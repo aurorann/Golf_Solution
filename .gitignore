@@ -1,0 +1,8 @@
+/.settings/
+/target/
+.classpath
+.project
+.springBeans
+.class
+/bin/
+/src/main/resources/generalConfig.properties*

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
+
+
+	
+	<context:component-scan base-package="apeak.golf.controller"/>
+	
+	<annotation-driven />
+
+	<resources mapping="/ad/**" location="/WEB-INF/ad/" />
+	<resources mapping="/img/**" location="/resources/img/" />
+	<resources mapping="/js/**" location="/resources/js/" />
+	<resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/vendor/**" location="/resources/vendor/" />
+	<resources mapping="/resources/**" location="/resources/"/>
+	<resources mapping="/robots.txt" location="/robots.txt"/>
+	
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+		
+
+	<!--  <context:property-placeholder location="/WEB-INF/spring/appServlet/*.properties" /> -->
+
+	<!-- Exception 등록하기  -->
+	
+	<beans:bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop key="java.lang.RuntimeException">error/errorMessage</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	<!-- 뒤로가기 새로고침 기능 설정 -->
+
+	<interceptors>
+		<beans:bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<beans:property name="cacheSeconds" value="0"></beans:property>
+			<beans:property name="useExpiresHeader" value="true"></beans:property>
+			<beans:property name="useCacheControlNoStore" value="true"></beans:property>
+			<beans:property name="useCacheControlHeader" value="true"></beans:property>
+		</beans:bean>
+	</interceptors>
+	
+	<!-- aop annnotation 설정하기 -->
+	<aop:aspectj-autoproxy/>
+	
+	<!-- 웹소켓 -->
+	<!--
+	<websocket:handlers allowed-origins="true">
+        <websocket:mapping path="/chat" handler="chatService"/>
+        	<websocket:handshake-interceptors>
+	        	<beans:bean class="apeak.golf.interceptor.HandshakeInterceptor"/>
+			</websocket:handshake-interceptors>
+        <websocket:sockjs/>
+    </websocket:handlers>
+    -->
+    <!--<beans:bean id="myHandler" class="apeak.golf.service.ChatService"/>-->
+    
+	<!-- 스케쥴러파일이 존재하는 패키지 설정 -->
+    <context:component-scan base-package="apeak.golf.util" />
+    <!-- 해당 태그들은 크론탭을 설정에 필요한 태그들 -->
+    <task:scheduler id="jobScheduler" pool-size="10" />
+    <task:annotation-driven scheduler="jobScheduler" />
+    
+    <!--
+    <interceptors>
+		
+         <interceptor>
+               <mapping path="/" /> 
+               <mapping path="/user/**" /> 
+               <mapping path="/board/**" />
+               <beans:bean class="apeak.golf.interceptor.MyInterceptor" />
+         </interceptor>
+
+	</interceptors>
+	-->
+	
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	    <beans:property name="definitions">
+	        <beans:list>
+	            <beans:value>/WEB-INF/tiles.xml</beans:value>
+	        </beans:list>
+	    </beans:property>
+	</beans:bean>
+	
+
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+	    <beans:property name="order" value="0" />
+	</beans:bean>
+	
+	
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
+		<beans:property name="exposedContextBeanNames">
+	        <beans:list>
+	        	<beans:value>general</beans:value>
+	        </beans:list>
+	    </beans:property>
+	</beans:bean>
+	
+</beans:beans>

@@ -1,0 +1,131 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+body {
+    font-family: 'Noto Sans KR', sans-serif!important;
+}
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+.layer-card {
+    width:300px;
+}
+
+.chart-card {
+    height:350px
+}
+
+.scrolled {
+    overflow:auto;
+}
+
+.course1 {
+    top:20%;
+    left:30%;
+}
+
+.course2 {
+    top:60%;
+    left:35%;
+}
+
+.course3 {
+    top:50%;
+    left:60%;
+}
+
+.course4 {
+    top:10%;
+    left:65%;
+}
+
+.course-tab {
+    right:16px;
+    top:10px;
+}
+
+.sidebar-small {
+    border-right: 1px solid rgba(0,0,0,.125)
+}
+
+.weather-unit {
+    font-size:.5rem;
+}
+
+.weather-wrap {
+    height:70px;
+}
+
+.weather-box {
+    width:80px;
+    padding-top:8px;
+}
+
+/* .navbar-nav-link {
+    padding: 0.5rem 1.25rem;
+    border-radius: 46px;
+    margin-right:10px;
+}
+
+.navbar-light .navbar-nav-link.active {
+    color: #fff;
+    font-weight: 700;
+    background-color: #2196f3;
+} */
+
+/* .navbar-light {
+    height:55px;
+}
+
+.navbar-nav {
+    margin-top:8px;
+}
+
+.navbar-nav-link {
+    padding: .5rem 1.25rem;
+}
+
+
+
+.navbar-light .navbar-nav-link.active {
+    border-top:1px solid rgba(0,0,0,0.1);
+    border-left:1px solid rgba(0,0,0,0.1);
+    border-right:1px solid rgba(0,0,0,0.1);
+    border-bottom:1px solid #fff;
+    border-radius:10px 10px 0 0;
+    background:#fff;
+} */
+
+.course1, .course2, .course3, .course4, .layer-card, .card-title, .card-header {
+    border-radius:20px!important;
+}
+
+.card-title {
+    overflow:hidden;
+}
+
+.course1 .card-header, .course2 .card-header, .course3 .card-header, .course4 .card-header {
+    border-radius:15px 15px 0 0!important;
+}
+
+.content-wrap {
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.navbar-light .navbar-nav-link.active {
+    border-bottom:2px solid rgb(33, 150, 243);
+    box-sizing: border-box;
+    background:#fff;
+}
+
+@media (min-width: 992px) {
+    .sidebar-expand-lg.sidebar-main-resized:not(.sidebar-main-unfold) .sidebar-section-body {
+        display:none;
+    }
+
+    .sidebar-expand-lg.sidebar-collapsed .btn-sidebar-expand {
+        align-items: flex-start;
+    }
+}

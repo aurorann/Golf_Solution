@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userMapper">
+
+	<!--
+	<resultMap type="userInfoDTO" id="signUserMap" autoMapping="true">
+		<id column="USER_ID" property="userId"/>
+		<association property="auth" javaType="authorityDTO" autoMapping="true">
+			<id column="USER_ID" property="userId"/>
+		</association>
+	</resultMap>
+	-->
+
+	<!-- 회원가입 -->
+	<select id="test" resultType="userInfoDTO">
+		SELECT * FROM USER_INFO
+	</select>
+
+</mapper>
