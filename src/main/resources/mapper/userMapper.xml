@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="userMapper">
 
-	<!--
+	<!--  
 	<resultMap type="userInfoDTO" id="signUserMap" autoMapping="true">
 		<id column="USER_ID" property="userId"/>
 		<association property="auth" javaType="authorityDTO" autoMapping="true">
@@ -13,10 +13,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	-->
+	
+	
+	<resultMap type="sensorInfoDTO" id="sensorInfoMap" autoMapping="true">
+		<id property="sensorNo" column="SENSOR_NO"/>
+		<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+		</collection>
+	</resultMap>
 
 	<!-- 회원가입 -->
+	<!--  -->
 	<select id="test" resultType="userInfoDTO">
 		SELECT * FROM USER_INFO
+	</select>
+	
+	<select id="collectTest" resultMap="sensorInfoMap">
+		SELECT * FROM SENSOR_INFO JOIN WEATHER_DATA
+		USING(SENSOR_NO)
 	</select>
 
 </mapper>

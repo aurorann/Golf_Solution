@@ -3,6 +3,7 @@ package apeak.golf.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +15,6 @@ public class UserInfoDTO {
 	private String hp;
 	private String regiDate;
 	private String lastLogin;
+	
+	private List<UserAuthDTO> userAuthList;
 }
