@@ -17,10 +17,10 @@
 
 				<!-- Main -->
 				<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
-				<li class="nav-item p-0"><a href="course_allcourse.html" class="nav-link active"> <i class="fas fa-map"></i>
+				<li class="nav-item p-0"><a href="/all/course_allcourse" class="nav-link active"> <i class="fas fa-map"></i>
 						<span> 전체 코스 </span>
-				</a> <a href="course_separatecourse.html" class="nav-link"> <i class="fas fa-golf-ball"></i> <span> 개별 코스 </span>
-				</a> <a href="course_report.html" class="nav-link"> <i class="fas fa-chart-bar"></i> <span> 리포트 </span>
+				</a> <a href="/each/course_separatecourse" class="nav-link"> <i class="fas fa-golf-ball"></i> <span> 개별 코스 </span>
+				</a> <a href="/report/course_report" class="nav-link"> <i class="fas fa-chart-bar"></i> <span> 리포트 </span>
 				</a></li>
 				<!-- /main -->
 			</ul>

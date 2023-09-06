@@ -9,14 +9,9 @@ import org.springframework.stereotype.Repository;
 import apeak.golf.model.dto.UserInfoDTO;
 
 @Repository
-public class HomeDAO {
+public class SensorInfoDAO {
 
 	@Autowired
 	private SqlSession session;
 	
-	public void test() {
-		List<UserInfoDTO> list = session.selectList("userMapper.test");
-		
-		System.out.println(list.get(0).getUserId());
-	}
 }
