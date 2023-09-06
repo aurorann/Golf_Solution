@@ -26,7 +26,8 @@
 	<!-- /core JS files -->
 		
 	<!-- Theme JS files -->
-	<script src="/resources/assets/js/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ko.min.js"></script>
 	<script src="/resources/assets/js/daterangepicker.js"></script>
 	<script src="/resources/assets/js/picker.js"></script>
 	<script src="/resources/assets/js/picker.date.js"></script>
@@ -116,7 +117,7 @@
 								<span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar22"></i></span>
 								</span>
-								<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+								<input type="text" class="form-control daterange-basic" value=""> 
 								
 							</div>
 						</li>
@@ -140,6 +141,7 @@
 
 	</div>
 	<!-- /page content -->
+
 
 </body>
 </html>

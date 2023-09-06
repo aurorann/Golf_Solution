@@ -27,16 +27,10 @@
 					<button type="button" class="btn btn-light">Green</button>
 				</div>
 
-				<div class="float-right">
-					<button type="button" class="btn sidebar-control sidebar-right-toggle">
-						<i class="fas fa-align-justify"></i>
-					</button>
-				</div>
-
 				<div class="float-right mr-2">
 					<div class="input-group">
 						<span class="input-group-prepend"> <span class="input-group-text"><i class="icon-calendar22"></i></span>
-						</span> <input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015">
+						</span> <input type="text" class="form-control daterange-basic" value="">
 						<button type="button" class="ml-2 btn btn-primary">검색</button>
 						<div class="btn-group ml-4">
 							<button type="button" class="btn btn-light">

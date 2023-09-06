@@ -509,7 +509,7 @@
 								<span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar22"></i></span>
 								</span>
-								<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+								<input type="text" class="form-control daterange-basic" value="09/01/2023 - 09/30/2023"> 
 								
 							</div>
 						</li>
