@@ -10,11 +10,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
 			<id column="SENSOR_NO" property="sensorNo"/>
 			<id column="HOLE_NO" property="holeNo"/>
+			<collection property="weatherDataList" column="HOLE_NO" ofType="WeatherDataDTO" javaType="List" autoMapping="true">
+				<id column="SENSOR_NO" property="sensorNo"/>
+				<id column="TM" property="tm"/>
+			</collection>
 		</collection>
 		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
 			<id column="ROBOT_NO" property="robotNo"/>
 			<id column="HOLE_NO_NOW" property="holeNoNow"/>
 		</collection>
+
+	</resultMap>
+	
+	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
+		<id column="HOLE_NO" property="holeNo"/>
+		<id column="COURSE_TYPE" property="courseType"/>
+		<association property="sensorInfo" column="HOLE_NO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+		</association>
+		<association property="weatherData" column="SENSOR_NO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+		</association>
 	</resultMap>
 	
 	<select id="holeSensorList" resultMap="holeInfoMap">
@@ -23,10 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN ROBOT_INFO ON HOLE_INFO.HOLE_NO = ROBOT_INFO.HOLE_NO_NOW
 	</select>
 	
-	<select id="SensorData" resultMap="holeInfoMap">
-		SELECT * FROM SENSOR_INFO A
-		JOIN WEATHER_DATA B 
-		ON A.SENSOR_NO = B.SENSOR_NO and A.COURSE_TYPE = '#{category}' and A.HOLE_NO = #{hole}
+	<select id="SensorData" parameterType="map" resultMap="holeInfoMap2">
+		SELECT * FROM HOLE_INFO H
+		JOIN SENSOR_INFO S ON H.HOLE_NO = S.HOLE_NO AND H.COURSE_TYPE = S.COURSE_TYPE
+		JOIN WEATHER_DATA W ON S.SENSOR_NO = W.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
 	</select>
 	
 	

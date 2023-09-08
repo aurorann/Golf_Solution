@@ -48,15 +48,22 @@ public class ReportCourseController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/course_report")
+	@RequestMapping("/course_report2")
 	private List<HoleInfoDTO> courseReportAjax2() {
 		return reportCourseService.test();
+	}
+	
+	@RequestMapping("/course_report")
+	private String courseReportAjax(Model model) {
+		List<HoleInfoDTO> list =reportCourseService.getdata("2", "GREEN");
+		model.addAttribute("data",list);
+		return "/report/course_report";
 	}
 
 	
 	@ResponseBody
 	@RequestMapping(value = "/course_report_ajax", method = RequestMethod.GET)
-	public List<HoleInfoDTO> courseReportAjax(@RequestParam("hole") String hole, @RequestParam("category") String category) {
+	public List<HoleInfoDTO> courseReportAjax(@RequestParam(value="hole",required=false) String hole, @RequestParam(value="category",required=false) String category) {
 		return reportCourseService.getdata(hole, category);
 	}
 }

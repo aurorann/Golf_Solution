@@ -13,7 +13,7 @@
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2">
 					<button type="button" class="holebt btn btn-light" value="0">전체</button>
-					<button type="button" class="holebt btn btn-light" value="1">H1</button>
+					<button type="button" class="holebt btn btn-light active" value="1">H1</button>
 					<button type="button" class="holebt btn btn-light" value="2">H2</button>
 					<button type="button" class="holebt btn btn-light" value="3">H3</button>
 					<button type="button" class="holebt btn btn-light" value="4">H4</button>
@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="btn-group mr-2">
-					<button type="button" class="categorybt btn btn-light" value="FAIRWAY">Fairway</button>
+					<button type="button" class="categorybt btn btn-light active" value="FAIRWAY">Fairway</button>
 					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
 				</div>
 
@@ -59,7 +59,7 @@
 		<div class="card">
 			<div class="card-header">
 				<h5 class="card-title">
-					Hole 1
+					<c:out value="${data[0].holeName}" />
 					<div class="btn-group ml-3">
 						<button type="button" class="btn btn-light">생육</button>
 						<button type="button" class="btn btn-light">열</button>
@@ -205,7 +205,7 @@
 												<div class="row">
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[1].TEMP}" /></h2>
+														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[0].sensorInfoList[0].weatherDataList[1].temp}" /></h2>
 														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
@@ -215,7 +215,7 @@
 												<div class="row">
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[0].TEMP}" /></h2>
+														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[0].sensorInfoList[0].weatherDataList[0].temp}" /></h2>
 														<div class="font-size-sm text-muted">현재</div>
 													</div>
 												</div>
@@ -341,7 +341,7 @@
 
 <script>
 	$(".holebt").click(function() {
-	    var hole = parseInt($(this).val());
+	    var hole = $(this).val();
 	    $(".holebt").removeClass("active");
 	    $(this).addClass("active");
 	    getData(hole, $(".categorybt.active").val());
@@ -358,8 +358,8 @@
 	
 	function getData(hole, category){
 	    $.ajax({
-	        url: '/course_report_ajax',
-	        type: 'GET'
+	        url: '/report/course_report_ajax',
+	        type: 'GET',
 	        data: {hole: hole, category: category},
 	        success: function(data) {
 	            // 응답 데이터 처리
@@ -386,13 +386,13 @@
 
 
 
-	function loadData(){
-		$.ajax({
-			url:'/course_report_ajax2'
-			success: function(data){
-	            $('#data').text(data.value);
-			}
-		})//ajax end
-	}//loadData() end
+//	function loadData(){
+//		$.ajax({
+//			url:'/course_report_ajax2'
+//			success: function(data){
+//	            $('#data').text(data.value);
+//			}
+//		})//ajax end
+//	}//loadData() end
 
 </script>

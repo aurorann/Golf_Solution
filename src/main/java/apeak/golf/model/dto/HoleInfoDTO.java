@@ -11,10 +11,13 @@ import java.util.List;
 public class HoleInfoDTO {
 	private int holeNo;
 	private String courseType;
-	private int holeName;
+	private String holeName;
 	private double lat;
 	private double lon;
 	
 	public List<SensorInfoDTO> sensorInfoList;
 	public List<RobotInfoDTO> robotInfoList;
+	
+	public SensorInfoDTO sensorInfo;
+	public WeatherDataDTO weatherData;
 }
