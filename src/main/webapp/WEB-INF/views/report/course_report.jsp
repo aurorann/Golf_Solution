@@ -12,7 +12,7 @@
 			<div class="page-title" style="width: 100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="holebt btn btn-light active" value="">전체</button>
+					<button type="button" class="holebt btn btn-light" value="0">전체</button>
 					<button type="button" class="holebt btn btn-light" value="1">H1</button>
 					<button type="button" class="holebt btn btn-light" value="2">H2</button>
 					<button type="button" class="holebt btn btn-light" value="3">H3</button>
@@ -23,8 +23,8 @@
 				</div>
 
 				<div class="btn-group mr-2">
-					<button type="button" class="btn btn-light active">Fairway</button>
-					<button type="button" class="btn btn-light">Green</button>
+					<button type="button" class="categorybt btn btn-light" value="FAIRWAY">Fairway</button>
+					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
 				</div>
 
 				<div class="float-right mr-2">
@@ -92,7 +92,7 @@
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
 														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
+														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
 												</div>
@@ -130,7 +130,7 @@
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
 														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
+														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
 												</div>
@@ -168,7 +168,7 @@
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
 														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
+														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
 												</div>
@@ -205,8 +205,8 @@
 												<div class="row">
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold">12.5</h2>
-														<div class="font-size-sm text-muted">현재</div>
+														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[1].TEMP}" /></h2>
+														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
 												</div>
@@ -215,7 +215,7 @@
 												<div class="row">
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold">14.2</h2>
+														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[0].TEMP}" /></h2>
 														<div class="font-size-sm text-muted">현재</div>
 													</div>
 												</div>
@@ -244,7 +244,7 @@
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
 														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
+														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
 												</div>
@@ -282,7 +282,7 @@
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
 														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
+														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
 												</div>
@@ -340,20 +340,48 @@
 
 
 <script>
-	// 버튼 클릭 이벤트 리스너 추가
-	$('.holebt').on('click', function() {
-	    // 버튼의 값 가져오기
-	    var value = $(this).val();
+	$(".holebt").click(function() {
+	    var hole = parseInt($(this).val());
+	    $(".holebt").removeClass("active");
+	    $(this).addClass("active");
+	    getData(hole, $(".categorybt.active").val());
+	});
+
 	
+	$(".categorybt").click(function() {
+	    var category = $(this).val();
+	    $(".categorybt").removeClass("active");
+	    $(this).addClass("active");
+	    getData($(".holebt.active").val(), category);
+	});
+	
+	
+	function getData(hole, category){
 	    $.ajax({
 	        url: '/course_report_ajax',
-	        data: { value: value },
+	        type: 'GET'
+	        data: {hole: hole, category: category},
 	        success: function(data) {
 	            // 응답 데이터 처리
-	            // ...
 	        }
-	    });
-	});
+	    });//ajax end
+	}//getData end
+
+	
+	// 버튼 클릭 이벤트 리스너 추가
+// 	$('.holebt').on('click', function() {
+	    // 버튼의 값 가져오기
+// 	    var value = $(this).val();
+	
+// 	    $.ajax({
+// 	        url: '/course_report_ajax',
+// 	        data: { value: value },
+// 	        success: function(data) {
+	            // 응답 데이터 처리
+	            // ...
+// 	        }
+// 	    });
+// 	});
 
 
 

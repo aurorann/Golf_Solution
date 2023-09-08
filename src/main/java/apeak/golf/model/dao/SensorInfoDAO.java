@@ -1,6 +1,8 @@
 package apeak.golf.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,10 @@ public class SensorInfoDAO {
 		return list;
 	}//test end
 	
-	public List<HoleInfoDTO> getdata(String value){
-		return session.selectList("reportCourseMapper.SensorData", value);
+	public List<HoleInfoDTO> getdata(String hole, String category){
+        Map<String, Object> params = new HashMap<>();
+        params.put("hole", hole);
+        params.put("category", category);
+		return session.selectList("reportCourseMapper.SensorData", params);
 	}//getdata() end
 }

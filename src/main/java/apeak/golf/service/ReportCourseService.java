@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import apeak.golf.model.dao.SensorInfoDAO;
 import apeak.golf.model.dto.HoleInfoDTO;
 import apeak.golf.model.dto.RobotInfoDTO;
+import apeak.golf.model.dto.SensorInfoDTO;
 
 @Service
 @Transactional
@@ -16,13 +17,13 @@ public class ReportCourseService {
 	
 	
 	@Autowired
-	private SensorInfoDAO dao;
+	private SensorInfoDAO sensorinfodao;
 	
 	public List<HoleInfoDTO> test() {
-		return dao.test();
+		return sensorinfodao.test();
 	}
 	
-	public List<HoleInfoDTO> getdata(String value) {
-		return dao.getdata(value);
+	public List<HoleInfoDTO> getdata(String hole, String category) {
+		return sensorinfodao.getdata(hole, category);
 	}
 }
