@@ -23,13 +23,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
-		<id column="HOLE_NO" property="holeNo"/>
-		<id column="COURSE_TYPE" property="courseType"/>
-		<association property="sensorInfo" column="HOLE_NO" autoMapping="true">
+		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
 			<id column="SENSOR_NO" property="sensorNo"/>
 		</association>
-		<association property="weatherData" column="SENSOR_NO" autoMapping="true">
+		<association property="weatherData" javaType="WeatherDataDTO" autoMapping="true">
 			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+		</association>
+		<association property="ndviData" javaType="NdviDataDTO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+			<result column="NDVI" property="ndvi"/>
+		</association>
+	</resultMap>
+	
+	<resultMap type="holeInfoDTO" id="holeInfoMap3" autoMapping="true">
+		<association property="robotInfo" javaType="RobotInfoDTO" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+		</association>
+		<association property="soilData" javaType="SoilDataDTO" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<id column="TM" property="tm"/>
+		</association>
+		<association property="ndviRobotData" javaType="NdviRobotDataDTO" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
 			<id column="TM" property="tm"/>
 		</association>
 	</resultMap>
@@ -40,10 +57,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN ROBOT_INFO ON HOLE_INFO.HOLE_NO = ROBOT_INFO.HOLE_NO_NOW
 	</select>
 	
-	<select id="SensorData" parameterType="map" resultMap="holeInfoMap2">
-		SELECT * FROM HOLE_INFO H
-		JOIN SENSOR_INFO S ON H.HOLE_NO = S.HOLE_NO AND H.COURSE_TYPE = S.COURSE_TYPE
+	<select id="weatherData" parameterType="map" resultMap="holeInfoMap2">
+		SELECT * FROM SENSOR_INFO S
 		JOIN WEATHER_DATA W ON S.SENSOR_NO = W.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		ORDER BY TM DESC
+	</select>
+	
+	<select id="ndviData" parameterType="map" resultMap="holeInfoMap2">
+		SELECT * FROM SENSOR_INFO S
+		JOIN NDVI_DATA N ON S.SENSOR_NO = N.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		ORDER BY TM DESC
+	</select>
+	
+	<select id="soilData" parameterType="map" resultMap="holeInfoMap3">
+		SELECT * FROM ROBOT_INFO R
+		JOIN SOIL_DATA S ON R.ROBOT_NO = S.ROBOT_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		ORDER BY TM DESC
+	</select>
+	
+	<select id="ndviRobotData" parameterType="map" resultMap="holeInfoMap3">
+		SELECT * FROM ROBOT_INFO R
+		JOIN NDVI_ROBOT_DATA N ON R.ROBOT_NO = N.ROBOT_NO and N.COURSE_TYPE = #{category} and N.HOLE_NO = #{hole}
+		ORDER BY TM DESC
 	</select>
 	
 	

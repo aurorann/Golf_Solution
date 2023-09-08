@@ -26,44 +26,50 @@ public class ReportCourseController {
 	@Autowired
 	private ReportCourseService reportCourseService;
 	
-	@RequestMapping("/course_report1")
-	private String courseReport(Model model,String holeNo) {
-		
-		List<HoleInfoDTO> list = reportCourseService.test();
-		
-		model.addAttribute("list",list);
-		
-		return "/report/course_report";
-	}//courseReport() end
+//	@RequestMapping("/course_report1")
+//	private String courseReport(Model model,String holeNo) {
+//		
+//		List<HoleInfoDTO> list = reportCourseService.test();
+//		
+//		model.addAttribute("list",list);
+//		
+//		return "/report/course_report";
+//	}//courseReport() end
 	
-	@ResponseBody
-	@RequestMapping("/course_report_ajax1")
-	private Map<String,Object> courseReportAjax1() {
-		List<HoleInfoDTO> list = reportCourseService.test();
-		
-		Map<String,Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("list", list);
-		
-		return resultMap;
-	}
+//	@ResponseBody
+//	@RequestMapping("/course_report_ajax1")
+//	private Map<String,Object> courseReportAjax1() {
+//		List<HoleInfoDTO> list = reportCourseService.test();
+//		
+//		Map<String,Object> resultMap = new HashMap<String, Object>();
+//		resultMap.put("list", list);
+//		
+//		return resultMap;
+//	}
 
-	@ResponseBody
-	@RequestMapping("/course_report2")
-	private List<HoleInfoDTO> courseReportAjax2() {
-		return reportCourseService.test();
-	}
+//	@ResponseBody
+//	@RequestMapping("/course_report2")
+//	private List<HoleInfoDTO> courseReportAjax2() {
+//		return reportCourseService.test();
+//	}
+	
+//	@RequestMapping("/course_report")
+//	private String courseReportAjax(@RequestParam(value="hole",required=false) String hole, @RequestParam(value="category",required=false) String category, Model model) {
+//	    List<HoleInfoDTO> list = reportCourseService.getdata(hole, category);
+//		model.addAttribute("data",list);
+//		return "/report/course_report";
+//	}
 	
 	@RequestMapping("/course_report")
-	private String courseReportAjax(Model model) {
-		List<HoleInfoDTO> list =reportCourseService.getdata("2", "GREEN");
-		model.addAttribute("data",list);
+	private String courseReport() {
 		return "/report/course_report";
 	}
 
 	
 	@ResponseBody
 	@RequestMapping(value = "/course_report_ajax", method = RequestMethod.GET)
-	public List<HoleInfoDTO> courseReportAjax(@RequestParam(value="hole",required=false) String hole, @RequestParam(value="category",required=false) String category) {
+	public Map<String, Object> courseReportAjax(@RequestParam(value="hole",required=false) String hole, 
+											  @RequestParam(value="category",required=false) String category) {
 		return reportCourseService.getdata(hole, category);
 	}
 }

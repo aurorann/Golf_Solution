@@ -13,13 +13,13 @@
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2">
 					<button type="button" class="holebt btn btn-light" value="0">전체</button>
-					<button type="button" class="holebt btn btn-light active" value="1">H1</button>
-					<button type="button" class="holebt btn btn-light" value="2">H2</button>
-					<button type="button" class="holebt btn btn-light" value="3">H3</button>
-					<button type="button" class="holebt btn btn-light" value="4">H4</button>
-					<button type="button" class="holebt btn btn-light" value="5">H5</button>
-					<button type="button" class="holebt btn btn-light" value="6">H6</button>
-					<button type="button" class="holebt btn btn-light" value="7">H7</button>
+					<button type="button" class="holebt btn btn-light active" value="1" data-lat="" data-lon="" data-holename="Hole 1">H1</button>
+					<button type="button" class="holebt btn btn-light" value="2" data-lat="" data-lon="" data-holename="Hole 2">H2</button>
+					<button type="button" class="holebt btn btn-light" value="3" data-lat="" data-lon="" data-holename="Hole 3">H3</button>
+					<button type="button" class="holebt btn btn-light" value="4" data-lat="" data-lon="" data-holename="Hole 4">H4</button>
+					<button type="button" class="holebt btn btn-light" value="5" data-lat="" data-lon="" data-holename="Hole 5">H5</button>
+					<button type="button" class="holebt btn btn-light" value="6" data-lat="" data-lon="" data-holename="Hole 6">H6</button>
+					<button type="button" class="holebt btn btn-light" value="7" data-lat="" data-lon="" data-holename="Hole 7">H7</button>
 				</div>
 
 				<div class="btn-group mr-2">
@@ -58,8 +58,8 @@
 		<!-- Basic card -->
 		<div class="card">
 			<div class="card-header">
-				<h5 class="card-title">
-					<c:out value="${data[0].holeName}" />
+				<h5 class="card-title holename">
+					<!-- HOLE 이름 -->
 					<div class="btn-group ml-3">
 						<button type="button" class="btn btn-light">생육</button>
 						<button type="button" class="btn btn-light">열</button>
@@ -205,7 +205,7 @@
 												<div class="row">
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[0].sensorInfoList[0].weatherDataList[1].temp}" /></h2>
+														<h2 class="mb-0 font-weight-semibold temp_yesterday">0</h2>
 														<div class="font-size-sm text-muted">전날</div>
 													</div>
 
@@ -215,7 +215,7 @@
 												<div class="row">
 													<div class="col-lg-12 text-center">
 														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold"><c:out value="${data[0].sensorInfoList[0].weatherDataList[0].temp}" /></h2>
+														<h2 class="mb-0 font-weight-semibold temp_today">0</h2>
 														<div class="font-size-sm text-muted">현재</div>
 													</div>
 												</div>
@@ -340,7 +340,16 @@
 
 
 <script>
+	$(document).ready(function() {
+	    var holeName = $(".holebt.active").data("holename");
+	    $(".card-title.holename").prepend(holeName);
+	});
+
 	$(".holebt").click(function() {
+	    var holeName = $(this).data("holename");
+	    $(".card-title.holename").contents().first().remove(); // 기존 값을 제거
+	    $(".card-title.holename").prepend(holeName);
+	    
 	    var hole = $(this).val();
 	    $(".holebt").removeClass("active");
 	    $(this).addClass("active");
@@ -362,37 +371,29 @@
 	        type: 'GET',
 	        data: {hole: hole, category: category},
 	        success: function(data) {
-	            // 응답 데이터 처리
-	        }
+	            updatePage(data);
+	            console.log(data);
+	            //console.log(data[0]);
+	            //console.log(data[0].weatherData.temp);
+	        },
+		    error: function(jqXHR, textStatus, errorThrown) {
+		        alert(jqXHR.status);
+		        alert(jqXHR.statusText);
+		        alert(jqXHR.responseText);
+		        alert(jqXHR.readyState);
+		    }
 	    });//ajax end
 	}//getData end
-
 	
-	// 버튼 클릭 이벤트 리스너 추가
-// 	$('.holebt').on('click', function() {
-	    // 버튼의 값 가져오기
-// 	    var value = $(this).val();
-	
-// 	    $.ajax({
-// 	        url: '/course_report_ajax',
-// 	        data: { value: value },
-// 	        success: function(data) {
-	            // 응답 데이터 처리
-	            // ...
-// 	        }
-// 	    });
-// 	});
+	function updatePage(data) {
+	    var temp_today = data[0].weatherData.temp;
+	    var temp_yesterday = data[1].weatherData.temp;
+	    console.log(data[0].weatherData.temp);
+	    
+	    $(".mb-0.font-weight-semibold.temp_yesterday").text(temp_yesterday);
+	    $(".mb-0.font-weight-semibold.temp_today").text(temp_today);
+	}
 
 
-
-
-//	function loadData(){
-//		$.ajax({
-//			url:'/course_report_ajax2'
-//			success: function(data){
-//	            $('#data').text(data.value);
-//			}
-//		})//ajax end
-//	}//loadData() end
 
 </script>
