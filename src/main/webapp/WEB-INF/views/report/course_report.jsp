@@ -12,14 +12,14 @@
 			<div class="page-title" style="width: 100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="btn btn-light active">전체</button>
-					<button type="button" class="btn btn-light">H1</button>
-					<button type="button" class="btn btn-light">H2</button>
-					<button type="button" class="btn btn-light">H3</button>
-					<button type="button" class="btn btn-light">H4</button>
-					<button type="button" class="btn btn-light">H5</button>
-					<button type="button" class="btn btn-light">H6</button>
-					<button type="button" class="btn btn-light">H7</button>
+					<button type="button" class="holebt btn btn-light active" value="">전체</button>
+					<button type="button" class="holebt btn btn-light" value="1">H1</button>
+					<button type="button" class="holebt btn btn-light" value="2">H2</button>
+					<button type="button" class="holebt btn btn-light" value="3">H3</button>
+					<button type="button" class="holebt btn btn-light" value="4">H4</button>
+					<button type="button" class="holebt btn btn-light" value="5">H5</button>
+					<button type="button" class="holebt btn btn-light" value="6">H6</button>
+					<button type="button" class="holebt btn btn-light" value="7">H7</button>
 				</div>
 
 				<div class="btn-group mr-2">
@@ -59,7 +59,7 @@
 		<div class="card">
 			<div class="card-header">
 				<h5 class="card-title">
-					Hole 2
+					Hole 1
 					<div class="btn-group ml-3">
 						<button type="button" class="btn btn-light">생육</button>
 						<button type="button" class="btn btn-light">열</button>
@@ -337,3 +337,34 @@
 
 </div>
 <!-- /main content -->
+
+
+<script>
+	// 버튼 클릭 이벤트 리스너 추가
+	$('.holebt').on('click', function() {
+	    // 버튼의 값 가져오기
+	    var value = $(this).val();
+	
+	    $.ajax({
+	        url: '/course_report_ajax',
+	        data: { value: value },
+	        success: function(data) {
+	            // 응답 데이터 처리
+	            // ...
+	        }
+	    });
+	});
+
+
+
+
+	function loadData(){
+		$.ajax({
+			url:'/course_report_ajax2'
+			success: function(data){
+	            $('#data').text(data.value);
+			}
+		})//ajax end
+	}//loadData() end
+
+</script>

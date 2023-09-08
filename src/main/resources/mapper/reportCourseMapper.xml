@@ -5,5 +5,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="reportCourseMapper">
 
+	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+		<id property="holeNo" column="HOLE_NO"/>
+		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="HOLE_NO" property="holeNo"/>
+		</collection>
+		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<id column="HOLE_NO_NOW" property="holeNoNow"/>
+		</collection>
+	</resultMap>
+	
+	<select id="holeSensorList" resultMap="holeInfoMap">
+		SELECT * FROM HOLE_INFO
+		JOIN SENSOR_INFO ON HOLE_INFO.HOLE_NO = SENSOR_INFO.HOLE_NO
+		JOIN ROBOT_INFO ON HOLE_INFO.HOLE_NO = ROBOT_INFO.HOLE_NO_NOW
+	</select>
+	
+	<select id="SensorData" resultMap="holeInfoMap">
+		SELECT * FROM SENSOR_INFO A
+		JOIN WEATHER_DATA B 
+		ON A.SENSOR_NO = B.SENSOR_NO and A.COURSE_TYPE = 'GREEN' and A.HOLE_NO =  #{value}
+	</select>
+	
+	
+	
+	
+
 
 </mapper>
