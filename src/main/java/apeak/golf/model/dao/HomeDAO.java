@@ -3,6 +3,7 @@ package apeak.golf.model.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,8 +18,8 @@ public class HomeDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public void test() {
-		List<SensorInfoDTO> list = session.selectList("userMapper.collectTest");
+	public List<EgovMap> test() {
+		return session.selectList("userMapper.collectTest");
 		
 
 		//System.out.println(list.size());
@@ -26,7 +27,7 @@ public class HomeDAO {
 		//System.out.println(list);
 		
 		//log.info("데이터 : ",list);
-		
+		/*
 		for(SensorInfoDTO dto:list) {
 			System.out.println(dto);
 			
@@ -38,6 +39,6 @@ public class HomeDAO {
 			for(WeatherDataDTO weather:aa){
 				System.out.println(weather);
 			}
-		}
+		}*/
 	}
 }
