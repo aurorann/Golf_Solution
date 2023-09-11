@@ -77,240 +77,387 @@
 							referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
 
-					<div class="col-lg-9">
-						<div class="row">
-							<!--NDVI-->
-							<div class="col-lg-4">
-								<div class="card border-top-success rounded-top-0">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">NDVI</h6>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">전날</div>
-													</div>
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <!--NDVI-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">NDVI</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary ndvi_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold ndvi_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary ndvi_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold ndvi_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="ndvi_data"><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_ndvi text-danger icon-arrow-up13"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--NDVI end-->
 
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-2 mb-0 col-lg-12 text-center">
-												<div class="">
-													전날보다 <strong>-2.17<small class="weather-unit">%</small></strong> <i class="text-danger icon-arrow-down132"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--NDVI end-->
+                            <!--토양수분-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">토양수분</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary smo_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold smo_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary smo_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold smo_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="smo_data"><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_smo text-primary icon-arrow-up13"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--토양수분 end-->
 
-							<!--토양수분-->
-							<div class="col-lg-4">
-								<div class="card border-top-success rounded-top-0">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">토양수분</h6>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">전날</div>
-													</div>
+                            <!--토양온도-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">토양온도</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary stp_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold stp_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary stp_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold stp_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="stp_data"><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_stp text-danger icon-arrow-down132"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--토양온도 end-->
 
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold">0.7906</h2>
-														<div class="font-size-sm text-muted">현재</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-2 mb-0 col-lg-12 text-center">
-												<div class="">
-													전날보다 <strong>+2.17<small class="weather-unit">%</small></strong> <i class="text-primary icon-arrow-up13"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--토양수분 end-->
+                            <!--토양양분-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">토양양분</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary sec_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold sec_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary sec_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold sec_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="sec_data"><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_sec text-danger icon-arrow-down132"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--토양양분 end-->
 
-							<!--토양온도-->
-							<div class="col-lg-4">
-								<div class="card border-top-success rounded-top-0">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">토양온도</h6>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">전날</div>
-													</div>
+                            <!--기온-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">기온</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary temp_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold temp_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary temp_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold temp_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_temp text-primary icon-arrow-up13"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--기온 end-->
 
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-2 mb-0 col-lg-12 text-center">
-												<div class="">
-													전날보다 <strong>-2.17<small class="weather-unit">%</small></strong> <i class="text-danger icon-arrow-down132"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--토양온도 end-->
+                            <!--강수량-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">강수량</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary rain_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold rain_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary rain_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold rain_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="rain_data"></small></strong>
+                                                    <i class="textarrowcolor_rain text-primary icon-arrow-up13"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--강수량 end-->
 
-							<!--기온-->
-							<div class="col-lg-4">
-								<div class="card border-top-success rounded-top-0">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">기온</h6>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold temp_yesterday">0</h2>
-														<div class="font-size-sm text-muted">전날</div>
-													</div>
+                            <!--풍향-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">풍향</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary wd_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold wd_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 mb-4">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary wd_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold wd_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--풍향 end-->
 
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold temp_today">0</h2>
-														<div class="font-size-sm text-muted">현재</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-2 mb-0 col-lg-12 text-center">
-												<div class="">
-													전날보다 <strong>+2.17<small class="weather-unit">%</small></strong> <i class="text-primary icon-arrow-up13"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--기온 end-->
+                            <!--풍속-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">풍속</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary ws_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold ws_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary ws_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold ws_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="ws_data"><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_ws text-primary icon-arrow-up13"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--풍속 end-->
 
-							<!--습도-->
-							<div class="col-lg-4">
-								<div class="card border-top-success rounded-top-0">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">습도</h6>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">전날</div>
-													</div>
+                            <!--습도-->
+                            <div class="col-lg-2">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">습도</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary humi_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold humi_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary humi_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold humi_today"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="humi_data"><small class="weather-unit">%</small></strong>
+                                                    <i class="textarrowcolor_humi text-danger icon-arrow-down132"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--습도 end-->
 
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-2 mb-0 col-lg-12 text-center">
-												<div class="">
-													전날보다 <strong>-2.17<small class="weather-unit">%</small></strong> <i class="text-danger icon-arrow-down132"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--습도 end-->
+                            <!--미세먼지-->
+                            <div class="col-lg-6">
+                                <div class="card border-top-success rounded-top-0">
+                                    <div class="card-header">
+                                        <h6 class="card-title font-weight-bold">일조</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary solar_yesterday_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold solar_yesterday"></h2>
+                                                        <div class="font-size-sm text-muted">전날</div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-12 text-center p-0">
+                                                        <span class="text-secondary solar_today_data"></span>
+                                                        <h2 class="mb-0 font-weight-semibold solar_today_data"></h2>
+                                                        <div class="font-size-sm text-muted">현재</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                <div class="">전날보다 <strong class="solar_data"></strong>
+                                                    <i class="textarrowcolor_solar text-danger icon-arrow-down132"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--미세먼지 end-->
 
-							<!--PH-->
-							<div class="col-lg-4">
-								<div class="card border-top-success rounded-top-0">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">PH</h6>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.15</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">전날</div>
-													</div>
+                        </div>
+                    </div>
 
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="row">
-													<div class="col-lg-12 text-center">
-														<span class="text-secondary">2023.8.16</span>
-														<h2 class="mb-0 font-weight-semibold">0.221</h2>
-														<div class="font-size-sm text-muted">현재</div>
-													</div>
-												</div>
-											</div>
-											<div class="mt-2 mb-0 col-lg-12 text-center">
-												<div class="">
-													전날보다 <strong>-2.17<small class="weather-unit">%</small></strong> <i class="text-danger icon-arrow-down132"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--PH end-->
-
-
-
-						</div>
-					</div>
 
 					<div class="col-lg-12">
 						<div class="card-header">
@@ -343,8 +490,13 @@
 	$(document).ready(function() {
 	    var holeName = $(".holebt.active").data("holename");
 	    $(".card-title.holename").prepend(holeName);
+	    
+	    // 페이지가 로드될 때 getData 함수 호출
+	    var hole = $(".holebt.active").val();
+	    var category = $(".categorybt.active").val();
+	    getData(hole, category);
 	});
-
+	
 	$(".holebt").click(function() {
 	    var holeName = $(this).data("holename");
 	    $(".card-title.holename").contents().first().remove(); // 기존 값을 제거
@@ -355,7 +507,6 @@
 	    $(this).addClass("active");
 	    getData(hole, $(".categorybt.active").val());
 	});
-
 	
 	$(".categorybt").click(function() {
 	    var category = $(this).val();
@@ -370,11 +521,12 @@
 	        url: '/report/course_report_ajax',
 	        type: 'GET',
 	        data: {hole: hole, category: category},
+	        dataType: "json",
 	        success: function(data) {
 	            updatePage(data);
 	            console.log(data);
-	            //console.log(data[0]);
-	            //console.log(data[0].weatherData.temp);
+	            //console.log(data.list1);
+	            //console.log(data.list1[0].weatherData.temp);
 	        },
 		    error: function(jqXHR, textStatus, errorThrown) {
 		        alert(jqXHR.status);
@@ -386,13 +538,197 @@
 	}//getData end
 	
 	function updatePage(data) {
-	    var temp_today = data[0].weatherData.temp;
-	    var temp_yesterday = data[1].weatherData.temp;
-	    console.log(data[0].weatherData.temp);
+		//NDVI 데이터
+	    var ndvi_today_data = data.list2[0].ndviData.tm.substring(0, 10);
+	    var ndvi_yesterday_data = data.list2[1].ndviData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.ndvi_yesterday_data").text(ndvi_yesterday_data);
+	    $(".text-secondary.ndvi_today_data").text(ndvi_today_data);
+	    
+	    
+	    var ndvi_today = Number(data.list2[0].ndviData.ndvi.toFixed(3));
+	    var ndvi_yesterday = Number(data.list2[1].ndviData.ndvi.toFixed(3));
+	    
+	    $(".mb-0.font-weight-semibold.ndvi_yesterday").text(ndvi_yesterday);
+	    $(".mb-0.font-weight-semibold.ndvi_today").text(ndvi_today);
+	    
+	    
+	    difference(ndvi_today, ndvi_yesterday, ".ndvi_data", ".textarrowcolor_ndvi");
+
+	    
+		//토양수분 데이터
+	    var smo_today_data = data.list3[0].soilData.tm.substring(0, 10);
+	    var smo_yesterday_data = data.list3[1].soilData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.smo_yesterday_data").text(smo_yesterday_data);
+	    $(".text-secondary.smo_today_data").text(smo_today_data);
+	    
+	    
+	    var smo_today = Number(data.list3[0].soilData.smo.toFixed(3));
+	    var smo_yesterday = Number(data.list3[1].soilData.smo.toFixed(3));
+	    
+	    $(".mb-0.font-weight-semibold.smo_yesterday").text(smo_yesterday);
+	    $(".mb-0.font-weight-semibold.smo_today").text(smo_today);
+	    
+	    
+	    difference(smo_today, smo_yesterday, ".smo_data", ".textarrowcolor_smo");
+
+
+	    
+		//토양온도 데이터
+	    var stp_today_data = data.list3[0].soilData.tm.substring(0, 10);
+	    //stp_today_data = stp_today_data.replace(/-/g, '.');
+	    var stp_yesterday_data = data.list3[1].soilData.tm.substring(0, 10);
+	    //stp_today_data = stp_today_data.replace(/-/g, '.');
+	    
+	    $(".text-secondary.stp_yesterday_data").text(stp_yesterday_data);
+	    $(".text-secondary.stp_today_data").text(stp_today_data);
+	    
+	    
+	    var stp_today = Number(data.list3[0].soilData.stp.toFixed(3));
+	    var stp_yesterday = Number(data.list3[1].soilData.stp.toFixed(3));
+	    
+	    $(".mb-0.font-weight-semibold.stp_yesterday").text(stp_yesterday);
+	    $(".mb-0.font-weight-semibold.stp_today").text(stp_today);
+		    
+	    difference(stp_today, stp_yesterday, ".stp_data", ".textarrowcolor_stp");
+
+
+	    
+		//토양양분 데이터
+	    var sec_today_data = data.list3[0].soilData.tm.substring(0, 10);
+	    var sec_yesterday_data = data.list3[1].soilData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.sec_yesterday_data").text(sec_yesterday_data);
+	    $(".text-secondary.sec_today_data").text(sec_today_data);
+	    
+	    
+	    var sec_today = Number(data.list3[0].soilData.sec.toFixed(3));
+	    var sec_yesterday = Number(data.list3[1].soilData.sec.toFixed(3));
+	    
+	    $(".mb-0.font-weight-semibold.sec_yesterday").text(sec_yesterday);
+	    $(".mb-0.font-weight-semibold.sec_today").text(sec_today);
+	    	    
+	    difference(sec_today, sec_yesterday, ".sec_data", ".textarrowcolor_sec");
+
+	    
+	    
+	    //기온 데이터
+	    var temp_today_data = data.list1[0].weatherData.tm.substring(0, 10);
+	    var temp_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.temp_yesterday_data").text(temp_yesterday_data);
+	    $(".text-secondary.temp_today_data").text(temp_today_data);
+	    
+	    var temp_today = data.list1[0].weatherData.temp;
+	    var temp_yesterday = data.list1[1].weatherData.temp;
 	    
 	    $(".mb-0.font-weight-semibold.temp_yesterday").text(temp_yesterday);
 	    $(".mb-0.font-weight-semibold.temp_today").text(temp_today);
+
+	    difference(temp_today, temp_yesterday, ".temp_data", ".textarrowcolor_temp");
+	    
+	    
+	    //풍향 데이터
+	    var wd_today_data = data.list1[0].weatherData.tm.substring(0, 10);
+	    var wd_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.wd_yesterday_data").text(wd_yesterday_data);
+	    $(".text-secondary.wd_today_data").text(wd_today_data);
+	    
+	    var wd_today = data.list1[0].weatherData.wd;
+	    var wd_yesterday = data.list1[1].weatherData.wd;
+	    
+	    $(".mb-0.font-weight-semibold.wd_yesterday").text(wd_yesterday);
+	    $(".mb-0.font-weight-semibold.wd_today").text(wd_today);
+	    
+	    
+	    //풍속 데이터
+	    var ws_today_data = data.list1[0].weatherData.tm.substring(0, 10);
+	    var ws_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.ws_yesterday_data").text(ws_yesterday_data);
+	    $(".text-secondary.ws_today_data").text(ws_today_data);
+	    
+	    var ws_today = data.list1[0].weatherData.ws;
+	    var ws_yesterday = data.list1[1].weatherData.ws;
+	    
+	    $(".mb-0.font-weight-semibold.ws_yesterday").text(ws_yesterday);
+	    $(".mb-0.font-weight-semibold.ws_today").text(ws_today);
+
+	    difference(ws_today, ws_yesterday, ".ws_data", ".textarrowcolor_ws");
+	    
+	    
+	    
+	    //습도 데이터
+	    var humi_today_data = data.list1[0].weatherData.tm.substring(0, 10);
+	    var humi_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.humi_yesterday_data").text(humi_yesterday_data);
+	    $(".text-secondary.humi_today_data").text(humi_today_data);
+	    
+	    var humi_today = data.list1[0].weatherData.humi;
+	    var humi_yesterday = data.list1[1].weatherData.humi;
+	    
+	    $(".mb-0.font-weight-semibold.humi_yesterday").text(humi_yesterday);
+	    $(".mb-0.font-weight-semibold.humi_today").text(humi_today);
+
+	    difference(humi_today, humi_yesterday, ".humi_data", ".textarrowcolor_humi");
+	    
+	    
+	    
+	    //강수량 데이터
+	    var rain_today_data = data.list1[0].weatherData.tm.substring(0, 10);
+	    var rain_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.rain_yesterday_data").text(rain_yesterday_data);
+	    $(".text-secondary.rain_today_data").text(rain_today_data);
+	    
+	    var rain_today = data.list1[0].weatherData.rain;
+	    var rain_yesterday = data.list1[1].weatherData.rain;
+	    
+	    $(".mb-0.font-weight-semibold.rain_yesterday").text(rain_yesterday);
+	    $(".mb-0.font-weight-semibold.rain_today").text(rain_today);
+
+	    difference(rain_today, rain_yesterday, ".rain_data", ".textarrowcolor_rain");
+	    
+	    
+	    //일조 데이터
+	    var solar_today_data = data.list1[0].weatherData.tm.substring(0, 10);
+	    var solar_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
+	    
+	    $(".text-secondary.solar_yesterday_data").text(solar_yesterday_data);
+	    $(".text-secondary.solar_today_data").text(solar_today_data);
+	    
+	    var solar_today = data.list1[0].weatherData.solar;
+	    var solar_yesterday = data.list1[1].weatherData.solar;
+	    
+	    $(".mb-0.font-weight-semibold.solar_yesterday").text(solar_yesterday);
+	    $(".mb-0.font-weight-semibold.solar_today").text(solar_today);
+
+	    difference(solar_today, solar_yesterday, ".solar_data", ".textarrowcolor_solar");
+	    
+	    
+
+	
+	
+	
 	}
+	
+	
+	
+	function difference(today, yesterday, element, arrowElement) {
+	    var difference = today - yesterday;
+	    $(element).text(difference.toFixed(2));
+
+	    if (difference > 0) {
+	        $(arrowElement).removeClass("icon-arrow-down132 text-danger").addClass("icon-arrow-up13 text-primary");
+	    } else if (difference < 0) {
+	        $(arrowElement).removeClass("icon-arrow-up13 text-primary").addClass("icon-arrow-down132 text-danger");
+	    }
+	}
+	
+	
 
 
 

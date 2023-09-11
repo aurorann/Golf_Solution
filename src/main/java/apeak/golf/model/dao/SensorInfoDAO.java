@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -50,37 +51,20 @@ public class SensorInfoDAO {
 //	}//test end
 
 	
-	public List<HoleInfoDTO> getweatherdata(String hole, String category){
-        Map<String, Object> params = new HashMap<>();
-        params.put("hole", hole);
-        params.put("category", category);
-		return session.selectList("reportCourseMapper.weatherData", params);
+	public List<HoleInfoDTO> getweatherdata(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.weatherData", paramMap);
 	}//getweatherdata() end
-	
-	
-	public List<HoleInfoDTO> getndvidata(String hole, String category){
-		Map<String, Object> params = new HashMap<>();
-		params.put("hole", hole);
-		params.put("category", category);
-		return session.selectList("reportCourseMapper.ndviData", params);
+
+
+	public List<HoleInfoDTO> getndvidata(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.ndviData", paramMap);
 	}//getndvidata() end
-	
-	
-	public List<HoleInfoDTO> getsoildata(String hole, String category){
-		Map<String, Object> params = new HashMap<>();
-		params.put("hole", hole);
-		params.put("category", category);
-		return session.selectList("reportCourseMapper.soilData", params);
+
+
+	public List<HoleInfoDTO> getsoildata(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.soilData", paramMap);
 	}//getsoildata() end
-	
-	
-	public List<HoleInfoDTO> getndvirobotdata(String hole, String category){
-		Map<String, Object> params = new HashMap<>();
-		params.put("hole", hole);
-		params.put("category", category);
-		return session.selectList("reportCourseMapper.ndvirobotData", params);
-	}//getndvirobotdata() end
-	
+
 	
 	
 	

@@ -22,6 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</resultMap>
 	
+	
+	
 	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
 		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
 			<id column="SENSOR_NO" property="sensorNo"/>
@@ -30,14 +32,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<id column="SENSOR_NO" property="sensorNo"/>
 			<id column="TM" property="tm"/>
 		</association>
+	</resultMap>
+	
+	
+	<resultMap type="holeInfoDTO" id="holeInfoMap3" autoMapping="true">
+		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+		</association>
 		<association property="ndviData" javaType="NdviDataDTO" autoMapping="true">
 			<id column="SENSOR_NO" property="sensorNo"/>
 			<id column="TM" property="tm"/>
 			<result column="NDVI" property="ndvi"/>
 		</association>
 	</resultMap>
-	
-	<resultMap type="holeInfoDTO" id="holeInfoMap3" autoMapping="true">
+	 
+	 
+	<resultMap type="holeInfoDTO" id="holeInfoMap4" autoMapping="true">
 		<association property="robotInfo" javaType="RobotInfoDTO" autoMapping="true">
 			<id column="ROBOT_NO" property="robotNo"/>
 		</association>
@@ -45,11 +55,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<id column="ROBOT_NO" property="robotNo"/>
 			<id column="TM" property="tm"/>
 		</association>
-		<association property="ndviRobotData" javaType="NdviRobotDataDTO" autoMapping="true">
-			<id column="ROBOT_NO" property="robotNo"/>
-			<id column="TM" property="tm"/>
-		</association>
 	</resultMap>
+
+
+	<!-- 
+	<resultMap id="holeInfoMap" type="holeInfoDTO" autoMapping="true">
+	  <id property="holeNo" column="HOLE_NO"/>
+	  <result property="courseType" column="COURSE_TYPE"/>
+	  <result property="holeName" column="HOLE_NAME"/>
+	  <result property="lat" column="LAT"/>
+	  <result property="lon" column="LON"/>
+	  <collection property="items" ofType="Item">
+	    <id property="id" column="item_id"/>
+	    <result property="name" column="item_name"/>
+	    <result property="quantity" column="item_quantity"/>
+	    <collection property="details" ofType="Detail">
+	      <id property="id" column="detail_id"/>
+	      <result property="description" column="detail_description"/>
+	    </collection>
+	  </collection>
+	</resultMap>
+	-->
+
+
 	
 	<select id="holeSensorList" resultMap="holeInfoMap">
 		SELECT * FROM HOLE_INFO
@@ -63,27 +91,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY TM DESC
 	</select>
 	
-	<select id="ndviData" parameterType="map" resultMap="holeInfoMap2">
+	
+	<select id="ndviData" parameterType="map" resultMap="holeInfoMap3">
 		SELECT * FROM SENSOR_INFO S
 		JOIN NDVI_DATA N ON S.SENSOR_NO = N.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
 		ORDER BY TM DESC
 	</select>
-	
-	<select id="soilData" parameterType="map" resultMap="holeInfoMap3">
+	 
+	 
+	<select id="soilData" parameterType="map" resultMap="holeInfoMap4">
 		SELECT * FROM ROBOT_INFO R
 		JOIN SOIL_DATA S ON R.ROBOT_NO = S.ROBOT_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
 		ORDER BY TM DESC
 	</select>
 	
-	<select id="ndviRobotData" parameterType="map" resultMap="holeInfoMap3">
-		SELECT * FROM ROBOT_INFO R
-		JOIN NDVI_ROBOT_DATA N ON R.ROBOT_NO = N.ROBOT_NO and N.COURSE_TYPE = #{category} and N.HOLE_NO = #{hole}
-		ORDER BY TM DESC
-	</select>
-	
-	
-	
-	
+
 
 
 </mapper>

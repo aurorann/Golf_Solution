@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,20 +24,23 @@ public class ReportCourseService {
 //		return sensorinfodao.test();
 //	}
 	
-	public Map<String, Object> getdata(String hole, String category) {
+	public EgovMap getdata(String hole, String category) {
+		EgovMap paramMap = new EgovMap();
+		paramMap.put("hole", hole);
+		paramMap.put("category", category);
 		
-		Map<String,Object> resultMap = new HashMap<String, Object>();
-		
-		List<HoleInfoDTO> list1 = sensorinfodao.getweatherdata(hole, category);
-		List<HoleInfoDTO> list2 = sensorinfodao.getndvidata(hole, category);
-		List<HoleInfoDTO> list3 = sensorinfodao.getsoildata(hole, category);
-		List<HoleInfoDTO> list4 = sensorinfodao.getndvirobotdata(hole, category);
-		
+		List<HoleInfoDTO> list1 = sensorinfodao.getweatherdata(paramMap);
+		List<HoleInfoDTO> list2 = sensorinfodao.getndvidata(paramMap);
+		List<HoleInfoDTO> list3 = sensorinfodao.getsoildata(paramMap);
+
+		EgovMap resultMap = new EgovMap();
 		resultMap.put("list1", list1);
 		resultMap.put("list2", list2);
 		resultMap.put("list3", list3);
-		resultMap.put("list4", list4);
-				
+		
 		return resultMap;
 	}
+	
+	
+	
 }

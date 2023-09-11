@@ -18,6 +18,10 @@ public class HoleInfoDTO {
 	public List<SensorInfoDTO> sensorInfoList;
 	public List<RobotInfoDTO> robotInfoList;
 	
+	public RobotInfoDTO robotInfo;
 	public SensorInfoDTO sensorInfo;
 	public WeatherDataDTO weatherData;
+	public NdviDataDTO ndviData;
+	public SoilDataDTO soilData;
+	
 }
