@@ -29,8 +29,8 @@
 
 	<div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
 		<ul class="nav navbar-nav">
-			<li class="nav-item"><a href="#" class="navbar-nav-link active"> COURSE2 </a></li>
-			<li class="nav-item"><a href="#" class="navbar-nav-link"> MANAGEMENT2 </a></li>
+			<li class="nav-item"><a href="/home" class="navbar-nav-link"> COURSE </a></li>
+			<li class="nav-item"><a href="/management/dashboard" class="navbar-nav-link"> MANAGEMENT </a></li>
 		</ul>
 
 	</div>
@@ -54,3 +54,15 @@
 	</ul>
 </div>
 <!-- /main navbar -->
+
+<script>
+$(document).ready(function() {
+    var path = window.location.pathname; // 현재 페이지의 경로
+    $('.nav-item a').each(function() {
+        var href = $(this).attr('href');
+        if (path === href) { // 현재 페이지의 경로와 메뉴 아이템의 href가 일치하면
+            $(this).addClass('active'); // 해당 메뉴 아이템에 'active' 클래스 추가
+        }
+    });
+});
+</script>

@@ -16,7 +16,7 @@ public class WeatherDataDTO {
 	private double wd;
 	private double ws;
 	private double light;
-	private double co2;
-	private double pm10;
-	private double pm25;
+	private double rain;
+	private double solar;
+	
 }
