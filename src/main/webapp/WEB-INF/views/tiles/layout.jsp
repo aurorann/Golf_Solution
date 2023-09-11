@@ -42,6 +42,12 @@
 	<script src="/resources/assets/js/echarts.min.js"></script>
 	<script src="/resources/assets/js/lines_multiple.js"></script>
 	<!-- /theme JS files -->
+	
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tcdt00u6f1"></script>
+	
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<link href="https://code.highcharts.com/css/highcharts.css" rel="stylesheet"/>
 </head>
 
 <body>
