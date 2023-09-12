@@ -5,25 +5,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="reportCourseMapper">
 
-	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
-		<id property="holeNo" column="HOLE_NO"/>
-		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
-			<id column="SENSOR_NO" property="sensorNo"/>
-			<id column="HOLE_NO" property="holeNo"/>
-			<collection property="weatherDataList" column="HOLE_NO" ofType="WeatherDataDTO" javaType="List" autoMapping="true">
-				<id column="SENSOR_NO" property="sensorNo"/>
-				<id column="TM" property="tm"/>
-			</collection>
-		</collection>
-		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
-			<id column="ROBOT_NO" property="robotNo"/>
-			<id column="HOLE_NO_NOW" property="holeNoNow"/>
-		</collection>
-
-	</resultMap>
-	
-	
-	
 	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
 		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
 			<id column="SENSOR_NO" property="sensorNo"/>

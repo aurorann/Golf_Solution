@@ -20,8 +20,9 @@ public class CourseController {
 	@Autowired
 	private DashboardService dashboardService;
 
-	@RequestMapping("/course")
+	@RequestMapping("/course1")
 	private String courseManagement() {
+		
 		return "/management/course/management_course1";
 	}
 

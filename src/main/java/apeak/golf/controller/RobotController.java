@@ -20,9 +20,9 @@ public class RobotController {
 	@Autowired
 	private DashboardService dashboardService;
 
-	@RequestMapping("/robot")
+	@RequestMapping("/robot1")
 	private String courseManagement() {
-		return "/management/robot/management_robot";
+		return "/management/robot/management_robot1";
 	}
 
 }

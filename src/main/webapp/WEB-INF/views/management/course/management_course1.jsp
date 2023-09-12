@@ -10,38 +10,38 @@
 	<!-- Page header -->
 	<div class="page-header page-header-light">
 		<div class="page-header-content d-sm-flex">
-	
+
 			<div class="page-title" style="width:100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">코스관리 작업 일정표 - 달력</h6>
 				<div class="btn-group float-right mr-2">
 					<button type="button" class="btn btn-light active" onclick="location.href='management_course1.html'">달력</button>
 					<button type="button" class="btn btn-light" onclick="location.href='management_course2.html'">리스트</button>
 				</div>
-	
+
 				
 			</div>
-	
+
 		</div>
 	</div>
 	<!-- /page header -->
-	
-	
+
+
 	<!-- Content area -->
 	<div class="content">
 		<!-- Basic card -->
-	             <!-- Basic view -->
+              <!-- Basic view -->
 			<div class="card">						
 				<div class="card-body">
 					<div class="fullcalendar-event-colors"></div>
 				</div>
 			</div>
 			<!-- /basic view -->
-	
+
 		<!-- /basic card -->
-	
+
 	</div>
 	<!-- /content area -->
-	
+
 	<!-- Scrollable modal -->
 	<div class="" style="position:fixed; bottom:30px; right:30px; z-index:1;">
 		<button type="button" class="btn btn-round" data-toggle="modal" data-target="#modal_scrollable">작업 등록<i class="fas fa-plus mt-2"></i></button>
@@ -54,7 +54,7 @@
 					<h5 class="modal-title">작업일정 추가</h5>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-	
+
 				<div class="modal-body py-0">
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 날짜</label>
@@ -69,7 +69,7 @@
 						</div>
 						
 					</div>
-	
+
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">코스 위치</label>
 						<div class="col-lg-10 course-location-badge">
@@ -93,7 +93,7 @@
 							<a href="#"><span class="badge badge-info">Hole 18</span></a>
 						</div>
 					</div>
-	
+
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">코스 종류</label>
 						<div class="col-lg-10 course-category-badge">
@@ -101,7 +101,7 @@
 							<a href="#"><span class="badge badge-success">Fairway</span></a>						
 						</div>
 					</div>
-	
+
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 분류</label>
 						<div class="col-lg-10 work-class-badge">
@@ -110,7 +110,7 @@
 							<a href="#"><span class="badge badge-warning">기타</span></a>							
 						</div>
 					</div>
-	
+
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 종류</label>
 						<div class="col-lg-10 work-category-badge">
@@ -118,9 +118,9 @@
 							<a href="#"><span class="badge badge-secondary">시약</span></a>				 											
 						</div>
 					</div>
-	
-	
-	
+
+
+
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">브랜드 명</label>
 						<div class="col-lg-10">
@@ -149,7 +149,7 @@
 						</div>
 					</div>
 				</div>
-	
+
 				<div class="modal-footer pt-3">
 					<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
 					<button type="button" class="btn btn-primary">작업 등록</button>

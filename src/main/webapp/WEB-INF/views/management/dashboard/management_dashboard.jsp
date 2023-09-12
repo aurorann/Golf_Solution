@@ -22,7 +22,6 @@
 	</div>
 	<!-- /page header -->
 
-
 	<!-- Content area -->
 	<div class="content">
 		<!-- Basic card -->
@@ -32,8 +31,8 @@
 				
 				<h6 class="mr-2 font-weight-semibold float-left mt-1">구분</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="btn btn-light active">Fairway</button>
-					<button type="button" class="btn btn-light">Green</button>
+					<button type="button" class="categorybt btn btn-light active" value="FAIRWAY">Fairway</button>
+					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
 				</div>
 				<div class="btn-group float-right mr-2">
 					<button type="button" class="btn btn-light">관리순위</button>
@@ -1105,7 +1104,6 @@
 									<th>코스명</th>
 									<th>코스 구분</th>
 									<th>권장 작업</th>
-									<th>작업 여부</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -1114,70 +1112,60 @@
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>미작업</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>미작업</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-									<td>완료</td>
 								</tr>
 								
 							</tbody>
@@ -1208,3 +1196,42 @@
 
 </div>
 <!-- /main content -->
+
+<script>
+
+$(document).ready(function() {
+    // 페이지가 로드될 때 getData 함수 호출
+   var category = $(".categorybt.active").val();
+    
+});
+
+
+$(".categorybt").click(function() {
+    var category = $(this).val();
+    $(".categorybt").removeClass("active");
+    $(this).addClass("active");
+    getAllData(category);
+    console.log(category);
+});
+
+
+function getAllData(category){
+    $.ajax({
+        url: '/management/dashboardAjax',
+        type: 'GET',
+        data: {category: category},
+        dataType: "json",
+        success: function(data) {
+            console.log(data);
+        },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+}//getData end
+
+
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dashboardMapper">
+
+
+	<resultMap type="holeInfoDTO" id="holeInfoMap7" autoMapping="true">
+		<id property="holeNo" column="HOLE_NO"/>
+		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+		</collection>
+	</resultMap>
+
+	<select id="test" resultType="egovMap">
+		SELECT * FROM HOLE_INFO 				
+	</select>
+	
+	<select id="hole" parameterType="egovMap" resultMap="holeInfoMap7">
+		SELECT * FROM HOLE_INFO WHERE COURSE_TYPE = #{category}
+	</select>
+
+
+
+</mapper>

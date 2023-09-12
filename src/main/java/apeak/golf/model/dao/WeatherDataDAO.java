@@ -21,7 +21,7 @@ public class WeatherDataDAO {
 	
 	
 	public List<HoleInfoDTO> getweatherdata(EgovMap paramMap){
-		return session.selectList("reportCourseMapper.weatherData", paramMap);
+		return session.selectList("dashboardMapper.weatherData", paramMap);
 	}//getweatherdata() end
 	
 	
