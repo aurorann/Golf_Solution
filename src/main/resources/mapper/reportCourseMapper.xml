@@ -5,12 +5,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="reportCourseMapper">
 
+    <resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+        <id property="holeNo" column="HOLE_NO"/>
+		<result property="holeName" column="HOLE_NAME"/>
+        <collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+            <id column="SENSOR_NO" property="sensor_No"/>
+            <id column="HOLE_NO" property="hole_No"/>
+            <collection property="weatherDataList" column="HOLE_NO" ofType="WeatherDataDTO" javaType="List" autoMapping="true">
+                <id column="SENSOR_NO" property="sensor_No"/>
+                <id column="TM" property="tm"/>
+            </collection>
+        </collection>
+        <collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+            <id column="ROBOT_NO" property="robot_No"/>
+            <id column="HOLE_NO_NOW" property="hole_No_Now"/>
+        </collection>
+
+    </resultMap>
+
+
+
 	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
 		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="SENSOR_NO" property="sensor_No"/>
 		</association>
 		<association property="weatherData" javaType="WeatherDataDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="SENSOR_NO" property="sensor_No"/>
 			<id column="TM" property="tm"/>
 		</association>
 	</resultMap>
@@ -18,10 +38,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="holeInfoDTO" id="holeInfoMap3" autoMapping="true">
 		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="SENSOR_NO" property="sensor_No"/>
 		</association>
 		<association property="ndviData" javaType="NdviDataDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="SENSOR_NO" property="sensor_No"/>
 			<id column="TM" property="tm"/>
 			<result column="NDVI" property="ndvi"/>
 		</association>
@@ -30,10 +50,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	<resultMap type="holeInfoDTO" id="holeInfoMap4" autoMapping="true">
 		<association property="robotInfo" javaType="RobotInfoDTO" autoMapping="true">
-			<id column="ROBOT_NO" property="robotNo"/>
+			<id column="ROBOT_NO" property="robot_No"/>
 		</association>
 		<association property="soilData" javaType="SoilDataDTO" autoMapping="true">
-			<id column="ROBOT_NO" property="robotNo"/>
+			<id column="ROBOT_NO" property="robot_No"/>
 			<id column="TM" property="tm"/>
 		</association>
 	</resultMap>

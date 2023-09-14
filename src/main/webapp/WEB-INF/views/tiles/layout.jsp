@@ -43,6 +43,12 @@
 	<script src="/resources/assets/js/lines_multiple.js"></script>
 	<!-- /theme JS files -->
 	
+	<!-- twentytwenty -->
+	<script src="/resources/assets/js/jquery.event.move.js"></script>
+	<script src="/resources/assets/js/jquery.twentytwenty.js"></script>
+	<link href="/resources/assets/css/twentytwenty.css" rel="stylesheet" type="text/css">
+	<!-- twentytwenty end -->
+	
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tcdt00u6f1"></script>
 	
 	<script src="https://code.highcharts.com/highcharts.js"></script>
@@ -67,87 +73,16 @@
 		<tiles:insertAttribute name="contents"/>
 		<!-- /main content -->
 
-		<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg">
-
-			<!-- Expand button -->
-			<button type="button" class="btn btn-sidebar-expand sidebar-control sidebar-right-toggle">
-				<i class="mt-3 pt-1 fas fa-align-justify"></i>
-			</button>
-			<!-- /expand button -->
-
-
-			<!-- Sidebar content -->
-			<div class="sidebar-content">
-
-				<!-- Header -->
-				<div class="sidebar-section sidebar-section-body d-flex align-items-center">
-					<h5 class="mb-0 font-weight-bold">검색</h5>
-					<div class="ml-auto">
-						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
-							<i class="icon-transmission"></i>
-						</button>
-
-						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
-							<i class="icon-cross2"></i>
-						</button>
-					</div>
-				</div>
-				<!-- /header -->
-
-
-				<!-- Sidebar search -->
-				<div class="sidebar-section">
-					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
-						<li class="nav-item-header">설정</li>
-						<li class="nav-item text-center pl-2 pr-2">
-							<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
-								<label class="btn btn-light active">
-									<input type="radio" name="options" id="option1" autocomplete="off" checked="">
-									전체
-								</label>
-
-								<label class="btn btn-light">
-									<input type="radio" name="options" id="option2" autocomplete="off">
-									개별
-								</label>
-							</div>
-						</li>
-					</ul>
-
-
-					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
-						<li class="nav-item-header">기간</li>
-						<li class="nav-item pl-3 pr-3">
-							<!--달력 플러그인-->
-							<div class="input-group">
-								<span class="input-group-prepend">
-									<span class="input-group-text"><i class="icon-calendar22"></i></span>
-								</span>
-								<input type="text" class="form-control daterange-basic" value=""> 
-								
-							</div>
-						</li>
-						
-					</ul>
-
-					<ul class="nav nav-sidebar my-2" >
-						<li class="nav-item pl-3 pr-3">
-							<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
-						</li>
-					</ul>
-
-					
-				</div>
-				<!-- /sidebar search -->
-
-			</div>
-			<!-- /sidebar content -->
-
-		</div>
-
 	</div>
 	<!-- /page content -->
 
-
+	<script>
+	$(function(){
+		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
+		$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
+	});
+	</script>
+    
+    
 </body>
 </html>

@@ -8,11 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RobotAiPredictDTO {
-	private int predictNo;
-	private int holeNo;
- 	private String courseType;
- 	private String tmFc;
- 	private String tmEf;
- 	private String tmEd;
- 	private String predictContent;
+	private int predict_No;
+	private int hole_No;
+ 	private String course_Type;
+ 	private String tm_Fc;
+ 	private String tm_Ef;
+ 	private String tm_Ed;
+ 	private String predict_Content;
 }

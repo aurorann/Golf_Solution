@@ -8,11 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class WorkNotificationDTO {
-	private int notiNo;
+	private int noti_No;
 	private String tm;
-	private int holeNo;
-	private String courseType;
-	private String notiTitle;
-	private String recommendWork;
-	private String notiState;
+	private int hole_No;
+	private String course_Type;
+	private String noti_Title;
+	private String recommend_Work;
+	private String noti_State;
 }

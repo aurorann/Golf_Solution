@@ -20,8 +20,8 @@ public class SoilDataDAO {
 	private SqlSession session;
 	
 
-	public List<HoleInfoDTO> getsoildata(EgovMap paramMap){
-		return session.selectList("reportCourseMapper.soilData", paramMap);
+	public List<HoleInfoDTO> getSoilData(EgovMap paramMap){
+		return session.selectList("dashboardMapper.soilData", paramMap);
 	}//getsoildata() end
 	
 }

@@ -9,14 +9,14 @@ import java.util.List;
 @Setter
 @ToString
 public class SensorInfoDTO {
-	private String sensorNo;
-	private String sensorName;
-	private String SensorType;
-	private int holeNo;
-	private String courseType;
+	private int sensor_No;
+	private String sensor_Name;
+	private String Sensor_Type;
+	private int hole_No;
+	private String course_Type;
 	private double lat;
 	private double lon;
-	private String lastUpdated;
+	private String last_Updated;
 	
 	public List<WeatherDataDTO> weatherDataList;
 	public List<NdviDataDTO> ndviDataList;

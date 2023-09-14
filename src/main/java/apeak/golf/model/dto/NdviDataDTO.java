@@ -9,8 +9,8 @@ import java.util.List;
 @Setter
 @ToString
 public class NdviDataDTO {
-	private String sensorNo;
+	private int sensor_No;
 	private String tm;
-	private String imgPath;
+	private String img_Path;
 	private double ndvi;
 }

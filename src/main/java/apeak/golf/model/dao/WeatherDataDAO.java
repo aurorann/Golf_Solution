@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import apeak.golf.model.dto.HoleInfoDTO;
 import apeak.golf.model.dto.SensorInfoDTO;
-import apeak.golf.model.dto.RobotInfoDTO;
+import apeak.golf.model.dto.WeatherDataDTO;
 
 @Repository
 public class WeatherDataDAO {
@@ -20,9 +20,15 @@ public class WeatherDataDAO {
 	private SqlSession session;
 	
 	
-	public List<HoleInfoDTO> getweatherdata(EgovMap paramMap){
-		return session.selectList("dashboardMapper.weatherData", paramMap);
-	}//getweatherdata() end
-	
+	public List<HoleInfoDTO> getWeatherData(EgovMap paramMap){
+		System.out.println("오류지점 찾기3");
+		try {
+			session.selectList("dashboardMapper.weather", paramMap);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return session.selectList("dashboardMapper.weather", paramMap);
+	}
 	
 }

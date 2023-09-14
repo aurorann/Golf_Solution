@@ -10,9 +10,9 @@ import java.util.List;
 @ToString
 public class SoilDataDTO {
 	private String tm;
-	private int robotNo;
-	private int holeNo;
-	private String courseType;
+	private int robot_No;
+	private int hole_No;
+	private String course_Type;
 	private double lat;
 	private double lon;
 	private double smo;

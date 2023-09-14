@@ -27,25 +27,26 @@
 					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
 				</div>
 
-				<div class="float-right mr-2">
-					<div class="input-group">
-						<span class="input-group-prepend"> <span class="input-group-text"><i class="icon-calendar22"></i></span>
-						</span> <input type="text" class="form-control daterange-basic" value="">
-						<button type="button" class="ml-2 btn btn-primary">검색</button>
-						<div class="btn-group ml-4">
-							<button type="button" class="btn btn-light">
-								<i class="icon-arrow-left12"></i>
-							</button>
-							<button type="button" class="btn btn-light">
-								<i class="icon-arrow-right13"></i>
-							</button>
-						</div>
-						<button type="button" class="ml-2 btn btn-teal">오늘</button>
-
-					</div>
-
-
+				<div class="float-right">
+					<button type="button" class="btn sidebar-control sidebar-right-toggle">
+						<i class="fas fa-align-justify"></i>
+					</button>
 				</div>
+
+                 <div class="float-right mr-2">
+                     <div class="input-group">
+                         <span class="input-group-prepend">
+                             <span class="input-group-text"><i class="icon-calendar22"></i></span>
+                         </span>
+                         <input type="text" class="form-control daterange-basic" value=""> 
+                         <button type="button" class="ml-2 btn btn-primary">검색</button>
+                         <div class="btn-group ml-4">
+                             <button type="button" class="btn btn-light"><i class="icon-arrow-left12"></i></button>
+                             <button type="button" class="btn btn-light"><i class="icon-arrow-right13"></i></button>
+                         </div>
+                         <button type="button" class="ml-2 btn btn-teal">오늘</button>
+                     </div>
+                 </div>
 
 			</div>
 		</div>
@@ -484,6 +485,158 @@
 
 </div>
 <!-- /main content -->
+
+
+<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg sidebar-collapsed">
+
+
+	<!-- Sidebar content -->
+	<div class="sidebar-content">
+
+		<!-- Header -->
+		<div class="sidebar-section sidebar-section-body d-flex align-items-center">
+			<h5 class="mb-0 font-weight-bold">데이터 검색</h5>
+			<div class="ml-auto">
+				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
+					<i class="icon-transmission"></i>
+				</button>
+
+				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
+					<i class="icon-cross2"></i>
+				</button>
+			</div>
+		</div>
+		<!-- /header -->
+
+
+		<!-- Sidebar search -->
+		<div class="sidebar-section">
+			<ul class="nav nav-sidebar" data-nav-type="accordion">
+				<li class="nav-item-header">코스</li>
+				<li class="nav-item text-center pl-2 pr-2">
+					<div class="form-group row">
+                              <div class="col-lg-12">
+                                  <select class="custom-select">
+                                      <option value="opt1">전체코스</option>
+                                      <option value="opt2">Hole 1</option>
+                                      <option value="opt3">Hole 2</option>
+                                      <option value="opt4">Hole 3</option>
+                                      <option value="opt5">Hole 4</option>
+                                      <option value="opt6">Hole 5</option>
+                                      <option value="opt7">Hole 6</option>
+                                      <option value="opt8">Hole 7</option>
+                                  </select>
+                              </div>
+                          </div>
+				</li>
+			</ul>
+
+
+			<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+				<li class="nav-item-header">기간</li>
+				<li class="nav-item pl-3 pr-3">
+					<!--달력 플러그인-->
+					<div class="input-group">
+						<span class="input-group-prepend">
+							<span class="input-group-text"><i class="icon-calendar22"></i></span>
+						</span>
+						<input type="text" class="form-control daterange-basic" value=""> 
+						
+					</div>
+				</li>
+				
+			</ul>
+
+			<ul class="nav nav-sidebar my-2" >
+				<li class="nav-item pl-3 pr-3">
+					<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
+				</li>
+			</ul>
+
+                  <div class="table-responsive table-scrollable pl-2 pr-2">
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th class="table-info">날짜</th>
+                                  <th class="table-info">센서명</th>
+                                  <th class="table-info">온도</th>
+                                  <th class="table-info">습도</th>
+                                  <th class="table-info">토양온도</th>
+                                  <th class="table-info">토양습도</th>
+                                  <th class="table-info">이산화탄소</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td>2023-06-26 18:02:18</td>
+                                  <td>CLUBD-001</td>
+                                  <td>23</td>
+                                  <td>88.3</td>
+                                  <td>24</td>
+                                  <td>20.4</td>
+                                  <td>109.8</td>
+                              </tr>
+                              <tr>
+                                  <td>2023-06-26 18:02:18</td>
+                                  <td>CLUBD-001</td>
+                                  <td>23</td>
+                                  <td>88.3</td>
+                                  <td>24</td>
+                                  <td>20.4</td>
+                                  <td>109.8</td>
+                              </tr>
+                              <tr>
+                                  <td>2023-06-26 18:02:18</td>
+                                  <td>CLUBD-001</td>
+                                  <td>23</td>
+                                  <td>88.3</td>
+                                  <td>24</td>
+                                  <td>20.4</td>
+                                  <td>109.8</td>
+                              </tr>
+                              <tr>
+                                  <td>2023-06-26 18:02:18</td>
+                                  <td>CLUBD-001</td>
+                                  <td>23</td>
+                                  <td>88.3</td>
+                                  <td>24</td>
+                                  <td>20.4</td>
+                                  <td>109.8</td>
+                              </tr>
+                              <tr>
+                                  <td>2023-06-26 18:02:18</td>
+                                  <td>CLUBD-001</td>
+                                  <td>23</td>
+                                  <td>88.3</td>
+                                  <td>24</td>
+                                  <td>20.4</td>
+                                  <td>109.8</td>
+                              </tr>
+                              <tr>
+                                  <td>2023-06-26 18:02:18</td>
+                                  <td>CLUBD-001</td>
+                                  <td>23</td>
+                                  <td>88.3</td>
+                                  <td>24</td>
+                                  <td>20.4</td>
+                                  <td>109.8</td>
+                              </tr>
+                              
+
+                          </tbody>
+                      </table>
+                  </div>
+
+                  <button type="button" class="mt-2 ml-2 btn btn-secondary">파일 저장</button>
+
+			
+		</div>
+		<!-- /sidebar search -->
+
+	</div>
+	<!-- /sidebar content -->
+
+</div>
 
 
 <script>

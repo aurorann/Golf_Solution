@@ -5,5 +5,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="eachCourseMapper">
 
+	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+		<id property="hole_No" column="HOLE_NO"/>
+		<result property="course_Type" column="COURSE_TYPE"/>
+		<result property="hole_Name" column="HOLE_NAME"/>
+		<result property="lat" column="LAT"/>
+		<result property="lon" column="LON"/>
+		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensor_No"/>
+			<result property="sensor_Name" column="SENSOR_NAME"/>
+			<result property="Sensor_Type" column="SENSOR_TYPE"/>
+			<result property="hole_No" column="HOLE_NO"/>
+			<result property="course_Type" column="COURSE_TYPE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="last_Updated" column="LAST_UPDATED"/>
+<!-- 			<result property="" column=""/> -->
+			<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
+				<id column="SENSOR_NO" property="sensor_No"/>
+				<id column="TM" property="tm"/>
+				<result property="temp" column="TEMP"/>
+				<result property="humi" column="HUMI"/>
+				<result property="wd" column="WD"/>
+				<result property="ws" column="WS"/>
+				<result property="light" column="LIGHT"/>
+				<result property="rain" column="RAIN"/>
+				<result property="solar" column="SOLAR"/>
+			</collection>
+			<collection property="ndviDataList" column="SENSOR_NO" ofType="ndviDataDTO" javaType="List" autoMapping="true">
+				<result property="img_Path" column="IMG_PATH"/>
+				<result property="ndvi" column="NDVI"/>
+			</collection>
+		</collection>
+		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+			<id column="ROBOT_NO" property="robot_No"/>
+			<result property="hole_No_Now" column="HOLE_NO_NOW"/>
+			<result property="course_Type_Now" column="COURSE_TYPE_NOW"/>
+			<result property="robot_Name" column="ROBOT_NAME"/>
+			<result property="robot_Type" column="ROBOT_TYPE"/>
+			<result property="robot_State" column="ROBOT_STATE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
+				<result property="lat" column="LAT"/>
+				<result property="lon" column="LON"/>
+				<result property="smo" column="SMO"/>
+				<result property="stp" column="STP"/>
+				<result property="sec" column="SEC"/>
+			</collection>
+		</collection>
+	</resultMap>
+
+	<select id="ndviData" parameterType="egovMap" resultMap="holeInfoMap">
+		SELECT * FROM SENSOR_INFO S
+		JOIN NDVI_DATA N
+		ON S.SENSOR_NO = N.SENSOR_NO 
+		WHERE S.COURSE_TYPE = #{category} AND (S.HOLE_NO, N.TM) IN (
+		    SELECT HOLE_NO, MAX(TM)
+		    FROM SENSOR_INFO
+		    JOIN NDVI_DATA ON SENSOR_INFO.SENSOR_NO = NDVI_DATA.SENSOR_NO AND SENSOR_INFO.COURSE_TYPE = #{category}
+		    GROUP BY HOLE_NO
+		)
+		ORDER BY S.HOLE_NO;
+	</select>
 
 </mapper>

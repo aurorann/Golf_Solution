@@ -26,7 +26,8 @@
 	<!-- /core JS files -->
 		
 	<!-- Theme JS files -->
-	<script src="/resources/assets/js/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ko.min.js"></script>
 	<script src="/resources/assets/js/daterangepicker.js"></script>
 	<script src="/resources/assets/js/picker.js"></script>
 	<script src="/resources/assets/js/picker.date.js"></script>
@@ -42,12 +43,22 @@
 	<script src="/resources/assets/js/lines_multiple.js"></script>
 	<!-- /theme JS files -->
 	
+	<!-- twentytwenty -->
+	<script src="/resources/assets/js/jquery.event.move.js"></script>
+	<script src="/resources/assets/js/jquery.twentytwenty.js"></script>
+	<link href="/resources/assets/css/twentytwenty.css" rel="stylesheet" type="text/css">
+	<!-- twentytwenty end -->	
 	
     <!--fullcarendar js-->
     <script src="/resources/assets/js/fullcalendar/main.min.js"></script>
     <script src="/resources/assets/js/fullcalendar/fullcalendar_styling.js"></script>
     
-    <link href="/resources/assets/css/twentytwenty.css" rel="stylesheet" type="text/css">
+	
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tcdt00u6f1"></script>
+	
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<link href="https://code.highcharts.com/css/highcharts.css" rel="stylesheet"/>
     
 </head>
 
@@ -70,6 +81,13 @@
 
 	</div>
 	<!-- /page content -->
+	
+	<script>
+	$(function(){
+		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
+		$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
+	});
+	</script>
 
 </body>
 </html>

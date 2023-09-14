@@ -20,8 +20,12 @@ public class NdviDataDAO {
 	private SqlSession session;
 
 
-	public List<HoleInfoDTO> getndvidata(EgovMap paramMap){
-		return session.selectList("reportCourseMapper.ndviData", paramMap);
+	public List<HoleInfoDTO> getNdviData(EgovMap paramMap){
+		return session.selectList("dashboardMapper.ndviData", paramMap);
 	}//getndvidata() end
+	
+//	public List<EgovMap> getNdviData(){
+//		return session.selectList("eachCourseMapper.ndviData");
+//	}//getndvidata() end
 	
 }

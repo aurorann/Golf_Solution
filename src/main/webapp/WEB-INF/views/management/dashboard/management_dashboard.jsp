@@ -41,1051 +41,8 @@
 				</div>
 				<h6 class="mr-2 font-weight-semibold float-right ml-2 mt-1">정렬</h6>
 
-				<div class="row mt-3">
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 1
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
+				<div class="row mt-3 data">
 
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 2
-								<span class="float-right badge badge-danger badge-pill">점검 요망</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-danger badge-pill">위험</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 3
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 4
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 5
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 6
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 7
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 8
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 9
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 10
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 11
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-lg-3">
-						<div class="card">
-							<div class="card-header mb-2">
-								<h6 class="card-title font-weight-bold">Hole 12
-								<span class="float-right badge badge-success badge-pill">양호</span>
-								</h6>
-							</div>
-							
-							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-4">
-										<div class="card bg-success-100 border-success">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-primary-100 border-primary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-danger-100 border-danger">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-warning-100 border-warning">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-warning">기온</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-secondary-100 border-secondary">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-4">
-										<div class="card bg-purple-100 border-purple">
-											<div class="card-header">
-												<h6 class="card-title font-weight-semibold text-purple">PH</h6>
-											</div>
-											<div class="card-body pl-2 pr-2 pb-2">
-												<span class="font-weight-bold">0.7615</span>
-												<span class="float-right badge badge-success badge-pill">양호</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-					
 				</div>
 				
 		
@@ -1200,20 +157,22 @@
 <script>
 
 $(document).ready(function() {
-    // 페이지가 로드될 때 getData 함수 호출
+    // 페이지가 로드될 때 getAllData 함수 호출
    var category = $(".categorybt.active").val();
+   getAllData(category);
     
 });
 
 
 $(".categorybt").click(function() {
-    var category = $(this).val();
-    $(".categorybt").removeClass("active");
-    $(this).addClass("active");
-    getAllData(category);
-    console.log(category);
+	datatemplate = "";
+	$('.row.mt-3.data').empty();
+	var category = $(this).val();
+	$(".categorybt").removeClass("active");
+	$(this).addClass("active");
+	getAllData(category);
+    //console.log(category);
 });
-
 
 function getAllData(category){
     $.ajax({
@@ -1223,6 +182,9 @@ function getAllData(category){
         dataType: "json",
         success: function(data) {
             console.log(data);
+            //console.log(data.list1.length);
+            //console.log(data.list1[0].holeName);
+            updatedata(data);
         },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
@@ -1233,5 +195,107 @@ function getAllData(category){
     });//ajax end
 }//getData end
 
+let datatemplate = "";
+
+
+function updatedata(data){
+	for(var i=0; i<data.list1.length; i++){
+		//console.log(data.list1[i].holeName);
+		//console.log(data.list1[i].courseType);
+		datatemplate += `
+						<div class="col-lg-3">
+							<div class="card">
+								<div class="card-header mb-2">
+									<h6 class="card-title font-weight-bold">\${data.list1[i].hole_Name}
+									<span class="float-right badge badge-success badge-pill">양호</span>
+									</h6>
+								</div>
+								
+								<div class="card-body">
+									<div class="row">
+										
+										<div class="col-lg-4">
+											<div class="card bg-success-100 border-success">
+												<div class="card-header">
+													<h6 class="card-title font-weight-semibold text-success">NDVI</h6>
+												</div>
+												<div class="card-body pl-2 pr-2 pb-2">
+													<span class="font-weight-bold">\${parseFloat(data.list4[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2)}</span>
+													<span class="float-right badge badge-success badge-pill">양호</span>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-lg-4">
+											<div class="card bg-primary-100 border-primary">
+												<div class="card-header">
+													<h6 class="card-title font-weight-semibold text-primary">토양수분</h6>
+												</div>
+												<div class="card-body pl-2 pr-2 pb-2">
+													<span class="font-weight-bold">\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2)}</span>
+													<span class="float-right badge badge-success badge-pill">양호</span>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-lg-4">
+											<div class="card bg-danger-100 border-danger">
+												<div class="card-header">
+													<h6 class="card-title font-weight-semibold text-danger">토양온도</h6>
+												</div>
+												<div class="card-body pl-2 pr-2 pb-2">
+													<span class="font-weight-bold">\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2)}</span>
+													<span class="float-right badge badge-success badge-pill">양호</span>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-lg-4">
+											<div class="card bg-warning-100 border-warning">
+												<div class="card-header">
+													<h6 class="card-title font-weight-semibold text-warning">기온</h6>
+												</div>
+												<div class="card-body pl-2 pr-2 pb-2">
+													<span class="font-weight-bold">\${data.list2[i].sensorInfoList[0].weatherDataList[0].temp}</span>
+													<span class="float-right badge badge-success badge-pill">양호</span>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-lg-4">
+											<div class="card bg-secondary-100 border-secondary">
+												<div class="card-header">
+													<h6 class="card-title font-weight-semibold text-secondary">풍속</h6>
+												</div>
+												<div class="card-body pl-2 pr-2 pb-2">
+													<span class="font-weight-bold">\${data.list2[i].sensorInfoList[0].weatherDataList[0].ws}</span>
+													<span class="float-right badge badge-success badge-pill">양호</span>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-lg-4">
+											<div class="card bg-purple-100 border-purple">
+												<div class="card-header">
+													<h6 class="card-title font-weight-semibold text-purple">일사</h6>
+												</div>
+												<div class="card-body pl-2 pr-2 pb-2">
+													<span class="font-weight-bold">\${data.list2[i].sensorInfoList[0].weatherDataList[0].solar}</span>
+													<span class="float-right badge badge-success badge-pill">양호</span>
+												</div>
+											</div>
+										</div>							
+
+	
+									</div>
+								</div>
+							</div>
+						</div>`;
+	    }
+	// HTML 요소 선택 및 결과 삽입
+	let dataElement = document.querySelector('.row.mt-3.data');
+	dataElement.innerHTML = datatemplate;
+
+}//updatedata() end
 
 </script>

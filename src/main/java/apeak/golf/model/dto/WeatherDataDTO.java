@@ -10,7 +10,7 @@ import java.util.List;
 @ToString
 public class WeatherDataDTO {
 	private String tm;
-	private String sensorNo;
+	private String sensor_No;
 	private double temp;
 	private double humi;
 	private double wd;

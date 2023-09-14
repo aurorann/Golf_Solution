@@ -9,9 +9,9 @@ import java.util.List;
 @Setter
 @ToString
 public class HoleInfoDTO {
-	private int holeNo;
-	private String courseType;
-	private String holeName;
+	private int hole_No;
+	private String course_Type;
+	private String hole_Name;
 	private double lat;
 	private double lon;
 	

@@ -18,14 +18,14 @@ public class HoleInfoDAO {
 	private SqlSession sess;
 	
 	public List<HoleInfoDTO> getHoleInfo(EgovMap paramMap){
-		System.out.println("오류지점 찾기3");
+		//System.out.println("오류지점 찾기3");
 		try {
-		sess.selectList("userMapper.collectTest", paramMap);
+		sess.selectList("dashboardMapper.hole", paramMap);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return sess.selectList("dashboardMapper.hole", paramMap);
 	}
 	
 	public List<EgovMap> holeinfo(){

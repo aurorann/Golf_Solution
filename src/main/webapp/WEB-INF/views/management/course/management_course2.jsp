@@ -512,8 +512,6 @@
 </div>
 
 <!-- twentytwenty -->
-<script src="/resources/assets/js/jquery.event.move.js"></script>
-<script src="/resources/assets/js/jquery.twentytwenty.js"></script>
 <script>
 	$(function(){
 		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
