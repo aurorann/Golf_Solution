@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 
 <!-- Main sidebar -->
-<div class="sidebar sidebar-light sidebar-expand-lg sidebar-main-resized">
+<div class="sidebar sidebar-light sidebar-main sidebar-expand-lg sidebar-main-resized">
 
 	<!-- Sidebar content -->
 	<div class="sidebar-content sidebar-small">
@@ -17,11 +17,11 @@
 
 				<!-- Main -->
 				<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
-				<li class="nav-item p-0"><a href="/all/course_allcourse" class="nav-link active"> <i class="fas fa-map"></i>
-						<span> 전체 코스 </span>
-				</a> <a href="/each/course_separatecourse" class="nav-link"> <i class="fas fa-golf-ball"></i> <span> 개별 코스 </span>
-				</a> <a href="/report/course_report" class="nav-link"> <i class="fas fa-chart-bar"></i> <span> 리포트 </span>
-				</a></li>
+				<li class="nav-item p-0">
+					<a href="/all/course_allcourse" class="nav-link"> <i class="fas fa-map"></i><span> 전체 코스 </span></a> 
+					<a href="/each/course_separatecourse" class="nav-link"> <i class="fas fa-golf-ball"></i> <span> 개별 코스 </span></a> 
+					<a href="/report/course_report" class="nav-link"> <i class="fas fa-chart-bar"></i> <span> 리포트 </span></a>
+				</li>
 				<!-- /main -->
 			</ul>
 		</div>

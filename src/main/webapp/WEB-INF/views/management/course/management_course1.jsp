@@ -14,8 +14,8 @@
 			<div class="page-title" style="width:100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">코스관리 작업 일정표 - 달력</h6>
 				<div class="btn-group float-right mr-2">
-					<button type="button" class="btn btn-light active" onclick="location.href='management_course1.html'">달력</button>
-					<button type="button" class="btn btn-light" onclick="location.href='management_course2.html'">리스트</button>
+					<button type="button" class="btn btn-light active" onclick="location.href='/management/course1'">달력</button>
+					<button type="button" class="btn btn-light" onclick="location.href='/management/course2'">리스트</button>
 				</div>
 
 				
@@ -63,7 +63,7 @@
 								<span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar22"></i></span>
 								</span>
-								<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+								<input type="text" class="form-control daterange-basic" value=""> 
 								
 							</div>
 						</div>

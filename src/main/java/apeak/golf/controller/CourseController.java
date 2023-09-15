@@ -25,5 +25,11 @@ public class CourseController {
 		
 		return "/management/course/management_course1";
 	}
+	
+	@RequestMapping("/course2")
+	private String courseManagementlist() {
+		
+		return "/management/course/management_course2";
+	}
 
 }
