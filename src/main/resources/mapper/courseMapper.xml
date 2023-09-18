@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="courseMapper">
+
+	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+		<id property="hole_No" column="HOLE_NO"/>
+		<result property="course_Type" column="COURSE_TYPE"/>
+		<result property="hole_Name" column="HOLE_NAME"/>
+		<result property="lat" column="LAT"/>
+		<result property="lon" column="LON"/>
+		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensor_No"/>
+			<result property="sensor_Name" column="SENSOR_NAME"/>
+			<result property="Sensor_Type" column="SENSOR_TYPE"/>
+			<result property="hole_No" column="HOLE_NO"/>
+			<result property="course_Type" column="COURSE_TYPE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="last_Updated" column="LAST_UPDATED"/>
+<!-- 			<result property="" column=""/> -->
+			<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
+				<id column="SENSOR_NO" property="sensor_No"/>
+				<id column="TM" property="tm"/>
+				<result property="temp" column="TEMP"/>
+				<result property="humi" column="HUMI"/>
+				<result property="wd" column="WD"/>
+				<result property="ws" column="WS"/>
+				<result property="light" column="LIGHT"/>
+				<result property="rain" column="RAIN"/>
+				<result property="solar" column="SOLAR"/>
+			</collection>
+			<collection property="ndviDataList" column="SENSOR_NO" ofType="ndviDataDTO" javaType="List" autoMapping="true">
+				<result property="img_Path" column="IMG_PATH"/>
+				<result property="ndvi" column="NDVI"/>
+			</collection>
+		</collection>
+		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+			<id column="ROBOT_NO" property="robot_No"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
+				<result property="lat" column="LAT"/>
+				<result property="lon" column="LON"/>
+				<result property="smo" column="SMO"/>
+				<result property="stp" column="STP"/>
+				<result property="sec" column="SEC"/>
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="workReportDTO" id="workReportInfo" autoMapping="true">
+		<id property="workNo" column="WORK_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="writeAt" column="WRITE_AT"/>
+		<result property="workStart" column="WRITE_START"/>
+		<result property="workEnd" column="WRITE_END"/>
+		<result property="workClass" column="WORK_CLASS"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="workComment" column="WORK_COMMENT"/>
+		<result property="workState" column="WORK_STATE"/>
+	</resultMap>
+	
+	<resultMap type="workReportBrandDefDTO" id="brandInfoMap">
+		<result column="BRAND_NO" property="brand_No"/>
+		<result column="BRAND_NAME" property="brand_Name"/>
+		<result column="WORK_TYPE" property="work_Type"/>
+		<result column="BRAND_IMG" property="brand_Img"/>
+	</resultMap>
+
+	<select id="holedata" resultType="egovMap">
+		SELECT HOLE_NAME FROM HOLE_INFO GROUP BY HOLE_NAME
+	</select>
+
+	<select id="branddata" parameterType="map" resultMap="brandInfoMap">
+		SELECT * FROM WORK_REPORT_BRAND_DEF WHERE WORK_TYPE = #{worktype}
+	</select>
+	
+	<insert id="insertwork" parameterType="map">
+		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END)
+		VALUES(now(), #{workstart},#{workend})
+	</insert>
+
+
+
+
+</mapper>

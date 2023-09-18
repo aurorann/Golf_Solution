@@ -32,4 +32,8 @@ public class HoleInfoDAO {
 		return sess.selectList("dashboardMapper.test");
 	}
 	
+	public List<EgovMap> holedata(){
+		return sess.selectList("courseMapper.holedata");
+	}
+	
 }
