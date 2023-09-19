@@ -57,11 +57,16 @@ public class CourseController {
 	@RequestMapping(value="/insertwork_ajax", method = RequestMethod.POST)
 	public void insertWorkAjax(@RequestParam Map<String, Object> param) {
 		try {
-	    String writeat = (String) param.get("writeat");
 	    String workstart = (String) param.get("workstart");
 	    String workend = (String) param.get("workend");
+	    String hole = (String) param.get("hole");
+	    String course = (String) param.get("course");
+	    String workclass = (String) param.get("workclass");
+	    String worktype = (String) param.get("worktype");
+	    String oriImgName = (String) param.get("oriImgName");
+	    String comment = (String) param.get("comment");
 	    
-	    courseService.insertWork(writeat, workstart, workend);
+	    courseService.insertWork(workstart, workend, hole, course, workclass, worktype, oriImgName, comment);
 		
 		} catch (Exception e) {
 			e.printStackTrace();

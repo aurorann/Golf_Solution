@@ -38,9 +38,9 @@ public class CourseService {
 		return workReportBrandDefDAO.branddata(worktype);
 	}
 	
-	public void insertWork(String writeat, String workstart, String workend) {
+	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String oriImgName, String comment) {
 		System.out.println("service 성공");
-		workReportDAO.insertWork(writeat, workstart, workend);
+		workReportDAO.insertWork(workstart, workend, hole, course, workclass, worktype, oriImgName, comment);
 	}//insertWork() end
 	
 	

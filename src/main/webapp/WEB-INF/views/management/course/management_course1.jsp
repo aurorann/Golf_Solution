@@ -109,6 +109,7 @@
 						<div class="col-lg-10">
 							<select class="custom-select brandname">
 								<!-- 브랜드 선택 -->
+								  <option value='' selected>브랜드 선택</option>
 							</select>
 						</div>
 					</div>
@@ -155,7 +156,11 @@
 		$(".coursetypebt").removeClass("active");			
 		$(".holebt").removeClass("active");			
 		$(".classbt").removeClass("active");			
-		$(".typebt").removeClass("active");			
+		$(".typebt").removeClass("active");
+		$('.daterange-basic').val('');
+		$('.img').val('');
+		$('.comment').val('');
+		//$('.brandname').val('default');
 	});
 	
 	//코스 위치 active 클래스 추가
@@ -222,8 +227,9 @@
 		dataElement.innerHTML = brand;
 	}//updatebrand() end
 	
+	
+	
 	$(".workreport").click(function() {
-		var writeat = new Date().toLocaleDateString(); //등록날짜
 		var dateRange = $('.daterange-basic').val(); // 작업날짜 
 		var dates = dateRange.split(' - '); // 작업날짜 - 빼기
 		var workstart = dates[0]; // 작업시작날짜
@@ -232,7 +238,7 @@
 		var course = $('.coursetypebt.active').text(); // 코스종류
 		var workclass = $('.classbt.active').text(); // 작업분류
 		var worktype = $('.typebt.active').text(); // 작업종류
-		var img = $('.img').val(); //작업 이미지
+		var oriImgName = $('.img').val(); //작업 이미지
 		var comment = $('.comment').val(); //작업 이미지
 		//alert(hole);
 		let token = $("input[name='_csrf']").val();
@@ -244,7 +250,13 @@
 	        method: 'POST',
 	        data: {
 	        	workstart: workstart,
-	        	workend: workend
+	        	workend: workend,
+	        	hole: hole,
+	        	course: course,
+	        	workclass: workclass,
+	        	worktype: worktype,
+	        	oriImgName: oriImgName,
+	        	comment: comment
 	        	},
 	        //dataType: "json",//(insert 성공하여도 자료형때문에 200에서 자료형에러를 뱉어낸다)
 			beforeSend : function(xhr) {  
@@ -252,6 +264,7 @@
 			},
 	        success: function(result) {
 	            alert("등록되었습니다")
+	            $('#modal_scrollable').modal('hide');  // 모달 창 닫기
 	        },
 		    error: function(jqXHR, textStatus, errorThrown) {
 		        alert(jqXHR.status);

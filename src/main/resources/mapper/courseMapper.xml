@@ -78,9 +78,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM WORK_REPORT_BRAND_DEF WHERE WORK_TYPE = #{worktype}
 	</select>
 	
-	<insert id="insertwork" parameterType="map">
-		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END)
-		VALUES(now(), #{workstart},#{workend})
+	<insert id="insertworkreport" parameterType="map">
+		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END, WORK_CLASS, WORK_TYPE, WORK_COMMENT)
+		VALUES(now(), #{workstart},#{workend},#{workclass},#{worktype},#{comment})
+	</insert>
+	
+	<insert id="insertworkreporttarget" parameterType="map">
+		INSERT INTO WORK_REPORT_TARGET (WORK_NO, HOLE_NO, COURSE_TYPE)
+		VALUES ((select max(work_no) from WORK_REPORT)
+				,(SELECT HOLE_NO  from HOLE_INFO WHERE HOLE_NAME = #{hole} and COURSE_TYPE = #{course})
+				,#{course})
+	</insert>
+	
+	<insert id="insertworkreportimg" parameterType="map">
+		INSERT INTO WORK_REPORT_IMAGE (WORK_NO, FILE_PATH, ORI_NAME, SAVE_NAME)
+		VALUES ((SELECT MAX(work_no) FROM WORK_REPORT),	#{filePath}, #{oriImgName}, #{saveName})
 	</insert>
 
 
