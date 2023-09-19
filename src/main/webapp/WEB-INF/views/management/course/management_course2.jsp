@@ -27,7 +27,7 @@
 	<!-- Content area -->
 	<div class="content layout-boxed">
 		<!-- Basic card -->
-              <!-- Basic view -->
+		<!-- Basic view -->
 		<div class="row">
 
 			<div class="col-lg-7 mr-2">
@@ -38,125 +38,128 @@
                               </h6>
                           </div>
                           <div class="col-lg-12 row">
-                              <div class="col-lg-12">
-                                  <div class="card more-round">
-                                      <div class="card-header bg-white">
-                                          <span class="font-weight-semibold float-left ml-1 mr-2 font-weight-bold">작업자명</span>
-                                          <div class="list-icons float-right ml-3">
-                                              <div class="dropdown position-static">
-                                                  <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
-                                                  <div class="dropdown-menu dropdown-menu-right" style="">
-                                                      <a href="#" class="dropdown-item">수정</a>
-                                                      <a href="#" class="dropdown-item">삭제</a>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <span class="float-left text-muted">2023.06.08 14:11</span>
-                                      </div>
-                                      <div class="card-body">
-                                          <h6 class="card-title font-weight-bold">코스 1, 2 시약 작업</h6>
-									<div class="row">
-										<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
-										<label class="col-form-label col-lg-10">01/01/2015 - 01/31/2015</label>
-									</div>
+                             <div class="col-lg-12">
+                                 <div class="card more-round">
+                                     <div class="card-header bg-white">
+                                         <span class="font-weight-semibold float-left ml-1 mr-2 font-weight-bold">작업자명</span>
+                                         <div class="list-icons float-right ml-3">
+                                             <div class="dropdown position-static">
+                                                 <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
+                                                 <div class="dropdown-menu dropdown-menu-right" style="">
+                                                     <a href="#" class="dropdown-item">수정</a>
+                                                     <a href="#" class="dropdown-item">삭제</a>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         <span class="float-left text-muted">2023.06.08 14:11</span>
+                                     </div>
+                                     <div class="card-body">
+                                         <h6 class="card-title font-weight-bold">코스 1, 2 시약 작업</h6>
+								<div class="row">
+									<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
+									<label class="col-form-label col-lg-10">01/01/2015 - 01/31/2015</label>
+								</div>
 
-									<div class="row">
-										<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
-										<div class="col-form-label col-lg-10">
-											<span class="badge badge-info">Hole 1</span> <!--코스 위치 라벨-->
-											<span class="badge badge-success">Green</span> <!--코스 유형 라벨-->
-											<span class="badge badge-warning">갱신</span> <!--작업 분류 라벨-->
-											<span class="badge badge-secondary">시비</span> <!--작업 종류 라벨-->
-										</div>
+								<div class="row">
+									<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
+									<div class="col-form-label col-lg-10">
+										<span class="badge badge-info">Hole 1</span> <!--코스 위치 라벨-->
+										<span class="badge badge-success">Green</span> <!--코스 유형 라벨-->
+										<span class="badge badge-warning">갱신</span> <!--작업 분류 라벨-->
+										<span class="badge badge-secondary">시비</span> <!--작업 종류 라벨-->
 									</div>
+								</div>
 
-									<div class="row">
-										<label class="col-form-label font-weight-bold col-lg-2">브랜드명</label>
-										<label class="col-form-label col-lg-10">브랜드명</label>
-									</div>
+								<div class="row">
+									<label class="col-form-label font-weight-bold col-lg-2">브랜드명</label>
+									<label class="col-form-label col-lg-10">브랜드명</label>
+								</div>
 
-									<div class="row">
-										<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
-										<label class="col-form-label col-lg-10">작업 메모 내용입니다.</label>
-									</div>
+								<div class="row">
+									<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
+									<label class="col-form-label col-lg-10">작업 메모 내용입니다.</label>
+								</div>
 
-									<div class="form-group row mt-2">
-										<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
-											<div class="row">
-												<div class="col-lg-4">
-													<div class="card">
-														<div class="card-img-actions m-1">
-															<img class="card-img img-fluid" src="assets/img/ndvi-1.png" alt="">
-															<div class="card-img-actions-overlay card-img">
-																<a href="assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-																	<i class="icon-plus3"></i>
-																</a>
-						
-																<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-																	<i class="icon-link"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-						
-												<div class="col-lg-4">
-													<div class="card">
-														<div class="card-img-actions m-1">
-															<img class="card-img img-fluid" src="assets/img/ndvi-1.png" alt="">
-															<div class="card-img-actions-overlay card-img">
-																<a href="assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-																	<i class="icon-plus3"></i>
-																</a>
-						
-																<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-																	<i class="icon-link"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-						
-												<div class="col-lg-4">
-													<div class="card">
-														<div class="card-img-actions m-1">
-															<img class="card-img img-fluid" src="assets/img/noimage.png" alt="">
-															<div class="card-img-actions-overlay card-img">
-																<a href="assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-																	<i class="icon-plus3"></i>
-																</a>
-						
-																<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-																	<i class="icon-link"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-						
-												<div class="col-lg-4">
-													<div class="card">
-														<div class="card-img-actions m-1">
-															<img class="card-img img-fluid" src="assets/img/noimage.png" alt="">
-															<div class="card-img-actions-overlay card-img">
-																<a href="assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-																	<i class="icon-plus3"></i>
-																</a>
-						
-																<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-																	<i class="icon-link"></i>
-																</a>
-															</div>
+								<div class="form-group row mt-2">
+									<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
+										<div class="row">
+											<div class="col-lg-4">
+												<div class="card">
+													<div class="card-img-actions m-1">
+														<img class="card-img img-fluid" src="assets/img/ndvi-1.png" alt="">
+														<div class="card-img-actions-overlay card-img">
+															<a href="assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+																<i class="icon-plus3"></i>
+															</a>
+					
+															<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+																<i class="icon-link"></i>
+															</a>
 														</div>
 													</div>
 												</div>
 											</div>
-										
-									</div>
+					
+											<div class="col-lg-4">
+												<div class="card">
+													<div class="card-img-actions m-1">
+														<img class="card-img img-fluid" src="assets/img/ndvi-1.png" alt="">
+														<div class="card-img-actions-overlay card-img">
+															<a href="assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+																<i class="icon-plus3"></i>
+															</a>
+					
+															<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+																<i class="icon-link"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+					
+											<div class="col-lg-4">
+												<div class="card">
+													<div class="card-img-actions m-1">
+														<img class="card-img img-fluid" src="assets/img/noimage.png" alt="">
+														<div class="card-img-actions-overlay card-img">
+															<a href="assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+																<i class="icon-plus3"></i>
+															</a>
+					
+															<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+																<i class="icon-link"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+					
+											<div class="col-lg-4">
+												<div class="card">
+													<div class="card-img-actions m-1">
+														<img class="card-img img-fluid" src="assets/img/noimage.png" alt="">
+														<div class="card-img-actions-overlay card-img">
+															<a href="assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+																<i class="icon-plus3"></i>
+															</a>
+					
+															<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+																<i class="icon-link"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									
+								</div>
 
-                                      </div>
-                                  </div>
-                              </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+
+
 
 						<div class="col-lg-12">
                                   <div class="card more-round">
@@ -277,17 +280,6 @@
                                       </div>
                                   </div>
                               </div>
-
-						
-
-						
-
-						
-
-						
-
-						
-
                           </div>
 				</div>
 			</div>
@@ -310,49 +302,34 @@
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">코스 위치</li>
 									<li class="nav-item pl-3 pr-3 course-location-badge">
-										<a href="#"><span class="badge badge-info active">Hole 1</span></a> <!--코스 위치 라벨-->
-										<a href="#"><span class="badge badge-info">Hole 2</span></a>
-										<a href="#"><span class="badge badge-info">Hole 3</span></a>
-										<a href="#"><span class="badge badge-info">Hole 4</span></a>
-										<a href="#"><span class="badge badge-info">Hole 5</span></a>
-										<a href="#"><span class="badge badge-info">Hole 6</span></a>
-										<a href="#"><span class="badge badge-info">Hole 7</span></a>
-										<a href="#"><span class="badge badge-info">Hole 8</span></a>
-										<a href="#"><span class="badge badge-info">Hole 9</span></a>
-										<a href="#"><span class="badge badge-info">Hole 10</span></a>
-										<a href="#"><span class="badge badge-info">Hole 11</span></a>
-										<a href="#"><span class="badge badge-info">Hole 12</span></a>
-										<a href="#"><span class="badge badge-info">Hole 13</span></a>
-										<a href="#"><span class="badge badge-info">Hole 14</span></a>
-										<a href="#"><span class="badge badge-info">Hole 15</span></a>
-										<a href="#"><span class="badge badge-info">Hole 16</span></a>
-										<a href="#"><span class="badge badge-info">Hole 17</span></a>
-										<a href="#"><span class="badge badge-info">Hole 18</span></a>
+										<c:forEach items="${list}" var="holename">
+										<a href="#"><span class="badge badge-info holebt2"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+										</c:forEach>
 									</li>
 								</ul>
 
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">코스 유형</li>
 									<li class="nav-item pl-3 pr-3 course-category-badge">
-										<a href="#"><span class="badge badge-success active">Green</span></a><!--코스 유형 라벨-->
-										<a href="#"><span class="badge badge-success">Fairway</span></a>						
+										<a href="#"><span class="badge badge-success coursetypebt2">Green</span></a><!--코스 유형 라벨-->
+										<a href="#"><span class="badge badge-success coursetypebt2">Fairway</span></a>						
 									</li>
 								</ul>
 
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">작업 분류</li>
 									<li class="nav-item pl-3 pr-3 work-class-badge">
-										<a href="#"><span class="badge badge-warning active">갱신</span></a><!--작업 분류 라벨-->
-										<a href="#"><span class="badge badge-warning">예고</span></a>				
-										<a href="#"><span class="badge badge-warning">기타</span></a>				
+										<a href="#"><span class="badge badge-warning classbt2">갱신</span></a><!--작업 분류 라벨-->
+										<a href="#"><span class="badge badge-warning classbt2">예고</span></a>				
+										<a href="#"><span class="badge badge-warning classbt2">기타</span></a>				
 									</li>
 								</ul>
 						
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">작업 종류</li>
 									<li class="nav-item pl-3 pr-3 work-category-badge">
-										<a href="#"><span class="badge badge-secondary active">시비</span></a> <!--작업 종류 라벨-->
-										<a href="#"><span class="badge badge-secondary">시약</span></a>				 					
+										<a href="#"><span class="badge badge-secondary typebt2" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
+										<a href="#"><span class="badge badge-secondary typebt2" data-value="시비">시약</span></a>				 					
 									</li>
 								</ul>
 
@@ -384,132 +361,294 @@
 	
 
 
-				<!-- Scrollable modal -->
-				<div class="" style="position:fixed; bottom:30px; right:30px; z-index:1;">
-					<button type="button" class="btn btn-round" data-toggle="modal" data-target="#modal_scrollable">작업 등록<i class="fas fa-plus mt-2"></i></button>
+	<!-- Scrollable modal -->
+	<div class="" style="position:fixed; bottom:30px; right:30px; z-index:1;">
+		<button type="button" class="btn btn-round work" data-toggle="modal" data-target="#modal_scrollable">작업 등록<i class="fas fa-plus mt-2"></i></button>
+	</div>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<div id="modal_scrollable" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+					<h5 class="modal-title">작업일정 추가</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-				
-				<div id="modal_scrollable" class="modal fade" tabindex="-1">
-					<div class="modal-dialog modal-dialog-scrollable">
-						<div class="modal-content">
-							<div class="modal-header pb-3">
-								<h5 class="modal-title">작업일정 추가</h5>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+				<div class="modal-body py-0">
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 날짜</label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<span class="input-group-prepend">
+									<span class="input-group-text"><i class="icon-calendar22"></i></span>
+								</span>
+								<input type="text" class="form-control daterange-basic" value=""> 
+								
 							</div>
-	
-							<div class="modal-body py-0">
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 날짜</label>
-									<div class="col-lg-10">
-										<div class="input-group">
-											<span class="input-group-prepend">
-												<span class="input-group-text"><i class="icon-calendar22"></i></span>
-											</span>
-											<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
-											
-										</div>
-									</div>
-									
-								</div>
-	
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">코스 위치</label>
-									<div class="col-lg-10 course-location-badge">
-										<a href="#"><span class="badge badge-info active">Hole 1</span></a> <!--코스 위치 라벨-->
-										<a href="#"><span class="badge badge-info">Hole 2</span></a>
-										<a href="#"><span class="badge badge-info">Hole 3</span></a>
-										<a href="#"><span class="badge badge-info">Hole 4</span></a>
-										<a href="#"><span class="badge badge-info">Hole 5</span></a>
-										<a href="#"><span class="badge badge-info">Hole 6</span></a>
-										<a href="#"><span class="badge badge-info">Hole 7</span></a>
-										<a href="#"><span class="badge badge-info">Hole 8</span></a>
-										<a href="#"><span class="badge badge-info">Hole 9</span></a>
-										<a href="#"><span class="badge badge-info">Hole 10</span></a>
-										<a href="#"><span class="badge badge-info">Hole 11</span></a>
-										<a href="#"><span class="badge badge-info">Hole 12</span></a>
-										<a href="#"><span class="badge badge-info">Hole 13</span></a>
-										<a href="#"><span class="badge badge-info">Hole 14</span></a>
-										<a href="#"><span class="badge badge-info">Hole 15</span></a>
-										<a href="#"><span class="badge badge-info">Hole 16</span></a>
-										<a href="#"><span class="badge badge-info">Hole 17</span></a>
-										<a href="#"><span class="badge badge-info">Hole 18</span></a>
-									</div>
-								</div>
-	
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 분류</label>
-									<div class="col-lg-10 course-category-badge">
-										<a href="#"><span class="badge badge-success active">Green</span></a><!--코스 유형 라벨-->
-										<a href="#"><span class="badge badge-success">Fairway</span></a>						
-									</div>
-								</div>
-	
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 분류</label>
-									<div class="col-lg-10 work-class-badge">
-										<a href="#"><span class="badge badge-warning active">갱신</span></a><!--작업 분류 라벨-->
-										<a href="#"><span class="badge badge-warning">예고</span></a>				
-										<a href="#"><span class="badge badge-warning">기타</span></a>							
-									</div>
-								</div>
-	
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 종류</label>
-									<div class="col-lg-10 work-category-badge">
-										<a href="#"><span class="badge badge-secondary active">시비</span></a> <!--작업 종류 라벨-->
-										<a href="#"><span class="badge badge-secondary">시약</span></a>				 											
-									</div>
-								</div>
-	
-	
-	
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">브랜드 명</label>
-									<div class="col-lg-10">
-										<select class="custom-select">
-											<option value="opt1">브랜드 명 1</option>
-											<option value="opt2">브랜드 명 2</option>
-											<option value="opt3">브랜드 명 3</option>
-											<option value="opt4">브랜드 명 4</option>
-											<option value="opt5">브랜드 명 5</option>
-											<option value="opt6">브랜드 명 6</option>
-											<option value="opt7">브랜드 명 7</option>
-											<option value="opt8">브랜드 명 8</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 이미지</label>
-									<div class="col-lg-10">
-										<input type="file" class="form-control h-auto">
-									</div>
-								</div>
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 메모</label>
-									<div class="col-lg-10">
-										<textarea rows="3" cols="3" class="form-control" placeholder="작업 내용을 입력해 주세요."></textarea>
-									</div>
-								</div>
-							</div>
-	
-							<div class="modal-footer pt-3">
-								<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
-								<button type="button" class="btn btn-primary">작업 등록</button>
-							</div>
+						</div>
+						
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">코스 위치</label>
+						<div class="col-lg-10 course-location-badge">
+							<c:forEach items="${list}" var="holename">
+							<a href="#"><span class="badge badge-info holebt"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">코스 종류</label>
+						<div class="col-lg-10 course-category-badge">
+							<a href="#"><span class="badge badge-success coursetypebt">Green</span></a><!--코스 유형 라벨-->
+							<a href="#"><span class="badge badge-success coursetypebt">Fairway</span></a>						
+						</div>
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 분류</label>
+						<div class="col-lg-10 work-class-badge">
+							<a href="#"><span class="badge badge-warning classbt">갱신</span></a><!--작업 분류 라벨-->
+							<a href="#"><span class="badge badge-warning classbt">예고</span></a>				
+							<a href="#"><span class="badge badge-warning classbt">기타</span></a>							
+						</div>
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 종류</label>
+						<div class="col-lg-10 work-category-badge">
+							<a href="#"><span class="badge badge-secondary typebt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
+							<a href="#"><span class="badge badge-secondary typebt" data-value="시약">시약</span></a>				 											
+						</div>
+					</div>
+
+
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">브랜드 명</label>
+						<div class="col-lg-10">
+							<select class="custom-select brandname">
+								<!-- 브랜드 선택 -->
+								  <option value='' selected>브랜드 선택</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 이미지</label>
+						<div class="col-lg-10">
+							<input type="file" class="form-control h-auto img">
+						</div>
+					</div>
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 메모</label>
+						<div class="col-lg-10">
+							<textarea rows="3" cols="3" class="form-control comment" placeholder="작업 내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
 				</div>
-				<!-- /scrollable modal -->
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary workreport">작업 등록</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /scrollable modal -->
+
 				
 
 </div>
 <!-- /main content -->
 
-<!-- twentytwenty -->
 <script>
+
+
+<!-- twentytwenty -->
 	$(function(){
 		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
 		$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
 	});
-</script>
 <!-- twentytwenty end -->
+
+	
+	//작업등록 버튼 클릭시 리셋
+	$(".work").click(function() {
+		$(".coursetypebt").removeClass("active");			
+		$(".holebt").removeClass("active");			
+		$(".classbt").removeClass("active");			
+		$(".typebt").removeClass("active");
+		$('.daterange-basic').val('');
+		$('.img').val('');
+		$('.comment').val('');
+		//$('.brandname').val('default');
+	});
+	
+	//코스 위치 active 클래스 추가
+	$(".holebt").click(function() {
+	    $(this).toggleClass("active");
+	});
+	
+	//코스 위치2 active 클래스 추가
+	$(".holebt2").click(function() {
+		$(".holebt2").removeClass("active");			
+	    $(this).addClass("active");
+	});
+	
+	
+	//코스종류 active 클래스 추가
+	$(".coursetypebt").click(function() {
+		$(".coursetypebt").removeClass("active");			
+		$(this).addClass("active");			
+	});
+	
+	//코스종류2 active 클래스 추가
+	$(".coursetypebt2").click(function() {
+		$(".coursetypebt2").removeClass("active");			
+		$(this).addClass("active");			
+	});
+	
+	
+	//작업분류 active 클래스 추가
+	$(".classbt").click(function() {
+	    $(".classbt").removeClass("active");
+	    $(this).addClass("active");
+	});
+	
+	//작업분류2 active 클래스 추가
+	$(".classbt2").click(function() {
+	    $(".classbt2").removeClass("active");
+	    $(this).addClass("active");
+	});
+	
+	//작업분류2 active 클래스 추가
+	$(".typebt2").click(function() {
+	    $(".typebt2").removeClass("active");
+	    $(this).addClass("active");
+	});
+
+			
+	//작업종류 active 클래스 추가
+	$(".typebt").click(function() {
+	    var worktype = $(this).data('value');
+	    //var worktype2 = $('.typebt.active').text(); 안되는 이유?
+	    //console.log(worktype2)
+		getbrand(worktype);
+		$(".typebt").removeClass("active");			
+		$(this).addClass("active");			
+	});
+	
+	
+	//작업종류에 따라 브랜드 보여주기
+	function getbrand(worktype){
+	    $.ajax({
+	        url: '/management/getbrand_ajax',
+	        type: 'GET',
+	        data: {worktype: worktype},
+	        dataType: "json",
+	        success: function(data) {
+	            console.log(data);
+	            updatebrand(data);
+	        },
+		    error: function(jqXHR, textStatus, errorThrown) {
+		        alert(jqXHR.status);
+		        alert(jqXHR.statusText);
+		        alert(jqXHR.responseText);
+		        alert(jqXHR.readyState);
+		    }
+	    });//ajax end
+	}//getHoleData end
+	
+	
+	//브랜드 업데이트
+	function updatebrand(data){
+		//사용제품 브랜드 
+		let brand = "";
+		
+        for(var i=0; i<data.length; i++){
+			brand += `<option value="opt1">\${data[i].brand_Name}</option>`;
+        }
+    	// HTML 요소 선택 및 결과 삽입
+		let dataElement = document.querySelector('.brandname');
+		dataElement.innerHTML = brand;
+	}//updatebrand() end
+	
+	
+	
+	$(".workreport").click(function() {
+		var dateRange = $('.daterange-basic').val(); // 작업날짜 
+		var dates = dateRange.split(' - '); // 작업날짜 - 빼기
+		var workstart = dates[0]; // 작업시작날짜
+		var workend = dates[1]; // 작업종료날짜
+		var hole = $('.holebt.active').text(); //holename
+		var course = $('.coursetypebt.active').text(); // 코스종류
+		var workclass = $('.classbt.active').text(); // 작업분류
+		var worktype = $('.typebt.active').text(); // 작업종류
+		var oriImgName = $('.img').val(); //작업 이미지
+		var comment = $('.comment').val(); //작업 이미지
+		//alert(hole);
+		let token = $("input[name='_csrf']").val();
+		let header = "X-CSRF-TOKEN";
+
+		
+	    $.ajax({
+	        url: '/management/insertwork_ajax',
+	        method: 'POST',
+	        data: {
+	        	workstart: workstart,
+	        	workend: workend,
+	        	hole: hole,
+	        	course: course,
+	        	workclass: workclass,
+	        	worktype: worktype,
+	        	oriImgName: oriImgName,
+	        	comment: comment
+	        	},
+	        //dataType: "json",//(insert 성공하여도 자료형때문에 200에서 자료형에러를 뱉어낸다)
+			beforeSend : function(xhr) {  
+				xhr.setRequestHeader(header, token);
+			},
+	        success: function(result) {
+	            alert("등록되었습니다")
+	            $('#modal_scrollable').modal('hide');  // 모달 창 닫기
+	        },
+		    error: function(jqXHR, textStatus, errorThrown) {
+		        alert(jqXHR.status);
+		        alert(jqXHR.statusText);
+		        alert(jqXHR.responseText);
+		        alert(jqXHR.readyState);
+		    }
+	    });//ajax end
+	});//workreport.click function
+	
+	//작업 조회
+    $.ajax({
+        url: '/management/insertwork_ajax',
+        method: 'POST',
+        dataType: "json",
+		beforeSend : function(xhr) {  
+			xhr.setRequestHeader(header, token);
+		},
+        success: function(result) {
+        },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+	
+
+	
+
+
+</script>
+
+
+
+
+
+
+

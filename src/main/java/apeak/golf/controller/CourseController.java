@@ -40,7 +40,11 @@ public class CourseController {
 
 	
 	@RequestMapping("/course2")
-	private String courseManagementlist() {
+	private String courseManagementlist(Model model) {
+		
+		List<EgovMap> list = courseService.holedata();
+		model.addAttribute("list", list);
+
 		
 		return "/management/course/management_course2";
 	}

@@ -80,7 +80,7 @@ $(document).ready(function() {
             $(this).addClass('active');
             
             // 경로에 따라 active 클래스 추가
-            if (path === '/management/course1' || path === '/management/robot1') {
+            if (path === '/management/course1' || path === '/management/course2' || path === '/management/robot1') {
                 $('.management').addClass('active'); // 'MANAGEMENT' 메뉴 아이템에 'active' 클래스 추가
             }else if (path === '/each/course_separatecourse' || path === '/report/course_report' || path === '/home' || path === '/all/course_allcourse') {
                 $('.course').addClass('active');
