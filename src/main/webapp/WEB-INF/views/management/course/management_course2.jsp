@@ -622,15 +622,13 @@
 	    });//ajax end
 	});//workreport.click function
 	
-	//작업 조회
+	//모든작업 조회
     $.ajax({
-        url: '/management/insertwork_ajax',
-        method: 'POST',
-        dataType: "json",
-		beforeSend : function(xhr) {  
-			xhr.setRequestHeader(header, token);
-		},
-        success: function(result) {
+        url: '/management/workReportAllList',
+        method: 'GET',
+        success: function(data) {
+        	console.log(data);
+        	workReportAllList(data);
         },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
@@ -639,6 +637,137 @@
 	        alert(jqXHR.readyState);
 	    }
     });//ajax end
+    
+    //전체 작업 일정 보여주기
+    function workReportAllList(data){
+    	console.log(data.length)
+    	
+    	var allList = ''
+    	for(var i=0; i<data.length; i++){}
+    	`
+        <div class="col-lg-12">
+        <div class="card more-round">
+            <div class="card-header bg-white">
+                <span class="font-weight-semibold float-left ml-1 mr-2 font-weight-bold">작업자명</span>
+                <div class="list-icons float-right ml-3">
+                    <div class="dropdown position-static">
+                        <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            <a href="#" class="dropdown-item">수정</a>
+                            <a href="#" class="dropdown-item">삭제</a>
+                        </div>
+                    </div>
+                </div>
+                <span class="float-left text-muted">2023.06.08 14:11</span>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title font-weight-bold">코스 1, 2 시약 작업</h6>
+		<div class="row">
+			<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
+			<label class="col-form-label col-lg-10">01/01/2015 - 01/31/2015</label>
+		</div>
+
+		<div class="row">
+			<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
+			<div class="col-form-label col-lg-10">
+				<span class="badge badge-info">Hole 1</span> <!--코스 위치 라벨-->
+				<span class="badge badge-success">Green</span> <!--코스 유형 라벨-->
+				<span class="badge badge-warning">갱신</span> <!--작업 분류 라벨-->
+				<span class="badge badge-secondary">시비</span> <!--작업 종류 라벨-->
+			</div>
+		</div>
+
+		<div class="row">
+			<label class="col-form-label font-weight-bold col-lg-2">브랜드명</label>
+			<label class="col-form-label col-lg-10">브랜드명</label>
+		</div>
+
+		<div class="row">
+			<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
+			<label class="col-form-label col-lg-10">작업 메모 내용입니다.</label>
+		</div>
+
+		<div class="form-group row mt-2">
+			<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-img-actions m-1">
+								<img class="card-img img-fluid" src="assets/img/ndvi-1.png" alt="">
+								<div class="card-img-actions-overlay card-img">
+									<a href="assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+										<i class="icon-plus3"></i>
+									</a>
+
+									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+										<i class="icon-link"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-img-actions m-1">
+								<img class="card-img img-fluid" src="assets/img/ndvi-1.png" alt="">
+								<div class="card-img-actions-overlay card-img">
+									<a href="assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+										<i class="icon-plus3"></i>
+									</a>
+
+									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+										<i class="icon-link"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-img-actions m-1">
+								<img class="card-img img-fluid" src="assets/img/noimage.png" alt="">
+								<div class="card-img-actions-overlay card-img">
+									<a href="assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+										<i class="icon-plus3"></i>
+									</a>
+
+									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+										<i class="icon-link"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="card">
+							<div class="card-img-actions m-1">
+								<img class="card-img img-fluid" src="assets/img/noimage.png" alt="">
+								<div class="card-img-actions-overlay card-img">
+									<a href="assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+										<i class="icon-plus3"></i>
+									</a>
+
+									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+										<i class="icon-link"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+		</div>
+
+            </div>
+        </div>
+    </div>
+    `;
+    	
+    	
+    }//workReportAllList() end
 	
 
 	

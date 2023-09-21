@@ -24,4 +24,12 @@ public class SoilDataDAO {
 		return session.selectList("dashboardMapper.soilData", paramMap);
 	}//getsoildata() end
 	
+	public List<HoleInfoDTO> getSearchSoilData(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.searchSoilData", paramMap);
+	}
+	
+	public List<HoleInfoDTO> getSearchAllSoilData(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.searchAllSoilData", paramMap);
+	}
+	
 }

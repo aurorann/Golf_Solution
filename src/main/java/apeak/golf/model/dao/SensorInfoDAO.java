@@ -59,12 +59,12 @@ public class SensorInfoDAO {
 	public List<HoleInfoDTO> getndvidata(EgovMap paramMap){
 		return session.selectList("reportCourseMapper.ndviData", paramMap);
 	}//getndvidata() end
-
-
+	
+	
 	public List<HoleInfoDTO> getsoildata(EgovMap paramMap){
 		return session.selectList("reportCourseMapper.soilData", paramMap);
 	}//getsoildata() end
-
+	
 	
 	
 	

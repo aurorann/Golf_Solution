@@ -19,6 +19,5 @@ public class RobotInfoDTO {
 	private double lon;
 	private String last_Updated;
 	
-	private List<NdviRobotDataDTO> ndviRobotDataList;
 	private List<SoilDataDTO> soilDataList;
 }

@@ -32,17 +32,12 @@
 	<!-- Content area -->
 	<div class="content">
 		<!-- Basic card -->
-
 		<div class="row data">
 
 		</div>
-
 		<!-- /basic card -->
-
-
 	</div>
 	<!-- /content area -->
-
 </div>
 <!-- /main content -->
 
@@ -52,6 +47,16 @@ $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
    var category = $(".categorybt.active").val();
    getAllData(category);
+   
+	// 상세정보 버튼 클릭 이벤트 핸들러
+	 $('body').on('click', '.detailreport', function() {
+		// 버튼의 value 값
+		var value = $(this).val();
+	
+		// /report/course_report 페이지로 이동합니다.
+		location.href = '/report/course_report?value=' + encodeURIComponent(value);
+		
+	});
 });
 
 
@@ -71,7 +76,7 @@ function getAllData(category){
 		url: '/each/course_separatecourse_ajax',
 		type:'GET',
         data: {category: category},
-		//dataType: "json",
+		dataType: "json",
 		success: function(data){
             console.log(data);
             console.log(data.list1.length);
@@ -136,7 +141,7 @@ function updatedata(data){
 									</span>
 			
 									<span class="float-right">
-										<button type="button" class="btn btn-primary-100 border-primary text-primary">상세정보</button>
+										<button type="button" class="btn btn-primary-100 border-primary text-primary detailreport" value="\${data.list1[i].hole_No}">상세정보</button>
 									</span>
 			
 									<!--Chart card-->

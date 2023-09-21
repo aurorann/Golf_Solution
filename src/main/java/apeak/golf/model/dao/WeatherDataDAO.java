@@ -31,4 +31,14 @@ public class WeatherDataDAO {
 		return session.selectList("dashboardMapper.weather", paramMap);
 	}
 	
+	
+	public List<HoleInfoDTO> getSearchWeatherData(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.searchweather", paramMap);
+	}
+	
+	public List<HoleInfoDTO> getSearchAllWeatherData(EgovMap paramMap){
+		return session.selectList("reportCourseMapper.searchAllWeather", paramMap);
+	}
+	
+	
 }

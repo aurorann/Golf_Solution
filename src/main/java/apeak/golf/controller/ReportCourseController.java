@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import apeak.golf.model.dto.HoleInfoDTO;
 import apeak.golf.model.dto.SensorInfoDTO;
+import apeak.golf.service.CourseService;
 import apeak.golf.service.ReportCourseService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,9 @@ public class ReportCourseController {
 
 	@Autowired
 	private ReportCourseService reportCourseService;
+
+	@Autowired
+	private CourseService courseService;
 	
 //	@RequestMapping("/course_report1")
 //	private String courseReport(Model model,String holeNo) {
@@ -62,8 +66,12 @@ public class ReportCourseController {
 //		return "/report/course_report";
 //	}
 	
+	//hole 모든정보 가져오기
 	@RequestMapping("/course_report")
-	private String courseReport() {
+	private String courseReport(Model model) {
+		List<EgovMap> list = courseService.holedata();
+		model.addAttribute("list", list);
+
 		return "/report/course_report";
 	}
 
@@ -82,6 +90,25 @@ public class ReportCourseController {
 	//		@RequestParam(value="category",required=false) String category) {
 	//	return reportCourseService.getdata(hole, category);
 	//}
+	
+	
+	//데이터 검색
+	@ResponseBody
+	@RequestMapping(value = "/course_report_search_ajax", method = RequestMethod.GET)
+	public EgovMap courseReportSearchAjax(@RequestParam(value="holeNo",required=false) String holeNo, 
+										@RequestParam(value="workStart",required=false) String workStart,
+										@RequestParam(value="workEnd",required=false) String workEnd) {
+		System.out.println(holeNo);
+	return reportCourseService.getsearchdata(holeNo, workStart, workEnd);
+	}
+	
+	//모든 홀 데이터 검색
+	@ResponseBody
+	@RequestMapping(value = "/course_report_allsearch_ajax", method = RequestMethod.GET)
+	public EgovMap courseReportAllSearchAjax(@RequestParam(value="workStart",required=false) String workStart,
+											@RequestParam(value="workEnd",required=false) String workEnd) {
+		return reportCourseService.getsearchalldata(workStart, workEnd);
+	}
 	
 	
 	

@@ -37,8 +37,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<result property="ndvi" column="NDVI"/>
 			</collection>
 		</collection>
-		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+		<collection property="robotInfoList" column="HOLE_NO_NOW" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
 			<id column="ROBOT_NO" property="robot_No"/>
+			<result property="robot_No" column="ROBOT_NO"/>
 			<result property="hole_No_Now" column="HOLE_NO_NOW"/>
 			<result property="course_Type_Now" column="COURSE_TYPE_NOW"/>
 			<result property="robot_Name" column="ROBOT_NAME"/>
@@ -47,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
 			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
+				<result property="robot_No" column="ROBOT_NO"/>
 				<result property="lat" column="LAT"/>
 				<result property="lon" column="LON"/>
 				<result property="smo" column="SMO"/>

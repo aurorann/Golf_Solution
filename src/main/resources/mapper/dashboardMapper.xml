@@ -7,12 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
 		<id property="hole_No" column="HOLE_NO"/>
+		<result property="hole_No" column="HOLE_NO"/>
 		<result property="course_Type" column="COURSE_TYPE"/>
 		<result property="hole_Name" column="HOLE_NAME"/>
 		<result property="lat" column="LAT"/>
 		<result property="lon" column="LON"/>
 		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
 			<id column="SENSOR_NO" property="sensor_No"/>
+			<result property="sensor_No" column="SENSOR_NO"/>
 			<result property="sensor_Name" column="SENSOR_NAME"/>
 			<result property="Sensor_Type" column="SENSOR_TYPE"/>
 			<result property="hole_No" column="HOLE_NO"/>
@@ -24,6 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
 				<id column="SENSOR_NO" property="sensor_No"/>
 				<id column="TM" property="tm"/>
+				<result property="sensor_No" column="SENSOR_NO"/>
+				<result property="tm" column="TM"/>
 				<result property="temp" column="TEMP"/>
 				<result property="humi" column="HUMI"/>
 				<result property="wd" column="WD"/>
@@ -37,11 +41,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<result property="ndvi" column="NDVI"/>
 			</collection>
 		</collection>
-		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+		<collection property="robotInfoList" column="HOLE_NO_NOW" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
 			<id column="ROBOT_NO" property="robot_No"/>
+			<result property="robot_No" column="ROBOT_NO"/>
+			<result property="hole_No_Now" column="HOLE_NO_NOW"/>
+			<result property="course_Type_Now" column="COURSE_TYPE_NOW"/>
+			<result property="robot_Name" column="ROBOT_NAME"/>
+			<result property="robot_Type" column="ROBOT_TYPE"/>
+			<result property="robot_State" column="ROBOT_STATE"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
 			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
+				<result property="robot_No" column="ROBOT_NO"/>
 				<result property="lat" column="LAT"/>
 				<result property="lon" column="LON"/>
 				<result property="smo" column="SMO"/>

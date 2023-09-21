@@ -28,9 +28,19 @@ public class CourseService {
 	@Autowired
 	private WorkReportDAO workReportDAO;
 	
+	//hole 이름 조회
 	public List<EgovMap> holedata() {
-	
 		return holeInfoDAO.holedata();
+	}
+	
+	//hole 모든정보 조회
+	public List<EgovMap> holedata2() {
+		return holeInfoDAO.holeinfo();
+	}
+	
+	public List<EgovMap> workReportAllList() {
+		
+		return workReportDAO.workReportAllList();
 	}
 	
 	public List<EgovMap> branddata(String worktype) {

@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
 			<id column="SENSOR_NO" property="sensor_No"/>
 			<result property="sensor_Name" column="SENSOR_NAME"/>
+			<result property="sensor_No" column="SENSOR_NO"/>
 			<result property="Sensor_Type" column="SENSOR_TYPE"/>
 			<result property="hole_No" column="HOLE_NO"/>
 			<result property="course_Type" column="COURSE_TYPE"/>
@@ -39,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</collection>
 		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
 			<id column="ROBOT_NO" property="robot_No"/>
+			<result property="robot_No" column="ROBOT_NO"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
 			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
@@ -52,15 +54,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<resultMap type="workReportDTO" id="workReportInfo" autoMapping="true">
-		<id property="workNo" column="WORK_NO"/>
-		<result property="userId" column="USER_ID"/>
-		<result property="writeAt" column="WRITE_AT"/>
-		<result property="workStart" column="WRITE_START"/>
-		<result property="workEnd" column="WRITE_END"/>
-		<result property="workClass" column="WORK_CLASS"/>
-		<result property="workType" column="WORK_TYPE"/>
-		<result property="workComment" column="WORK_COMMENT"/>
-		<result property="workState" column="WORK_STATE"/>
+		<id property="work_No" column="WORK_NO"/>
+		<result property="user_Id" column="USER_ID"/>
+		<result property="write_At" column="WRITE_AT"/>
+		<result property="work_Start" column="WORK_START"/>
+		<result property="work_End" column="WORK_END"/>
+		<result property="work_Class" column="WORK_CLASS"/>
+		<result property="work_Type" column="WORK_TYPE"/>
+		<result property="work_Comment" column="WORK_COMMENT"/>
+		<result property="work_State" column="WORK_STATE"/>
+		<collection property="workReportImageList" column="WORK_NO" ofType="WorkReportImageDTO" javaType="List" autoMapping="true">
+				<id column="IMG_NO" property="img_No"/>
+				<result property="work_No" column="WORK_NO"/>
+				<result property="file_Path" column="FILE_PATH"/>
+				<result property="ori_Name" column="ORI_NAME"/>
+				<result property="save_Name" column="SAVE_NAME"/>
+		</collection>
+		<collection property="workReportTargetList" column="WORK_NO" ofType="WorkReportTargetDTO" javaType="List" autoMapping="true">
+				<id column="TARGET_NO" property="target_No"/>
+				<result property="work_No" column="WORK_NO"/>
+				<result property="hole_No" column="HOLE_NO"/>
+				<result property="course_Type" column="COURSE_TYPE"/>
+		</collection>
 	</resultMap>
 	
 	<resultMap type="workReportBrandDefDTO" id="brandInfoMap">
@@ -70,8 +85,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="BRAND_IMG" property="brand_Img"/>
 	</resultMap>
 
+	<select id="holename" resultType="egovMap">
+		SELECT HOLE_NAME, HOLE_NO FROM HOLE_INFO GROUP BY HOLE_NAME, HOLE_NO
+	</select>
+
 	<select id="holedata" resultType="egovMap">
-		SELECT HOLE_NAME FROM HOLE_INFO GROUP BY HOLE_NAME
+		SELECT * FROM HOLE_INFO
 	</select>
 
 	<select id="branddata" parameterType="map" resultMap="brandInfoMap">
@@ -94,6 +113,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO WORK_REPORT_IMAGE (WORK_NO, FILE_PATH, ORI_NAME, SAVE_NAME)
 		VALUES ((SELECT MAX(work_no) FROM WORK_REPORT),	#{filePath}, #{oriImgName}, #{saveName})
 	</insert>
+	
+	
+	<select id="workReportAllList" parameterType="egovMap" resultMap="workReportInfo">
+		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
+		FROM WORK_REPORT WR
+		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
+		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
+	</select>
 
 
 

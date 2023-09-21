@@ -2,10 +2,12 @@ package apeak.golf.model.dao;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 
 import org.apache.ibatis.session.SqlSession;
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -64,9 +66,26 @@ public class WorkReportDAO {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-
-
 	}//insertwork() end
 	
+	
+	public List<EgovMap> workReportAllList(){
+		return session.selectList("courseMapper.workReportAllList");
+	}//workReportAllList() end
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -22,29 +22,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/management")
-public class CourseController {
+public class ManagementCourseController {
 
 	@Autowired
 	private CourseService courseService;
 
+	//hole 이름 가져오기
 	@RequestMapping("/course1")
 	private String courseManagement(Model model) {
 		
 		List<EgovMap> list = courseService.holedata();
 		
-		System.out.println(list);
+		//System.out.println(list);
 		model.addAttribute("list", list);
 		
 		return "/management/course/management_course1";
 	}
 
-	
+	//hole 이름 가져오기
 	@RequestMapping("/course2")
 	private String courseManagementlist(Model model) {
 		
 		List<EgovMap> list = courseService.holedata();
 		model.addAttribute("list", list);
-
 		
 		return "/management/course/management_course2";
 	}
@@ -77,5 +77,24 @@ public class CourseController {
 		}
 	    
 	}//brandAjax() end
-
+	
+	
+	//전체 작업 리포트 가져오기
+	@ResponseBody
+	@RequestMapping(value="/workReportAllList", method = RequestMethod.GET)
+	private List<EgovMap> workReportAllList() {
+		return courseService.workReportAllList();
+	}//brandAjax() end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
