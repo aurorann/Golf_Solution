@@ -75,6 +75,7 @@ public class ReportCourseController {
 		return "/report/course_report";
 	}
 
+
 	
 	@ResponseBody
 	@RequestMapping(value = "/course_report_ajax", method = RequestMethod.GET)
