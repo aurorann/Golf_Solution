@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="reportCourseMapper">
 
     <resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
-        <id property="holeNo" column="HOLE_NO"/>
-		<result property="holeName" column="HOLE_NAME"/>
+        <id property="hole_No" column="HOLE_NO"/>
+		<result property="hole_Name" column="HOLE_NAME"/>
         <collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
             <id column="SENSOR_NO" property="sensor_No"/>
             <id column="HOLE_NO" property="hole_No"/>
@@ -130,6 +130,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM ROBOT_INFO RI
 		JOIN SOIL_DATA SD ON RI.ROBOT_NO = SD.ROBOT_NO 
 		WHERE TM BETWEEN #{workStart} AND #{workEnd}
+	</select>
+	
+		 
+	<select id="holeData" resultMap="holeInfoMap">
+		SELECT * FROM HOLE_INFO WHERE HOLE_NO = #{hole} and COURSE_TYPE = #{category}
 	</select>
 	
 

@@ -27,5 +27,5 @@ public class NdviDataDAO {
 //	public List<EgovMap> getNdviData(){
 //		return session.selectList("eachCourseMapper.ndviData");
 //	}//getndvidata() end
-	
+
 }

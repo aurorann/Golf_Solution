@@ -28,6 +28,10 @@ public class HoleInfoDAO {
 		return sess.selectList("dashboardMapper.hole", paramMap);
 	}
 	
+	public List<HoleInfoDTO> getholedata(EgovMap paramMap){
+		return sess.selectList("reportCourseMapper.holeData", paramMap);
+	}
+	
 	//hole 모든 정보 조회
 	public List<EgovMap> holeinfo(){
 		return sess.selectList("dashboardMapper.test");
