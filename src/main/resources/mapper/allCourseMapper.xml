@@ -5,4 +5,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="allCourseMapper">
 
+	<select id="getWeatherDataList" parameterType="map" resultType="egovMap">
+	SELECT D.* FROM 
+	WEATHER_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='WEATHER'
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	ORDER BY TM
+	</select>
+
+	<select id="getSoilDataList" parameterType="map" resultType="egovMap">
+	SELECT * FROM 
+	SOIL_DATA 
+	WHERE HOLE_NO=#{holeNo}
+	AND COURSE_TYPE=#{courseType}
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	ORDER BY TM
+	</select>
+
+	<select id="getNdviDataList" parameterType="map" resultType="egovMap">
+	SELECT D.* FROM 
+	NDVI_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='NDVI'
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	ORDER BY TM
+	</select>
+	
+	<select id="getCurrentWeatherData" parameterType="map" resultType="egovMap">
+	SELECT D.* FROM 
+	WEATHER_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='WEATHER'
+	ORDER BY TM DESC LIMIT 1
+	</select>
+	
+	<select id="getCurrentSoilData" parameterType="map" resultType="egovMap">
+	SELECT * FROM 
+	SOIL_DATA 
+	WHERE HOLE_NO=#{holeNo}
+	AND COURSE_TYPE=#{courseType}
+	ORDER BY TM DESC LIMIT 1
+	</select>
+	
+	<select id="getCurrentNdviData" parameterType="map" resultType="egovMap">
+	SELECT D.* FROM 
+	NDVI_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='NDVI'
+	ORDER BY TM DESC LIMIT 1
+	</select>
+	
+	<select id="getLayerDataList" parameterType="map" resultType="egovMap">
+	SELECT * FROM
+	LAYER_DATA D JOIN HOLE_INFO I
+	ON D.HOLE_NO = I.HOLE_NO AND D.COURSE_TYPE = I.COURSE_TYPE
+	AND I.COURSE_TYPE = #{courseType}
+	AND I.HOLE_NO = #{holeNo}
+	WHERE TM BETWEEN #{startDate} AND #{endDate}
+	AND LAYER_TYPE=#{layerType}
+	</select>
 </mapper>

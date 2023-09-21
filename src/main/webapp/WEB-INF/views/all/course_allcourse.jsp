@@ -27,6 +27,12 @@
 					<button type="button" class="btn btn-light active">Fairway</button>
 					<button type="button" class="btn btn-light">Green</button>
 				</div>
+				
+				<div class="float-right">
+					<button type="button" class="btn sidebar-control sidebar-right-toggle">
+						<i class="fas fa-align-justify"></i>
+					</button>
+				</div>
 
 				<div class="btn-group mr-2 float-right" data-toggle="buttons" id="layerType">
 					<button type="button" class="btn btn-light active">
@@ -47,7 +53,6 @@
 					</button>
 				</div>
 				<h6 class="mr-2 mt-1 font-weight-bold float-right">Layer</h6>
-
 			</div>
 		</div>
 	</div>
@@ -152,18 +157,16 @@
 
 	</div>
 	<!-- /content area -->
+	
 	<script>
-	var isTemplateLiteralsSupported = false;
-	try {
-	    eval("var temp = `Test Template Literals`;");  // `Test Template Literals` 이 문자열이 에러없이 해석되면 ES6 지원
-	    isTemplateLiteralsSupported = true;
-	} catch (e) {
-	    isTemplateLiteralsSupported = false;
-	}
-	console.log(isTemplateLiteralsSupported);
 	$(function(){
 
 		let chartList = [];
+		let markerList = new Array(); // 마커 정보를 담는 배열
+		let infoWindowList = new Array(); // 정보창을 담는 배열
+		let nowHole;
+		let nowCourse;
+		let nowDataType;
 
 		function getWdText($wdir){
 			//16방
@@ -213,37 +216,47 @@
 
 		}
 
-		function createMarker(lat,lon,name){
+		function createMarker(lat,lon,markerId){
 			
 			var position = new naver.maps.LatLng(lat, lon);
 
-		    var contentString = [
-		    	drawInfoWindow("weather")
-		    ].join('');
+		    /* 정보창 */
+			var infoWindow = new naver.maps.InfoWindow({
+			    content: `<div id='\${markerId}'></div>`
+			});
 						
 			var marker = new naver.maps.Marker({
 			    map: map,
 			    position: position,
 			    icon: {
-			        content: contentString,
-			        //size: new naver.maps.Size(800,500),
-			        //origin: new naver.maps.Point(0, 0),
-			        //anchor: new naver.maps.Point(25, 26)
+			        //content: contentString,
+			        url: "http://15.165.143.75/growth/img/pin3.png",
+			        size: new naver.maps.Size(42, 42),
+			        origin: new naver.maps.Point(0, 0),
+			        anchor: new naver.maps.Point(25, 26)
 			    }
 			});
+
+			console.log(markerId)
 			
 			naver.maps.Event.addListener(marker, "click", function(e) {
-				
+				if(infoWindow.getMap()){
+					infoWindow.close();
+				}else{
+					infoWindow.setContent(drawInfoWindow(nowDataType));
+					infoWindow.open(map, marker);
+				}
 			});
 
 		}
 
-		function drawInfoWindow(type){
+
+		function drawInfoWindow(type,holeNo){
 
 			let template = ""
 
 			var data = {
-				"sec" : "0.1",
+				sec : 0.1,
 				stp : 0.1,
 				smo : 99.2,
 			    ndvi2 : 0.6,
@@ -258,7 +271,7 @@
 			console.log(data)
 
 			switch(type){
-			case "ndvi":
+			case "NDVI":
 				template = `<div class="course1 position-absolute card bg-success-100 border-success text-center" style="width:225px;">
 								<div class="text-body pb-1">
 									<div class="card-header bg-success text-white pt-1 pb-1">
@@ -268,19 +281,19 @@
 									<div class="card-body pt-2 pb-2">
 										<div class="float-left mr-5">
 											<span class="badge badge-success badge-pill">양호</span>
-											<h2 class="mb-0 font-weight-semibold">`+data.ndvi+`</h2>
+											<h2 class="mb-0 font-weight-semibold">\${data.ndvi}</h2>
 											<div class="font-size-sm text-muted">현재</div>
 										</div>
 										<div class="float-left">
 											<span class="badge badge-success badge-pill">양호</span>
-											<h2 class="mb-0 font-weight-semibold">`+data.ndvi2+`</h2>
+											<h2 class="mb-0 font-weight-semibold">\${data.ndvi2}</h2>
 											<div class="font-size-sm text-muted">예측</div>
 										</div>
 									</div>
 								</div>
 							</div>`
 					break;
-			case "weather":
+			case "기상정보":
 				template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:330px;">
 								<div class="text-body">
 									<div class="card-header bg-primary text-white pt-1 pb-1">
@@ -294,12 +307,12 @@
 											<div class="font-size-sm text-muted">기온</div>
 										</div>
 										<div class="float-left weather-box mr-3">
-											<h4 class="mb-0 font-weight-semibold">`+getWdText(data.wd)+`</h4>
+											<h4 class="mb-0 font-weight-semibold">\${getWdText(data.wd)}</h4>
 											<div class="font-size-sm text-muted">풍향</div>
 										</div>
 										<div class="float-left weather-box">
 											<h4 class="mb-0 font-weight-semibold">
-											`+data.ws+`<small class="weather-unit">m/s</small>
+											\${data.ws}<small class="weather-unit">m/s</small>
 											</h4>
 											<div class="font-size-sm text-muted">풍속</div>
 										</div>
@@ -307,19 +320,19 @@
 									<div class="text-center weather-wrap pl-2 pr-2">
 										<div class="float-left weather-box mr-3">
 											<h4 class="mb-0 font-weight-semibold">
-											`+data.humi+`<small class="weather-unit">%</small>
+											\${data.humi}<small class="weather-unit">%</small>
 											</h4>
 											<div class="font-size-sm text-muted">습도</div>
 										</div>
 										<div class="float-left weather-box mr-3">
 											<h4 class="mb-0 font-weight-semibold">
-											`+data.solar+`<small class="weather-unit">kWh</small>
+											\${data.solar}<small class="weather-unit">kWh</small>
 											</h4>
 											<div class="font-size-sm text-muted">일사</div>
 										</div>
 											<div class="float-left weather-box mr-3">
 											<h4 class="mb-0 font-weight-semibold">
-											`+data.rain+`<small class="weather-unit">mm</small>
+											\${data.rain}<small class="weather-unit">mm</small>
 											</h4>
 											<div class="font-size-sm text-muted">강수량</div>
 										</div>
@@ -327,7 +340,7 @@
 								</div>
 							</div>`
 					break;
-			case 'robot' : 
+			case '토양정보' : 
 					template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
 										<div class="text-body pb-1">
 										<div class="card-header bg-warning text-white pt-1 pb-1">
@@ -335,15 +348,15 @@
 										</div> <!--토양정보 3종-->
 										<div class="card-body pt-1 pb-2">
 											<div class="float-left mr-3">
-												<h2 class="mb-0 font-weight-semibold">`+data.smo+`<small class="weather-unit">%</small></h2>
+												<h2 class="mb-0 font-weight-semibold">\${data.smo}<small class="weather-unit">%</small></h2>
 												<div class="font-size-sm text-muted">토양 수분</div>
 											</div>
 											<div class="float-left mr-3">
-												<h2 class="mb-0 font-weight-semibold">2`+data.stp+`<small class="weather-unit">ºC</small></h2>
+												<h2 class="mb-0 font-weight-semibold">\${data.stp}<small class="weather-unit">ºC</small></h2>
 												<div class="font-size-sm text-muted">토양 온도</div>
 											</div>
 											<div class="float-left">
-												<h2 class="mb-0 font-weight-semibold">`+data.sec+`</h2>
+												<h2 class="mb-0 font-weight-semibold">\${data.sec}</h2>
 												<div class="font-size-sm text-muted">토양 양분</div>
 											</div>
 										</div>
@@ -351,8 +364,6 @@
 								</div>`
 						break;
 			}
-
-			console.log(template)
 
 			return template;
 		}
@@ -551,29 +562,29 @@
 			chartList.add(chart)
 		}
 
-		function getCurrentData(holeNo,course,dataType){
+		function getCurrentData(holeNo,courseType,type){
 			
 			let param = {
 				holeNo : holeNo,
-				course : course,
-				dataType : dataType
+				courseType : courseType,
+				type : type
 			}
 
-			/*
+			
 			$.ajax({
 				url : "/all/getCurrentData",
 				data : param,
 				success : function(result){
 					console.log(result)
 				}
-			})*/
+			})
 		}
 
-		function getChartData(holeNo,course,dataType){
+		function getChartData(holeNo,courseType,type){
 			let param = {
 				holeNo : holeNo,
-				course : course,
-				dataType : dataType
+				courseType : courseType,
+				type : type
 			}
 			
 			$.ajax({
@@ -584,7 +595,6 @@
 				}
 			})
 		}
-		
 
 		$('#holeList button,#courseType button,#dataType button,#layerType button').on('click',function(){
 			//alert($(this).text());
@@ -614,6 +624,10 @@
 			console.log(dataType)
 			//console.log(layer)
 			
+			nowHole = hole;
+			nowCourse = course;
+			nowDataType = dataType
+			
 			getCurrentData(hole,course);
 
 			setChartLayer(dataType);
@@ -621,13 +635,34 @@
 
 		var map = new naver.maps.Map('map', {
 		    center: new naver.maps.LatLng(35.59619903564453, 127.90499877929688),
-		    zoom: 16
+		    zoom: 18
 		});
 
 		map.setMapTypeId('satellite'); 
-		createMarker(35.59619903564453, 127.90499877929688,"ndvi");
+	    naver.maps.Event.addListener(map, 'click', function(e) {
+	        var coord = e.coord;
+	        var lat = coord.lat();
+	        var lng = coord.lng();
 
-		
+	        console.log('클릭한 위치의 좌표는 ' + lat + ', ' + lng + ' 입니다.');
+	    });
+		createMarker(35.5913518, 127.9020725,"ndvi");
+
+	    var bounds = new naver.maps.LatLngBounds(
+            new naver.maps.LatLng(35.5923333, 127.9004793),
+            new naver.maps.LatLng(35.5903572, 127.9035745)
+        );
+
+	    var groundOverlay = new naver.maps.GroundOverlay(
+    	    "/resources/assets/img/1.png",
+    	    bounds,
+    	    {
+    	        opacity: 0.5,
+    	        clickable: false
+    	    }
+    	);
+
+    	groundOverlay.setMap(map);
 	})
 	</script>
 	<style>
@@ -637,3 +672,73 @@
 	</style>
 </div>
 <!-- /main content -->
+
+<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg">
+			<!-- Sidebar content -->
+			<div class="sidebar-content">
+
+				<!-- Header -->
+				<div class="sidebar-section sidebar-section-body d-flex align-items-center">
+					<h5 class="mb-0 font-weight-bold">검색</h5>
+					<div class="ml-auto">
+						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
+							<i class="icon-transmission"></i>
+						</button>
+
+						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
+							<i class="icon-cross2"></i>
+						</button>
+					</div>
+				</div>
+				<!-- /header -->
+
+
+				<!-- Sidebar search -->
+				<div class="sidebar-section ">
+					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+						<li class="nav-item-header">설정</li>
+						<li class="nav-item text-center pl-2 pr-2">
+							<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+								<label class="btn btn-light active">
+									<input type="radio" name="options" id="option1" autocomplete="off" checked="">
+									전체
+								</label>
+
+								<label class="btn btn-light">
+									<input type="radio" name="options" id="option2" autocomplete="off">
+									개별
+								</label>
+							</div>
+						</li>
+					</ul>
+
+
+					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+						<li class="nav-item-header">기간</li>
+						<li class="nav-item pl-3 pr-3">
+							<!--달력 플러그인-->
+							<div class="input-group">
+								<span class="input-group-prepend">
+									<span class="input-group-text"><i class="icon-calendar22"></i></span>
+								</span>
+								<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+								
+							</div>
+						</li>
+						
+					</ul>
+
+					<ul class="nav nav-sidebar my-2">
+						<li class="nav-item pl-3 pr-3">
+							<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
+						</li>
+					</ul>
+
+					
+				</div>
+				<!-- /sidebar search -->
+
+			</div>
+			<!-- /sidebar content -->
+
+		</div>

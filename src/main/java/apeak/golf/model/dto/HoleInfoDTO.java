@@ -14,6 +14,10 @@ public class HoleInfoDTO {
 	private String hole_Name;
 	private double lat;
 	private double lon;
+	private double startLat;
+	private double startLon;
+	private double endLat;
+	private double endLon;
 	
 	public List<SensorInfoDTO> sensorInfoList;
 	public List<RobotInfoDTO> robotInfoList;

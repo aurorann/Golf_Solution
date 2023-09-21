@@ -23,6 +23,16 @@ public class NdviDataDAO {
 	public List<HoleInfoDTO> getNdviData(EgovMap paramMap){
 		return session.selectList("dashboardMapper.ndviData", paramMap);
 	}//getndvidata() end
+
+
+	public List<EgovMap> getNdviDataList(Map<String, Object> param) {
+		return session.selectList("allCourseMapper.getNdviDataList",param);
+	}
+
+
+	public EgovMap getCurrentNdviData(Map<String, Object> param) {
+		return session.selectOne("allCourseMapper.getCurrentNdviData",param);
+	}
 	
 //	public List<EgovMap> getNdviData(){
 //		return session.selectList("eachCourseMapper.ndviData");

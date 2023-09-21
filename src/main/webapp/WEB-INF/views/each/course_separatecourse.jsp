@@ -43,6 +43,9 @@
 
 <script>
 
+
+let holeCount = 0;
+
 $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
    var category = $(".categorybt.active").val();
@@ -81,7 +84,7 @@ function getAllData(category){
             console.log(data);
             console.log(data.list1.length);
             updatedata(data);
-    		
+            holeCount = data.list1.length
 		},
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
@@ -93,7 +96,7 @@ function getAllData(category){
 // 	    	$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
 // 			$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
 
-			
+			/*
 			var newSliderPct = 0.7; // adjust this value to your needs
 			$(".twentytwenty-container").each(function(){
 			  var container = $(this);
@@ -102,6 +105,30 @@ function getAllData(category){
 			// Trigger the resize event
 			$(window).trigger("resize.twentytwenty");
 			//$().adjustSlider()
+			*/
+			
+			
+			for(let i=0;i<holeCount;i++){
+				var map = new naver.maps.Map('map'+i, {
+				    center: new naver.maps.LatLng(35.59619903564453, 127.90499877929688),
+				    zoom: 18
+				});
+				map.setMapTypeId('satellite'); 
+
+				const imgNode = document.getElementById("img"+i);
+
+				imgNode.onload = function () {
+				  console.log("image load complete");
+				  $("#img"+i).closest(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
+				  $("#img"+i).closest(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
+				  //$("#img"+i).closest(".imageZone3").hide();
+				  if(i==17){
+					  setTimeout(() => $(".imageZone3").hide(), 100);
+				  }
+				};
+			}
+
+
 	    }
 		
 	})//ajax end
@@ -112,72 +139,80 @@ let datatemplate = "";
 function updatedata(data){
 	for(var i=0; i<data.list1.length; i++){
 		datatemplate += `
-						<div class="col-lg-3">
-							<div class="card imageZone">
-								<div class="card-header bg-white text-dark header-elements-inline">
-									<h6 class="card-title font-weight-semibold">\${data.list2[i].hole_Name}</h6>
-									<div>
-										<i class="fas fa-seedling mr-2"></i> 
-										<span class="badge badge-success badge-pill"><i class="fas fa-camera mr-2"></i>\${parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2)}</span>
-										<span class="badge badge-warning badge-pill"><i class="fas fa-tint mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2)}<small class="weather-unit">%</small></span>
-										<span class="badge badge-pink badge-pill"><i class="fas fa-thermometer-half mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2)}<small class="weather-unit">ºC</small></span>
-									</div>
+			<div class="col-lg-3">
+				<div class="card imageZone">
+					<div class="card-header bg-white text-dark header-elements-inline">
+						<h6 class="card-title font-weight-semibold">\${data.list2[i].hole_Name}</h6>
+						<div>
+							<i class="fas fa-seedling mr-2"></i> 
+							<span class="badge badge-success badge-pill"><i class="fas fa-camera mr-2"></i>\${parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2)}</span>
+							<span class="badge badge-warning badge-pill"><i class="fas fa-tint mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2)}<small class="weather-unit">%</small></span>
+							<span class="badge badge-pink badge-pill"><i class="fas fa-thermometer-half mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2)}<small class="weather-unit">ºC</small></span>
+						</div>
+					</div>
+	
+					<div class="card-body pb-0">
+						<!--이미지-->
+						<div class="col-xl-12 col-md-12 col-sm-12 p-0 mb-3 imageZone2">
+							<div id="map\${i}" style="height:236px"></div>
+						</div>
+						<div class="col-xl-12 col-md-12 col-sm-12 p-0 mb-3 imageZone3">
+							<div class="twentytwenty-wrapper twentytwenty-horizontal">
+								<div class="twentytwenty-container">
+									<img src="/resources/assets/img/ndvi-1.png" class="ndvi-img twentytwenty-before">
+									<img src="/resources/assets/img/ndvi-1.png" class="ndvi-img twentytwenty-after" id="img\${i}">
 								</div>
-			
-								<div class="card-body pb-0">
-									<!--이미지-->
-									<div class="col-xl-12 col-md-12 col-sm-12 p-0 mb-3 imageZone2">
-										<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr" width="100%" height="233" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-									</div>
-									<!--이미지 end-->
-									<div class="btn-group mr-2">
-										<button type="button" class="btn btn-light active" id="grow" onclick="change(event)">생육</button>
-										<button type="button" class="btn btn-light" id="temp" onclick="change(event)">열</button>
-										<button type="button" class="btn btn-light" id="moisture" onclick="change(event)">습도</button>
-									</div>
-
-									<span class="btn-group mr-2">
-										<button type="button" class="btn btn-light" id="ndvi" onclick="change(event)">NDVI 비교</button>
-									</span>
-			
-									<span class="float-right">
-										<button type="button" class="btn btn-primary-100 border-primary text-primary detailreport" value="\${data.list1[i].hole_No}">상세정보</button>
-									</span>
-			
-									<!--Chart card-->
-									<div class="card mt-2 mb-0 card-collapsed" id = "chartstart" style="border:0; box-shadow:none;">	
-										<div class="collapse">
-											<div class="card-chart">
-												<div id="layer-card-chart" class="collapse show" style="">
-													<div class="card-body chart-card scrolled">
-														<div class="chart-container">
-															<div class="chart has-fixed-height" id="line_multiple2" style="height: 440px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1694754372287">
-																<div style="position: relative; width: 150px; height: 440px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
-																	<canvas data-zr-dom-id="zr_0" width="187" height="550" style="position: absolute; left: 0px; top: 0px; width: 150px; height: 440px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
-																</div>
-																<div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(0, 0, 0, 0.75); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 13px / 20px &quot;Noto Sans KR&quot;; padding: 10px 15px; left: 278px; top: 131px; pointer-events: none;">
-																	Jan<br>
-																	<span class="badge badge-mark mr-2" style="border-color: #f17a52"></span>Limitless: 63 sales<br><span class="badge badge-mark mr-2" style="border-color: #03A9F4"></span>Londinium: 60 sales
-																</div>
-															</div>
-														</div>
+							</div>
+						</div>
+						<!--이미지 end-->
+						<div class="btn-group mr-2">
+							<button type="button" class="btn btn-light active grow" onclick="change(event)">생육</button>
+							<button type="button" class="btn btn-light temp" onclick="change(event)">열</button>
+							<button type="button" class="btn btn-light moisture" onclick="change(event)">습도</button>
+						</div>
+	
+						<span class="btn-group mr-2">
+							<button type="button" class="btn btn-light ndvi" onclick="change(event)">NDVI 비교</button>
+						</span>
+	
+						<span class="float-right">
+							<button type="button" class="btn btn-primary-100 border-primary text-primary detailreport" value="\${data.list1[i].hole_No}">상세정보</button>
+						</span>
+	
+						<!--Chart card-->
+						<div class="card mt-2 mb-0 card-collapsed" id = "chartstart" style="border:0; box-shadow:none;">	
+							<div class="collapse">
+								<div class="card-chart">
+									<div id="layer-card-chart" class="collapse show" style="">
+										<div class="card-body chart-card scrolled">
+											<div class="chart-container">
+												<div class="chart has-fixed-height" id="line_multiple2" style="height: 440px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1694754372287">
+													<div style="position: relative; width: 150px; height: 440px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+														<canvas data-zr-dom-id="zr_0" width="187" height="550" style="position: absolute; left: 0px; top: 0px; width: 150px; height: 440px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+													</div>
+													<div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(0, 0, 0, 0.75); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 13px / 20px &quot;Noto Sans KR&quot;; padding: 10px 15px; left: 278px; top: 131px; pointer-events: none;">
+														Jan<br>
+														<span class="badge badge-mark mr-2" style="border-color: #f17a52"></span>Limitless: 63 sales<br><span class="badge badge-mark mr-2" style="border-color: #03A9F4"></span>Londinium: 60 sales
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="list-icons">
-											<a class="list-icons-item chart-close" data-action="collapse" onclick="spread(event)" id="fffff"></a>
-										</div>
-
-									
 									</div>
-									<!--Chart card end-->
-
-								
 								</div>
 							</div>
+							<div class="list-icons">
+								<a class="list-icons-item chart-close" data-action="collapse" onclick="spread(event)" id="fffff"></a>
+							</div>
+	
+						
 						</div>
-				    	`;
+						<!--Chart card end-->
+	
+					
+					</div>
+				</div>
+			</div>
+	    `;
 	}//for end
 	let dataElement = document.querySelector('.row.data');
 	dataElement.innerHTML = datatemplate;
@@ -188,31 +223,15 @@ function updatedata(data){
 }//updatedata() end
 
 function change(event){
+
+	var targets = event.target;
 	
-	let id = "";
-	let targets = event.target;
-	console.log($(targets).attr('id'))
-	
-	console.log($(targets).closest('.imageZone').find('.card-title').html())
-	/*
-	.closest('.imageZone').find('').html('변경할요소')
-	//상위 탐색해서 조건에 일치하는 첫번쨰 부모를 가져온다.
-	.parent()
-	.next()
-	.prev()
-	.child()*/
-	
-    if($(targets).attr('id') == 'ndvi'){
-    	$(targets).closest('.imageZone').find('.imageZone2').html(`
-																<div class="twentytwenty-wrapper twentytwenty-horizontal">
-																	<div class="twentytwenty-container" style="height:200px;">
-																		<img src="/resources/assets/img/ndvi-1.png" class="ndvi-img twentytwenty-before">
-																		<img src="/resources/assets/img/ndvi-1.png" class="ndvi-img twentytwenty-after">
-																	</div>
-																</div>   			
-    															`)
-    }else if($(targets).attr('id') == 'grow'){
-    	$(targets).closest('.imageZone').find('.imageZone2').html(`<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr" width="100%" height="233" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`)
+    if($(targets).hasClass('ndvi')){
+    	$(targets).closest('.imageZone').find('.imageZone2').hide();
+    	$(targets).closest('.imageZone').find('.imageZone3').show();
+    }else if($(targets).hasClass('grow') || $(targets).hasClass('temp') || $(targets).hasClass('moisture')){
+    	$(targets).closest('.imageZone').find('.imageZone2').show();
+    	$(targets).closest('.imageZone').find('.imageZone3').hide();
     }
 	
 }//change end

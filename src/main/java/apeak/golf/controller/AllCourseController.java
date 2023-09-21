@@ -1,11 +1,14 @@
 package apeak.golf.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import apeak.golf.service.AllCourseService;
@@ -19,14 +22,22 @@ public class AllCourseController {
 	@Autowired
 	private AllCourseService allCourseService;
 
-	@RequestMapping("/course_allcourse")
+	@GetMapping("/course_allcourse")
 	private String courseAllcourse() {
 		return "/all/course_allcourse";
 	}
 	
-	@RequestMapping("/test")
+	@GetMapping("/getCurrentData")
 	@ResponseBody
-	private List<EgovMap> test(){
-		return allCourseService.test();
+	public EgovMap getCurrentData(@RequestParam Map<String, Object> param){
+		log.debug(param.toString());
+		return allCourseService.getCurrentData(param);
+	}
+	
+	@GetMapping("/getChartData")
+	@ResponseBody
+	public List<EgovMap> getChartData(@RequestParam Map<String, Object> param){
+		log.debug(param.toString());
+		return allCourseService.getChartData(param);
 	}
 }
