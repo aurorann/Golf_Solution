@@ -164,8 +164,6 @@
 	    updateDates(0);
 	    console.log("페이지 로딩시 기준 : " + selectDate);
 	    console.log("페이지 로딩시 전날 : " + beforeDate);
-	    console.log("페이지 로딩시 기준2 : " + selectDateStr);
-	    console.log("페이지 로딩시 전날2 : " + beforeDateStr);
 	
 	    //페이지 다이렉트 진입시와 개별코스에서 상세정보로 진입할때의 데이터 값 접근
 	    if(value != null){
@@ -198,6 +196,8 @@
 	    console.log("전날 : " + beforeDate);
 	}
 	
+	var todayStr = new Date().toISOString().substring(0, 10);
+	
 	//2-1.뒤버튼 클릭시 기준날짜를 1일 빼기
 	$(".beforeday").click(function(){
 	    updateDates(-1);
@@ -209,9 +209,15 @@
 	//2-2.앞버튼 클릭시 기준날짜를 1일 더하기
 	$(".nextday").click(function(){
 	    updateDates(1);
-        var hole = $(".holebt.active").val();
-        var category = $(".categorybt.active").val();
-        getData(hole, category, selectDate, beforeDate);	
+	    
+		if(selectDateStr > todayStr){
+			alert("더 이상의 데이터는 없습니다");
+			$('.currentDate').val(todayStr)
+		}else{
+	        var hole = $(".holebt.active").val();
+	        var category = $(".categorybt.active").val();
+	        getData(hole, category, selectDate, beforeDate);	
+		}//if end
 	})
 	
 	//2-3.오늘버튼 클릭시 기준날짜를 오늘로
@@ -241,10 +247,16 @@
 	//3.검색버튼을 클릭시켜 데이터를 갱신한다.
 	$(".searchDate").click(function(){
 		updateDates(0);
-        var hole = $(".holebt.active").val();
-        var category = $(".categorybt.active").val();
-        //alert("기준 : " + selectDate + " 전날 : " + beforeDate)
-        getData(hole, category, selectDate, beforeDate);		
+		
+		if(selectDateStr > todayStr){
+			alert("더 이상의 데이터는 없습니다");
+			$('.currentDate').val(todayStr)
+		}else{
+	        var hole = $(".holebt.active").val();
+	        var category = $(".categorybt.active").val();
+	        //alert("기준 : " + selectDate + " 전날 : " + beforeDate)
+	        getData(hole, category, selectDate, beforeDate);		
+		}//if end
 	})
 
 
@@ -286,496 +298,929 @@
 	}//getData end
 	
 	function updatePage(data) {
-    
-	    let content = "";
-	    
-	    content += `
-					<!-- Basic card -->
-					<div class="card">
-						<div class="card-header">
-							<h5 class="card-title holename">
-								\${data.list4[0].hole_Name}
-								<div class="btn-group ml-3">
-									<button type="button" class="btn btn-light">생육</button>
-									<button type="button" class="btn btn-light">열</button>
-									<button type="button" class="btn btn-light">습도</button>
-								</div>
-								<small class="mr-2 mt-1 font-weight-bold float-right">Update : 2023.08.16 11:12</small>
-							</h5>
-						</div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-lg-3">
-									<iframe
-										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr"
-										width="100%" height="350" style="border: 0;" allowfullscreen="" loading="lazy"
-										referrerpolicy="no-referrer-when-downgrade"></iframe>
-								</div>
-			
-			                    <div class="col-lg-9">
-			                        <div class="row">
-			                            <!--NDVI-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">NDVI</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list2[1].ndviData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list2[1].ndviData.ndvi.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list2[0].ndviData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list2[0].ndviData.ndvi.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="ndvi_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_ndvi"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--NDVI end-->
-			
-			                            <!--토양수분-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">토양수분</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.smo.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list3[0].soilData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[0].soilData.smo.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="smo_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_smo"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--토양수분 end-->
-			
-			                            <!--토양온도-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">토양온도</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.stp.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list3[0].soilData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[0].soilData.stp.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="stp_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_stp"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--토양온도 end-->
-			
-			                            <!--토양양분-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">토양양분</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.sec.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list3[0].soilData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[0].soilData.sec.toFixed(3))}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="sec_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_sec"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--토양양분 end-->
-			
-			                            <!--기온-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">기온</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.temp}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.temp}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="temp_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_temp"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--기온 end-->
-			
-			                            <!--강수량-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">강수량</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.rain}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.rain}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="rain_data"></small></strong>
-			                                                    <i class="textarrowcolor_rain"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--강수량 end-->
-			
-			                            <!--풍향-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">풍향</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.wd}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6 mb-4">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.wd}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--풍향 end-->
-			
-			                            <!--풍속-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">풍속</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.ws}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.ws}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="ws_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_ws"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--풍속 end-->
-			
-			                            <!--습도-->
-			                            <div class="col-lg-2">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">습도</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.humi}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.humi}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="humi_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_humi text-primary icon-arrow-up13"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--습도 end-->
-			
-			                            <!--일조-->
-			                            <div class="col-lg-6">
-			                                <div class="card border-top-success rounded-top-0">
-			                                    <div class="card-header">
-			                                        <h6 class="card-title font-weight-bold">일조</h6>
-			                                    </div>
-			                                    <div class="card-body">
-			                                        <div class="row">
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.solar}</h2>
-			                                                        <div class="font-size-sm text-muted">전날</div>
-			                                                    </div>
-			                                                    
-			                                                </div>
-			                                            </div>
-			                                            <div class="col-lg-6">
-			                                                <div class="row">
-			                                                    <div class="col-lg-12 text-center p-0">
-			                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
-			                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.solar}</h2>
-			                                                        <div class="font-size-sm text-muted">기준</div>
-			                                                    </div>
-			                                                </div>
-			                                            </div>
-			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong class="solar_data"></strong>
-			                                                    <i class="textarrowcolor_solar text-danger icon-arrow-down132"></i>
-			                                                </div>
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <!--일조 end-->
-			
-			                        </div>
-			                    </div>
-			
-			
-								<div class="col-lg-12">
-									<div class="card-header">
-										<h6 class="card-title font-weight-bold">차트 보기</h6>
-									</div>
-			
-									<div class="chart-container">
-										<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
-									</div>
-								</div>
-			
-							</div>
-			
-			
-						</div>
-					</div>
-					`
-					
-		let dataElement = document.querySelector('.contentdata');
-		dataElement.innerHTML = content;
 		
-		//NDVI 데이터
-	    var ndvi_today = Number(data.list2[0].ndviData.ndvi.toFixed(3));
-	    var ndvi_yesterday = Number(data.list2[1].ndviData.ndvi.toFixed(3));
-	    //console.log("ndvi_today : "+ndvi_today)
-
-	    difference(ndvi_today, ndvi_yesterday, ".ndvi_data", ".textarrowcolor_ndvi");
-
-	    
-		//토양수분 데이터
-	    var smo_today = Number(data.list3[0].soilData.smo.toFixed(3));
-	    var smo_yesterday = Number(data.list3[1].soilData.smo.toFixed(3));
-	    
-	    difference(smo_today, smo_yesterday, ".smo_data", ".textarrowcolor_smo");
-
-	    
-		//토양온도 데이터
-	    var stp_today = Number(data.list3[0].soilData.stp.toFixed(3));
-	    var stp_yesterday = Number(data.list3[1].soilData.stp.toFixed(3));
+		if(!data || data.list1.length == 0 || data.list2.length == 0 || data.list3.length == 0 || data.list1.length == 1 || data.list2.length == 1 || data.list3.length == 1){
+		    let content = "";
 		    
-	    difference(stp_today, stp_yesterday, ".stp_data", ".textarrowcolor_stp");
+		    content += `
+						<!-- Basic card -->
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-title holename">
+									\${data.list4[0].hole_Name}
+									<div class="btn-group ml-3">
+										<button type="button" class="btn btn-light">생육</button>
+										<button type="button" class="btn btn-light">열</button>
+										<button type="button" class="btn btn-light">습도</button>
+									</div>
+									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
+								</h5>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-3">
+										<iframe
+											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr"
+											width="100%" height="350" style="border: 0;" allowfullscreen="" loading="lazy"
+											referrerpolicy="no-referrer-when-downgrade"></iframe>
+									</div>
+				
+				                    <div class="col-lg-9">
+				                        <div class="row">
+				                            <!--NDVI-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">NDVI</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="ndvi_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_ndvi"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--NDVI end-->
+				
+				                            <!--토양수분-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">토양수분</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+			                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="smo_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_smo"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--토양수분 end-->
+				
+				                            <!--토양온도-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">토양온도</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="stp_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_stp"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--토양온도 end-->
+				
+				                            <!--토양양분-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">토양양분</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="sec_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_sec"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--토양양분 end-->
+				
+				                            <!--기온-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">기온</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="temp_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_temp"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--기온 end-->
+				
+				                            <!--강수량-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">강수량</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="rain_data"></small></strong>
+				                                                    <i class="textarrowcolor_rain"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--강수량 end-->
+				
+				                            <!--풍향-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">풍향</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6 mb-4">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--풍향 end-->
+				
+				                            <!--풍속-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">풍속</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="ws_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_ws"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--풍속 end-->
+				
+				                            <!--습도-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">습도</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="humi_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_humi"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--습도 end-->
+				
+				                            <!--일조-->
+				                            <div class="col-lg-6">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">일조</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">-</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">` + selectDateStr + `</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="solar_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_solar"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--일조 end-->
+				
+				                        </div>
+				                    </div>
+				
+				
+									<div class="col-lg-12">
+										<div class="card-header">
+											<h6 class="card-title font-weight-bold">차트 보기</h6>
+										</div>
+				
+										<div class="chart-container">
+											<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
+										</div>
+									</div>
+				
+								</div>
+				
+				
+							</div>
+						</div>
+						`
 
-	    
-	    //토양양분 데이터
-	    var sec_today = Number(data.list3[0].soilData.sec.toFixed(3));
-	    var sec_yesterday = Number(data.list3[1].soilData.sec.toFixed(3));
-	    	    
-	    difference(sec_today, sec_yesterday, ".sec_data", ".textarrowcolor_sec");
+				let dataElement = document.querySelector('.contentdata');
+				dataElement.innerHTML = content;
+		}else{
+			
+		    let content = "";
+		    
+		    content += `
+						<!-- Basic card -->
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-title holename">
+									\${data.list4[0].hole_Name}
+									<div class="btn-group ml-3">
+										<button type="button" class="btn btn-light">생육</button>
+										<button type="button" class="btn btn-light">열</button>
+										<button type="button" class="btn btn-light">습도</button>
+									</div>
+									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
+								</h5>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-lg-3">
+										<iframe
+											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr"
+											width="100%" height="350" style="border: 0;" allowfullscreen="" loading="lazy"
+											referrerpolicy="no-referrer-when-downgrade"></iframe>
+									</div>
+				
+				                    <div class="col-lg-9">
+				                        <div class="row">
+				                            <!--NDVI-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">NDVI</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list2[1].ndviData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list2[1].ndviData.ndvi.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list2[0].ndviData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list2[0].ndviData.ndvi.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="ndvi_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_ndvi"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--NDVI end-->
+				
+				                            <!--토양수분-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">토양수분</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.smo.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list3[0].soilData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[0].soilData.smo.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="smo_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_smo"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--토양수분 end-->
+				
+				                            <!--토양온도-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">토양온도</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.stp.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list3[0].soilData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[0].soilData.stp.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="stp_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_stp"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--토양온도 end-->
+				
+				                            <!--토양양분-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">토양양분</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.sec.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list3[0].soilData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[0].soilData.sec.toFixed(3))}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="sec_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_sec"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--토양양분 end-->
+				
+				                            <!--기온-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">기온</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.temp}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.temp}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="temp_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_temp"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--기온 end-->
+				
+				                            <!--강수량-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">강수량</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.rain}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.rain}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="rain_data"></small></strong>
+				                                                    <i class="textarrowcolor_rain"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--강수량 end-->
+				
+				                            <!--풍향-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">풍향</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.wd}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6 mb-4">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.wd}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--풍향 end-->
+				
+				                            <!--풍속-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">풍속</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.ws}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.ws}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="ws_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_ws"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--풍속 end-->
+				
+				                            <!--습도-->
+				                            <div class="col-lg-2">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">습도</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.humi}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.humi}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="humi_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_humi"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--습도 end-->
+				
+				                            <!--일조-->
+				                            <div class="col-lg-6">
+				                                <div class="card border-top-success rounded-top-0">
+				                                    <div class="card-header">
+				                                        <h6 class="card-title font-weight-bold">일조</h6>
+				                                    </div>
+				                                    <div class="card-body">
+				                                        <div class="row">
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.solar}</h2>
+				                                                        <div class="font-size-sm text-muted">전날</div>
+				                                                    </div>
+				                                                    
+				                                                </div>
+				                                            </div>
+				                                            <div class="col-lg-6">
+				                                                <div class="row">
+				                                                    <div class="col-lg-12 text-center p-0">
+				                                                        <span class="text-secondary">\${data.list1[0].weatherData.tm.substring(0, 10)}</span>
+				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[0].weatherData.solar}</h2>
+				                                                        <div class="font-size-sm text-muted">기준</div>
+				                                                    </div>
+				                                                </div>
+				                                            </div>
+				                                            <div class="mt-2 mb-0 col-lg-12 text-center">
+				                                                <div class="">전날보다 <strong class="solar_data"><small class="weather-unit">%</small></strong>
+				                                                    <i class="textarrowcolor_solar"></i>
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                            <!--일조 end-->
+				
+				                        </div>
+				                    </div>
+				
+				
+									<div class="col-lg-12">
+										<div class="card-header">
+											<h6 class="card-title font-weight-bold">차트 보기</h6>
+										</div>
+				
+										<div class="chart-container">
+											<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
+										</div>
+									</div>
+				
+								</div>
+				
+				
+							</div>
+						</div>
+						`
 
-	    
-	    //기온 데이터
-	    var temp_today = data.list1[0].weatherData.temp;
-	    var temp_yesterday = data.list1[1].weatherData.temp;
+				let dataElement = document.querySelector('.contentdata');
+				dataElement.innerHTML = content;
+				
+				//NDVI 데이터
+				var ndvi_today = Number(data.list2[0].ndviData.ndvi.toFixed(3));
+				var ndvi_yesterday = Number(data.list2[1].ndviData.ndvi.toFixed(3));
+				
+				difference(ndvi_today, ndvi_yesterday, ".ndvi_data", ".textarrowcolor_ndvi");
+				
+				   
+				//토양수분 데이터
+				var smo_today = Number(data.list3[0].soilData.smo.toFixed(3));
+				var smo_yesterday = Number(data.list3[1].soilData.smo.toFixed(3));
+				   
+				difference(smo_today, smo_yesterday, ".smo_data", ".textarrowcolor_smo");
+				
+				   
+				//토양온도 데이터
+				var stp_today = Number(data.list3[0].soilData.stp.toFixed(3));
+				var stp_yesterday = Number(data.list3[1].soilData.stp.toFixed(3));
+				    
+				difference(stp_today, stp_yesterday, ".stp_data", ".textarrowcolor_stp");
+				
+				   
+				//토양양분 데이터
+				var sec_today = Number(data.list3[0].soilData.sec.toFixed(3));
+				var sec_yesterday = Number(data.list3[1].soilData.sec.toFixed(3));
+					    
+				difference(sec_today, sec_yesterday, ".sec_data", ".textarrowcolor_sec");
+				
+				
+				//기온 데이터
+				var temp_today = data.list1[0].weatherData.temp;
+				var temp_yesterday = data.list1[1].weatherData.temp;
+				
+				difference(temp_today, temp_yesterday, ".temp_data", ".textarrowcolor_temp");
+				
+				
+				//풍속 데이터
+				var ws_today = data.list1[0].weatherData.ws;
+				var ws_yesterday = data.list1[1].weatherData.ws;
+				
+				difference(ws_today, ws_yesterday, ".ws_data", ".textarrowcolor_ws");
+				
+				
+				//습도 데이터
+				var humi_today = data.list1[0].weatherData.humi;
+				var humi_yesterday = data.list1[1].weatherData.humi;
+				
+				difference(humi_today, humi_yesterday, ".humi_data", ".textarrowcolor_humi");
+				
+				
+				//강수량 데이터
+				var rain_today = data.list1[0].weatherData.rain;
+				var rain_yesterday = data.list1[1].weatherData.rain;
+				
+				difference(rain_today, rain_yesterday, ".rain_data", ".textarrowcolor_rain");
+				
+				
+				//일조 데이터
+				var solar_today = data.list1[0].weatherData.solar;
+				var solar_yesterday = data.list1[1].weatherData.solar;
+				
+				difference(solar_today, solar_yesterday, ".solar_data", ".textarrowcolor_solar");
+						
+		}//if end
+	
+    
 
-	    difference(temp_today, temp_yesterday, ".temp_data", ".textarrowcolor_temp");
-	    
-	    
-	    //풍속 데이터
-	    var ws_today = data.list1[0].weatherData.ws;
-	    var ws_yesterday = data.list1[1].weatherData.ws;
-
-	    difference(ws_today, ws_yesterday, ".ws_data", ".textarrowcolor_ws");
-	    
-	    
-	    //습도 데이터
-	    var humi_today = data.list1[0].weatherData.humi;
-	    var humi_yesterday = data.list1[1].weatherData.humi;
-
-	    difference(humi_today, humi_yesterday, ".humi_data", ".textarrowcolor_humi");
-	    
-	    
-	    //강수량 데이터
-	    var rain_today = data.list1[0].weatherData.rain;
-	    var rain_yesterday = data.list1[1].weatherData.rain;
-
-	    difference(rain_today, rain_yesterday, ".rain_data", ".textarrowcolor_rain");
-	    
-	    
-	    //일조 데이터
-	    var solar_today = data.list1[0].weatherData.solar;
-	    var solar_yesterday = data.list1[1].weatherData.solar;
-
-	    difference(solar_today, solar_yesterday, ".solar_data", ".textarrowcolor_solar");
 	    
 	}
 	
@@ -844,7 +1289,10 @@
     //검색 결과 테이블 추가
 	function searchResult(data){
 		let result = "";
-		if(data == null || data == undefined || data.length == 0){
+		alert(Object.keys(data).length)
+		alert(data.list1.length)
+		console.log(typeof data)
+		if(!data|| data.list1.length == 0 || data.list2.length == 0){
 			result += `
 	            <tr>
 	                <td colspan=7>해당 데이터가 없습니다</td>
@@ -872,6 +1320,17 @@
 	//달력 오늘날짜 설정
     document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
     
+	//현재 날짜 yyyy-mm-dd hh:mm:ss으로 표출
+    function formatDate(date) {
+    	  var yyyy = date.getFullYear();
+    	  var mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so we add 1
+    	  var dd = String(date.getDate()).padStart(2, '0');
+    	  var hh = String(date.getHours()).padStart(2, '0');
+    	  var min = String(date.getMinutes()).padStart(2, '0');
+    	  var ss = String(date.getSeconds()).padStart(2, '0');
+
+    	  return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
+    	}
 	
 
 
