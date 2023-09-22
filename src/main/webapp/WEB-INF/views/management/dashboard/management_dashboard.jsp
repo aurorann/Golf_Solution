@@ -36,8 +36,8 @@
 				</div>
 				<div class="btn-group float-right mr-2">
 					<button type="button" class="btn btn-light">관리순위</button>
-					<button type="button" class="btn btn-light active">오름차순</button>
-					<button type="button" class="btn btn-light">내림차순</button>
+					<button type="button" class="btn btn-light ASC">오름차순</button>
+					<button type="button" class="btn btn-light DESC">내림차순</button>
 				</div>
 				<h6 class="mr-2 font-weight-semibold float-right ml-2 mt-1">정렬</h6>
 
@@ -297,5 +297,19 @@ function updatedata(data){
 	dataElement.innerHTML = datatemplate;
 
 }//updatedata() end
+
+
+$(".ASC").click(function() {
+    data.list1.sort((a, b) => a.hole_Name.localeCompare(b.hole_Name));
+    updatedata(data);
+    return false;
+})
+
+$(".DESC").click(function() {
+    data.list1.sort((a, b) => b.hole_Name.localeCompare(a.hole_Name));
+    updatedata(data);
+    return false;
+})
+
 
 </script>
