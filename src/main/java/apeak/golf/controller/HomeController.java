@@ -21,6 +21,6 @@ public class HomeController {
 		
 		homeService.test();
 		
-		return "home";
+		return "/all/course_allcourse";
 	}
 }

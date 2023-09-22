@@ -67,11 +67,17 @@
         this.buttonClasses = 'btn btn-sm';
         this.applyButtonClasses = 'btn-primary';
         this.cancelButtonClasses = 'btn-light';
+        
+        moment.updateLocale(moment.locale(), {
+            longDateFormat: {
+                L: 'YYYY-MM-DD'
+            }
+        });
 
         this.locale = {
             direction: 'ltr',
             format: moment.localeData().longDateFormat('L'),
-            separator: ' - ',
+            separator: ' ~ ',
             applyLabel: 'Apply',
             cancelLabel: 'Cancel',
             weekLabel: 'W',
@@ -704,7 +710,7 @@
                 html += '<th></th>';
             }
 
-            var dateHtml = this.locale.monthNames[calendar[1][1].month()] + calendar[1][1].format(" YYYY");
+            var dateHtml = calendar[1][1].format("YYYY ")+this.locale.monthNames[calendar[1][1].month()];
 
             if (this.showDropdowns) {
                 var currentMonth = calendar[1][1].month();
