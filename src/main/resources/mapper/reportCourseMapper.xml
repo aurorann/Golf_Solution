@@ -91,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="weatherData" parameterType="map" resultMap="holeInfoMap2">
 		SELECT * FROM SENSOR_INFO S
 		JOIN WEATHER_DATA W ON S.SENSOR_NO = W.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		AND W.TM BETWEEN #{beforeDate} AND #{selectDate}
 		ORDER BY TM DESC
 	</select>
 	
@@ -110,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="ndviData" parameterType="map" resultMap="holeInfoMap3">
 		SELECT * FROM SENSOR_INFO S
 		JOIN NDVI_DATA N ON S.SENSOR_NO = N.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		AND N.TM BETWEEN  #{beforeDate} AND #{selectDate}
 		ORDER BY TM DESC
 	</select>
 	 
@@ -117,6 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="soilData" parameterType="map" resultMap="holeInfoMap4">
 		SELECT * FROM ROBOT_INFO R
 		JOIN SOIL_DATA S ON R.ROBOT_NO = S.ROBOT_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		AND S.TM BETWEEN #{beforeDate} AND #{selectDate}
 		ORDER BY TM DESC
 	</select>
 	 

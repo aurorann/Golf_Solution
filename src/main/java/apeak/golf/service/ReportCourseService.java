@@ -40,10 +40,12 @@ public class ReportCourseService {
 //		return sensorinfodao.test();
 //	}
 	
-	public EgovMap getdata(String hole, String category) {
+	public EgovMap getdata(String hole, String category, String selectDate, String beforeDate) {
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("hole", hole);
 		paramMap.put("category", category);
+		paramMap.put("selectDate", selectDate);
+		paramMap.put("beforeDate", beforeDate);
 		
 		List<HoleInfoDTO> list1 = sensorinfodao.getweatherdata(paramMap);
 		List<HoleInfoDTO> list2 = sensorinfodao.getndvidata(paramMap);

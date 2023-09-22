@@ -80,8 +80,10 @@ public class ReportCourseController {
 	@ResponseBody
 	@RequestMapping(value = "/course_report_ajax", method = RequestMethod.GET)
 	public EgovMap courseReportAjax(@RequestParam(value="hole",required=false) String hole, 
-									@RequestParam(value="category",required=false) String category) {
-		return reportCourseService.getdata(hole, category);
+									@RequestParam(value="category",required=false) String category, 
+									@RequestParam(value="selectDate",required=false) String selectDate, 
+									@RequestParam(value="beforeDate",required=false) String beforeDate) {
+		return reportCourseService.getdata(hole, category, selectDate, beforeDate);
 	}
 	
 	

@@ -811,9 +811,9 @@
 	    $(element).text(difference.toFixed(2));
 
 	    if (difference > 0) {
-	        $(arrowElement).removeClass("icon-arrow-down132 text-danger").addClass("icon-arrow-up13 text-primary");
+	        $(arrowElement).addClass("icon-arrow-up13 text-primary");
 	    } else if (difference < 0) {
-	        $(arrowElement).removeClass("icon-arrow-up13 text-primary").addClass("icon-arrow-down132 text-danger");
+	        $(arrowElement).addClass("icon-arrow-down132 text-danger");
 	    }
 	}
 	

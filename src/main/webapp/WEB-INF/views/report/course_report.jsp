@@ -38,12 +38,12 @@
                              <span class="input-group-text"><i class="icon-calendar22"></i></span>
                          </span>
                          <input type="date" class="form-control currentDate" id="currentDate"> 
-                         <button type="button" class="ml-2 btn btn-primary">검색</button>
+                         <button type="button" class="ml-2 btn btn-primary searchDate">검색</button>
                          <div class="btn-group ml-4">
                              <button type="button" class="btn btn-light beforeday"><i class="icon-arrow-left12"></i></button>
                              <button type="button" class="btn btn-light nextday"><i class="icon-arrow-right13"></i></button>
                          </div>
-                         <button type="button" class="ml-2 btn btn-teal">오늘</button>
+                         <button type="button" class="ml-2 btn btn-teal today">오늘</button>
                      </div>
                  </div>
 
@@ -152,71 +152,123 @@
 
 
 <script>
-
+		
+	//전역 변수 선언
+	var selectDateStr, selectDate, beforeDateStr, beforeDate;
+	
 	$(document).ready(function() {
-		// 페이지가 로드될 때 getData 함수 호출
-		//var hole = $(".holebt.active").val();
-		
-		// URL의 쿼리 문자열에서 value 값 가져오기
-		var urlParams = new URLSearchParams(window.location.search);
-		var value = urlParams.get('value');
-		
-		//1.날짜 INPUT의 날짜를 가져온다.
-		var dateStr = $('.currentDate').val();
-		var dateObj = new Date(dateStr);
-		dateObj.setDate(dateObj.getDate() - 1);
-		var newDateStr = dateObj.toISOString().split('T')[0]; 
-		console.log(newDateStr)
-		
-		
-		var startData = $('.currentDate').val().concat(' 00:00:00');
-		console.log(typeof startData)
-		
-		//달력에서 선택된 데이터
-		var enddata = $('.currentDate').val().concat(' 23:59:59');
-		console.log(startData)
-		console.log(enddata)
-		
-		if(value != null){
-			$('.holebt[value="' + value + '"]').addClass('active');
-			var category = $(".categorybt.active").val();
-			getData(value, category);
-		}else{
-			var hole = $(".holebt.active").val();
-			var category = $(".categorybt.active").val();
-			getData(hole, category);
-		}
-
+	    // URL의 쿼리 문자열에서 value 값 가져오기
+	    var urlParams = new URLSearchParams(window.location.search);
+	    var value = urlParams.get('value');
+	
+	    updateDates(0);
+	    console.log("페이지 로딩시 기준 : " + selectDate);
+	    console.log("페이지 로딩시 전날 : " + beforeDate);
+	    console.log("페이지 로딩시 기준2 : " + selectDateStr);
+	    console.log("페이지 로딩시 전날2 : " + beforeDateStr);
+	
+	    //페이지 다이렉트 진입시와 개별코스에서 상세정보로 진입할때의 데이터 값 접근
+	    if(value != null){
+	        $('.holebt[value="' + value + '"]').addClass('active');
+	        var category = $(".categorybt.active").val();
+	        getData(value, category, selectDate, beforeDate);
+	    }else{
+	        var hole = $(".holebt.active").val();
+	        var category = $(".categorybt.active").val();
+	        getData(hole, category, selectDate, beforeDate);
+	    }
 	});
 	
+	//날짜 셋팅
+	function updateDates(days){
+	    //1.날짜 INPUT의 날짜를 가져온다.
+	    selectDateStr = $('.currentDate').val();//날짜는 String
+	    selectDate = new Date(selectDateStr);//날짜를 data로 변형
+	    selectDate.setDate(selectDate.getDate() + days);
+	    selectDateStr = selectDate.toISOString().split('T')[0]; //기준날짜-1일을 String으로 저장. selectDate 변수에 저장
+	    selectDate = selectDateStr.concat(' 23:59:59')
+	    $('.currentDate').val(selectDateStr) // currentDate의 값을 다시 정의한다
 	
+	    beforeDate = new Date(selectDateStr);
+	    beforeDate.setDate(beforeDate.getDate() - 1);
+	    beforeDateStr = beforeDate.toISOString().split('T')[0]; //String으로 저장. beforeDate 변수에 저장
+	    beforeDate = beforeDateStr.concat(' 00:00:00')
 	
+	    console.log("기준 : " + selectDate);
+	    console.log("전날 : " + beforeDate);
+	}
 	
+	//2-1.뒤버튼 클릭시 기준날짜를 1일 빼기
+	$(".beforeday").click(function(){
+	    updateDates(-1);
+        var hole = $(".holebt.active").val();
+        var category = $(".categorybt.active").val();
+        getData(hole, category, selectDate, beforeDate);	
+	})
 	
-	//2.앞버튼 or 뒤버튼 클릭시 날짜를 1일 더하거나 뺸다
+	//2-2.앞버튼 클릭시 기준날짜를 1일 더하기
+	$(".nextday").click(function(){
+	    updateDates(1);
+        var hole = $(".holebt.active").val();
+        var category = $(".categorybt.active").val();
+        getData(hole, category, selectDate, beforeDate);	
+	})
+	
+	//2-3.오늘버튼 클릭시 기준날짜를 오늘로
+	$(".today").click(function(){
+	    selectDateStr = new Date().toISOString().substring(0, 10);//날짜는 String
+	    //alert(selectDateStr)
+	    selectDate = new Date(selectDateStr);//날짜를 data로 변형
+	    selectDate.setDate(selectDate.getDate());
+	    selectDateStr = selectDate.toISOString().split('T')[0]; //기준날짜-1일을 String으로 저장. selectDate 변수에 저장
+	    selectDate = selectDateStr.concat(' 23:59:59')
+	    $('.currentDate').val(selectDateStr) // currentDate의 값을 다시 정의한다
+	
+	    beforeDate = new Date(selectDateStr);
+	    beforeDate.setDate(beforeDate.getDate() - 1);
+	    beforeDateStr = beforeDate.toISOString().split('T')[0]; //String으로 저장. beforeDate 변수에 저장
+	    beforeDate = beforeDateStr.concat(' 00:00:00')
+	    
+	    console.log("기준 : " + selectDate);
+	    console.log("전날 : " + beforeDate);
+	    
+	    
+        var hole = $(".holebt.active").val();
+        var category = $(".categorybt.active").val();
+        getData(hole, category, selectDate, beforeDate);	
+	})
+	
 	//3.검색버튼을 클릭시켜 데이터를 갱신한다.
+	$(".searchDate").click(function(){
+		updateDates(0);
+        var hole = $(".holebt.active").val();
+        var category = $(".categorybt.active").val();
+        //alert("기준 : " + selectDate + " 전날 : " + beforeDate)
+        getData(hole, category, selectDate, beforeDate);		
+	})
+
 
 	
 	$(".holebt").click(function() {
 	    var hole = $(this).val();
 	    $(".holebt").removeClass("active");
 	    $(this).addClass("active");
-	    getData(hole, $(".categorybt.active").val());
+	    getData(hole, $(".categorybt.active").val(), selectDate, beforeDate);
 	});
 	
 	$(".categorybt").click(function() {
 	    var category = $(this).val();
 	    $(".categorybt").removeClass("active");
 	    $(this).addClass("active");
-	    getData($(".holebt.active").val(), category);
+	    getData($(".holebt.active").val(), category, selectDate, beforeDate);
 	});
 	
 	
-	function getData(hole, category){
+	function getData(hole, category, selectDate, beforeDate){
 	    $.ajax({
 	        url: '/report/course_report_ajax',
 	        type: 'GET',
-	        data: {hole: hole, category: category},
+	        data: {hole: hole, category: category, selectDate: selectDate, beforeDate: beforeDate},
 	        dataType: "json",
 	        success: function(data) {
 	            updatePage(data);
@@ -234,88 +286,7 @@
 	}//getData end
 	
 	function updatePage(data) {
-				
-		//NDVI 데이터
-	    var ndvi_today_data = data.list2[0].ndviData.tm.substring(0, 10);
-	    var ndvi_yesterday_data = data.list2[1].ndviData.tm.substring(0, 10);
-	    var ndvi_today = Number(data.list2[0].ndviData.ndvi.toFixed(3));
-	    var ndvi_yesterday = Number(data.list2[1].ndviData.ndvi.toFixed(3));
-
-	    difference(ndvi_today, ndvi_yesterday, ".ndvi_data", ".textarrowcolor_ndvi");
-
-	    
-		//토양수분 데이터
-	    var smo_today_data = data.list3[0].soilData.tm.substring(0, 10);
-	    var smo_yesterday_data = data.list3[1].soilData.tm.substring(0, 10);
-	    var smo_today = Number(data.list3[0].soilData.smo.toFixed(3));
-	    var smo_yesterday = Number(data.list3[1].soilData.smo.toFixed(3));
-	    
-	    difference(smo_today, smo_yesterday, ".smo_data", ".textarrowcolor_smo");
-
-	    
-		//토양온도 데이터
-	    var stp_today_data = data.list3[0].soilData.tm.substring(0, 10);
-	    var stp_yesterday_data = data.list3[1].soilData.tm.substring(0, 10);
-	    var stp_today = Number(data.list3[0].soilData.stp.toFixed(3));
-	    var stp_yesterday = Number(data.list3[1].soilData.stp.toFixed(3));
-		    
-	    difference(stp_today, stp_yesterday, ".stp_data", ".textarrowcolor_stp");
-
-	    
-	    //토양양분 데이터
-	    var sec_today_data = data.list3[0].soilData.tm.substring(0, 10);
-	    var sec_yesterday_data = data.list3[1].soilData.tm.substring(0, 10);
-	    var sec_today = Number(data.list3[0].soilData.sec.toFixed(3));
-	    var sec_yesterday = Number(data.list3[1].soilData.sec.toFixed(3));
-	    	    
-	    difference(sec_today, sec_yesterday, ".sec_data", ".textarrowcolor_sec");
-
-	    
-	    //기온 데이터
-	    var temp_today_data = data.list1[0].weatherData.tm.substring(0, 10);
-	    var temp_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
-	    var temp_today = data.list1[0].weatherData.temp;
-	    var temp_yesterday = data.list1[1].weatherData.temp;
-
-	    difference(temp_today, temp_yesterday, ".temp_data", ".textarrowcolor_temp");
-	    
-	    
-	    //풍속 데이터
-	    var ws_today_data = data.list1[0].weatherData.tm.substring(0, 10);
-	    var ws_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
-	    var ws_today = data.list1[0].weatherData.ws;
-	    var ws_yesterday = data.list1[1].weatherData.ws;
-
-	    difference(ws_today, ws_yesterday, ".ws_data", ".textarrowcolor_ws");
-	    
-	    
-	    //습도 데이터
-	    var humi_today_data = data.list1[0].weatherData.tm.substring(0, 10);
-	    var humi_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
-	    var humi_today = data.list1[0].weatherData.humi;
-	    var humi_yesterday = data.list1[1].weatherData.humi;
-
-	    difference(humi_today, humi_yesterday, ".humi_data", ".textarrowcolor_humi");
-	    
-	    
-	    //강수량 데이터
-	    var rain_today_data = data.list1[0].weatherData.tm.substring(0, 10);
-	    var rain_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
-	    var rain_today = data.list1[0].weatherData.rain;
-	    var rain_yesterday = data.list1[1].weatherData.rain;
-
-	    difference(rain_today, rain_yesterday, ".rain_data", ".textarrowcolor_rain");
-	    
-	    
-	    //일조 데이터
-	    var solar_today_data = data.list1[0].weatherData.tm.substring(0, 10);
-	    var solar_yesterday_data = data.list1[1].weatherData.tm.substring(0, 10);
-	    var solar_today = data.list1[0].weatherData.solar;
-	    var solar_yesterday = data.list1[1].weatherData.solar;
-
-	    difference(solar_today, solar_yesterday, ".solar_data", ".textarrowcolor_solar");
-	    	    
-	    
+    
 	    let content = "";
 	    
 	    content += `
@@ -372,7 +343,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="ndvi_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_ndvi text-danger icon-arrow-up13"></i>
+			                                                    <i class="textarrowcolor_ndvi"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -410,7 +381,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="smo_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_smo text-primary icon-arrow-up13"></i>
+			                                                    <i class="textarrowcolor_smo"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -448,7 +419,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="stp_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_stp text-danger icon-arrow-down132"></i>
+			                                                    <i class="textarrowcolor_stp"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -486,7 +457,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="sec_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_sec text-danger icon-arrow-down132"></i>
+			                                                    <i class="textarrowcolor_sec"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -523,8 +494,8 @@
 			                                                </div>
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
-			                                                <div class="">전날보다 <strong><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_temp text-primary icon-arrow-up13"></i>
+			                                                <div class="">전날보다 <strong class="temp_data"><small class="weather-unit">%</small></strong>
+			                                                    <i class="textarrowcolor_temp"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -562,7 +533,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="rain_data"></small></strong>
-			                                                    <i class="textarrowcolor_rain text-primary icon-arrow-up13"></i>
+			                                                    <i class="textarrowcolor_rain"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -634,7 +605,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="ws_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_ws text-primary icon-arrow-up13"></i>
+			                                                    <i class="textarrowcolor_ws"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -672,7 +643,7 @@
 			                                            </div>
 			                                            <div class="mt-2 mb-0 col-lg-12 text-center">
 			                                                <div class="">전날보다 <strong class="humi_data"><small class="weather-unit">%</small></strong>
-			                                                    <i class="textarrowcolor_humi text-danger icon-arrow-down132"></i>
+			                                                    <i class="textarrowcolor_humi text-primary icon-arrow-up13"></i>
 			                                                </div>
 			                                            </div>
 			                                        </div>
@@ -739,14 +710,79 @@
 						</div>
 					</div>
 					`
+					
 		let dataElement = document.querySelector('.contentdata');
 		dataElement.innerHTML = content;
+		
+		//NDVI 데이터
+	    var ndvi_today = Number(data.list2[0].ndviData.ndvi.toFixed(3));
+	    var ndvi_yesterday = Number(data.list2[1].ndviData.ndvi.toFixed(3));
+	    //console.log("ndvi_today : "+ndvi_today)
+
+	    difference(ndvi_today, ndvi_yesterday, ".ndvi_data", ".textarrowcolor_ndvi");
+
+	    
+		//토양수분 데이터
+	    var smo_today = Number(data.list3[0].soilData.smo.toFixed(3));
+	    var smo_yesterday = Number(data.list3[1].soilData.smo.toFixed(3));
+	    
+	    difference(smo_today, smo_yesterday, ".smo_data", ".textarrowcolor_smo");
+
+	    
+		//토양온도 데이터
+	    var stp_today = Number(data.list3[0].soilData.stp.toFixed(3));
+	    var stp_yesterday = Number(data.list3[1].soilData.stp.toFixed(3));
+		    
+	    difference(stp_today, stp_yesterday, ".stp_data", ".textarrowcolor_stp");
+
+	    
+	    //토양양분 데이터
+	    var sec_today = Number(data.list3[0].soilData.sec.toFixed(3));
+	    var sec_yesterday = Number(data.list3[1].soilData.sec.toFixed(3));
+	    	    
+	    difference(sec_today, sec_yesterday, ".sec_data", ".textarrowcolor_sec");
+
+	    
+	    //기온 데이터
+	    var temp_today = data.list1[0].weatherData.temp;
+	    var temp_yesterday = data.list1[1].weatherData.temp;
+
+	    difference(temp_today, temp_yesterday, ".temp_data", ".textarrowcolor_temp");
+	    
+	    
+	    //풍속 데이터
+	    var ws_today = data.list1[0].weatherData.ws;
+	    var ws_yesterday = data.list1[1].weatherData.ws;
+
+	    difference(ws_today, ws_yesterday, ".ws_data", ".textarrowcolor_ws");
+	    
+	    
+	    //습도 데이터
+	    var humi_today = data.list1[0].weatherData.humi;
+	    var humi_yesterday = data.list1[1].weatherData.humi;
+
+	    difference(humi_today, humi_yesterday, ".humi_data", ".textarrowcolor_humi");
+	    
+	    
+	    //강수량 데이터
+	    var rain_today = data.list1[0].weatherData.rain;
+	    var rain_yesterday = data.list1[1].weatherData.rain;
+
+	    difference(rain_today, rain_yesterday, ".rain_data", ".textarrowcolor_rain");
+	    
+	    
+	    //일조 데이터
+	    var solar_today = data.list1[0].weatherData.solar;
+	    var solar_yesterday = data.list1[1].weatherData.solar;
+
+	    difference(solar_today, solar_yesterday, ".solar_data", ".textarrowcolor_solar");
+	    
 	}
 	
 	function difference(today, yesterday, element, arrowElement) {
 	    var difference = today - yesterday;
 	    $(element).text(difference.toFixed(2));
-
+	    //console.log($(arrowElement).length)
 	    if (difference > 0) {
 	        $(arrowElement).removeClass("icon-arrow-down132 text-danger").addClass("icon-arrow-up13 text-primary");
 	    } else if (difference < 0) {
@@ -757,14 +793,14 @@
 	
 	
 	$(".search").click(function() {
-		function formatDate(date) {
-		    return date.replace(/\./g, '-').slice(0, -1);
-		}
-		
+	
 		var holeNo = $('.custom-select').val(); // 선택된 옵션의 value 값
-		var dataRange = $('.search-daterange').val().split(' - '); // 작업날짜 - 빼기
-		var workStart = formatDate(dataRange[0]).concat(' 00:00:00'); // 작업시작날짜
-		var workEnd = formatDate(dataRange[1]).concat(' 23:59:59'); // 작업종료날짜
+		var dataRange = $('.search-daterange').val().split(' ~ '); // 작업날짜 - 빼기
+		console.log(dataRange);
+		var workStart = dataRange[0].concat(' 00:00:00'); // 작업시작날짜
+		console.log(workStart)
+		var workEnd = dataRange[1].concat(' 23:59:59'); // 작업종료날짜
+		console.log(workEnd)
 
 		
 		if(holeNo==0){
@@ -834,7 +870,7 @@
 	}
     
 	//달력 오늘날짜 설정
-    document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
+    document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
     
 	
 
