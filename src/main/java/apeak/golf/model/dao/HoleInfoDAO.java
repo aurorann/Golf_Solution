@@ -1,6 +1,7 @@
 package apeak.golf.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
@@ -39,6 +40,10 @@ public class HoleInfoDAO {
 	//hole name 조회
 	public List<EgovMap> holedata(){
 		return sess.selectList("courseMapper.holename");
+	}
+
+	public HoleInfoDTO getHoleInfoOne(Map<String, Object> param) {
+		return sess.selectOne("allCourseMapper.getHoleInfoOne",param);
 	}
 	
 }

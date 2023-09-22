@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import apeak.golf.model.dto.HoleInfoDTO;
 import apeak.golf.service.AllCourseService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,5 +40,18 @@ public class AllCourseController {
 	public List<EgovMap> getChartData(@RequestParam Map<String, Object> param){
 		log.debug(param.toString());
 		return allCourseService.getChartData(param);
+	}
+	
+	@GetMapping("/getLayerData")
+	@ResponseBody
+	public List<EgovMap> getLayerData(@RequestParam Map<String, Object> param){
+		return allCourseService.getLayerData(param);
+	}
+	
+	@GetMapping("/getHoleInfo")
+	@ResponseBody
+	public HoleInfoDTO getHoleInfo(@RequestParam Map<String, Object> param){
+		//log.debug(param.toString());
+		return allCourseService.getHoleInfoOne(param);
 	}
 }

@@ -34,8 +34,8 @@
         //default settings for options
         this.parentEl = 'body';
         this.element = $(element);
-        this.startDate = moment().startOf('day');
-        this.endDate = moment().endOf('day');
+        this.startDate = moment().subtract(7, 'days');
+        this.endDate = moment().add(1,'days');
         this.minDate = false;
         this.maxDate = false;
         this.maxSpan = false;

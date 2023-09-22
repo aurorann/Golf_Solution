@@ -13,8 +13,8 @@
 			<div class="page-title" style="width: 100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2" data-toggle="buttons" id="holeList">
-					<button type="button" class="btn btn-light active">전체</button>
-					<button type="button" class="btn btn-light">H1</button>
+					<!--<button type="button" class="btn btn-light active">전체</button>-->
+					<button type="button" class="btn btn-light active">H1</button>
 					<button type="button" class="btn btn-light">H2</button>
 					<button type="button" class="btn btn-light">H3</button>
 					<button type="button" class="btn btn-light">H4</button>
@@ -35,19 +35,19 @@
 				</div>
 
 				<div class="btn-group mr-2 float-right" data-toggle="buttons" id="layerType">
-					<button type="button" class="btn btn-light active">
+					<button type="button" class="btn btn-light active" data-layertype="NDVI">
 						<i class="fas fa-seedling"></i>
 						<!--생육-->
 					</button>
-					<button type="button" class="btn btn-light">
+					<button type="button" class="btn btn-light" data-layertype="TEMP">
 						<i class="fab fa-hotjar"></i>
 						<!--열-->
 					</button>
-					<button type="button" class="btn btn-light">
+					<button type="button" class="btn btn-light" data-layertype="HUMI">
 						<i class="fas fa-tint"></i>
 						<!--습도-->
 					</button>
-					<button type="button" class="btn btn-light">
+					<button type="button" class="btn btn-light" data-layertype="NULL">
 						<i class="fas fa-times"></i>
 						<!--없음-->
 					</button>
@@ -151,6 +151,15 @@
 			<div id="map" style="height: 750px;width: 100%">
 			
 			</div>
+			
+			
+			<div id="overlayList" style="margin-top: 10px;">
+				<button id="overlayPlay"> 재생 </button>
+				<button class="overlayBtn">2023-09-22 16:15:09</button>
+				<button class="overlayBtn">2023-09-22 16:15:09</button>
+				<button class="overlayBtn">2023-09-22 16:15:09</button>
+				<button class="overlayBtn">2023-09-22 16:15:09</button>
+			</div>
 		</div>
 		<!-- /basic card -->
 
@@ -159,70 +168,77 @@
 	<!-- /content area -->
 	
 	<script>
+
+	function getWdText(wdir){
+		//16방
+		wdirk = "";
+		
+		wdir = wdir*1;
+		
+		if (0 <= wdir && wdir <= 11.25){
+			wdirk = "북";
+		}else if (11.25 < wdir && wdir <= 33.75){
+			wdirk = "북북동";
+		}else if (33.75 < wdir && wdir <= 56.25){ 
+			wdirk = "북동";
+		}else if (56.25 < wdir && wdir <= 78.75){ 
+			wdirk = "동북동";
+		}else if (78.75 < wdir && wdir <= 101.25){ 
+			wdirk = "동";
+		}else if (101.25 < wdir && wdir <= 123.75){ 
+			wdirk = "동남동";
+		}else if (123.75 < wdir && wdir <= 146.25){ 
+			wdirk = "남동";
+		}else if (146.25 < wdir && wdir <= 168.75){ 
+			wdirk = "남남동";
+		}else if (168.75 < wdir && wdir <= 191.25){ 
+			wdirk = "남";
+		}else if (191.25 < wdir && wdir <= 213.75){ 
+			wdirk = "남남서";
+		}else if (213.75 < wdir && wdir <= 236.25){ 
+			wdirk = "남서";
+		}else if (236.25 < wdir && wdir <= 258.75){ 
+			wdirk = "서남서";
+		}else if (258.75 < wdir && wdir <= 281.25){ 
+			wdirk = "서";
+		}else if (281.25 < wdir && wdir <= 303.75){ 
+			wdirk = "서북서";
+		}else if (303.75 < wdir && wdir <= 326.25){ 
+			wdirk = "북서";
+		}else if (326.25 < wdir && wdir <= 348.75){ 
+			wdirk = "북북서";
+		}else if (348.75 < wdir){ 
+			wdirk = "북";
+		}else{
+			wdirk = '-';
+		}
+
+		return wdirk;
+
+	}
+	
 	$(function(){
 
 		let chartList = [];
 		let markerList = new Array(); // 마커 정보를 담는 배열
 		let infoWindowList = new Array(); // 정보창을 담는 배열
+		let overLayList = new Array(); // 그라운드 오버레이 배열
 		let nowHole;
 		let nowCourse;
 		let nowDataType;
+		let nowLayerType;
+		let playState = false;
+		let playTimer;
+		let playIdx = 0;
+		
 
-		function getWdText($wdir){
-			//16방
-			$wdirk = "";
-			
-			$wdir = $wdir*1;
-			
-			if (0 <= $wdir && $wdir <= 11.25){
-				$wdirk = "북";
-			}else if (11.25 < $wdir && $wdir <= 33.75){
-				$wdirk = "북북동";
-			}else if (33.75 < $wdir && $wdir <= 56.25){ 
-				$wdirk = "북동";
-			}else if (56.25 < $wdir && $wdir <= 78.75){ 
-				$wdirk = "동북동";
-			}else if (78.75 < $wdir && $wdir <= 101.25){ 
-				$wdirk = "동";
-			}else if (101.25 < $wdir && $wdir <= 123.75){ 
-				$wdirk = "동남동";
-			}else if (123.75 < $wdir && $wdir <= 146.25){ 
-				$wdirk = "남동";
-			}else if (146.25 < $wdir && $wdir <= 168.75){ 
-				$wdirk = "남남동";
-			}else if (168.75 < $wdir && $wdir <= 191.25){ 
-				$wdirk = "남";
-			}else if (191.25 < $wdir && $wdir <= 213.75){ 
-				$wdirk = "남남서";
-			}else if (213.75 < $wdir && $wdir <= 236.25){ 
-				$wdirk = "남서";
-			}else if (236.25 < $wdir && $wdir <= 258.75){ 
-				$wdirk = "서남서";
-			}else if (258.75 < $wdir && $wdir <= 281.25){ 
-				$wdirk = "서";
-			}else if (281.25 < $wdir && $wdir <= 303.75){ 
-				$wdirk = "서북서";
-			}else if (303.75 < $wdir && $wdir <= 326.25){ 
-				$wdirk = "북서";
-			}else if (326.25 < $wdir && $wdir <= 348.75){ 
-				$wdirk = "북북서";
-			}else if (348.75 < $wdir){ 
-				$wdirk = "북";
-			}else{
-				$wdirk = '-';
-			}
-
-			return $wdirk;
-
-		}
-
-		function createMarker(lat,lon,markerId){
+		function createMarker(lat,lon){
 			
 			var position = new naver.maps.LatLng(lat, lon);
 
 		    /* 정보창 */
 			var infoWindow = new naver.maps.InfoWindow({
-			    content: `<div id='\${markerId}'></div>`
+			    content: `<div></div>`
 			});
 						
 			var marker = new naver.maps.Marker({
@@ -237,29 +253,15 @@
 			    }
 			});
 
-			console.log(markerId)
+			infoWindowList.push(infoWindow)
+			markerList.push(marker)
 			
-			naver.maps.Event.addListener(marker, "click", function(e) {
-				if(infoWindow.getMap()){
-					infoWindow.close();
-				}else{
-					infoWindow.setContent(drawInfoWindow(nowDataType));
-					infoWindow.open(map, marker);
-				}
-			});
-
-		}
-
-
-		function drawInfoWindow(type,holeNo){
-
-			let template = ""
-
 			var data = {
 				sec : 0.1,
 				stp : 0.1,
 				smo : 99.2,
-			    ndvi2 : 0.6,
+				ndvi : 0.611,
+			    ndvi2 : 0.611,
 			    temp : 20,
 			    rain : 10,
 			    ws : 5,
@@ -267,6 +269,92 @@
 			    humi : 60,
 			    solar : 10,
 			}
+			
+			naver.maps.Event.addListener(marker, "click", function(e) {
+				if(infoWindow.getMap()){
+					infoWindow.close();
+				}else{
+					data = getCurrentData(nowHole,nowCourse,nowDataType)
+					infoWindow.setContent(drawInfoWindow(nowDataType,nowHole,data));
+					infoWindow.open(map, marker);
+				}
+			});
+
+		}
+
+		function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx){
+		    var bounds = new naver.maps.LatLngBounds(
+	            new naver.maps.LatLng(startLat, startLon),
+	            new naver.maps.LatLng(endLat, endLon)
+	        );
+
+		    var groundOverlay = new naver.maps.GroundOverlay(
+		    	path,
+	    	    bounds,
+	    	    {
+	    	        opacity: 0.5,
+	    	        clickable: false
+	    	    }
+	    	);
+
+		    overLayList.push(groundOverlay)
+	    	groundOverlay.setMap(map);
+
+	    	$('#overlayList').append(`<button class="overlayBtn" data-idx="\${idx}">\${tm}</button>`)
+		}
+
+		function clearMarker(){
+
+			for(var i=0;i<markerList.length;i++){
+				markerList[i].setMap(null);
+			}
+		}
+
+		function clearGroundOverlay(){
+			
+			for(var i=0;i<overLayList.length;i++){
+				overLayList[i].setMap(null)
+			}
+
+			overLayList = [];
+
+			$('#overlayList').empty();
+			$('#overlayList').html(`<button id="overlayPlay"> 재생 </button>`)
+		}
+
+		function hideGroundOverlay(){
+			for(var i=0;i<overLayList.length;i++){
+				overLayList[i].setMap(null)
+			}
+		}
+
+		function showGroundOverlay(idx){
+			overLayList[idx].setMap(map);
+			$("#overlayList .overlayBtn").removeClass('nowOver')
+			$("#overlayList [data-idx='"+idx+"']").addClass('nowOver')
+		}
+
+		function playOverlay(){
+			if(playState==true){
+				clearInterval(playTimer)
+				playState = false;
+				$('#overlayPlay').text('재생')
+			}else{
+				playTimer = setInterval(function() {
+					console.log(overLayList.length)
+					console.log(playIdx)
+					hideGroundOverlay()
+					showGroundOverlay(playIdx%overLayList.length)
+					playIdx++;
+				}, 1500);
+				playState = true;
+				$('#overlayPlay').text('정지')
+			}
+		}
+		
+		function drawInfoWindow(type,holeNo,data){
+
+			let template = ""
 
 			console.log(data)
 
@@ -275,18 +363,18 @@
 				template = `<div class="course1 position-absolute card bg-success-100 border-success text-center" style="width:225px;">
 								<div class="text-body pb-1">
 									<div class="card-header bg-success text-white pt-1 pb-1">
-										<h6 class="card-title font-weight-semibold">Hole 1</h6>
+										<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
 									</div>
 					
 									<div class="card-body pt-2 pb-2">
 										<div class="float-left mr-5">
 											<span class="badge badge-success badge-pill">양호</span>
-											<h2 class="mb-0 font-weight-semibold">\${data.ndvi}</h2>
+											<h2 class="mb-0 font-weight-semibold">\${data.ndvi.toFixed(3)}</h2>
 											<div class="font-size-sm text-muted">현재</div>
 										</div>
 										<div class="float-left">
 											<span class="badge badge-success badge-pill">양호</span>
-											<h2 class="mb-0 font-weight-semibold">\${data.ndvi2}</h2>
+											<h2 class="mb-0 font-weight-semibold">\${data.ndvi.toFixed(3)}</h2>
 											<div class="font-size-sm text-muted">예측</div>
 										</div>
 									</div>
@@ -297,7 +385,7 @@
 				template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:330px;">
 								<div class="text-body">
 									<div class="card-header bg-primary text-white pt-1 pb-1">
-										<h6 class="card-title font-weight-semibold">Hole 3</h6>
+										<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
 									</div> <!--기상정보 8종-->
 									<div class="text-center weather-wrap pl-2 pr-2 pb-2">
 										<div class="float-left weather-box mr-3">
@@ -344,7 +432,7 @@
 					template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
 										<div class="text-body pb-1">
 										<div class="card-header bg-warning text-white pt-1 pb-1">
-											<h6 class="card-title font-weight-semibold">Hole 4</h6>
+											<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
 										</div> <!--토양정보 3종-->
 										<div class="card-body pt-1 pb-2">
 											<div class="float-left mr-3">
@@ -562,11 +650,46 @@
 			chartList.add(chart)
 		}
 
+		function getHoleInfo(holeNo,courseType){
+
+			let retData = null;
+
+			let param = {
+				holeNo : holeNo.substring(1,holeNo.length),
+				courseType : courseType.toUpperCase()
+			}
+			
+			$.ajax({
+				url : "/all/getHoleInfo",
+				data : param,
+				async : false,
+				success : function(result){
+					retData = result;
+				}
+			})
+
+			return retData;
+		}
+
 		function getCurrentData(holeNo,courseType,type){
+
+			let retData = null;
+
+			if(type=="NDVI"){
+				type = "ndvi"
+			}
+
+			if(type=="기상정보"){
+				type ="weather"
+			}
+
+			if(type=="토양정보"){
+				type ="soil"
+			}
 			
 			let param = {
-				holeNo : holeNo,
-				courseType : courseType,
+				holeNo : holeNo.substring(1,holeNo.length),
+				courseType : courseType.toUpperCase(),
 				type : type
 			}
 
@@ -574,26 +697,75 @@
 			$.ajax({
 				url : "/all/getCurrentData",
 				data : param,
+				async : false,
 				success : function(result){
-					console.log(result)
+					retData = result;
 				}
 			})
+
+			return retData;
+		}
+
+		function getLayerData(holeNo,courseType){
+			let retData = null;
+
+			let searchDate = $('#searchDate').val();
+
+			let param = {
+				holeNo : holeNo.substring(1,holeNo.length),
+				courseType : courseType.toUpperCase(),
+				layerType : nowLayerType,
+				startDate : searchDate.split('~')[0].trim(),
+				endDate : searchDate.split('~')[1].trim()
+			}
+			
+			$.ajax({
+				url : "/all/getLayerData",
+				data : param,
+				async : false,
+				success : function(result){
+					retData = result;
+				}
+			})
+
+			return retData;
 		}
 
 		function getChartData(holeNo,courseType,type){
+
+			let retData = null;
+
+			if(type=="NDVI"){
+				type = "ndvi"
+			}
+
+			if(type=="기상정보"){
+				type ="weather"
+			}
+
+			if(type=="토양정보"){
+				type ="soil"
+			}
+
+			let searchDate = $('#searchDate').val();
+
 			let param = {
-				holeNo : holeNo,
-				courseType : courseType,
-				type : type
+				holeNo : holeNo.substring(1,holeNo.length),
+				courseType : courseType.toUpperCase(),
+				type : type,
+				startDate : searchDate.split('~')[0].trim(),
+				endDate : searchDate.split('~')[1].trim()
 			}
 			
 			$.ajax({
 				url : "/all/getChartData",
 				data : param,
 				success : function(result){
-					console.log(result)
+					retData = result;
 				}
 			})
+
+			return retData;
 		}
 
 		$('#holeList button,#courseType button,#dataType button,#layerType button').on('click',function(){
@@ -618,19 +790,50 @@
 			if(dataType==""){
 				dataType = now
 			}
-
-			console.log(hole)
-			console.log(course)
-			console.log(dataType)
-			//console.log(layer)
 			
 			nowHole = hole;
 			nowCourse = course;
 			nowDataType = dataType
-			
-			getCurrentData(hole,course);
+
+			getHoleInfo(hole,course)
+			getCurrentData(hole,course,nowDataType);
 
 			setChartLayer(dataType);
+		})
+		
+		$('#layerType button').on('click',function(){
+			var layerType = $(this).data('layertype');
+			
+			nowLayerType = layerType;
+
+			clearGroundOverlay();
+			//alert(layerType)
+			if(layerType=="NULL"){
+				return;
+			}
+
+			var result = getLayerData(nowHole,nowCourse)
+
+			$.each(result,function(index,item){
+				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+			})
+
+			hideGroundOverlay()
+			showGroundOverlay(result.length-1)
+		})
+		
+		$('#layerType button:eq(0)').click();
+		
+		$(document).on('click','#overlayPlay',function(){
+			console.log("재생")
+			playOverlay();
+		})
+		
+		$(document).on('click','.overlayBtn',function(){
+			var idx = $(this).data('idx')
+
+			hideGroundOverlay()
+			showGroundOverlay(idx)
 		})
 
 		var map = new naver.maps.Map('map', {
@@ -646,99 +849,94 @@
 
 	        console.log('클릭한 위치의 좌표는 ' + lat + ', ' + lng + ' 입니다.');
 	    });
-		createMarker(35.5913518, 127.9020725,"ndvi");
+	    
+		createMarker(35.5913518, 127.9020725);
+		
 
-	    var bounds = new naver.maps.LatLngBounds(
-            new naver.maps.LatLng(35.5923333, 127.9004793),
-            new naver.maps.LatLng(35.5903572, 127.9035745)
-        );
 
-	    var groundOverlay = new naver.maps.GroundOverlay(
-    	    "/resources/assets/img/1.png",
-    	    bounds,
-    	    {
-    	        opacity: 0.5,
-    	        clickable: false
-    	    }
-    	);
-
-    	groundOverlay.setMap(map);
 	})
 	</script>
 	<style>
 		.position-absolute{
 			z-index: 2;
 		}
+		.overlayBtn{
+			
+		}
+		.nowOver{
+			background-color: cornflowerblue;
+			color: white;
+		}
 	</style>
 </div>
 <!-- /main content -->
 
 <div class="sidebar sidebar-light sidebar-right sidebar-expand-lg">
-			<!-- Sidebar content -->
-			<div class="sidebar-content">
+	<!-- Sidebar content -->
+	<div class="sidebar-content">
 
-				<!-- Header -->
-				<div class="sidebar-section sidebar-section-body d-flex align-items-center">
-					<h5 class="mb-0 font-weight-bold">검색</h5>
-					<div class="ml-auto">
-						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
-							<i class="icon-transmission"></i>
-						</button>
+		<!-- Header -->
+		<div class="sidebar-section sidebar-section-body d-flex align-items-center">
+			<h5 class="mb-0 font-weight-bold">검색</h5>
+			<div class="ml-auto">
+				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
+					<i class="icon-transmission"></i>
+				</button>
 
-						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
-							<i class="icon-cross2"></i>
-						</button>
-					</div>
-				</div>
-				<!-- /header -->
-
-
-				<!-- Sidebar search -->
-				<div class="sidebar-section ">
-					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
-						<li class="nav-item-header">설정</li>
-						<li class="nav-item text-center pl-2 pr-2">
-							<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
-								<label class="btn btn-light active">
-									<input type="radio" name="options" id="option1" autocomplete="off" checked="">
-									전체
-								</label>
-
-								<label class="btn btn-light">
-									<input type="radio" name="options" id="option2" autocomplete="off">
-									개별
-								</label>
-							</div>
-						</li>
-					</ul>
-
-
-					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
-						<li class="nav-item-header">기간</li>
-						<li class="nav-item pl-3 pr-3">
-							<!--달력 플러그인-->
-							<div class="input-group">
-								<span class="input-group-prepend">
-									<span class="input-group-text"><i class="icon-calendar22"></i></span>
-								</span>
-								<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
-								
-							</div>
-						</li>
-						
-					</ul>
-
-					<ul class="nav nav-sidebar my-2">
-						<li class="nav-item pl-3 pr-3">
-							<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
-						</li>
-					</ul>
-
-					
-				</div>
-				<!-- /sidebar search -->
-
+				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
+					<i class="icon-cross2"></i>
+				</button>
 			</div>
-			<!-- /sidebar content -->
-
 		</div>
+		<!-- /header -->
+
+
+		<!-- Sidebar search -->
+		<div class="sidebar-section ">
+			<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+				<li class="nav-item-header">설정</li>
+				<li class="nav-item text-center pl-2 pr-2">
+					<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
+						<label class="btn btn-light active">
+							<input type="radio" name="options" id="option1" autocomplete="off" checked="">
+							전체
+						</label>
+
+						<label class="btn btn-light">
+							<input type="radio" name="options" id="option2" autocomplete="off">
+							개별
+						</label>
+					</div>
+				</li>
+			</ul>
+
+
+			<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+				<li class="nav-item-header">기간</li>
+				<li class="nav-item pl-3 pr-3">
+					<!--달력 플러그인-->
+					<div class="input-group">
+						<span class="input-group-prepend">
+							<span class="input-group-text"><i class="icon-calendar22"></i></span>
+						</span>
+						<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015" id="searchDate"> 
+						
+					</div>
+				</li>
+				
+			</ul>
+
+			<ul class="nav nav-sidebar my-2">
+				<li class="nav-item pl-3 pr-3">
+					<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
+				</li>
+			</ul>
+
+			
+		</div>
+		<!-- /sidebar search -->
+
+	</div>
+	<!-- /sidebar content -->
+
+</div>

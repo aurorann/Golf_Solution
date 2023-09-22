@@ -73,4 +73,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE TM BETWEEN #{startDate} AND #{endDate}
 	AND LAYER_TYPE=#{layerType}
 	</select>
+	
+	<select id="getHoleInfoOne" parameterType="map" resultType="holeInfoDTO">
+	SELECT * FROM HOLE_INFO 
+	WHERE HOLE_NO=#{holeNo} AND COURSE_TYPE=#{courseType} LIMIT 1
+	</select>
+	
+	<select id="getLayerData" parameterType="map" resultType="egovMap">
+	SELECT * FROM LAYER_DATA JOIN HOLE_INFO
+	USING(HOLE_NO,COURSE_TYPE) 
+	WHERE HOLE_NO=#{holeNo} AND COURSE_TYPE=#{courseType}
+	AND LAYER_TYPE=#{layerType}
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	</select>
 </mapper>
