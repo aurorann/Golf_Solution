@@ -140,7 +140,7 @@
 			    </table>
 			</div>
 				
-			<button type="button" class="mt-2 ml-2 btn btn-secondary">파일 저장</button>
+			<button type="button" class="mt-2 ml-2 btn btn-secondary csvdownload">파일 저장</button>
 			
 		</div>
 		<!-- /sidebar search -->
@@ -1289,13 +1289,13 @@
     //검색 결과 테이블 추가
 	function searchResult(data){
 		let result = "";
-		alert(Object.keys(data).length)
-		alert(data.list1.length)
-		console.log(typeof data)
+		//alert(Object.keys(data).length)
+		//alert(data.list1.length)
+		//console.log(typeof data)
 		if(!data|| data.list1.length == 0 || data.list2.length == 0){
 			result += `
 	            <tr>
-	                <td colspan=7>해당 데이터가 없습니다</td>
+	                <td colspan="7" style="text-align: center;">해당 데이터가 없습니다</td>
 	            </tr>
 	        `
 		}else{
@@ -1316,6 +1316,38 @@
 		let dataElement = document.querySelector('.searchresult tbody');
 		dataElement.innerHTML = result;
 	}
+    
+    
+	$(".csvdownload").click(function() {
+		saveCSV('data.csv')
+	    return false;
+	})
+    
+    
+    
+	//CSV 생성 함수
+	function saveCSV(fileName){
+		let csv = '';
+		let rows = document.querySelectorAll("tbody tr"); 
+	
+		for (var i = 0; i < rows.length; i++) {
+			let cells = rows[i].querySelectorAll("td");
+			let row = [];
+			cells.forEach(function(cell){
+				row.push(cell.textContent);
+			});
+	
+			csv += row.join(',') + (i != rows.length-1 ? '\n':''); 
+		}
+	
+		let csvFile = new Blob([csv], {type: "text/csv"}); 
+		let downLink = document.createElement('a');
+		downLink.href = window.URL.createObjectURL(csvFile); 
+		downLink.download = fileName; 
+		downLink.click();
+	}
+    
+    
     
 	//달력 오늘날짜 설정
     document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
