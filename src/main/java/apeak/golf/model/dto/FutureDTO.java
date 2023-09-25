@@ -10,15 +10,15 @@ import java.util.List;
 @ToString
 public class FutureDTO {
 	private String tm;
-	private String sensor_No;
+	private String sensorNo;
 	private double smo;
 	private double pm10;
 	private double pm25;
 	private double temp;
 	private double humi;
-	private double ndvi_Hour;
-	private double ndvi_Daily;
-	private double ndvi_Ma5;
-	private double ndvi_Now;
-	private double ndvi_Predict;
+	private double ndviHour;
+	private double ndviDaily;
+	private double ndviMa5;
+	private double ndviNow;
+	private double ndviPredict;
 }

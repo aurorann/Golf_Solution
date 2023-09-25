@@ -6,21 +6,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="courseMapper">
 
 	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
-		<id property="hole_No" column="HOLE_NO"/>
-		<result property="course_Type" column="COURSE_TYPE"/>
-		<result property="hole_Name" column="HOLE_NAME"/>
+		<id property="holeNo" column="HOLE_NO"/>
+		<result property="courseType" column="COURSE_TYPE"/>
+		<result property="holeName" column="HOLE_NAME"/>
 		<result property="lat" column="LAT"/>
 		<result property="lon" column="LON"/>
 		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
-			<id column="SENSOR_NO" property="sensor_No"/>
-			<result property="sensor_Name" column="SENSOR_NAME"/>
-			<result property="sensor_No" column="SENSOR_NO"/>
-			<result property="Sensor_Type" column="SENSOR_TYPE"/>
-			<result property="hole_No" column="HOLE_NO"/>
-			<result property="course_Type" column="COURSE_TYPE"/>
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="sensorNo" column="SENSOR_NO"/>
+			<result property="sensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
-			<result property="last_Updated" column="LAST_UPDATED"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
 <!-- 			<result property="" column=""/> -->
 			<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
 				<id column="SENSOR_NO" property="sensor_No"/>
@@ -34,13 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<result property="solar" column="SOLAR"/>
 			</collection>
 			<collection property="ndviDataList" column="SENSOR_NO" ofType="ndviDataDTO" javaType="List" autoMapping="true">
-				<result property="img_Path" column="IMG_PATH"/>
+				<result property="imgPath" column="IMG_PATH"/>
 				<result property="ndvi" column="NDVI"/>
 			</collection>
 		</collection>
 		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
-			<id column="ROBOT_NO" property="robot_No"/>
-			<result property="robot_No" column="ROBOT_NO"/>
+			<id column="ROBOT_NO" property="robotNo"/>
+			<result property="robotNo" column="ROBOT_NO"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
 			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
@@ -54,35 +54,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<resultMap type="workReportDTO" id="workReportInfo" autoMapping="true">
-		<id property="work_No" column="WORK_NO"/>
-		<result property="user_Id" column="USER_ID"/>
-		<result property="write_At" column="WRITE_AT"/>
-		<result property="work_Start" column="WORK_START"/>
-		<result property="work_End" column="WORK_END"/>
-		<result property="work_Class" column="WORK_CLASS"/>
-		<result property="work_Type" column="WORK_TYPE"/>
-		<result property="work_Comment" column="WORK_COMMENT"/>
-		<result property="work_State" column="WORK_STATE"/>
+		<id property="workNo" column="WORK_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="writeAt" column="WRITE_AT"/>
+		<result property="workStart" column="WORK_START"/>
+		<result property="workEnd" column="WORK_END"/>
+		<result property="workClass" column="WORK_CLASS"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="workComment" column="WORK_COMMENT"/>
+		<result property="workState" column="WORK_STATE"/>
 		<collection property="workReportImageList" column="WORK_NO" ofType="WorkReportImageDTO" javaType="List" autoMapping="true">
-				<id column="IMG_NO" property="img_No"/>
-				<result property="work_No" column="WORK_NO"/>
-				<result property="file_Path" column="FILE_PATH"/>
-				<result property="ori_Name" column="ORI_NAME"/>
-				<result property="save_Name" column="SAVE_NAME"/>
+				<id column="IMG_NO" property="imgNo"/>
+				<result property="workNo" column="WORK_NO"/>
+				<result property="filePath" column="FILE_PATH"/>
+				<result property="oriName" column="ORI_NAME"/>
+				<result property="saveName" column="SAVE_NAME"/>
 		</collection>
 		<collection property="workReportTargetList" column="WORK_NO" ofType="WorkReportTargetDTO" javaType="List" autoMapping="true">
-				<id column="TARGET_NO" property="target_No"/>
-				<result property="work_No" column="WORK_NO"/>
-				<result property="hole_No" column="HOLE_NO"/>
-				<result property="course_Type" column="COURSE_TYPE"/>
+				<id column="TARGET_NO" property="targetNo"/>
+				<result property="workNo" column="WORK_NO"/>
+				<result property="holeNo" column="HOLE_NO"/>
+				<result property="courseType" column="COURSE_TYPE"/>
 		</collection>
 	</resultMap>
 	
 	<resultMap type="workReportBrandDefDTO" id="brandInfoMap">
-		<result column="BRAND_NO" property="brand_No"/>
-		<result column="BRAND_NAME" property="brand_Name"/>
-		<result column="WORK_TYPE" property="work_Type"/>
-		<result column="BRAND_IMG" property="brand_Img"/>
+		<result column="BRAND_NO" property="brandNo"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="WORK_TYPE" property="workType"/>
+		<result column="BRAND_IMG" property="brandImg"/>
 	</resultMap>
 
 	<select id="holename" resultType="egovMap">

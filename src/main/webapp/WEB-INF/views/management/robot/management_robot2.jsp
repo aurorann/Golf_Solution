@@ -13,8 +13,8 @@
 			<div class="page-title" style="width:100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">로봇 관리 - 뷰어</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="btn btn-light" onclick="location.href='management_robot1.html'">MAP</button>
-					<button type="button" class="btn btn-light active" onclick="location.href='management_robot2.html'">GRID</button>
+					<button type="button" class="btn btn-light" onclick="location.href='/management/robot1'">MAP</button>
+					<button type="button" class="btn btn-light active" onclick="location.href='/management/robot2'">GRID</button>
 				</div>
 
 				<div class="float-right">

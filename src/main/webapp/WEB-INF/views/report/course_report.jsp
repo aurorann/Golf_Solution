@@ -122,7 +122,7 @@
 			</ul>
 
 			<div class="table-responsive table-scrollable pl-2 pr-2">
-			    <table class="table searchresult">
+			    <table class="table searchresult" id="searchresult">
 			        <thead>
 			            <tr>
 			                <th class="table-info">날짜</th>
@@ -155,6 +155,9 @@
 		
 	//전역 변수 선언
 	var selectDateStr, selectDate, beforeDateStr, beforeDate;
+	var nowLayerType = "ndvi";
+	var chartList = [];
+	var overLayList = [];
 	
 	$(document).ready(function() {
 	    // URL의 쿼리 문자열에서 value 값 가져오기
@@ -276,6 +279,22 @@
 	    $(this).addClass("active");
 	    getData($(".holebt.active").val(), category, selectDate, beforeDate);
 	});
+
+	$(document).on('click','#layerType button',function(){
+		var layerType = $(this).data('layertype');
+		
+		nowLayerType = layerType;
+
+		clearGroundOverlay();
+
+    	var result = getLayerData($(".holebt.active").val(),$(".categorybt.active").val(),selectDate,beforeDate,layerType)
+
+		$.each(result,function(index,item){
+			if(index==result.length-1){
+				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+			}
+		})
+	})
 	
 	
 	function getData(hole, category, selectDate, beforeDate){
@@ -295,9 +314,92 @@
 		        alert(jqXHR.statusText);
 		        alert(jqXHR.responseText);
 		        alert(jqXHR.readyState);
-		    }
+		    },
+		    complete : function(){
+		    	updateChart(hole,category,selectDate,beforeDate)
+		    	var result = getLayerData(hole,category,selectDate,beforeDate,"NDVI")
+
+				$.each(result,function(index,item){
+					if(index==result.length-1){
+						createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+					}
+				})
+			}
 	    });//ajax end
 	}//getData end
+
+	function updateChart(hole, category, selectDate, beforeDate){
+
+		$('#chartZone').empty();
+		
+		type = "NDVI"
+		
+		if(type=="NDVI"){
+			type = "ndvi"
+		}
+
+		if(type=="기상정보"){
+			type ="weather"
+		}
+
+		if(type=="토양정보"){
+			type ="soil"
+		}
+
+		
+
+		let searchDate = $('#searchDate').val();
+
+		let param = {
+			holeNo : hole,
+			courseType : category,
+			type : type,
+			startDate : beforeDate,
+			endDate : selectDate
+		}
+
+		var dataTypeList = getDataTypeList("NDVI");
+		setChartLayer(dataTypeList)
+		$.ajax({
+			url : "/all/getChartData",
+			data : param,
+			async : false,
+			success : function(chartData){
+				for(var i=0;i<dataTypeList.length;i++){
+					drawChart(dataTypeList[i],chartData);
+				}
+			}
+		})
+
+		param.type ="weather"
+		var dataTypeList = getDataTypeList("기상정보");
+		setChartLayer(dataTypeList)
+		$.ajax({
+			url : "/all/getChartData",
+			data : param,
+			async : false,
+			success : function(chartData){
+				for(var i=0;i<dataTypeList.length;i++){
+					drawChart(dataTypeList[i],chartData);
+				}
+			}
+		})
+
+		param.type ="soil"
+		var dataTypeList = getDataTypeList("토양정보");
+		setChartLayer(dataTypeList)
+		$.ajax({
+			url : "/all/getChartData",
+			data : param,
+			async : false,
+			success : function(chartData){
+				for(var i=0;i<dataTypeList.length;i++){
+					drawChart(dataTypeList[i],chartData);
+				}
+			}
+		})
+		
+	}
 	
 	function updatePage(data) {
 		
@@ -310,10 +412,10 @@
 							<div class="card-header">
 								<h5 class="card-title holename">
 									\${data.list4[0].hole_Name}
-									<div class="btn-group ml-3">
-										<button type="button" class="btn btn-light">생육</button>
-										<button type="button" class="btn btn-light">열</button>
-										<button type="button" class="btn btn-light">습도</button>
+									<div class="btn-group ml-3" data-toggle="buttons" id="layerType">
+										<button type="button" class="btn btn-light" data-layertype="NDVI">생육</button>
+										<button type="button" class="btn btn-light" data-layertype="TEMP">열</button>
+										<button type="button" class="btn btn-light" data-layertype="HUMI">습도</button>
 									</div>
 									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
 								</h5>
@@ -711,7 +813,7 @@
 											<h6 class="card-title font-weight-bold">차트 보기</h6>
 										</div>
 				
-										<div class="chart-container">
+										<div class="chart-container" id="chartZone">
 											<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
 										</div>
 									</div>
@@ -742,10 +844,10 @@
 							<div class="card-header">
 								<h5 class="card-title holename">
 									\${data.list4[0].hole_Name}
-									<div class="btn-group ml-3">
-										<button type="button" class="btn btn-light">생육</button>
-										<button type="button" class="btn btn-light">열</button>
-										<button type="button" class="btn btn-light">습도</button>
+									<div class="btn-group ml-3" data-toggle="buttons" id="layerType">
+										<button type="button" class="btn btn-light" data-layertype="NDVI">생육</button>
+										<button type="button" class="btn btn-light" data-layertype="TEMP">열</button>
+										<button type="button" class="btn btn-light" data-layertype="HUMI">습도</button>
 									</div>
 									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
 								</h5>
@@ -1143,7 +1245,7 @@
 											<h6 class="card-title font-weight-bold">차트 보기</h6>
 										</div>
 				
-										<div class="chart-container">
+										<div class="chart-container" id="chartZone">
 											<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
 										</div>
 									</div>
@@ -1226,12 +1328,266 @@
 				var solar_yesterday = data.list1[1].weatherData.solar;
 				
 				difference(solar_today, solar_yesterday, ".solar_data", ".textarrowcolor_solar");
+
 						
 		}//if end
 	
-    
 
-	    
+    	console.log(data)
+		/*
+		var chartData = getChartData(hole,course,nowDataType);
+		var dataTypeList = getDataTypeList(nowDataType);
+
+		setChartLayer(dataTypeList);
+
+		
+		for(var i=0;i<dataTypeList.length;i++){
+			drawChart(dataTypeList[i],chartData);
+		}*/
+	}
+
+	function getLayerData(hole, category, selectDate, beforeDate,nowLayerType){
+		let retData = null;
+
+		let param = {
+			holeNo : hole,
+			courseType : category,
+			layerType : nowLayerType,
+			startDate : beforeDate,
+			endDate : selectDate
+		}
+		
+		$.ajax({
+			url : "/all/getLayerData",
+			data : param,
+			async : false,
+			success : function(result){
+				retData = result;
+			}
+		})
+
+		return retData;
+	}
+
+	function clearGroundOverlay(){
+		
+		for(var i=0;i<overLayList.length;i++){
+			overLayList[i].setMap(null)
+		}
+
+		overLayList = [];
+	}
+
+	function showGroundOverlay(idx){
+		overLayList[idx].setMap(map);
+		$("#overlayList .overlayBtn").removeClass('nowOver')
+		$("#overlayList [data-idx='"+idx+"']").addClass('nowOver')
+	}
+
+	function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx){
+	    var bounds = new naver.maps.LatLngBounds(
+            new naver.maps.LatLng(startLat, startLon),
+            new naver.maps.LatLng(endLat, endLon)
+        );
+
+	    var groundOverlay = new naver.maps.GroundOverlay(
+	    	path,
+    	    bounds,
+    	    {
+    	        opacity: 0.5,
+    	        clickable: false
+    	    }
+    	);
+
+	    overLayList.push(groundOverlay)
+    	groundOverlay.setMap(map);
+	}
+
+	function getDataTypeList(type){
+		if(type=="NDVI"){
+			return ["ndvi"];
+		}
+		if(type=="토양정보"){
+			return ["smo","sec","stp"];
+		}
+
+		if(type=="기상정보"){
+			return ["temp","humi","ws","light","rain","solar"];
+		}
+	}
+
+	function getDataKrName(type){
+		if(type=="ndvi"){
+			return "NDVI"
+		}
+
+		if(type=="smo"){
+			return "토양습도";
+		}
+		if(type=="sec"){
+			return "토양양분";
+		}
+		if(type=="stp"){
+			return "토양온도";
+		}
+
+		if(type=="temp"){
+			return "온도";
+		}
+		if(type=="humi"){
+			return "습도";
+		}
+		if(type=="ws"){
+			return "풍속";
+		}
+		if(type=="light"){
+			return "광량";
+		}
+		if(type=="rain"){
+			return "강수량";
+		}
+		if(type=="solar"){
+			return "일사량";
+		}
+	}
+
+	function setChartLayer(dataTypeList){
+		//$('#chartZone').empty();
+		
+		for(var i=0;i<dataTypeList.length;i++){
+			$('#chartZone').append("<div id='"+dataTypeList[i]+"Chart'></div>");
+		}
+
+		//console.log($('#chartZone').html())
+	}
+
+	function getChartType(type){
+		var bar = ["smo","humi","rain"]
+
+		if(bar.indexOf(type)!=-1){
+			return "column"
+		}else{
+			return "spline"
+		}
+	}
+
+	function getUnit(type){
+
+		var unit = "";
+		
+		if(type=='smo'){
+			unit = "%VWC"
+		}else if(type=='stp' || type=='temp'){
+			unit = "℃"
+		}else if(type=='sec'){
+			unit = "dS/m"
+		}else if(type=='pm25' || type=='pm10'){
+			unit = "㎍/m³"
+		}else if(type=='humi'){
+			unit = "%"
+		}else if(type=="rain"){
+			unit = "mm"
+		}else if(type=="co2"){
+			unit = "ppm"
+		}
+
+		return unit;
+	}
+
+	function drawChart(type,chartData){
+		
+		var unit = getUnit(type);
+		var chartType = getChartType(type);
+
+		console.log(chartData)
+
+		var obj = {};
+		obj.name = getDataKrName(type);
+		obj.data = [];
+		
+				
+		for(var i=0;i<chartData.length;i++){
+			obj.data.push([chartData[i].tm*1,chartData[i][type]*1])
+			if(chartData[i][type]==null){
+				return;
+			}
+		}
+
+		console.log(obj)
+
+		var options = {
+			chart : {
+				renderTo : type+"Chart",
+				zoomType : 'x',
+				type :chartType
+			},
+			credits : false,
+		    time: {
+		    	timezoneOffset: -9 * 60
+		    },
+			title : {
+				text : ''
+			},
+			subtitle : {
+				text : ''
+			},
+		    exporting: {
+		        enabled: false
+		    },
+			xAxis : {
+				type : 'datetime',
+		        dateTimeLabelFormats: {
+		            day: '%y-%m-%d<br>%H:%M'
+		        }
+			},
+			labels : {
+				autoRotation: false,
+		        style: {
+		            whiteSpace: 'normal'  // 줄 바꿈 허용
+		        }
+				//autoRotationLimit : 5
+			},
+			yAxis : {
+				min: 0,
+				labels : {
+					format : '{value}'+unit,
+					style : {
+						color : Highcharts.getOptions().colors[3]
+					}
+				},
+				title : {
+					text : false,
+					style : {
+						color : Highcharts.getOptions().colors[3]
+					}
+				}
+			},
+			tooltip : {
+				shared : true,
+				useHTML : true,
+				xDateFormat : '%Y-%m-%d %H:%M',
+				headerFormat : '<small>{point.key}</small><table>',
+				pointFormat : '<tr><td style="color: {series.color}">{series.name}: </td>'
+						+ '<td style="text-align: right"><b>{point.y}'+unit+'</b></td></tr>',
+				footerFormat : '</table>',
+				valueDecimals : 1
+			},
+			legend : {
+				layout : 'vertical',
+				align : 'right',
+				x : 0,
+				verticalAlign : 'top',
+				y : 10,
+				floating : true,
+				backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColor)
+						|| '#FFFFFF'
+			},
+			series : [obj]
+		};
+
+		chart = new Highcharts.Chart(options);
+
+		chartList.push(chart)
 	}
 	
 	function difference(today, yesterday, element, arrowElement) {
@@ -1329,7 +1685,8 @@
     
     
 	$(".csvdownload").click(function() {
-		saveCSV('data.csv')
+		//saveCSV('data.csv')
+		saveCSV2()
 	    return false;
 	})
     
@@ -1355,6 +1712,38 @@
 		downLink.href = window.URL.createObjectURL(csvFile); 
 		downLink.download = fileName; 
 		downLink.click();
+	}
+
+	function saveCSV2() {
+	    let table = document.getElementById('searchresult');
+	    let csv = [];
+	    
+	    for(let row of table.rows) {
+	        let rowData = [];
+	        for(let cell of row.cells) {
+	            // 셀의 데이터를 가져와서 콤마(,)와 쌍따옴표(")로 감싸줍니다.
+	        	rowData.push(`"\${(cell.innerText || "").replace(/"/g, '""')}"`);
+	        }
+	        csv.push(rowData.join(','));
+	    }
+	    
+	    // CSV 형식으로 변환
+	    let csvString = csv.join('\n');
+
+	    // UTF-8 BOM 추가
+	    let BOM = "\uFEFF";
+	    csvString = BOM + csvString;
+	    
+	    // 다운로드 링크 생성
+	    let blob = new Blob([csvString], { type: 'text/csv' });
+	    let url = URL.createObjectURL(blob);
+	    
+	    let a = document.createElement('a');
+	    a.href = url;
+	    a.download = 'table.csv';
+	    a.click();
+	    
+	    URL.revokeObjectURL(url);
 	}
     
     

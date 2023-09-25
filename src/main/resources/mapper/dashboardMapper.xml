@@ -6,10 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="dashboardMapper">
 
 	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
-		<id property="hole_No" column="HOLE_NO"/>
-		<result property="hole_No" column="HOLE_NO"/>
-		<result property="course_Type" column="COURSE_TYPE"/>
-		<result property="hole_Name" column="HOLE_NAME"/>
+		<id property="holeNo" column="HOLE_NO"/>
+		<result property="holeNo" column="HOLE_NO"/>
+		<result property="courseType" column="COURSE_TYPE"/>
+		<result property="holeName" column="HOLE_NAME"/>
 		<result property="lat" column="LAT"/>
 		<result property="lon" column="LON"/>
 		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">

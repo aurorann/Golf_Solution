@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RobotLogDTO {
-	private int log_No;
+	private int logNo;
 	private String tm;
-	private int robot_No;
-	private String event_Comment;
+	private int robotNo;
+	private String eventComment;
 }

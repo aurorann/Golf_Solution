@@ -9,8 +9,8 @@ import java.util.List;
 @Setter
 @ToString
 public class WorkReportTargetDTO {
-	private String target_No;
-	private double work_No;
-	private int hole_No;
-	private String course_Type;
+	private String targetNo;
+	private double workNo;
+	private int holeNo;
+	private String courseType;
 }

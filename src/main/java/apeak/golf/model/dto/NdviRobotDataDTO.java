@@ -9,12 +9,12 @@ import java.util.List;
 @Setter
 @ToString
 public class NdviRobotDataDTO {
-	private int robot_No;
+	private int robotNo;
 	private String tm;
 	private double lat;
 	private double lon;
-	private int hole_No;
-	private String course_Type;
-	private String img_Path;
+	private int holeNo;
+	private String courseType;
+	private String imgPath;
 	private double ndvi;
 }

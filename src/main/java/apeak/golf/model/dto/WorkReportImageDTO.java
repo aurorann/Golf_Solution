@@ -9,9 +9,9 @@ import java.util.List;
 @Setter
 @ToString
 public class WorkReportImageDTO {
-	private double img_No;
-	private double work_No;
-	private String file_Path;
-	private String ori_Name;
-	private String save_Name;
+	private double imgNo;
+	private double workNo;
+	private String filePath;
+	private String oriName;
+	private String saveName;
 }
