@@ -219,7 +219,7 @@ function updatedata(data){
 						<div class="col-lg-3">
 							<div class="card">
 								<div class="card-header mb-2">
-									<h6 class="card-title font-weight-bold"><a class="detailreport" value="\${data.list1[i].hole_No}">\${data.list1[i].hole_Name}</a>
+									<h6 class="card-title font-weight-bold"><a class="detailreport" value="\${data.list1[i].hole_No}">\${data.list1[i].holeName}</a>
 									<span class="float-right badge badge-success badge-pill">양호</span>
 									</h6>
 								</div>
