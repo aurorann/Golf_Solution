@@ -417,7 +417,6 @@ $(document).ready(function() {
     	for(var i=0; i<data.length; i++){
     		let dateStart = `\${data[i].workStart}`.slice(0, 10);
     		let dateEnd = `\${data[i].workEnd}`.slice(0, 10);
-    		console.log(date_Start);
         	allWorkList += `
 			                <div class="col-lg-12">
 			                <div class="card more-round">
