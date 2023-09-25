@@ -34,8 +34,8 @@
         //default settings for options
         this.parentEl = 'body';
         this.element = $(element);
-        this.startDate = moment().subtract(7, 'days');
-        this.endDate = moment().add(1,'days');
+        this.startDate = moment().startOf('day');
+        this.endDate = moment().endOf('day');
         this.minDate = false;
         this.maxDate = false;
         this.maxSpan = false;
@@ -67,17 +67,11 @@
         this.buttonClasses = 'btn btn-sm';
         this.applyButtonClasses = 'btn-primary';
         this.cancelButtonClasses = 'btn-light';
-        
-        moment.updateLocale(moment.locale(), {
-            longDateFormat: {
-                L: 'YYYY-MM-DD'
-            }
-        });
 
         this.locale = {
             direction: 'ltr',
             format: moment.localeData().longDateFormat('L'),
-            separator: ' ~ ',
+            separator: ' - ',
             applyLabel: 'Apply',
             cancelLabel: 'Cancel',
             weekLabel: 'W',
@@ -710,7 +704,7 @@
                 html += '<th></th>';
             }
 
-            var dateHtml = calendar[1][1].format("YYYY ")+this.locale.monthNames[calendar[1][1].month()];
+            var dateHtml = this.locale.monthNames[calendar[1][1].month()] + calendar[1][1].format(" YYYY");
 
             if (this.showDropdowns) {
                 var currentMonth = calendar[1][1].month();

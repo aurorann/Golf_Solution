@@ -39,7 +39,7 @@ public class HoleInfoDAO {
 	}
 	//hole name 조회
 	public List<EgovMap> holedata(){
-		return sess.selectList("courseMapper.holename");
+		return sess.selectList("managementCourseMapper.holename");
 	}
 
 	public HoleInfoDTO getHoleInfoOne(Map<String, Object> param) {

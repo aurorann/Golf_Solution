@@ -165,7 +165,8 @@
 	
 	//코스 위치 active 클래스 추가
 	$(".holebt").click(function() {
-	    $(this).toggleClass("active");
+		$(".holebt").removeClass("active");			
+		$(this).addClass("active");			
 	});
 	
 	
@@ -178,7 +179,8 @@
 	
 	//작업분류 active 클래스 추가
 	$(".classbt").click(function() {
-	    $(this).toggleClass("active");
+		$(".classbt").removeClass("active");			
+		$(this).addClass("active");		
 	});
 
 			
@@ -220,7 +222,7 @@
 		let brand = "";
 		
         for(var i=0; i<data.length; i++){
-			brand += `<option value="opt1">\${data[i].brand_Name}</option>`;
+			brand += `<option value="opt1">\${data[i].brandName}</option>`;
         }
     	// HTML 요소 선택 및 결과 삽입
 		let dataElement = document.querySelector('.brandname');
@@ -231,7 +233,7 @@
 	
 	$(".workreport").click(function() {
 		var dateRange = $('.daterange-basic').val(); // 작업날짜 
-		var dates = dateRange.split(' - '); // 작업날짜 - 빼기
+		var dates = dateRange.split(' ~ '); // 작업날짜 - 빼기
 		var workstart = dates[0]; // 작업시작날짜
 		var workend = dates[1]; // 작업종료날짜
 		var hole = $('.holebt.active').text(); //holename

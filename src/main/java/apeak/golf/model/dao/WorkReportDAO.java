@@ -21,6 +21,7 @@ public class WorkReportDAO {
 	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String oriImgName, String comment) {
 		try {
 			System.out.println("DAO 성공");
+			
 		    Map<String, Object> params1 = new HashMap<>();
 		    params1.put("workstart", workstart);
 		    params1.put("workend", workend);
@@ -28,13 +29,13 @@ public class WorkReportDAO {
 		    params1.put("worktype", worktype);
 		    params1.put("comment", comment);
 		    
-		    session.insert("courseMapper.insertworkreport", params1);
+		    session.insert("managementCourseMapper.insertworkreport", params1);
 		    
 		    Map<String, Object> params2 = new HashMap<>();
 		    params2.put("hole", hole);
 		    params2.put("course", course);
 		    
-		    session.insert("courseMapper.insertworkreporttarget", params2);
+		    session.insert("managementCourseMapper.insertworkreporttarget", params2);
 		    
 		    Map<String, Object> params3 = new HashMap<>();
 		    
@@ -61,7 +62,7 @@ public class WorkReportDAO {
 		    params3.put("oriImgName", oriImgName);
 		    params3.put("saveName", saveName);
 		    
-		    session.insert("courseMapper.insertworkreportimg", params3);
+		    session.insert("managementCourseMapper.insertworkreportimg", params3);
 			
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -70,7 +71,7 @@ public class WorkReportDAO {
 	
 	
 	public List<EgovMap> workReportAllList(){
-		return session.selectList("courseMapper.workReportAllList");
+		return session.selectList("managementCourseMapper.workReportAllList");
 	}//workReportAllList() end
 	
 	

@@ -17,7 +17,7 @@ public class WorkReportBrandDefDAO {
 	
 	public List<EgovMap> branddata(String worktype){
 		System.out.println("DAO 성공");
-		return session.selectList("courseMapper.branddata", worktype);
+		return session.selectList("managementCourseMapper.branddata", worktype);
 	}
 
 	
