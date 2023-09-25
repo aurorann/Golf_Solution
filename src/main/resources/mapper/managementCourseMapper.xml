@@ -15,7 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<id column="SENSOR_NO" property="sensorNo"/>
 			<result property="sensorName" column="SENSOR_NAME"/>
 			<result property="sensorNo" column="SENSOR_NO"/>
+<<<<<<< HEAD:src/main/resources/mapper/managementCourseMapper.xml
 			<result property="SensorType" column="SENSOR_TYPE"/>
+=======
+			<result property="sensorType" column="SENSOR_TYPE"/>
+>>>>>>> 631decc95fab85802dca17e3ebba8903d9c75ce9:src/main/resources/mapper/courseMapper.xml
 			<result property="holeNo" column="HOLE_NO"/>
 			<result property="courseType" column="COURSE_TYPE"/>
 			<result property="lat" column="LAT"/>

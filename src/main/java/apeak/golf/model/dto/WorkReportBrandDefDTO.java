@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class WorkReportBrandDefDTO {
-	private int brand_No;
-	private String brand_Name;
-	private String work_Type;
-	private String brand_Img;
+	private int brandNo;
+	private String brandName;
+	private String workType;
+	private String brandImg;
 }

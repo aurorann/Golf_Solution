@@ -83,7 +83,7 @@ function getAllData(category, listsort){
 		type:'GET',
         data: {category: category, listsort: listsort},
 		dataType: "json",
-		success: function(data){
+		success: function(data, textStatus, jqXHR){
             console.log(data);
             console.log(data.list1.length);
             updatedata(data);
@@ -95,7 +95,7 @@ function getAllData(category, listsort){
 	        alert(jqXHR.responseText);
 	        alert(jqXHR.readyState);
 	    },
-	    complete : function(){
+	    complete : function(jqXHR, textStatus){
 // 	    	$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
 // 			$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
 
@@ -109,11 +109,13 @@ function getAllData(category, listsort){
 			$(window).trigger("resize.twentytwenty");
 			//$().adjustSlider()
 			*/
-			
+			let responseData = jqXHR.responseJSON;
+			console.log(responseData)
+			let list = responseData.list2;
 			
 			for(let i=0;i<holeCount;i++){
 				var map = new naver.maps.Map('map'+i, {
-				    center: new naver.maps.LatLng(35.59619903564453, 127.90499877929688),
+				    center: new naver.maps.LatLng(list[i].lat, list[i].lon),
 				    zoom: 18
 				});
 				map.setMapTypeId('satellite'); 
