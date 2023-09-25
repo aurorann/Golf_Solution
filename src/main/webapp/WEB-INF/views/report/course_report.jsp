@@ -211,7 +211,7 @@
 	    updateDates(1);
 	    
 		if(selectDateStr > todayStr){
-			alert("더 이상의 데이터는 없습니다");
+			alert("해당 날짜에 데이터가 없습니다");
 			$('.currentDate').val(todayStr)
 		}else{
 	        var hole = $(".holebt.active").val();
@@ -676,7 +676,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">-</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">-</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1352,16 +1352,15 @@
 	//달력 오늘날짜 설정
     document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
     
-	//현재 날짜 yyyy-mm-dd hh:mm:ss으로 표출
+	//현재 날짜 yyyy-mm-dd hh:mm으로 표출
     function formatDate(date) {
     	  var yyyy = date.getFullYear();
     	  var mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so we add 1
     	  var dd = String(date.getDate()).padStart(2, '0');
     	  var hh = String(date.getHours()).padStart(2, '0');
     	  var min = String(date.getMinutes()).padStart(2, '0');
-    	  var ss = String(date.getSeconds()).padStart(2, '0');
 
-    	  return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
+    	  return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min;
     	}
 	
 

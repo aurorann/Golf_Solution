@@ -13,9 +13,9 @@
 			<div class="page-title" style="width:100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">정렬</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="btn btn-light">관리순위</button>
-					<button type="button" class="btn btn-light active">오름차순</button>
-					<button type="button" class="btn btn-light">내림차순</button>
+					<button type="button" class="btn btn-light listsort" value="">관리순위</button>
+					<button type="button" class="btn btn-light listsort active" value="ASC">오름차순</button>
+					<button type="button" class="btn btn-light listsort" value="DESC">내림차순</button>
 				</div>
 				<div class="btn-group mr-2">
 					<button type="button" class="categorybt btn btn-light active" value="FAIRWAY">Fairway</button>
@@ -48,8 +48,9 @@ let holeCount = 0;
 
 $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
-   var category = $(".categorybt.active").val();
-   getAllData(category);
+	var category = $(".categorybt.active").val();
+	var listsort = $(".listsort.active").val();
+	getAllData(category, listsort);
    
 	// 상세정보 버튼 클릭 이벤트 핸들러
 	 $('body').on('click', '.detailreport', function() {
@@ -69,16 +70,27 @@ $(".categorybt").click(function() {
 	var category = $(this).val();
 	$(".categorybt").removeClass("active");
 	$(this).addClass("active");
-	getAllData(category);
-    console.log(category);
+	var listsort = $(".listsort.active").val();
+	getAllData(category, listsort);
+});
+
+$(".listsort").click(function() {
+	datatemplate = "";
+	$('.row.data').empty();
+	var listsort = $(this).val();
+	$(".listsort").removeClass("active");
+	$(this).addClass("active");
+	var category = $(".categorybt.active").val();
+	getAllData(category, listsort);
+    console.log(category, listsort);
 });
 
 
-function getAllData(category){
+function getAllData(category, listsort){
 	$.ajax({
 		url: '/each/course_separatecourse_ajax',
 		type:'GET',
-        data: {category: category},
+        data: {category: category, listsort: listsort},
 		dataType: "json",
 		success: function(data){
             console.log(data);
@@ -274,6 +286,7 @@ $('.chart-close').click(function() {//버튼 클릭
         card.find('.collapse').collapse('hide');
     }
 });
+
 
 
 </script>

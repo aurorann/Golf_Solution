@@ -26,9 +26,10 @@ public class EachCourseService {
 	@Autowired
 	private SoilDataDAO soilDataDAO;
 	
-	public EgovMap ndviData(String category) {
+	public EgovMap ndviData(String category, String listsort) {
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("category", category);
+		paramMap.put("listsort", listsort);
 
 		List<HoleInfoDTO> list1 = ndviDataDAO.getNdviData(paramMap);
 		List<HoleInfoDTO> list2 = holeInfoDAO.getHoleInfo(paramMap);

@@ -67,7 +67,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="hole" parameterType="egovMap" resultMap="holeInfoMap">
-		SELECT * FROM HOLE_INFO WHERE COURSE_TYPE = #{category}
+		SELECT * FROM HOLE_INFO WHERE COURSE_TYPE = #{category} 
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY HOLE_NO DESC
+	        </otherwise>
+	    </choose>
 	</select>
 	
 	<select id="weather" parameterType="egovMap" resultMap="holeInfoMap">
@@ -93,7 +101,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    JOIN NDVI_DATA ON SENSOR_INFO.SENSOR_NO = NDVI_DATA.SENSOR_NO AND SENSOR_INFO.COURSE_TYPE = #{category}
 		    GROUP BY HOLE_NO
 		)
-		ORDER BY S.HOLE_NO;
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY S.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY S.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
 	</select>
 	
 	<select id="soilData" parameterType="egovMap" resultMap="holeInfoMap">
@@ -104,7 +119,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM ROBOT_INFO
 			JOIN SOIL_DATA on ROBOT_INFO.ROBOT_NO = SOIL_DATA.ROBOT_NO and SOIL_DATA.COURSE_TYPE = #{category}
 			GROUP by SOIL_DATA.HOLE_NO 
-		) ORDER BY S.HOLE_NO 
+		)
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY S.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY S.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
 	</select>
 
 

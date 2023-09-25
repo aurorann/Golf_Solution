@@ -26,8 +26,8 @@ public class EachCourseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/course_separatecourse_ajax", method = RequestMethod.GET)
-	private EgovMap courseSeparatecourse(@RequestParam String category) {
+	private EgovMap courseSeparatecourse(@RequestParam String category, @RequestParam String listsort) {
 		//System.out.println(category);
-		return eachCourseService.ndviData(category);
+		return eachCourseService.ndviData(category, listsort);
 	}
 }

@@ -35,9 +35,9 @@
 					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
 				</div>
 				<div class="btn-group float-right mr-2">
-					<button type="button" class="btn btn-light">관리순위</button>
-					<button type="button" class="btn btn-light ASC">오름차순</button>
-					<button type="button" class="btn btn-light DESC">내림차순</button>
+					<button type="button" class="btn btn-light listsort" value="">관리순위</button>
+					<button type="button" class="btn btn-light listsort active" value="ASC">오름차순</button>
+					<button type="button" class="btn btn-light listsort" value="DESC">내림차순</button>
 				</div>
 				<h6 class="mr-2 font-weight-semibold float-right ml-2 mt-1">정렬</h6>
 
@@ -158,27 +158,40 @@
 
 $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
-   var category = $(".categorybt.active").val();
-   getAllData(category);
+	var category = $(".categorybt.active").val();
+	var listsort = $(".listsort.active").val();
+	getAllData(category, listsort);
     
 });
 
-
+//카테고리 버튼 클릭시 데이터 갱신
 $(".categorybt").click(function() {
 	datatemplate = "";
 	$('.row.mt-3.data').empty();
 	var category = $(this).val();
 	$(".categorybt").removeClass("active");
 	$(this).addClass("active");
-	getAllData(category);
+	var listsort = $(".listsort.active").val();
+	getAllData(category, listsort);
     //console.log(category);
 });
 
-function getAllData(category){
+//정렬 버튼 클릭스 데이터 갱신
+$(".listsort").click(function() {
+	datatemplate = "";
+	$('.row.mt-3.data').empty();
+	var listsort = $(this).val();
+	$(".listsort").removeClass("active");
+	$(this).addClass("active");
+	var category = $(".categorybt.active").val();
+	getAllData(category, listsort);
+});
+
+function getAllData(category, listsort){
     $.ajax({
         url: '/management/dashboardAjax',
         type: 'GET',
-        data: {category: category},
+        data: {category: category, listsort: listsort},
         dataType: "json",
         success: function(data) {
             console.log(data);
@@ -298,18 +311,6 @@ function updatedata(data){
 
 }//updatedata() end
 
-
-$(".ASC").click(function() {
-    data.list1.sort((a, b) => a.hole_Name.localeCompare(b.hole_Name));
-    updatedata(data);
-    return false;
-})
-
-$(".DESC").click(function() {
-    data.list1.sort((a, b) => b.hole_Name.localeCompare(a.hole_Name));
-    updatedata(data);
-    return false;
-})
 
 
 </script>

@@ -28,11 +28,11 @@ public class DashboardController {
 
 	@RequestMapping(value = "/dashboardAjax", method = RequestMethod.GET)
 	@ResponseBody
-	public EgovMap dashBoard(@RequestParam String category) {
+	public EgovMap dashBoard(@RequestParam String category, @RequestParam String listsort) {
 		
 		//System.out.println("오류지점 찾기");
 		
-	    return dashboardService.data(category);
+	    return dashboardService.data(category, listsort);
 	}
 
 }

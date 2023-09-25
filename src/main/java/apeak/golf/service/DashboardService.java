@@ -37,12 +37,13 @@ public class DashboardService {
 	}//holeinfo() end
 	
 	
-	public EgovMap data(String category) {
+	public EgovMap data(String category, String listsort) {
 		
 		System.out.println("오류지점 찾기2"+category);
 		
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("category", category);
+		paramMap.put("listsort", listsort);
 		
 		List<HoleInfoDTO> list1 = holeInfoDAO.getHoleInfo(paramMap);
 		List<HoleInfoDTO> list2 = weatherDataDAO.getWeatherData(paramMap);
