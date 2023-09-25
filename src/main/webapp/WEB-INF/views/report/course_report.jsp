@@ -175,6 +175,7 @@
 	        var category = $(".categorybt.active").val();
 	        getData(hole, category, selectDate, beforeDate);
 	    }
+
 	});
 	
 	//날짜 셋팅
@@ -319,10 +320,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-lg-3">
-										<iframe
-											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr"
-											width="100%" height="350" style="border: 0;" allowfullscreen="" loading="lazy"
-											referrerpolicy="no-referrer-when-downgrade"></iframe>
+										<div id="map" style="height: 350px;"></div>
 									</div>
 				
 				                    <div class="col-lg-9">
@@ -726,6 +724,13 @@
 
 				let dataElement = document.querySelector('.contentdata');
 				dataElement.innerHTML = content;
+
+				map = new naver.maps.Map('map', {
+				    center: new naver.maps.LatLng(35.591352, 127.902073),
+				    zoom: 17
+				});
+
+				map.setMapTypeId('satellite'); 
 		}else{
 			
 		    let content = "";
@@ -747,10 +752,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-lg-3">
-										<iframe
-											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr"
-											width="100%" height="350" style="border: 0;" allowfullscreen="" loading="lazy"
-											referrerpolicy="no-referrer-when-downgrade"></iframe>
+										<div id="map" style="height: 350px;"></div>
 									</div>
 				
 				                    <div class="col-lg-9">
@@ -1154,6 +1156,13 @@
 
 				let dataElement = document.querySelector('.contentdata');
 				dataElement.innerHTML = content;
+
+				map = new naver.maps.Map('map', {
+				    center: new naver.maps.LatLng(35.591352, 127.902073),
+				    zoom: 17
+				});
+
+				map.setMapTypeId('satellite'); 
 				
 				//NDVI 데이터
 				var ndvi_today = Number(data.list2[0].ndviData.ndvi.toFixed(3));
@@ -1354,14 +1363,14 @@
     
 	//현재 날짜 yyyy-mm-dd hh:mm으로 표출
     function formatDate(date) {
-    	  var yyyy = date.getFullYear();
-    	  var mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so we add 1
-    	  var dd = String(date.getDate()).padStart(2, '0');
-    	  var hh = String(date.getHours()).padStart(2, '0');
-    	  var min = String(date.getMinutes()).padStart(2, '0');
+   	  var yyyy = date.getFullYear();
+   	  var mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so we add 1
+   	  var dd = String(date.getDate()).padStart(2, '0');
+   	  var hh = String(date.getHours()).padStart(2, '0');
+   	  var min = String(date.getMinutes()).padStart(2, '0');
 
-    	  return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min;
-    	}
+   	  return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min;
+   	}
 	
 
 
