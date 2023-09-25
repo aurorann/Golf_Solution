@@ -124,7 +124,7 @@
 					<div class="card-header header-elements-inline">
 						<h6 class="card-title">
 							<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart" aria-expanded="false"> <span>차트정보
-									보기</span> <span class="badge badge-success badge-pill">Hole 1</span>
+									보기</span> <span class="badge badge-success badge-pill" id="chartHole">Hole 1</span>
 							</a>
 						</h6>
 
@@ -223,10 +223,10 @@
 		let markerList = new Array(); // 마커 정보를 담는 배열
 		let infoWindowList = new Array(); // 정보창을 담는 배열
 		let overLayList = new Array(); // 그라운드 오버레이 배열
-		let nowHole;
-		let nowCourse;
-		let nowDataType;
-		let nowLayerType;
+		let nowHole = "H1";
+		let nowCourse = "Fairway";
+		let nowDataType = "ndvi";
+		let nowLayerType = "ndvi";
 		let playState = false;
 		let playTimer;
 		let playIdx = 0;
@@ -320,6 +320,9 @@
 
 			$('#overlayList').empty();
 			$('#overlayList').html(`<button id="overlayPlay"> 재생 </button>`)
+
+			clearInterval(playTimer)
+			playState = false;
 		}
 
 		function hideGroundOverlay(){
@@ -346,7 +349,7 @@
 					hideGroundOverlay()
 					showGroundOverlay(playIdx%overLayList.length)
 					playIdx++;
-				}, 1500);
+				}, 1000);
 				playState = true;
 				$('#overlayPlay').text('정지')
 			}
@@ -456,6 +459,41 @@
 			return template;
 		}
 
+		function getDataKrName(type){
+			if(type=="ndvi"){
+				return "NDVI"
+			}
+
+			if(type=="smo"){
+				return "토양습도";
+			}
+			if(type=="sec"){
+				return "토양양분";
+			}
+			if(type=="stp"){
+				return "토양온도";
+			}
+
+			if(type=="temp"){
+				return "온도";
+			}
+			if(type=="humi"){
+				return "습도";
+			}
+			if(type=="ws"){
+				return "풍속";
+			}
+			if(type=="light"){
+				return "광량";
+			}
+			if(type=="rain"){
+				return "강수량";
+			}
+			if(type=="solar"){
+				return "일사량";
+			}
+		}
+
 		function getDataTypeList(type){
 			if(type=="NDVI"){
 				return ["ndvi"];
@@ -465,43 +503,25 @@
 			}
 
 			if(type=="기상정보"){
-				return ["temp","rain","ws","humi","pm10","pm25","co2"];
+				return ["temp","humi","ws","light","rain","solar"];
 			}
 		}
 
-		function setChartLayer(type){
+		function setChartLayer(dataTypeList){
 			$('#chartZone').empty();
-
-			console.log(type)
-
-			if(type=="NDVI"){
-				$('#chartZone').append("<div id='ndviChart'></div>");
-			}
-
-			if(type=="토양정보"){
-				$('#chartZone').append("<div id='smoChart'></div>");
-				$('#chartZone').append("<div id='secChart'></div>");
-				$('#chartZone').append("<div id='stpChart'></div>");
-			}
-
-			if(type=="기상정보"){
-				$('#chartZone').append("<div id='tempChart'></div>");
-				$('#chartZone').append("<div id='rainChart'></div>");
-				$('#chartZone').append("<div id='wsChart'></div>");
-				$('#chartZone').append("<div id='humiChart'></div>");
-				$('#chartZone').append("<div id='pm10Chart'></div>");
-				$('#chartZone').append("<div id='pm25Chart'></div>");
-				$('#chartZone').append("<div id='co2Chart'></div>");
+			
+			for(var i=0;i<dataTypeList.length;i++){
+				$('#chartZone').append("<div id='"+dataTypeList[i]+"Chart'></div>");
 			}
 
 			//console.log($('#chartZone').html())
 		}
 
 		function getChartType(type){
-			var bar = ["smo","humi"]
+			var bar = ["smo","humi","rain"]
 
 			if(bar.indexOf(type)!=-1){
-				return "bar"
+				return "column"
 			}else{
 				return "spline"
 			}
@@ -530,11 +550,26 @@
 			return unit;
 		}
 
-		function drawChart(type,dataList){
+		function drawChart(type,chartData){
 			
 			var unit = getUnit(type);
 			var chartType = getChartType(type);
-		
+
+			console.log(chartData)
+
+			var obj = {};
+			obj.name = getDataKrName(type);
+			obj.data = [];
+			
+					
+			for(var i=0;i<chartData.length;i++){
+				obj.data.push([chartData[i].tm*1,chartData[i][type]*1])
+				if(chartData[i][type]==null){
+					return;
+				}
+			}
+
+			console.log(obj)
 
 			var options = {
 				chart : {
@@ -558,11 +593,15 @@
 				xAxis : {
 					type : 'datetime',
 			        dateTimeLabelFormats: {
-			            day: '%Y-%m-%d %H:%M'
+			            day: '%y-%m-%d<br>%H:%M'
 			        }
 				},
 				labels : {
-					autoRotationLimit : 5
+					autoRotation: false,
+			        style: {
+			            whiteSpace: 'normal'  // 줄 바꿈 허용
+			        }
+					//autoRotationLimit : 5
 				},
 				yAxis : {
 					min: 0,
@@ -599,7 +638,7 @@
 					backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColor)
 							|| '#FFFFFF'
 				},
-				series : dataList
+				series : [obj]
 			};
 			
 			/*
@@ -647,7 +686,7 @@
 			*/
 			chart = new Highcharts.Chart(options);
 
-			chartList.add(chart)
+			chartList.push(chart)
 		}
 
 		function getHoleInfo(holeNo,courseType){
@@ -760,6 +799,7 @@
 			$.ajax({
 				url : "/all/getChartData",
 				data : param,
+				async : false,
 				success : function(result){
 					retData = result;
 				}
@@ -768,7 +808,7 @@
 			return retData;
 		}
 
-		$('#holeList button,#courseType button,#dataType button,#layerType button').on('click',function(){
+		$('#holeList button,#courseType button,#dataType button').on('click',function(){
 			//alert($(this).text());
 			$(this).parent().find('button').removeClass('active')
 			//$(this).addClass('active')
@@ -795,11 +835,49 @@
 			nowCourse = course;
 			nowDataType = dataType
 
-			getHoleInfo(hole,course)
-			getCurrentData(hole,course,nowDataType);
+			var holeInfo = getHoleInfo(hole,course)
+			var moveTo = new naver.maps.LatLng(holeInfo.lat, holeInfo.lon);
+			if(map){
+				map.panTo(moveTo)
+			}
 
-			setChartLayer(dataType);
+			clearMarker()
+			createMarker(holeInfo.lat,holeInfo.lon)
+			$('#chartHole').html("Hole "+nowHole);
+			
+			for(var i=0;i<infoWindowList.length;i++){
+				if(infoWindowList[i]){
+					infoWindowList[i].close();
+				}
+			}
+
+
+			var chartData = getChartData(hole,course,nowDataType);
+			var dataTypeList = getDataTypeList(nowDataType);
+
+			setChartLayer(dataTypeList);
+
+			
+			for(var i=0;i<dataTypeList.length;i++){
+				drawChart(dataTypeList[i],chartData);
+			}
+
+			clearGroundOverlay();
+			//alert(layerType)
+			if(nowLayerType=="NULL"){
+				return;
+			}
+
+			var result = getLayerData(nowHole,nowCourse)
+
+			$.each(result,function(index,item){
+				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+			})
+
+			hideGroundOverlay()
+			showGroundOverlay(result.length-1)
 		})
+		
 		
 		$('#layerType button').on('click',function(){
 			var layerType = $(this).data('layertype');
@@ -822,6 +900,34 @@
 			showGroundOverlay(result.length-1)
 		})
 		
+		$('#searchBtn').on('click',function(){
+
+			var chartData = getChartData(nowHole,nowCourse,nowDataType);
+			var dataTypeList = getDataTypeList(nowDataType);
+
+			setChartLayer(dataTypeList);
+
+			for(var i=0;i<dataTypeList.length;i++){
+				drawChart(dataTypeList[i],chartData);
+			}
+
+			clearGroundOverlay();
+			//alert(layerType)
+			if(nowLayerType=="NULL"){
+				return;
+			}
+
+			var result = getLayerData(nowHole,nowCourse)
+
+			$.each(result,function(index,item){
+				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+			})
+
+			hideGroundOverlay()
+			showGroundOverlay(result.length-1)
+		})
+		
+		$('#holeList button:eq(0)').click();
 		$('#layerType button:eq(0)').click();
 		
 		$(document).on('click','#overlayPlay',function(){
@@ -837,7 +943,7 @@
 		})
 
 		var map = new naver.maps.Map('map', {
-		    center: new naver.maps.LatLng(35.59619903564453, 127.90499877929688),
+		    center: new naver.maps.LatLng(35.591352, 127.902073),
 		    zoom: 18
 		});
 
@@ -866,6 +972,9 @@
 		.nowOver{
 			background-color: cornflowerblue;
 			color: white;
+		}
+		#chartZone > div{
+			height: 350px;
 		}
 	</style>
 </div>
@@ -928,7 +1037,7 @@
 
 			<ul class="nav nav-sidebar my-2">
 				<li class="nav-item pl-3 pr-3">
-					<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
+					<button type="button" class="btn btn-primary btn-block" id="searchBtn">검색하기<i class="icon-search4 ml-2"></i></button>
 				</li>
 			</ul>
 
