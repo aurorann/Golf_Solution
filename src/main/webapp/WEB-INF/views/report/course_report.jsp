@@ -70,15 +70,6 @@
 		<!-- Header -->
 		<div class="sidebar-section sidebar-section-body d-flex align-items-center">
 			<h5 class="mb-0 font-weight-bold">데이터 검색</h5>
-			<div class="ml-auto">
-				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
-					<i class="icon-transmission"></i>
-				</button>
-
-				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
-					<i class="icon-cross2"></i>
-				</button>
-			</div>
 		</div>
 		<!-- /header -->
 
@@ -813,7 +804,7 @@
 											<h6 class="card-title font-weight-bold">차트 보기</h6>
 										</div>
 				
-										<div class="chart-container" id="chartZone">
+										<div class="chart-container row" id="chartZone">
 											<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
 										</div>
 									</div>
@@ -1245,8 +1236,8 @@
 											<h6 class="card-title font-weight-bold">차트 보기</h6>
 										</div>
 				
-										<div class="chart-container" id="chartZone">
-											<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
+										<div class="chart-container row" id="chartZone">
+											<div class="chart has-fixed-height" id="line_multiple" style="height: 420px;"></div>
 										</div>
 									</div>
 				
@@ -1455,7 +1446,7 @@
 		//$('#chartZone').empty();
 		
 		for(var i=0;i<dataTypeList.length;i++){
-			$('#chartZone').append("<div id='"+dataTypeList[i]+"Chart'></div>");
+			$('#chartZone').append("<div class='col-lg-6' id='"+dataTypeList[i]+"Chart'></div>");
 		}
 
 		//console.log($('#chartZone').html())
@@ -1766,3 +1757,10 @@
 
 
 </script>
+<style>
+<!--
+#chartZone > div{
+	height: 330px;
+}
+-->
+</style>

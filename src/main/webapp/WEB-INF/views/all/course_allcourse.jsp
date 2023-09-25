@@ -974,7 +974,10 @@
 			color: white;
 		}
 		#chartZone > div{
-			height: 350px;
+			height: 175px;
+		}
+		#chartZone > #ndviChart{
+			height: 300px;
 		}
 	</style>
 </div>
@@ -987,15 +990,6 @@
 		<!-- Header -->
 		<div class="sidebar-section sidebar-section-body d-flex align-items-center">
 			<h5 class="mb-0 font-weight-bold">검색</h5>
-			<div class="ml-auto">
-				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
-					<i class="icon-transmission"></i>
-				</button>
-
-				<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
-					<i class="icon-cross2"></i>
-				</button>
-			</div>
 		</div>
 		<!-- /header -->
 
