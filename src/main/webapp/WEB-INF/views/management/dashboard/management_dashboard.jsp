@@ -219,7 +219,7 @@ function updatedata(data){
 						<div class="col-lg-3">
 							<div class="card">
 								<div class="card-header mb-2">
-									<h6 class="card-title font-weight-bold">\${data.list1[i].hole_Name}
+									<h6 class="card-title font-weight-bold"><a class="detailreport" value="\${data.list1[i].hole_No}">\${data.list1[i].hole_Name}</a>
 									<span class="float-right badge badge-success badge-pill">양호</span>
 									</h6>
 								</div>
@@ -310,6 +310,15 @@ function updatedata(data){
 	dataElement.innerHTML = datatemplate;
 
 }//updatedata() end
+
+//상세정보 버튼 클릭 이벤트 핸들러
+$('body').on('click', '.detailreport', function() {
+    // 버튼의 value 값
+    var value = $(this).attr('value');
+    console.log(value);
+    
+	location.href = '/report/course_report?value=' + encodeURIComponent(value);
+});
 
 
 
