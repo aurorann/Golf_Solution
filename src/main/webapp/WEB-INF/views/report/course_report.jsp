@@ -411,7 +411,7 @@
 						<div class="card">
 							<div class="card-header">
 								<h5 class="card-title holename">
-									\${data.list4[0].hole_Name}
+									\${data.list4[0].holeName}
 									<div class="btn-group ml-3" data-toggle="buttons" id="layerType">
 										<button type="button" class="btn btn-light" data-layertype="NDVI">생육</button>
 										<button type="button" class="btn btn-light" data-layertype="TEMP">열</button>
@@ -843,7 +843,7 @@
 						<div class="card">
 							<div class="card-header">
 								<h5 class="card-title holename">
-									\${data.list4[0].hole_Name}
+									\${data.list4[0].holeName}
 									<div class="btn-group ml-3" data-toggle="buttons" id="layerType">
 										<button type="button" class="btn btn-light" data-layertype="NDVI">생육</button>
 										<button type="button" class="btn btn-light" data-layertype="TEMP">열</button>
@@ -1669,8 +1669,8 @@
 				result += `
 		            <tr>
 		                <td>\${data.list1[i].weatherData.tm}</td>
-		                <td>\${data.list1[i].sensorInfo.sensor_Name}</td>
-		                <td>\${data.list1[i].sensorInfo.course_Type}</td>
+		                <td>\${data.list1[i].sensorInfo.sensorName}</td>
+		                <td>\${data.list1[i].sensorInfo.courseType}</td>
 		                <td>\${data.list1[i].weatherData.temp}</td>
 		                <td>\${data.list1[i].weatherData.humi}</td>
 		                <td>\${data.list2[i].soilData.stp}</td>
