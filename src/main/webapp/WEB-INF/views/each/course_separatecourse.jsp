@@ -147,7 +147,7 @@ function updatedata(data){
 			<div class="col-lg-3">
 				<div class="card imageZone">
 					<div class="card-header bg-white text-dark header-elements-inline">
-						<h6 class="card-title font-weight-semibold">\${data.list2[i].hole_Name}</h6>
+						<h6 class="card-title font-weight-semibold">\${data.list2[i].holeName}</h6>
 						<div>
 							<i class="fas fa-seedling mr-2"></i> 
 							<span class="badge badge-success badge-pill"><i class="fas fa-camera mr-2"></i>\${parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2)}</span>
@@ -181,7 +181,7 @@ function updatedata(data){
 						</span>
 	
 						<span class="float-right">
-							<button type="button" class="btn btn-primary-100 border-primary text-primary detailreport" value="\${data.list1[i].hole_No}">상세정보</button>
+							<button type="button" class="btn btn-primary-100 border-primary text-primary detailreport" value="\${data.list1[i].holeNo}">상세정보</button>
 						</span>
 	
 						<!--Chart card-->
