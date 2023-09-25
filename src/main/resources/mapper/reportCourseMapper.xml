@@ -6,19 +6,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="reportCourseMapper">
 
     <resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
-        <id property="hole_No" column="HOLE_NO"/>
-		<result property="hole_Name" column="HOLE_NAME"/>
+        <id property="holeNo" column="HOLE_NO"/>
+		<result property="holeName" column="HOLE_NAME"/>
         <collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
-            <id column="SENSOR_NO" property="sensor_No"/>
-            <id column="HOLE_NO" property="hole_No"/>
+            <id column="SENSOR_NO" property="sensorNo"/>
+            <id column="HOLE_NO" property="holeNo"/>
             <collection property="weatherDataList" column="HOLE_NO" ofType="WeatherDataDTO" javaType="List" autoMapping="true">
-                <id column="SENSOR_NO" property="sensor_No"/>
+                <id column="SENSOR_NO" property="sensorNo"/>
                 <id column="TM" property="tm"/>
             </collection>
         </collection>
         <collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
-            <id column="ROBOT_NO" property="robot_No"/>
-            <id column="HOLE_NO_NOW" property="hole_No_Now"/>
+            <id column="ROBOT_NO" property="robotNo"/>
+            <id column="HOLE_NO_NOW" property="holeNoNow"/>
         </collection>
 
     </resultMap>
@@ -27,17 +27,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
 		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensor_No"/>
-			<result property="sensor_Name" column="SENSOR_NAME"/>
-			<result property="Sensor_Type" column="SENSOR_TYPE"/>
-			<result property="hole_No" column="HOLE_NO"/>
-			<result property="course_Type" column="COURSE_TYPE"/>
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="SensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
-			<result property="last_Updated" column="LAST_UPDATED"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
 		</association>
 		<association property="weatherData" javaType="WeatherDataDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensor_No"/>
+			<id column="SENSOR_NO" property="sensorNo"/>
 			<id column="TM" property="tm"/>
 		</association>
 	</resultMap>
@@ -45,17 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<resultMap type="holeInfoDTO" id="holeInfoMap3" autoMapping="true">
 		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensor_No"/>
-			<result property="sensor_Name" column="SENSOR_NAME"/>
-			<result property="Sensor_Type" column="SENSOR_TYPE"/>
-			<result property="hole_No" column="HOLE_NO"/>
-			<result property="course_Type" column="COURSE_TYPE"/>
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="sensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
-			<result property="last_Updated" column="LAST_UPDATED"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
 		</association>
 		<association property="ndviData" javaType="NdviDataDTO" autoMapping="true">
-			<id column="SENSOR_NO" property="sensor_No"/>
+			<id column="SENSOR_NO" property="sensorNo"/>
 			<id column="TM" property="tm"/>
 			<result column="NDVI" property="ndvi"/>
 		</association>
@@ -64,18 +64,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	<resultMap type="holeInfoDTO" id="holeInfoMap4" autoMapping="true">
 		<association property="robotInfo" javaType="RobotInfoDTO" autoMapping="true">
-			<id column="ROBOT_NO" property="robot_No"/>
-			<result property="hole_No_Now" column="HOLE_NO_NOW"/>
-			<result property="course_Type_Now" column="COURSE_TYPE_NOW"/>
-			<result property="robot_Name" column="ROBOT_NAME"/>
-			<result property="robot_Type" column="ROBOT_TYPE"/>
-			<result property="robot_State" column="ROBOT_STATE"/>
+			<id column="ROBOT_NO" property="robotNo"/>
+			<result property="holeNoNow" column="HOLE_NO_NOW"/>
+			<result property="courseTypeNow" column="COURSE_TYPE_NOW"/>
+			<result property="robotName" column="ROBOT_NAME"/>
+			<result property="robotType" column="ROBOT_TYPE"/>
+			<result property="robotState" column="ROBOT_STATE"/>
 			<result property="lat" column="LAT"/>
 			<result property="lon" column="LON"/>
 			<result property="lon" column="LON"/>
 		</association>
 		<association property="soilData" javaType="SoilDataDTO" autoMapping="true">
-			<id column="ROBOT_NO" property="robot_No"/>
+			<id column="ROBOT_NO" property="robotNo"/>
 			<id column="TM" property="tm"/>
 		</association>
 	</resultMap>
