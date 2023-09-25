@@ -21,7 +21,7 @@
 					<button type="button" class="categorybt btn btn-light active" value="FAIRWAY">Fairway</button>
 					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
 				</div>
-				<h6 class="mr-2 mt-1 font-weight-bold float-right">Update : 2023.08.16 11:12</h6>
+				<h6 class="mr-2 mt-1 font-weight-bold float-right" id="currentDate"></h6>
 				
 			</div>
 		</div>
@@ -51,16 +51,7 @@ $(document).ready(function() {
 	var category = $(".categorybt.active").val();
 	var listsort = $(".listsort.active").val();
 	getAllData(category, listsort);
-   
-	// 상세정보 버튼 클릭 이벤트 핸들러
-	 $('body').on('click', '.detailreport', function() {
-		// 버튼의 value 값
-		var value = $(this).val();
-	
-		// /report/course_report 페이지로 이동합니다.
-		location.href = '/report/course_report?value=' + encodeURIComponent(value);
-		
-	});
+
 });
 
 
@@ -229,10 +220,20 @@ function updatedata(data){
 	let dataElement = document.querySelector('.row.data');
 	dataElement.innerHTML = datatemplate;
 	
-
-
 	
 }//updatedata() end
+
+
+// 상세정보 버튼 클릭 이벤트 핸들러
+$('body').on('click', '.detailreport', function() {
+	// 버튼의 value 값
+	var value = $(this).val();
+
+	// /report/course_report 페이지로 이동합니다.
+	location.href = '/report/course_report?value=' + encodeURIComponent(value);
+	
+});
+
 
 function change(event){
 
@@ -286,6 +287,20 @@ $('.chart-close').click(function() {//버튼 클릭
         card.find('.collapse').collapse('hide');
     }
 });
+
+
+//현재 날짜 yyyy-mm-dd hh:mm으로 표출
+function formatDate(date) {
+	  var yyyy = date.getFullYear();
+	  var mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so we add 1
+	  var dd = String(date.getDate()).padStart(2, '0');
+	  var hh = String(date.getHours()).padStart(2, '0');
+	  var min = String(date.getMinutes()).padStart(2, '0');
+
+	  return 'Update : ' + yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min;
+	}
+	
+document.getElementById("currentDate").innerHTML = formatDate(new Date());
 
 
 

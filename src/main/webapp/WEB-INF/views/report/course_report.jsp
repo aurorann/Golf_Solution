@@ -167,6 +167,7 @@
 	
 	    //페이지 다이렉트 진입시와 개별코스에서 상세정보로 진입할때의 데이터 값 접근
 	    if(value != null){
+	    	$(".holebt").removeClass("active");
 	        $('.holebt[value="' + value + '"]').addClass('active');
 	        var category = $(".categorybt.active").val();
 	        getData(value, category, selectDate, beforeDate);
