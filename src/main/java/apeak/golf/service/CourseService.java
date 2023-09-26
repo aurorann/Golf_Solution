@@ -48,11 +48,26 @@ public class CourseService {
 		return workReportBrandDefDAO.branddata(worktype);
 	}
 	
-	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String oriImgName, String comment) {
+	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String workbrand, String oriImgName, String comment) {
 		System.out.println("service 성공");
-		workReportDAO.insertWork(workstart, workend, hole, course, workclass, worktype, oriImgName, comment);
+		workReportDAO.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment);
 	}//insertWork() end
 	
+	//검색 선택작업 조회하기
+	public EgovMap searchWorkReportList(String searchHole, String searchCourseType, String searchClass, String searchType) {
+		EgovMap paramMap = new EgovMap();
+		paramMap.put("searchHole", searchHole);
+		paramMap.put("searchCourseType", searchCourseType);
+		paramMap.put("searchClass", searchClass);
+		paramMap.put("searchType", searchType);
+		
+		List<EgovMap> list = workReportDAO.searchWorkReportList(paramMap);
+		
+		EgovMap resultMap = new EgovMap();
+		resultMap.put("list", list);
+		
+		return resultMap;
+	}
 	
 	
 }

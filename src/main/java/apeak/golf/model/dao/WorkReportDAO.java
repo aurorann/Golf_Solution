@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Repository
@@ -18,7 +19,7 @@ public class WorkReportDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String oriImgName, String comment) {
+	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String workbrand, String oriImgName, String comment) {
 		try {
 			System.out.println("DAO 성공");
 			
@@ -27,6 +28,7 @@ public class WorkReportDAO {
 		    params1.put("workend", workend);
 		    params1.put("workclass", workclass);
 		    params1.put("worktype", worktype);
+		    params1.put("workbrand", workbrand);
 		    params1.put("comment", comment);
 		    
 		    session.insert("managementCourseMapper.insertworkreport", params1);
@@ -72,6 +74,11 @@ public class WorkReportDAO {
 	
 	public List<EgovMap> workReportAllList(){
 		return session.selectList("managementCourseMapper.workReportAllList");
+	}//workReportAllList() end
+	
+	
+	public List<EgovMap> searchWorkReportList(EgovMap paramMap){
+		return session.selectList("managementCourseMapper.workReportAllList", paramMap);
 	}//workReportAllList() end
 	
 	

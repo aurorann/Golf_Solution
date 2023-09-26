@@ -67,10 +67,11 @@ public class ManagementCourseController {
 	    String course = (String) param.get("course");
 	    String workclass = (String) param.get("workclass");
 	    String worktype = (String) param.get("worktype");
+	    String workbrand = (String) param.get("workbrand");
 	    String oriImgName = (String) param.get("oriImgName");
 	    String comment = (String) param.get("comment");
 	    
-	    courseService.insertWork(workstart, workend, hole, course, workclass, worktype, oriImgName, comment);
+	    courseService.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,6 +87,22 @@ public class ManagementCourseController {
 		return courseService.workReportAllList();
 	}//brandAjax() end
 	
+	
+	//검색 선택작업 조회하기
+	@ResponseBody
+	@RequestMapping(value="/searchWorkReportListAjax", method = RequestMethod.GET)
+	private EgovMap searchWorkReportList(@RequestParam(value="searchHole",required=false) String searchHole,
+										@RequestParam(value="searchCourseType",required=false) String searchCourseType,
+										@RequestParam(value="searchClass",required=false) String searchClass,
+										@RequestParam(value="searchType",required=false) String searchType) {
+		
+		System.out.println(searchHole);
+		System.out.println(searchCourseType);
+		System.out.println(searchClass);
+		System.out.println(searchType);
+		
+		return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
+	}//brandAjax() end
 	
 	
 	

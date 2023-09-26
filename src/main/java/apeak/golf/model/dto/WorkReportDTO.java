@@ -16,6 +16,7 @@ public class WorkReportDTO {
 	private String workEnd;
 	private String workClass;
 	private String workType;
+	private String workBrand;
 	private String workComment;
 	private String workState;
 	

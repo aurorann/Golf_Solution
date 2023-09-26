@@ -47,7 +47,7 @@ var DateTimePickers = function() {
             parentEl: '.content-inner',
             timePicker: true,
             locale: {
-                format: 'MM/DD/YYYY h:mm a'
+                format: 'YYYY-MM-DD HH:mm'
             }
         });
 

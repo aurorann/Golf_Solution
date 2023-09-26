@@ -61,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="workEnd" column="WORK_END"/>
 		<result property="workClass" column="WORK_CLASS"/>
 		<result property="workType" column="WORK_TYPE"/>
+		<result property="workBrand" column="WORK_BRAND"/>
 		<result property="workComment" column="WORK_COMMENT"/>
 		<result property="workState" column="WORK_STATE"/>
 		<collection property="workReportImageList" column="WORK_NO" ofType="WorkReportImageDTO" javaType="List" autoMapping="true">
@@ -98,8 +99,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insertworkreport" parameterType="map">
-		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END, WORK_CLASS, WORK_TYPE, WORK_COMMENT)
-		VALUES(now(), #{workstart},#{workend},#{workclass},#{worktype},#{comment})
+		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END, WORK_CLASS, WORK_TYPE, WORK_BRAND, WORK_COMMENT)
+		VALUES(now(), #{workstart},#{workend},#{workclass},#{worktype},#{workbrand},#{comment})
 	</insert>
 	
 	<insert id="insertworkreporttarget" parameterType="map">
@@ -119,7 +120,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
 		FROM WORK_REPORT WR
 		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
-		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
+		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
+		<where>
+			<if test="searchHole!=null and !searchHole.equals('')">
+			WRT.HOLE_NO = #{searchHole}
+			</if>
+			<if test="searchCourseType!=null and !searchCourseType.equals('')">
+			AND WRT.COURSE_TYPE = #{searchCourseType}
+			</if>
+			<if test="searchClass!=null and !searchClass.equals('')">
+			AND WR.WORK_CLASS = #{searchClass}
+			</if>
+			<if test="searchType!=null and !searchType.equals('')">
+			AND WR.WORK_TYPE = #{searchType}
+			</if>
+		</where>
+		ORDER BY WR.WORK_NO DESC 
 	</select>
 
 
