@@ -207,3 +207,9 @@ body {
         align-items: flex-start;
     }
 }
+
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light {
+    color: white;
+    background-color: #333;
+    border-color: #777;
+}

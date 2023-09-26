@@ -1,6 +1,8 @@
 package apeak.golf.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,10 @@ public class EachCourseService {
 	@Autowired
 	private SoilDataDAO soilDataDAO;
 	
-	public EgovMap ndviData(String category, String listsort) {
+	@Autowired
+	private WeatherDataDAO weatherDataDAO;
+	
+	public EgovMap courseSeparatecourseAjax(String category, String listsort) {
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("category", category);
 		paramMap.put("listsort", listsort);
@@ -42,4 +47,18 @@ public class EachCourseService {
 		
 		return resultMap;
 	}//ndviData() end
+	
+	public EgovMap getChartDataList(String category, String listsort) {
+		Map<String,Object> param = new HashMap<>();
+		EgovMap resultMap = new EgovMap();
+		List<HoleInfoDTO> ndviDataList = ndviDataDAO.getNdviDataAllList(param);
+		List<HoleInfoDTO> soilDataList =soilDataDAO.getSoilDataAllList(param);
+		List<HoleInfoDTO> weatherDataList =weatherDataDAO.getWeatherDataAllList(param);
+		
+		resultMap.put("ndviDataList",ndviDataList);
+		resultMap.put("soilDataList",soilDataList);
+		resultMap.put("weatherDataList",weatherDataList);
+		
+		return resultMap;
+	}
 }

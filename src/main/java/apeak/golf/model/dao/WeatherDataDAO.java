@@ -49,6 +49,11 @@ public class WeatherDataDAO {
 	public EgovMap getCurrentWeatherData(Map<String, Object> param) {
 		return session.selectOne("allCourseMapper.getCurrentWeatherData",param);
 	}
+
+
+	public List<HoleInfoDTO> getWeatherDataAllList(Map<String, Object> param) {
+		return session.selectList("eachCourseMapper.getWeatherDataAllList",param);
+	}
 	
 	
 }

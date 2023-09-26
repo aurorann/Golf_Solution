@@ -35,7 +35,7 @@
 				</div>
 
 				<div class="btn-group mr-2 float-right" data-toggle="buttons" id="layerType">
-					<button type="button" class="btn btn-light active" data-layertype="NDVI">
+					<button type="button" class="btn btn-light" data-layertype="NDVI">
 						<i class="fas fa-seedling"></i>
 						<!--생육-->
 					</button>
@@ -880,6 +880,7 @@
 		
 		
 		$('#layerType button').on('click',function(){
+			$(this).parent().find('button').removeClass('active')
 			var layerType = $(this).data('layertype');
 			
 			nowLayerType = layerType;
@@ -928,7 +929,7 @@
 		})
 		
 		$('#holeList button:eq(0)').click();
-		$('#layerType button:eq(0)').click();
+		//$('#layerType button:eq(0)').click();
 		
 		$(document).on('click','#overlayPlay',function(){
 			console.log("재생")

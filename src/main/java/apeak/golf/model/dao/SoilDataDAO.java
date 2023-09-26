@@ -39,5 +39,9 @@ public class SoilDataDAO {
 	public EgovMap getCurrentSoilData(Map<String, Object> param) {
 		return session.selectOne("allCourseMapper.getCurrentSoilData",param);
 	}
+
+	public List<HoleInfoDTO> getSoilDataAllList(Map<String, Object> param) {
+		return session.selectList("eachCourseMapper.getSoilDataAllList", param);
+	}
 	
 }

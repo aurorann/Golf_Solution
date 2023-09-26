@@ -51,7 +51,7 @@ $(document).ready(function() {
 	var category = $(".categorybt.active").val();
 	var listsort = $(".listsort.active").val();
 	getAllData(category, listsort);
-
+	getChartData()
 });
 
 
@@ -83,6 +83,7 @@ function getAllData(category, listsort){
 		type:'GET',
         data: {category: category, listsort: listsort},
 		dataType: "json",
+		async: false,
 		success: function(data, textStatus, jqXHR){
             console.log(data);
             console.log(data.list1.length);
@@ -185,21 +186,22 @@ function updatedata(data){
 						</span>
 	
 						<!--Chart card-->
-						<div class="card mt-2 mb-0 card-collapsed" id = "chartstart" style="border:0; box-shadow:none;">	
+						<div class="card mt-2 mb-0 card-collapsed" style="border:0; box-shadow:none;">	
 							<div class="collapse">
 								<div class="card-chart">
 									<div id="layer-card-chart" class="collapse show" style="">
 										<div class="card-body chart-card scrolled">
 											<div class="chart-container">
-												<div class="chart has-fixed-height" id="line_multiple2" style="height: 440px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1694754372287">
-													<div style="position: relative; width: 150px; height: 440px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
-														<canvas data-zr-dom-id="zr_0" width="187" height="550" style="position: absolute; left: 0px; top: 0px; width: 150px; height: 440px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
-													</div>
-													<div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(0, 0, 0, 0.75); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 13px / 20px &quot;Noto Sans KR&quot;; padding: 10px 15px; left: 278px; top: 131px; pointer-events: none;">
-														Jan<br>
-														<span class="badge badge-mark mr-2" style="border-color: #f17a52"></span>Limitless: 63 sales<br><span class="badge badge-mark mr-2" style="border-color: #03A9F4"></span>Londinium: 60 sales
-													</div>
-												</div>
+												<div class="ndviChart"></div>
+												<div class="tempChart"></div>
+												<div class="humiChart"></div>
+												<div class="wsChart"></div>
+												<div class="lightChart"></div>
+												<div class="rainChart"></div>
+												<div class="solarChart"></div>
+												<div class="smoChart"></div>
+												<div class="secChart"></div>
+												<div class="stpChart"></div>
 											</div>
 										</div>
 									</div>
@@ -224,6 +226,225 @@ function updatedata(data){
 	
 	
 }//updatedata() end
+
+function getChartData(){
+	$.ajax({
+		url : "/each/getChartDataList",
+		success : function(result){
+			console.log(result)
+			let ndviDataList = result.ndviDataList;
+			let soilDataList = result.soilDataList;
+			let weatherDataList = result.weatherDataList;
+
+			for(var i=0;i<ndviDataList.length;i++){
+
+				var dataList = ndviDataList[i].sensorInfoList[0].ndviDataList;
+				
+				drawChart("ndvi",".ndviChart:eq("+i+")",dataList)
+			}
+
+			for(var i=0;i<weatherDataList.length;i++){
+
+				var dataList = weatherDataList[i].sensorInfoList[0].weatherDataList;
+				
+				drawChart("temp",".tempChart:eq("+i+")",dataList)
+				drawChart("humi",".humiChart:eq("+i+")",dataList)
+				drawChart("ws",".wsChart:eq("+i+")",dataList)
+				drawChart("light",".lightChart:eq("+i+")",dataList)
+				drawChart("rain",".rainChart:eq("+i+")",dataList)
+				drawChart("solar",".solarChart:eq("+i+")",dataList)
+
+			}
+
+			for(var i=0;i<soilDataList.length;i++){
+
+				var dataList = soilDataList[i].soilDataList;
+				
+				drawChart("smo",".smoChart:eq("+i+")",dataList)
+				drawChart("sec",".secChart:eq("+i+")",dataList)
+				drawChart("stp",".stpChart:eq("+i+")",dataList)
+			}
+
+		}
+	})
+}
+
+var chartList = [];
+
+function getTimeStamp(dateString){
+	// Date 객체 생성
+	let dateObject = new Date(dateString + " UTC"); // UTC 기준으로 Date 객체 생성
+
+	// 유닉스 타임스탬프로 변환 (초 단위)
+	let unixTimestamp = Math.floor(dateObject.getTime() / 1);
+
+	return unixTimestamp;
+}
+
+function drawChart(type,target,chartData){
+	
+	var unit = getUnit(type);
+	var chartType = getChartType(type);
+
+	console.log(chartData)
+
+	var obj = {};
+	obj.name = getDataKrName(type);
+	obj.data = [];
+	
+			
+	for(var i=0;i<chartData.length;i++){
+		obj.data.push([getTimeStamp(chartData[i].tm)*1,chartData[i][type]*1])
+		if(chartData[i][type]==null){
+			return;
+		}
+	}
+
+	console.log(obj)
+
+	var options = {
+		chart : {
+			renderTo : type+"Chart",
+			zoomType : 'x',
+			type :chartType
+		},
+		credits : false,
+	    time: {
+	    	timezoneOffset: -9 * 60
+	    },
+		title : {
+			text : ''
+		},
+		subtitle : {
+			text : ''
+		},
+	    exporting: {
+	        enabled: false
+	    },
+		xAxis : {
+			type : 'datetime',
+	        dateTimeLabelFormats: {
+	            day: '%y-%m-%d<br>%H:%M'
+	        }
+		},
+		labels : {
+			autoRotation: false,
+	        style: {
+	            whiteSpace: 'normal'  // 줄 바꿈 허용
+	        }
+			//autoRotationLimit : 5
+		},
+		yAxis : {
+			min: 0,
+			labels : {
+				format : '{value}'+unit,
+				style : {
+					color : Highcharts.getOptions().colors[3]
+				}
+			},
+			title : {
+				text : false,
+				style : {
+					color : Highcharts.getOptions().colors[3]
+				}
+			}
+		},
+		tooltip : {
+			shared : true,
+			useHTML : true,
+			xDateFormat : '%Y-%m-%d %H:%M',
+			headerFormat : '<small>{point.key}</small><table>',
+			pointFormat : '<tr><td style="color: {series.color}">{series.name}: </td>'
+					+ '<td style="text-align: right"><b>{point.y}'+unit+'</b></td></tr>',
+			footerFormat : '</table>',
+			valueDecimals : 1
+		},
+		legend : {
+			layout : 'vertical',
+			align : 'right',
+			x : 10,
+			verticalAlign : 'top',
+			y : 0,
+			floating : true,
+			backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColor)
+					|| '#FFFFFF'
+		},
+		series : [obj]
+	};
+
+	chart = $(target).highcharts(options);
+
+	chartList.push(chart)
+}
+
+
+function getChartType(type){
+	var bar = ["smo","humi","rain"]
+
+	if(bar.indexOf(type)!=-1){
+		return "column"
+	}else{
+		return "spline"
+	}
+}
+
+function getUnit(type){
+
+	var unit = "";
+	
+	if(type=='smo'){
+		unit = "%VWC"
+	}else if(type=='stp' || type=='temp'){
+		unit = "℃"
+	}else if(type=='sec'){
+		unit = "dS/m"
+	}else if(type=='pm25' || type=='pm10'){
+		unit = "㎍/m³"
+	}else if(type=='humi'){
+		unit = "%"
+	}else if(type=="rain"){
+		unit = "mm"
+	}else if(type=="co2"){
+		unit = "ppm"
+	}
+
+	return unit;
+}
+
+function getDataKrName(type){
+	if(type=="ndvi"){
+		return "NDVI"
+	}
+
+	if(type=="smo"){
+		return "토양습도";
+	}
+	if(type=="sec"){
+		return "토양양분";
+	}
+	if(type=="stp"){
+		return "토양온도";
+	}
+
+	if(type=="temp"){
+		return "온도";
+	}
+	if(type=="humi"){
+		return "습도";
+	}
+	if(type=="ws"){
+		return "풍속";
+	}
+	if(type=="light"){
+		return "광량";
+	}
+	if(type=="rain"){
+		return "강수량";
+	}
+	if(type=="solar"){
+		return "일사량";
+	}
+}
 
 
 // 상세정보 버튼 클릭 이벤트 핸들러
@@ -307,19 +528,8 @@ document.getElementById("currentDate").innerHTML = formatDate(new Date());
 
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<style>
+.chart-container>div{
+	height: 150px;
+}
+</style>

@@ -26,8 +26,14 @@ public class EachCourseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/course_separatecourse_ajax", method = RequestMethod.GET)
-	private EgovMap courseSeparatecourse(@RequestParam String category, @RequestParam String listsort) {
+	private EgovMap courseSeparatecourseAjax(@RequestParam String category, @RequestParam String listsort) {
 		//System.out.println(category);
-		return eachCourseService.ndviData(category, listsort);
+		return eachCourseService.courseSeparatecourseAjax(category, listsort);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getChartDataList")
+	private EgovMap getChartDataList(String category,String listsort) {
+		return eachCourseService.getChartDataList(category,listsort);
 	}
 }
