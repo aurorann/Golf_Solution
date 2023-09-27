@@ -123,8 +123,8 @@
 								<span class="input-group-prepend">
 									<span class="input-group-text"><i class="icon-calendar22"></i></span>
 								</span>
-								<input type="text" class="form-control daterange-time dateInput" value="">
-								<!-- <input type="text" class="form-control daterange-basic dateInput"  value=""> -->
+								<input type="text" class="form-control daterange-time dateInputTime dateInput" value="" style="display:show">
+								<input type="text" class="form-control daterange-basic dateInputBasic dateInput"  value="" style="display:none">
 								<input type="checkbox" class="allDayWork" name="allDay" style="margin-left: 1rem!important; margin-right: .2rem!important;"/>
 							    <label for="allDay" style="margin: auto;">하루종일</label>
 							</div>
@@ -190,7 +190,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-	        			<div class="col-form-label col-lg-10">
+	        			<div class="col-form-label col-lg-10 selectItem">
 	        				<span class="badge badge-info selectHole"></span> <!--코스 위치 라벨-->
 	        				<span class="badge badge-success selectCourse"></span> <!--코스 유형 라벨-->
 	        				<span class="badge badge-warning selectClass"></span> <!--작업 분류 라벨-->
@@ -201,8 +201,111 @@
 				</div>
 
 				<div class="modal-footer pt-3">
-					<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary workreport">작업 등록</button>
+					<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary workInsert">작업 등록</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /scrollable modal -->
+
+	<!-- Update Scrollable modal -->
+	<div id="update_modal_scrollable" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+					<h5 class="modal-title">작업일정 수정</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 날짜</label>
+						<div class="col-lg-10">
+							<div class="input-group">
+								<span class="input-group-prepend">
+									<span class="input-group-text"><i class="icon-calendar22"></i></span>
+								</span>
+								<input type="text" class="form-control daterange-time dateInputTime dateInput" value="" style="display:show">
+								<input type="text" class="form-control daterange-basic dateInputBasic dateInput"  value="" style="display:none">
+								<input type="checkbox" class="allDayWork" name="allDay" style="margin-left: 1rem!important; margin-right: .2rem!important;"/>
+							    <label for="allDay" style="margin: auto;">하루종일</label>
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">코스 위치</label>
+						<div class="col-lg-10 course-location-badge">
+							<c:forEach items="${list}" var="holename">
+							<a href="#"><span class="badge badge-info holebt"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">코스 종류</label>
+						<div class="col-lg-10 course-category-badge">
+							<a href="#"><span class="badge badge-success coursetypebt">Green</span></a><!--코스 유형 라벨-->
+							<a href="#"><span class="badge badge-success coursetypebt">Fairway</span></a>						
+						</div>
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 분류</label>
+						<div class="col-lg-10 work-class-badge">
+							<a href="#"><span class="badge badge-warning classbt">갱신</span></a><!--작업 분류 라벨-->
+							<a href="#"><span class="badge badge-warning classbt">예고</span></a>				
+							<a href="#"><span class="badge badge-warning classbt">기타</span></a>							
+						</div>
+					</div>
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 종류</label>
+						<div class="col-lg-10 work-category-badge">
+							<a href="#"><span class="badge badge-secondary typebt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
+							<a href="#"><span class="badge badge-secondary typebt" data-value="시약">시약</span></a>				 											
+						</div>
+					</div>
+
+
+
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">브랜드 명</label>
+						<div class="col-lg-10">
+							<select class="custom-select brandname">
+								<!-- 브랜드 선택 -->
+								  <option value='' selected>브랜드 선택</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 이미지</label>
+						<div class="col-lg-10">
+							<input type="file" class="form-control h-auto img">
+						</div>
+					</div>
+					<div class="form-group row mt-3">
+						<label class="col-form-label col-lg-2">작업 메모</label>
+						<div class="col-lg-10">
+							<textarea rows="1" cols="3" class="form-control comment" placeholder="작업 내용을 입력해 주세요."></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+	        			<div class="col-form-label col-lg-10 selectItem">
+	        				<span class="badge badge-info selectHole"></span> <!--코스 위치 라벨-->
+	        				<span class="badge badge-success selectCourse"></span> <!--코스 유형 라벨-->
+	        				<span class="badge badge-warning selectClass"></span> <!--작업 분류 라벨-->
+	        				<span class="badge badge-secondary selectType"></span> <!--작업 종류 라벨-->
+	        			</div>
+	        			<div class="inputText"></div>
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary workInsert">작업 등록</button>
 				</div>
 			</div>
 		</div>
@@ -221,6 +324,13 @@ $(document).ready(function() {
 	workAllList();
 });
 
+function searchCheck(){
+	if(!$(".searchHoleBt").hasClass("active") && !$(".searchCourseTypeBt").hasClass("active") && !$(".searchClassBt").hasClass("active") && !$(".searchTypeBt").hasClass("active")){
+		workAllList();
+	}//if end
+}
+
+
 <!-- twentytwenty -->
 	$(function(){
 		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
@@ -229,19 +339,13 @@ $(document).ready(function() {
 <!-- twentytwenty end -->
 
 $('.allDayWork').change(function() {
-	var dateRange = $('.dateInput.daterange-time').val();
-	console.log(dateRange)
 	
     if(this.checked) {
-        $('.dateInput').val('');
-        $('.dateInput').removeClass('daterange-time');
-        $('.dateInput').addClass('daterange-basic');
-        $('.dateInput').val(new Date().toISOString().substring(0, 10) + " ~ " +new Date().toISOString().substring(0, 10));
+    	$('.dateInputTime').hide();
+    	$('.dateInputBasic').show();
     } else {
-        $('.dateInput').val('');
-        $('.dateInput').removeClass('daterange-basic');
-        $('.dateInput').addClass('daterange-time');
-        $('.dateInput').val(dateRange);
+    	$('.dateInputTime').show();
+    	$('.dateInputBasic').hide();
     }
 });
 
@@ -256,13 +360,23 @@ $(".work").click(function() {
 	$('.img').val('');
 	$('.comment').val('');
 	$('.brandname').val('default');
+	$('.selectHole').text('');
+	$('.selectCourse').text('');
+	$('.selectClass').text('');
+	$('.selectType').text('');
 });
 
 //코스 위치 active 클래스 추가
 $(".holebt").click(function() {
-	$(".holebt").removeClass("active");			
-	$(this).addClass("active");
-	$(".selectHole").text($(this).addClass("active").text());
+	//클릭시 이미 active 클래스면 active 제거
+	if($(this).hasClass("active")){
+		$(".holebt").removeClass("active");
+		$('.selectHole').text('');
+	}else{
+		$(".holebt").removeClass("active");			
+	    $(this).addClass("active");
+		$(".selectHole").text($(this).addClass("active").text());
+	}//if end
 });
 
 //코스 위치2 active 클래스 추가
@@ -278,14 +392,21 @@ $(".searchHoleBt").click(function() {
 	var searchHole = $(".searchHoleBt.active").attr('value');
 	console.log("active추가"+searchHole)
 	workSelectList(searchHole, $(".searchCourseTypeBt.active").text(), $(".searchClassBt.active").text(), $(".searchTypeBt.active").text());
+	searchCheck();
 });
 
 
 //코스종류 active 클래스 추가
 $(".coursetypebt").click(function() {
-	$(".coursetypebt").removeClass("active");			
-	$(this).addClass("active");			
-	$(".selectCourse").text($(this).addClass("active").text());
+	//클릭시 이미 active 클래스면 active 제거
+	if($(this).hasClass("active")){
+		$(".coursetypebt").removeClass("active");
+		$('.selectCourse').text('');
+	}else{
+		$(".coursetypebt").removeClass("active");			
+	    $(this).addClass("active");
+		$(".selectCourse").text($(this).addClass("active").text());
+	}//if end
 });
 
 //코스종류2 active 클래스 추가
@@ -300,14 +421,21 @@ $(".searchCourseTypeBt").click(function() {
 	var searchCourseType = $(".searchCourseTypeBt.active").text();
 	console.log("active추가"+searchCourseType)
 	workSelectList($(".searchHoleBt.active").attr('value'), searchCourseType, $(".searchClassBt.active").text(), $(".searchTypeBt.active").text());
+	searchCheck();
 });
 
 
 //작업분류 active 클래스 추가
 $(".classbt").click(function() {
-    $(".classbt").removeClass("active");
-    $(this).addClass("active");
-	$(".selectClass").text($(this).addClass("active").text());
+	//클릭시 이미 active 클래스면 active 제거
+	if($(this).hasClass("active")){
+		$(".classbt").removeClass("active");
+		$('.selectClass').text('');
+	}else{
+		$(".classbt").removeClass("active");			
+	    $(this).addClass("active");
+		$(".selectClass").text($(this).addClass("active").text());
+	}//if end
 });
 
 //작업분류2 active 클래스 추가
@@ -322,6 +450,7 @@ $(".searchClassBt").click(function() {
 	var searchClass = $(".searchClassBt.active").text();
 	console.log("active추가"+searchClass)
 	workSelectList($(".searchHoleBt.active").attr('value'), $(".searchCourseTypeBt.active").text(), searchClass, $(".searchTypeBt.active").text());
+	searchCheck();
 });
 
 //작업분류2 active 클래스 추가
@@ -336,18 +465,23 @@ $(".searchTypeBt").click(function() {
 	var searchType = $(".searchTypeBt.active").text();
 	console.log("active추가"+searchType)
 	workSelectList($(".searchHoleBt.active").attr('value'), $(".searchCourseTypeBt.active").text(), $(".searchClassBt.active").text(), searchType);
+	searchCheck();
 });
 
 		
 //작업종류 active 클래스 추가
 $(".typebt").click(function() {
-    var worktype = $(this).data('value');
-    //var worktype2 = $('.typebt.active').text(); 안되는 이유?
-    //console.log(worktype2)
-	getbrand(worktype);
-	$(".typebt").removeClass("active");			
-	$(this).addClass("active");	
-	$(".selectType").text($(this).addClass("active").text());
+	//클릭시 이미 active 클래스면 active 제거
+	if($(this).hasClass("active")){
+		$(".typebt").removeClass("active");
+		$('.selectType').text('');
+	}else{
+	    var worktype = $(this).data('value');
+		getbrand(worktype);
+		$(".typebt").removeClass("active");			
+	    $(this).addClass("active");
+		$(".selectType").text($(this).addClass("active").text());
+	}//if end
 });
 
 
@@ -387,9 +521,11 @@ function updatebrand(data){
 
 
 
-$(".workreport").click(function() {
-	var dateRange = $('.dateInput').val(); // 작업날짜 
+$(".workInsert").click(function() {
+	var dateRange = $('.dateInput:visible').val(); // 작업날짜 
+	console.log(dateRange);
 	var dates = dateRange.split(' ~ '); // 작업날짜 ~ 빼기
+	console.log(dates);
 	var workstart = dates[0]; // 작업시작날짜
 	var workend = dates[1]; // 작업종료날짜
 	var hole = $('.holebt.active').text(); //holename
@@ -503,8 +639,21 @@ function workReportAllList(data){
            `;
             
 	for(var i=0; i<data.length; i++){
-		let dateStart = `\${data[i].workStart}`.slice(0, 10);
-		let dateEnd = `\${data[i].workEnd}`.slice(0, 10);
+		let dateStartTime = `\${data[i].workStart}`.slice(11, 16);
+		let dateEndTime = `\${data[i].workEnd}`.slice(11, 16);
+		let dateStart = '';
+		let dateEnd = '';
+		
+		//하루종일 날짜와 시간별 날짜 구분하기
+		if(`\${data[i].workStart}`.slice(11, 16) == '00:00' && `\${data[i].workEnd}`.slice(11, 16) == '00:00'){
+			dateStart = `\${data[i].workStart}`.slice(0, 10);
+			dateEnd = `\${data[i].workEnd}`.slice(0, 10);			
+		}else{
+			dateStart = `\${data[i].workStart}`.slice(0, 16);
+			dateEnd = `\${data[i].workEnd}`.slice(0, 16);	
+		}
+		let dateWorkNo = `\${data[i].workNo}`
+
     	allWorkList += `
                <div class="col-lg-12">
                <div class="card more-round">
@@ -514,7 +663,7 @@ function workReportAllList(data){
                            <div class="dropdown position-static">
                                <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
                                <div class="dropdown-menu dropdown-menu-right" style="">
-                                   <a href="#" class="dropdown-item">수정</a>
+                               <a href="#" class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" data-value="\${dateWorkNo}">수정</a>
                                    <a href="#" class="dropdown-item">삭제</a>
                                </div>
                            </div>
@@ -658,7 +807,7 @@ function searchWorkReportList(data){
                            <div class="dropdown position-static">
                                <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
                                <div class="dropdown-menu dropdown-menu-right" style="">
-                                   <a href="#" class="dropdown-item">수정</a>
+									<a href="#" class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" data-value="\${data.list[i].workNo}">수정</a>
                                    <a href="#" class="dropdown-item">삭제</a>
                                </div>
                            </div>
@@ -775,6 +924,34 @@ function searchWorkReportList(data){
 	dataElement.innerHTML = allWorkList;
 	
 }//workReportAllList() end
+
+
+
+//수정 버튼 클릭
+$(".workReportUpdate").click(function() {
+	let workNo = $(this).data('value');
+	console.log(workNo);
+});
+
+
+//선택작업 조회
+function workReportUpdate(){
+    $.ajax({
+        url: '/management/searchWorkReportListAjax',
+        method: 'GET',
+        data: {searchHole: searchHole, searchCourseType: searchCourseType, searchClass: searchClass, searchType: searchType},
+        success: function(data) {
+        	console.log(data);
+        	searchWorkReportList(data);
+        },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+}//workAllList() end
 
  
 </script>
