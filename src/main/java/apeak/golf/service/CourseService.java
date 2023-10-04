@@ -69,5 +69,11 @@ public class CourseService {
 		return resultMap;
 	}
 	
+	//수정 할 작업 조회
+	public List<EgovMap> workReportUpdateList(String workNo) {
+		
+		return workReportDAO.workReportUpdateList(workNo);
+	}
+	
 	
 }

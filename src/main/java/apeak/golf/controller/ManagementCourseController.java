@@ -49,13 +49,6 @@ public class ManagementCourseController {
 		return "/management/course/management_course2";
 	}
 	
-	//작업종류에 따른 제품브랜드 가져오기
-	@ResponseBody
-	@RequestMapping(value="/getbrand_ajax", method = RequestMethod.GET)
-	private List<EgovMap> brandAjax(@RequestParam(value="worktype",required=false) String worktype) {
-		return courseService.branddata(worktype);
-	}//brandAjax() end
-	
 	//작업등록 하기
 	@ResponseBody
 	@RequestMapping(value="/insertwork_ajax", method = RequestMethod.POST)
@@ -102,6 +95,23 @@ public class ManagementCourseController {
 		System.out.println(searchType);
 		
 		return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
+	}//brandAjax() end
+	
+	
+	//수정할 작업 조회하기
+	@ResponseBody
+	@RequestMapping(value="/workReportUpdateList", method = RequestMethod.GET)
+	private List<EgovMap> workReportUpdateList(@RequestParam(value="workNo",required=false) String workNo) {
+		
+		return courseService.workReportUpdateList(workNo);
+	}//brandAjax() end
+	
+	
+	//작업종류에 따른 제품브랜드 가져오기
+	@ResponseBody
+	@RequestMapping(value="/getbrand_ajax", method = RequestMethod.GET)
+	private List<EgovMap> brandAjax(@RequestParam(value="worktype",required=false) String worktype) {
+		return courseService.branddata(worktype);
 	}//brandAjax() end
 	
 	

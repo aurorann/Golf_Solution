@@ -51,7 +51,7 @@
 	
     <!--fullcarendar js-->
     <script src="/resources/assets/js/fullcalendar/main.min.js"></script>
-    <script src="/resources/assets/js/fullcalendar/fullcalendar_styling.js"></script>
+    <!-- <script src="/resources/assets/js/fullcalendar/fullcalendar_styling.js"></script> -->
     
 	
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tcdt00u6f1"></script>

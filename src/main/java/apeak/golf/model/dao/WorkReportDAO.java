@@ -81,6 +81,9 @@ public class WorkReportDAO {
 		return session.selectList("managementCourseMapper.workReportAllList", paramMap);
 	}//workReportAllList() end
 	
+	public List<EgovMap> workReportUpdateList(String workNo){
+		return session.selectList("managementCourseMapper.workReportUpdateList", workNo);
+	}
 	
 }
 

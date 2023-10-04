@@ -138,6 +138,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY WR.WORK_NO DESC 
 	</select>
 
+	<select id="workReportUpdateList" parameterType="map" resultMap="workReportInfo">
+		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
+		FROM WORK_REPORT WR 
+		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
+		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
+		WHERE WR.WORK_NO = #{workNo}
+	</select>
 
 
 
