@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="layout-static">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>골프 코스관리 솔루션 웹</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/fontawsome/styles.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/add.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<!-- /core JS files -->
+		
+	<!-- Theme JS files -->
+	<script src="assets/js/moment.min.js"></script>
+	<script src="assets/js/daterangepicker.js"></script>
+	<script src="assets/js/picker.js"></script>
+	<script src="assets/js/picker.date.js"></script>
+	<script src="assets/js/picker.time.js"></script>
+	<script src="assets/js/legacy.js"></script>
+	<script src="assets/js/jgrowl.min.js"></script>
+
+
+	<!-- Theme JS files -->
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/picker_date.js"></script>
+	<script src="assets/js/echarts.min.js"></script>
+	<script src="assets/js/lines_multiple.js"></script>
+	<!-- /theme JS files -->
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar navbar-expand-lg navbar-light navbar-static">
+		<div class="d-flex flex-1 d-lg-none">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+				<i class="icon-paragraph-justify3"></i>
+			</button>
+			<button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+				<i class="icon-transmission"></i>
+			</button>
+			<button type="button" class="navbar-toggler sidebar-mobile-right-toggle">
+				<i class="icon-arrow-right8"></i>
+			</button>
+		</div>
+
+		<div class="navbar-brand text-center text-lg-left">
+			<a href="index.html" class="d-inline-block">
+				<img src="assets/img/golf_logo.png" class="d-none d-sm-block" alt="Logo">
+				<img src="assets/img/golf_logo.png" class="d-sm-none" alt="Logo">
+			</a>
+		</div>
+
+		<div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
+			<ul class="nav navbar-nav">
+				<li class="nav-item">
+					<a href="course_allcourse.html" class="navbar-nav-link">
+						COURSE
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="management_dashboard.html" class="navbar-nav-link active">
+						MANAGEMENT
+					</a>
+				</li>
+			</ul>
+
+		</div>
+
+		<ul class="navbar-nav flex-row order-1 order-lg-2 flex-1 flex-lg-0 justify-content-end align-items-center">
+			<li class="nav-item">
+				<a href="#" class="navbar-nav-link navbar-nav-link-toggler">
+					<i class="fas fa-bell"></i>
+					<span class="badge badge-warning badge-pill ml-auto ml-lg-0">2</span>
+				</a>				
+			</li>
+
+			<li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
+				<a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle d-inline-flex align-items-center h-100" data-toggle="dropdown">
+					<img src="assets/img/user.png" class="rounded-pill mr-lg-2" height="34" alt="">
+					<span class="d-none d-lg-inline-block">사용자명</span>
+				</a>
+
+				<div class="dropdown-menu dropdown-menu-right">
+					<a href="#" class="dropdown-item">내 정보</a>
+					<div class="dropdown-divider"></div>
+					<a href="#" class="dropdown-item">로그아웃</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main sidebar -->
+		<div class="sidebar sidebar-light sidebar-main sidebar-expand-lg sidebar-main-resized">
+		
+			<!-- Sidebar content -->
+			<div class="sidebar-content sidebar-small ">
+
+
+				<!-- Main navigation -->
+				<div class="sidebar-section">
+					<ul class="nav nav-sidebar" data-nav-type="accordion">
+
+						<div class="sidebar-main-close text-right">
+							<button type="button" class="btn btn-outline-light-100 text-dark border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-main-toggle d-lg-none">
+								<i class="icon-cross2"></i>
+							</button>
+						</div>
+
+						<!-- Main -->
+						<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
+						<li class="nav-item p-0">
+							<a href="management_dashboard.html" class="nav-link">
+								<i class="far fa-clone"></i>
+								<span>
+									대시보드
+								</span>
+							</a>
+							<a href="management_course1.html" class="nav-link">
+								<i class="far fa-calendar-alt"></i>
+								<span>
+									코스관리
+								</span>
+							</a>
+							<a href="management_robot11.html" class="nav-link active">
+								<i class="fas fa-robot"></i>
+								<span>
+									로봇관리
+								</span>
+							</a>
+						</li>
+						<!-- /main -->
+					</ul>
+				</div>
+				<!-- /main navigation -->
+
+			</div>
+			<!-- /sidebar content -->
+			
+		</div>
+		<!-- /main sidebar -->
+
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Page header -->
+			<div class="page-header page-header-light">
+				<div class="page-header-content d-sm-flex">
+					<div class="page-title" style="width:100%;">
+						<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">로봇 관리 - 뷰어</h6>
+						<div class="btn-group mr-2">
+							<button type="button" class="btn btn-light active" onclick="location.href='management_robot1.html'">MAP</button>
+							<button type="button" class="btn btn-light" onclick="location.href='management_robot2.html'">GRID</button>
+						</div>
+
+						<div class="float-right">
+							<button type="button" class="btn sidebar-control sidebar-right-toggle">
+								<i class="fas fa-align-justify"></i>
+							</button>
+						</div>
+
+						<div class="btn-group mr-2 float-left">
+							<button type="button" class="btn btn-light active">전체</button>
+							<button type="button" class="btn btn-light">동작중</button>
+							<button type="button" class="btn btn-light">대기중</button>
+						</div>
+						<h6 class="ml-3 mr-2 mt-1 font-weight-bold float-left">로봇</h6>	
+
+					</div>
+				</div>
+			</div>
+			<!-- /page header -->
+
+
+			<!-- Content area -->
+			<div class="content">
+				<!-- Basic card -->
+				<div class="content-wrap position-relative">
+
+					<div class="robot1 position-absolute card border-pink bg-white text-center p-2">
+						<a href="#" class="text-body">
+							<div class="media m-0">
+								<div class="mr-3">
+									<a href="#">
+										<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
+										</span>
+										<span class="ml-1 font-weight-bold text-dark">캐디 로봇 1</span>
+									</a>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<div class="robot2 robot-active position-absolute card border-pink bg-white text-center p-2">
+						<a href="#" class="text-body">
+							<div class="media m-0">
+								<div class="mr-3">
+									<a href="#">
+										<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
+										</span>
+										<span class="ml-1 font-weight-bold text-dark">캐디 로봇 2</span>
+									</a>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<div class="collapsible-sortable position-absolute" style="left:10px; top:10px;">
+
+						<div class="card layer-card">
+							<div class="card-header card-header-round header-elements-inline">
+								<h6 class="card-title">
+									<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart" aria-expanded="false">
+										<span class="badge badge-danger badge-pill mr-1">충전 필요</span>
+										<span>캐디 로봇 2</span>
+										<span>
+											배터리가 부족합니다
+										</span>
+									</a>
+								</h6>
+	
+								<div class="header-elements">
+									<div class="list-icons">
+										<a class="list-icons-item" data-action="remove"></a>
+									</div>
+								</div>
+							</div>
+	
+							<div id="layer-card-chart" class="collapse" style="">
+								<div class="card-body chart-card scrolled pl-1 pr-1">
+									<div class="table-responsive">
+										<table class="table text-center">
+											<thead>
+												<tr>
+													<th class="table-info pt-1 pb-1">날짜</th>
+													<th class="table-info pt-1 pb-1">활동</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="p-0">2023-06-26 18:02:18</td>
+													<td class="p-0">배터리가 부족합니다.</td>
+												</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">이동중 입니다.</td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="card layer-card">
+								<div class="card-header card-header-round header-elements-inline">
+									<h6 class="card-title">
+										<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart2" aria-expanded="false">
+											<span class="badge badge-success badge-pill mr-1">활동중</span>
+											<span>캐디 로봇 1</span>
+											<span>
+												활동 중입니다.
+											</span>
+										</a>
+									</h6>
+		
+									<div class="header-elements">
+										<div class="list-icons">
+											<a class="list-icons-item" data-action="remove"></a>
+										</div>
+									</div>
+								</div>
+		
+								<div id="layer-card-chart2" class="collapse" style="">
+									<div class="card-body chart-card scrolled pl-1 pr-1">
+										<div class="table-responsive">
+											<table class="table text-center">
+												<thead>
+													<tr>
+														<th class="table-info pt-1 pb-1">날짜</th>
+														<th class="table-info pt-1 pb-1">활동</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="p-0">2023-06-26 18:02:18</td>
+														<td class="p-0">배터리가 부족합니다.</td>
+													</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+	
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+														<tr>
+															<td class="p-0">2023-06-26 18:02:18</td>
+															<td class="p-0">이동중 입니다.</td>
+														</tr>
+	
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							
+	
+						</div>
+
+						
+
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr" width="100%" height="750" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				</div>
+				<!-- /basic card -->
+
+
+			</div>
+			<!-- /content area -->
+
+
+
+		</div>
+		<!-- /main content -->
+
+		<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg sidebar-collapsed">
+			<!-- Sidebar content -->
+			<div class="sidebar-content">
+
+				<!-- Header -->
+				<div class="sidebar-section sidebar-section-body d-flex align-items-center">
+					<h5 class="mb-0 font-weight-bold">로봇 리스트</h5>
+					<div class="ml-auto">
+						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
+							<i class="icon-transmission"></i>
+						</button>
+
+						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
+							<i class="icon-cross2"></i>
+						</button>
+					</div>
+				</div>
+				<!-- /header -->
+
+
+				<!-- Sidebar search -->
+				<div class="sidebar-section ">
+					<div class="table-responsive table-scrollable">
+						<table class="table text-center">
+							<thead>
+								<tr>
+									<th class="table-info pl-1 pr-1 pt-1 pb-1">로봇명</th>
+									<th class="table-info pl-1 pr-1 pt-1 pb-1">동작현황</th>
+									<th class="table-info pl-1 pr-1 pt-1 pb-1">동작시간</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+								<tr>
+									<td class="pl-1 pr-1">캐디1</td>
+									<td class="pl-1 pr-1">작동중</td>
+									<td class="pl-1 pr-1">2023-10-23 14:11</td>
+								</tr>
+							
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- /sidebar search -->
+
+			</div>
+			<!-- /sidebar content -->
+
+		</div>
+
+	</div>
+	<!-- /page content -->
+
+</body>
+</html>

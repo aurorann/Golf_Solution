@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reportCourseMapper">
+
+    <resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+        <id property="holeNo" column="HOLE_NO"/>
+		<result property="holeName" column="HOLE_NAME"/>
+        <collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+            <id column="SENSOR_NO" property="sensorNo"/>
+            <id column="HOLE_NO" property="holeNo"/>
+            <collection property="weatherDataList" column="HOLE_NO" ofType="WeatherDataDTO" javaType="List" autoMapping="true">
+                <id column="SENSOR_NO" property="sensorNo"/>
+                <id column="TM" property="tm"/>
+            </collection>
+        </collection>
+        <collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+            <id column="ROBOT_NO" property="robotNo"/>
+            <id column="HOLE_NO_NOW" property="holeNoNow"/>
+        </collection>
+
+    </resultMap>
+
+
+
+	<resultMap type="holeInfoDTO" id="holeInfoMap2" autoMapping="true">
+		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="SensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
+		</association>
+		<association property="weatherData" javaType="WeatherDataDTO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+		</association>
+	</resultMap>
+	
+	
+	<resultMap type="holeInfoDTO" id="holeInfoMap3" autoMapping="true">
+		<association property="sensorInfo" javaType="SensorInfoDTO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="sensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
+		</association>
+		<association property="ndviData" javaType="NdviDataDTO" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<id column="TM" property="tm"/>
+			<result column="NDVI" property="ndvi"/>
+		</association>
+	</resultMap>
+	 
+	 
+	<resultMap type="holeInfoDTO" id="holeInfoMap4" autoMapping="true">
+		<association property="robotInfo" javaType="RobotInfoDTO" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<result property="holeNoNow" column="HOLE_NO_NOW"/>
+			<result property="courseTypeNow" column="COURSE_TYPE_NOW"/>
+			<result property="robotName" column="ROBOT_NAME"/>
+			<result property="robotType" column="ROBOT_TYPE"/>
+			<result property="robotState" column="ROBOT_STATE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="lon" column="LON"/>
+		</association>
+		<association property="soilData" javaType="SoilDataDTO" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<id column="TM" property="tm"/>
+		</association>
+	</resultMap>
+
+
+	
+	<select id="holeSensorList" resultMap="holeInfoMap">
+		SELECT * FROM HOLE_INFO
+		JOIN SENSOR_INFO ON HOLE_INFO.HOLE_NO = SENSOR_INFO.HOLE_NO
+		JOIN ROBOT_INFO ON HOLE_INFO.HOLE_NO = ROBOT_INFO.HOLE_NO_NOW
+	</select>
+	
+	<select id="weatherData" parameterType="map" resultMap="holeInfoMap2">
+		SELECT * FROM SENSOR_INFO S
+		JOIN WEATHER_DATA W ON S.SENSOR_NO = W.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		AND W.TM BETWEEN #{beforeDate} AND #{selectDate}
+		ORDER BY TM DESC
+	</select>
+	
+	<select id="searchweather" parameterType="map" resultMap="holeInfoMap2">
+		SELECT * FROM SENSOR_INFO SI 
+		JOIN WEATHER_DATA WD ON SI.SENSOR_NO = WD.SENSOR_NO 
+		WHERE HOLE_NO = #{holeNo} and TM BETWEEN #{workStart} AND #{workEnd}
+	</select>
+	
+	<select id="searchAllWeather" parameterType="map" resultMap="holeInfoMap2">
+		SELECT * FROM SENSOR_INFO SI 
+		JOIN WEATHER_DATA WD ON SI.SENSOR_NO = WD.SENSOR_NO 
+		WHERE TM BETWEEN #{workStart} AND #{workEnd}
+	</select>
+	
+	
+	<select id="ndviData" parameterType="map" resultMap="holeInfoMap3">
+		SELECT * FROM SENSOR_INFO S
+		JOIN NDVI_DATA N ON S.SENSOR_NO = N.SENSOR_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		AND N.TM BETWEEN  #{beforeDate} AND #{selectDate}
+		ORDER BY TM DESC
+	</select>
+	 
+	 
+	<select id="soilData" parameterType="map" resultMap="holeInfoMap4">
+		SELECT * FROM ROBOT_INFO R
+		JOIN SOIL_DATA S ON R.ROBOT_NO = S.ROBOT_NO and S.COURSE_TYPE = #{category} and S.HOLE_NO = #{hole}
+		AND S.TM BETWEEN #{beforeDate} AND #{selectDate}
+		ORDER BY TM DESC
+	</select>
+	 
+	<select id="searchSoilData" parameterType="map" resultMap="holeInfoMap4">
+		SELECT * FROM ROBOT_INFO RI
+		JOIN SOIL_DATA SD ON RI.ROBOT_NO = SD.ROBOT_NO 
+		WHERE HOLE_NO = #{holeNo} and TM BETWEEN #{workStart} AND #{workEnd}
+	</select>
+	 
+	<select id="searchAllSoilData" parameterType="map" resultMap="holeInfoMap4">
+		SELECT * FROM ROBOT_INFO RI
+		JOIN SOIL_DATA SD ON RI.ROBOT_NO = SD.ROBOT_NO 
+		WHERE TM BETWEEN #{workStart} AND #{workEnd}
+	</select>
+	
+		 
+	<select id="holeData" resultMap="holeInfoMap">
+		SELECT * FROM HOLE_INFO WHERE HOLE_NO = #{hole} and COURSE_TYPE = #{category}
+	</select>
+	
+
+
+
+</mapper>

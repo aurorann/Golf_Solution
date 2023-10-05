@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="defaultlayout" template="/WEB-INF/views/tiles/layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/tiles/sidebar.jsp" />
+    </definition>
+
+	<definition name="*" extends="defaultlayout">
+		<put-attribute name="contents" value="/WEB-INF/views/{1}.jsp" />
+	</definition>
+	
+	<definition name="/*/*" extends="defaultlayout">
+		<put-attribute name="contents" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+  
+    <definition name="managementlayout" template="/WEB-INF/views/tiles/management_layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="managementsidebar" value="/WEB-INF/views/tiles/management_sidebar.jsp" />
+    </definition>
+
+	<definition name="/management/*/*" extends="managementlayout">
+		<put-attribute name="contents" value="/WEB-INF/views/management/{1}/{2}.jsp" />
+	</definition>    
+      
+</tiles-definitions>

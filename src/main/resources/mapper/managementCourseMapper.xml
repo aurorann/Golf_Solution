@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="managementCourseMapper">
+
+	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+		<id property="holeNo" column="HOLE_NO"/>
+		<result property="courseType" column="COURSE_TYPE"/>
+		<result property="holeName" column="HOLE_NAME"/>
+		<result property="lat" column="LAT"/>
+		<result property="lon" column="LON"/>
+		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="sensorNo" column="SENSOR_NO"/>
+			<result property="sensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
+<!-- 			<result property="" column=""/> -->
+			<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
+				<id column="SENSOR_NO" property="sensorNo"/>
+				<id column="TM" property="tm"/>
+				<result property="temp" column="TEMP"/>
+				<result property="humi" column="HUMI"/>
+				<result property="wd" column="WD"/>
+				<result property="ws" column="WS"/>
+				<result property="light" column="LIGHT"/>
+				<result property="rain" column="RAIN"/>
+				<result property="solar" column="SOLAR"/>
+			</collection>
+			<collection property="ndviDataList" column="SENSOR_NO" ofType="ndviDataDTO" javaType="List" autoMapping="true">
+				<result property="imgPath" column="IMG_PATH"/>
+				<result property="ndvi" column="NDVI"/>
+			</collection>
+		</collection>
+		<collection property="robotInfoList" column="HOLE_NO" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<result property="robotNo" column="ROBOT_NO"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
+				<result property="lat" column="LAT"/>
+				<result property="lon" column="LON"/>
+				<result property="smo" column="SMO"/>
+				<result property="stp" column="STP"/>
+				<result property="sec" column="SEC"/>
+			</collection>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="workReportDTO" id="workReportInfo" autoMapping="true">
+		<id property="workNo" column="WORK_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="writeAt" column="WRITE_AT"/>
+		<result property="workStart" column="WORK_START"/>
+		<result property="workEnd" column="WORK_END"/>
+		<result property="workClass" column="WORK_CLASS"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="workBrand" column="WORK_BRAND"/>
+		<result property="workComment" column="WORK_COMMENT"/>
+		<result property="workState" column="WORK_STATE"/>
+		<collection property="workReportImageList" column="WORK_NO" ofType="WorkReportImageDTO" javaType="List" autoMapping="true">
+				<id column="IMG_NO" property="imgNo"/>
+				<result property="workNo" column="WORK_NO"/>
+				<result property="filePath" column="FILE_PATH"/>
+				<result property="oriName" column="ORI_NAME"/>
+				<result property="saveName" column="SAVE_NAME"/>
+		</collection>
+		<collection property="workReportTargetList" column="WORK_NO" ofType="WorkReportTargetDTO" javaType="List" autoMapping="true">
+				<id column="TARGET_NO" property="targetNo"/>
+				<result property="workNo" column="WORK_NO"/>
+				<result property="holeNo" column="HOLE_NO"/>
+				<result property="courseType" column="COURSE_TYPE"/>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="workReportBrandDefDTO" id="brandInfoMap">
+		<result column="BRAND_NO" property="brandNo"/>
+		<result column="BRAND_NAME" property="brandName"/>
+		<result column="WORK_TYPE" property="workType"/>
+		<result column="BRAND_IMG" property="brandImg"/>
+	</resultMap>
+
+	<select id="holename" resultType="egovMap">
+		SELECT HOLE_NAME, HOLE_NO FROM HOLE_INFO GROUP BY HOLE_NAME, HOLE_NO
+	</select>
+
+	<select id="holedata" resultType="egovMap">
+		SELECT * FROM HOLE_INFO
+	</select>
+
+	<select id="branddata" parameterType="map" resultMap="brandInfoMap">
+		SELECT * FROM WORK_REPORT_BRAND_DEF WHERE WORK_TYPE = #{worktype}
+	</select>
+	
+	<insert id="insertworkreport" parameterType="map">
+		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END, WORK_CLASS, WORK_TYPE, WORK_BRAND, WORK_COMMENT)
+		VALUES(now(), #{workstart},#{workend},#{workclass},#{worktype},#{workbrand},#{comment})
+	</insert>
+	
+	<insert id="insertworkreporttarget" parameterType="map">
+		INSERT INTO WORK_REPORT_TARGET (WORK_NO, HOLE_NO, COURSE_TYPE)
+		VALUES ((select max(work_no) from WORK_REPORT)
+				,(SELECT HOLE_NO  from HOLE_INFO WHERE HOLE_NAME = #{hole} and COURSE_TYPE = #{course})
+				,#{course})
+	</insert>
+	
+	<insert id="insertworkreportimg" parameterType="map">
+		INSERT INTO WORK_REPORT_IMAGE (WORK_NO, FILE_PATH, ORI_NAME, SAVE_NAME)
+		VALUES ((SELECT MAX(work_no) FROM WORK_REPORT),	#{filePath}, #{oriImgName}, #{saveName})
+	</insert>
+	
+	
+	<select id="workReportAllList" parameterType="egovMap" resultMap="workReportInfo">
+		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
+		FROM WORK_REPORT WR
+		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
+		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
+		<where>
+			<if test="searchHole!=null and !searchHole.equals('')">
+			WRT.HOLE_NO = #{searchHole}
+			</if>
+			<if test="searchCourseType!=null and !searchCourseType.equals('')">
+			AND WRT.COURSE_TYPE = #{searchCourseType}
+			</if>
+			<if test="searchClass!=null and !searchClass.equals('')">
+			AND WR.WORK_CLASS = #{searchClass}
+			</if>
+			<if test="searchType!=null and !searchType.equals('')">
+			AND WR.WORK_TYPE = #{searchType}
+			</if>
+		</where>
+		ORDER BY WR.WORK_NO DESC 
+	</select>
+
+	<select id="workReportUpdateList" parameterType="map" resultMap="workReportInfo">
+		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
+		FROM WORK_REPORT WR 
+		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
+		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
+		WHERE WR.WORK_NO = #{workNo}
+	</select>
+	
+	
+	<delete id="deleteworkreport">
+		DELETE FROM WORK_REPORT WHERE WORK_NO = #{workNo}
+	</delete>
+	
+	
+	<delete id="deleteworkreportimage">
+		DELETE FROM WORK_REPORT_IMAGE WHERE WORK_NO = #{workNo}
+	</delete>
+	
+	
+	<delete id="deleteworkreporttarget">
+		DELETE FROM WORK_REPORT_TARGET WHERE WORK_NO = #{workNo}
+	</delete>
+
+
+
+</mapper>

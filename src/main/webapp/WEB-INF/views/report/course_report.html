@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en" class="layout-static">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>골프 코스관리 솔루션 웹</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="assets/css/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/fontawsome/styles.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/add.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<!-- /core JS files -->
+		
+	<!-- Theme JS files -->
+	<script src="assets/js/moment.min.js"></script>
+	<script src="assets/js/daterangepicker.js"></script>
+
+	<!-- Theme JS files -->
+	<script src="assets/js/app.js"></script>
+	<script src="assets/js/picker_date.js"></script>
+	<script src="assets/js/echarts.min.js"></script>
+	<script src="assets/js/lines_multiple.js"></script>
+	<!-- /theme JS files -->
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar navbar-expand-lg navbar-light navbar-static">
+		<div class="d-flex flex-1 d-lg-none">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+				<i class="icon-paragraph-justify3"></i>
+			</button>
+			<button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+				<i class="icon-transmission"></i>
+			</button>
+			<button type="button" class="navbar-toggler sidebar-mobile-right-toggle">
+				<i class="icon-arrow-right8"></i>
+			</button>
+		</div>
+
+		<div class="navbar-brand text-center text-lg-left">
+			<a href="index.html" class="d-inline-block">
+				<img src="assets/img/golf_logo.png" class="d-none d-sm-block" alt="Logo">
+				<img src="assets/img/golf_logo.png" class="d-sm-none" alt="Logo">
+			</a>
+		</div>
+
+		<div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
+			<ul class="nav navbar-nav">
+				<li class="nav-item">
+					<a href="course_allcourse.html" class="navbar-nav-link active">
+						COURSE
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="management_dashboard.html" class="navbar-nav-link">
+						MANAGEMENT
+					</a>
+				</li>
+			</ul>
+
+		</div>
+
+		<ul class="navbar-nav flex-row order-1 order-lg-2 flex-1 flex-lg-0 justify-content-end align-items-center">
+			<li class="nav-item">
+				<a href="#" class="navbar-nav-link navbar-nav-link-toggler">
+					<i class="fas fa-bell"></i>
+					<span class="badge badge-warning badge-pill ml-auto ml-lg-0">2</span>
+				</a>				
+			</li>
+
+			<li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
+				<a href="#" class="navbar-nav-link navbar-nav-link-toggler dropdown-toggle d-inline-flex align-items-center h-100" data-toggle="dropdown">
+					<img src="assets/img/user.png" class="rounded-pill mr-lg-2" height="34" alt="">
+					<span class="d-none d-lg-inline-block">사용자명</span>
+				</a>
+
+				<div class="dropdown-menu dropdown-menu-right">
+					<a href="#" class="dropdown-item">내 정보</a>
+					<div class="dropdown-divider"></div>
+					<a href="#" class="dropdown-item">로그아웃</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- /main navbar -->
+
+
+	<!-- Page content -->
+	<div class="page-content">
+
+		<!-- Main sidebar -->
+		<div class="sidebar sidebar-light sidebar-main sidebar-expand-lg sidebar-main-resized">
+		
+			<!-- Sidebar content -->
+			<div class="sidebar-content sidebar-small ">
+
+
+				<!-- Main navigation -->
+				<div class="sidebar-section">
+					<ul class="nav nav-sidebar" data-nav-type="accordion">
+
+						<div class="sidebar-main-close text-right">
+							<button type="button" class="btn btn-outline-light-100 text-dark border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-main-toggle d-lg-none">
+								<i class="icon-cross2"></i>
+							</button>
+						</div>
+
+						<!-- Main -->
+						<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
+						<li class="nav-item p-0">
+							<a href="course_allcourse.html" class="nav-link">
+								<i class="fas fa-map"></i>
+								<span>
+									전체 코스
+								</span>
+							</a>
+							<a href="course_separatecourse.html" class="nav-link">
+								<i class="fas fa-golf-ball"></i>
+								<span>
+									개별 코스
+								</span>
+							</a>
+							<a href="course_report.html" class="nav-link active">
+								<i class="fas fa-chart-bar"></i>
+								<span>
+									리포트
+								</span>
+							</a>
+						</li>
+						<!-- /main -->
+					</ul>
+				</div>
+				<!-- /main navigation -->
+
+			</div>
+			<!-- /sidebar content -->
+			
+		</div>
+		<!-- /main sidebar -->
+
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Page header -->
+			<div class="page-header page-header-light">
+				<div class="page-header-content d-sm-flex">
+					<div class="page-title" style="width:100%;">
+						<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
+						<div class="btn-group mr-2">
+							<button type="button" class="btn btn-light active">전체</button>
+							<button type="button" class="btn btn-light">H1</button>
+							<button type="button" class="btn btn-light">H2</button>
+							<button type="button" class="btn btn-light">H3</button>
+							<button type="button" class="btn btn-light">H4</button>
+							<button type="button" class="btn btn-light">H5</button>
+							<button type="button" class="btn btn-light">H6</button>
+							<button type="button" class="btn btn-light">H7</button>
+						</div>
+
+						<div class="btn-group mr-2">
+							<button type="button" class="btn btn-light active">Fairway</button>
+							<button type="button" class="btn btn-light">Green</button>
+						</div>
+
+                        <div class="float-right">
+							<button type="button" class="btn sidebar-control sidebar-right-toggle">
+								<i class="fas fa-align-justify"></i>
+							</button>
+						</div>
+
+                        <div class="float-right mr-2">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar22"></i></span>
+                                </span>
+                                <input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+                                <button type="button" class="ml-2 btn btn-primary">검색</button>
+                                <div class="btn-group ml-4">
+                                    <button type="button" class="btn btn-light"><i class="icon-arrow-left12"></i></button>
+                                    <button type="button" class="btn btn-light"><i class="icon-arrow-right13"></i></button>
+                                </div>
+                                <button type="button" class="ml-2 btn btn-teal">오늘</button>
+
+                            </div>
+
+                            
+                        </div>
+						
+					</div>
+				</div>
+			</div>
+			<!-- /page header -->
+
+
+			<!-- Content area -->
+			<div class="content">
+				<!-- Basic card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Hole 2
+                            <div class="btn-group ml-3">
+                                <button type="button" class="btn btn-light">생육</button>
+                                <button type="button" class="btn btn-light">열</button>
+                                <button type="button" class="btn btn-light">습도</button>
+                            </div>
+                            <small class="mr-2 mt-1 font-weight-bold float-right">Update : 2023.08.16 11:12</small>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11124.634462768941!2d127.8932198328219!3d35.58989843099262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356fa1a0b8e4ab75%3A0x6cb5878cba1e3d20!2z7YG065-965SUIOqxsOywvQ!5e1!3m2!1sko!2skr!4v1693789715832!5m2!1sko!2skr" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+
+                            <div class="col-lg-9">
+                                <div class="row">
+                                    <!--NDVI-->
+                                    <div class="col-lg-2">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">NDVI</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>-2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-danger icon-arrow-down132"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--NDVI end-->
+                                    
+                                    <!--기온-->
+                                    <div class="col-lg-2">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">기온</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">12.5</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">14.2</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>+2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-primary icon-arrow-up13"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--기온 end-->
+
+                                    <!--강수량-->
+                                    <div class="col-lg-2">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">강수량</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">12.5</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">14.2</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>+2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-primary icon-arrow-up13"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--강수량 end-->
+
+                                    <!--풍향-->
+                                    <div class="col-lg-2">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">풍향</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">12.5</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">14.2</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--풍향 end-->
+
+                                    <!--풍속-->
+                                    <div class="col-lg-2">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">풍속</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">12.5</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">14.2</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>+2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-primary icon-arrow-up13"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--풍속 end-->
+
+                                    <!--습도-->
+                                    <div class="col-lg-2">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">습도</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>-2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-danger icon-arrow-down132"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--습도 end-->
+
+                                    
+                                    <!--토양수분-->
+                                    <div class="col-lg-4">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">토양수분</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.7906</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>+2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-primary icon-arrow-up13"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--토양수분 end-->
+
+                                    <!--토양온도-->
+                                    <div class="col-lg-4">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">토양온도</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>-2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-danger icon-arrow-down132"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--토양온도 end-->
+
+                                    <!--PH-->
+                                    <div class="col-lg-4">
+                                        <div class="card border-top-success rounded-top-0">
+                                            <div class="card-header">
+                                                <h6 class="card-title font-weight-bold">PH</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.15</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">현재</div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 text-center p-0">
+                                                                <span class="text-secondary">2023.8.16</span>
+                                                                <h2 class="mb-0 font-weight-semibold">0.221</h2>
+                                                                <div class="font-size-sm text-muted">예측</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-2 mb-0 col-lg-12 text-center">
+                                                        <div class="">전날보다 <strong>-2.17<small class="weather-unit">%</small></strong>
+                                                            <i class="text-danger icon-arrow-down132"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--PH end-->
+
+
+
+                                    
+
+
+                                </div>
+                            </div>
+                            
+
+                            <div class="col-lg-12">
+                                <div class="card-header">
+                                    <h6 class="card-title font-weight-bold">차트 보기
+                                    </h6>
+                                    <span class="float-right">
+                                        <button type="button" class="btn btn-primary-100 border-primary text-primary" data-toggle="modal" data-target="#modal_chart">상세정보</button>
+                                    </span>
+                                    
+                                </div>
+
+                                <div class="chart-container mt-3">
+                                    <div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
+                                </div>
+                            </div>
+
+                            <!--모달 차트-->
+
+                            <div id="modal_chart" class="modal fade" tabindex="-1">
+                                <div class="modal-dialog modal-full">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">차트 상세정보</h5>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+        
+                                        <div class="modal-body">
+                                            <h6 class="font-weight-semibold">차트 타이틀
+                                                <div class="btn-group ml-4">
+                                                    <button type="button" class="btn btn-light"><i class="icon-arrow-left12"></i></button>
+                                                    <button type="button" class="btn btn-light"><i class="icon-arrow-right13"></i></button>
+                                                </div>
+                                            </h6>
+                                        </div>
+        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--모달 차트 끝-->
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+				
+            </div>
+
+
+
+		</div>
+		<!-- /main content -->
+
+		<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg sidebar-collapsed">
+
+
+			<!-- Sidebar content -->
+			<div class="sidebar-content">
+
+				<!-- Header -->
+				<div class="sidebar-section sidebar-section-body d-flex align-items-center">
+					<h5 class="mb-0 font-weight-bold">데이터 검색</h5>
+					<div class="ml-auto">
+						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-right-toggle d-none d-lg-inline-flex">
+							<i class="icon-transmission"></i>
+						</button>
+
+						<button type="button" class="btn btn-outline-light text-body border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-right-toggle d-lg-none">
+							<i class="icon-cross2"></i>
+						</button>
+					</div>
+				</div>
+				<!-- /header -->
+
+
+				<!-- Sidebar search -->
+				<div class="sidebar-section">
+					<ul class="nav nav-sidebar" data-nav-type="accordion">
+						<li class="nav-item-header">코스</li>
+						<li class="nav-item text-center pl-2 pr-2">
+							<div class="form-group row">
+                                <div class="col-lg-12">
+                                    <select class="custom-select">
+                                        <option value="opt1">전체코스</option>
+                                        <option value="opt2">Hole 1</option>
+                                        <option value="opt3">Hole 2</option>
+                                        <option value="opt4">Hole 3</option>
+                                        <option value="opt5">Hole 4</option>
+                                        <option value="opt6">Hole 5</option>
+                                        <option value="opt7">Hole 6</option>
+                                        <option value="opt8">Hole 7</option>
+                                    </select>
+                                </div>
+                            </div>
+						</li>
+					</ul>
+
+
+					<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+						<li class="nav-item-header">기간</li>
+						<li class="nav-item pl-3 pr-3">
+							<!--달력 플러그인-->
+							<div class="input-group">
+								<span class="input-group-prepend">
+									<span class="input-group-text"><i class="icon-calendar22"></i></span>
+								</span>
+								<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015"> 
+								
+							</div>
+						</li>
+						
+					</ul>
+
+					<ul class="nav nav-sidebar my-2" >
+						<li class="nav-item pl-3 pr-3">
+							<button type="button" class="btn btn-primary btn-block">검색하기<i class="icon-search4 ml-2"></i></button>
+						</li>
+					</ul>
+
+                    <div class="table-responsive table-scrollable pl-2 pr-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="table-info">날짜</th>
+                                    <th class="table-info">센서명</th>
+                                    <th class="table-info">온도</th>
+                                    <th class="table-info">습도</th>
+                                    <th class="table-info">토양온도</th>
+                                    <th class="table-info">토양습도</th>
+                                    <th class="table-info">이산화탄소</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2023-06-26 18:02:18</td>
+                                    <td>CLUBD-001</td>
+                                    <td>23</td>
+                                    <td>88.3</td>
+                                    <td>24</td>
+                                    <td>20.4</td>
+                                    <td>109.8</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-26 18:02:18</td>
+                                    <td>CLUBD-001</td>
+                                    <td>23</td>
+                                    <td>88.3</td>
+                                    <td>24</td>
+                                    <td>20.4</td>
+                                    <td>109.8</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-26 18:02:18</td>
+                                    <td>CLUBD-001</td>
+                                    <td>23</td>
+                                    <td>88.3</td>
+                                    <td>24</td>
+                                    <td>20.4</td>
+                                    <td>109.8</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-26 18:02:18</td>
+                                    <td>CLUBD-001</td>
+                                    <td>23</td>
+                                    <td>88.3</td>
+                                    <td>24</td>
+                                    <td>20.4</td>
+                                    <td>109.8</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-26 18:02:18</td>
+                                    <td>CLUBD-001</td>
+                                    <td>23</td>
+                                    <td>88.3</td>
+                                    <td>24</td>
+                                    <td>20.4</td>
+                                    <td>109.8</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-06-26 18:02:18</td>
+                                    <td>CLUBD-001</td>
+                                    <td>23</td>
+                                    <td>88.3</td>
+                                    <td>24</td>
+                                    <td>20.4</td>
+                                    <td>109.8</td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="button" class="mt-2 ml-2 btn btn-secondary">파일 저장</button>
+
+					
+				</div>
+				<!-- /sidebar search -->
+
+			</div>
+			<!-- /sidebar content -->
+
+		</div>
+
+	</div>
+	<!-- /page content -->
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="allCourseMapper">
+
+	<resultMap type="holeInfoDTO" id="holeLayerSoilMap" autoMapping="true">
+		<id property="holeNo" column="HOLE_NO"/>
+		<id property="courseType" column="COURSE_TYPE"/>
+		<collection property="layerDataList" column="layerData" ofType="LayerDataDTO" autoMapping="true">
+			<id property="layerSeq" column="LAYER_SEQ"/>
+		</collection>
+		<collection property="soilDataList" column="soilData" ofType="SoilDataDTO" autoMapping="true">
+			<id property="tm" column="TM"/>
+			<id property="robotNo" column="ROBOT_NO"/>
+			<id property="holeNo" column="HOLE_NO"/>
+			<id property="courseType" column="COURSE_TYPE"/>
+		</collection>
+	</resultMap>
+
+	<select id="getWeatherDataList" parameterType="map" resultType="egovMap">
+	SELECT D.* FROM 
+	WEATHER_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='WEATHER'
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	ORDER BY TM
+	</select>
+
+	<select id="getSoilDataList" parameterType="map" resultType="egovMap">
+	SELECT * FROM 
+	SOIL_DATA 
+	WHERE HOLE_NO=#{holeNo}
+	AND COURSE_TYPE=#{courseType}
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	ORDER BY TM
+	</select>
+
+	<select id="getNdviDataList" parameterType="map" resultType="egovMap">
+	SELECT D.* FROM 
+	NDVI_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='NDVI'
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	ORDER BY TM
+	</select>
+	
+	<select id="getCurrentWeatherData" parameterType="map" resultType="weatherDataDTO">
+	SELECT D.* FROM 
+	WEATHER_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='WEATHER'
+	ORDER BY TM DESC LIMIT 1
+	</select>
+	
+	<select id="getCurrentSoilData" parameterType="map" resultType="soilDataDTO">
+	SELECT * FROM 
+	SOIL_DATA 
+	WHERE HOLE_NO=#{holeNo}
+	AND COURSE_TYPE=#{courseType}
+	ORDER BY TM DESC LIMIT 1
+	</select>
+	
+	<select id="getCurrentNdviData" parameterType="map" resultType="ndviDataDTO">
+	SELECT D.* FROM 
+	NDVI_DATA D JOIN SENSOR_INFO I
+	ON D.SENSOR_NO = I.SENSOR_NO 
+	AND I.HOLE_NO=#{holeNo}
+	AND I.COURSE_TYPE=#{courseType}
+	AND I.SENSOR_TYPE='NDVI'
+	ORDER BY TM DESC LIMIT 1
+	</select>
+	
+	<select id="getLayerDataList" parameterType="map" resultType="egovMap">
+	SELECT * FROM
+	LAYER_DATA D JOIN HOLE_INFO I
+	ON D.HOLE_NO = I.HOLE_NO AND D.COURSE_TYPE = I.COURSE_TYPE
+	AND I.COURSE_TYPE = #{courseType}
+	AND I.HOLE_NO = #{holeNo}
+	WHERE TM BETWEEN #{startDate} AND #{endDate}
+	AND LAYER_TYPE=#{layerType}
+	</select>
+	
+	<select id="getHoleInfoOne" parameterType="map" resultType="holeInfoDTO">
+	SELECT * FROM HOLE_INFO 
+	WHERE HOLE_NO=#{holeNo} AND COURSE_TYPE=#{courseType} LIMIT 1
+	</select>
+	
+	<select id="getLayerData" parameterType="map" resultType="egovMap">
+	SELECT * FROM LAYER_DATA JOIN HOLE_INFO
+	USING(HOLE_NO,COURSE_TYPE) 
+	WHERE HOLE_NO=#{holeNo} AND COURSE_TYPE=#{courseType}
+	AND LAYER_TYPE=#{layerType}
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	</select>
+	
+	<select id="getLayerDataAllList" parameterType="map" resultMap="holeLayerSoilMap">
+	SELECT * FROM HOLE_INFO
+	LEFT JOIN LAYER_DATA USING(HOLE_NO,COURSE_TYPE)
+	WHERE COURSE_TYPE=#{courseType}
+	AND LAYER_TYPE=#{layerType} 
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	</select>
+	
+	<select id="getSoilDataAllList" parameterType="map" resultMap="holeLayerSoilMap">
+	SELECT * FROM HOLE_INFO
+	LEFT JOIN SOIL_DATA USING(HOLE_NO,COURSE_TYPE)
+	WHERE COURSE_TYPE=#{courseType}
+	AND TM BETWEEN #{startDate} AND #{endDate}
+	</select>
+</mapper>

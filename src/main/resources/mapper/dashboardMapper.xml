@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dashboardMapper">
+
+	<resultMap type="holeInfoDTO" id="holeInfoMap" autoMapping="true">
+		<id property="holeNo" column="HOLE_NO"/>
+		<result property="holeNo" column="HOLE_NO"/>
+		<result property="courseType" column="COURSE_TYPE"/>
+		<result property="holeName" column="HOLE_NAME"/>
+		<result property="lat" column="LAT"/>
+		<result property="lon" column="LON"/>
+		<collection property="sensorInfoList" column="HOLE_NO" ofType="SensorInfoDTO" javaType="List" autoMapping="true">
+			<id column="SENSOR_NO" property="sensorNo"/>
+			<result property="sensorNo" column="SENSOR_NO"/>
+			<result property="sensorName" column="SENSOR_NAME"/>
+			<result property="SensorType" column="SENSOR_TYPE"/>
+			<result property="holeNo" column="HOLE_NO"/>
+			<result property="courseType" column="COURSE_TYPE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<result property="lastUpdated" column="LAST_UPDATED"/>
+<!-- 			<result property="" column=""/> -->
+			<collection property="weatherDataList" column="SENSOR_NO" ofType="weatherDataDTO" javaType="List" autoMapping="true">
+				<id column="SENSOR_NO" property="sensorNo"/>
+				<id column="TM" property="tm"/>
+				<result property="sensorNo" column="SENSOR_NO"/>
+				<result property="tm" column="TM"/>
+				<result property="temp" column="TEMP"/>
+				<result property="humi" column="HUMI"/>
+				<result property="wd" column="WD"/>
+				<result property="ws" column="WS"/>
+				<result property="light" column="LIGHT"/>
+				<result property="rain" column="RAIN"/>
+				<result property="solar" column="SOLAR"/>
+			</collection>
+			<collection property="ndviDataList" column="SENSOR_NO" ofType="ndviDataDTO" javaType="List" autoMapping="true">
+				<result property="imgPath" column="IMG_PATH"/>
+				<result property="ndvi" column="NDVI"/>
+			</collection>
+		</collection>
+		<collection property="robotInfoList" column="HOLE_NO_NOW" ofType="RobotInfoDTO" javaType="List" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<result property="robotNo" column="ROBOT_NO"/>
+			<result property="holeNoNow" column="HOLE_NO_NOW"/>
+			<result property="courseTypeNow" column="COURSE_TYPE_NOW"/>
+			<result property="robotName" column="ROBOT_NAME"/>
+			<result property="robotType" column="ROBOT_TYPE"/>
+			<result property="robotState" column="ROBOT_STATE"/>
+			<result property="lat" column="LAT"/>
+			<result property="lon" column="LON"/>
+			<collection property="soilDataList" column="ROBOT_NO" ofType="soilDataDTO" javaType="List" autoMapping="true">
+				<result property="robotNo" column="ROBOT_NO"/>
+				<result property="lat" column="LAT"/>
+				<result property="lon" column="LON"/>
+				<result property="smo" column="SMO"/>
+				<result property="stp" column="STP"/>
+				<result property="sec" column="SEC"/>
+			</collection>
+		</collection>
+	</resultMap>
+
+	<select id="test" resultType="egovMap">
+		SELECT * FROM HOLE_INFO 				
+	</select>
+	
+	<select id="hole" parameterType="egovMap" resultMap="holeInfoMap">
+		SELECT * FROM HOLE_INFO WHERE COURSE_TYPE = #{category} 
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY HOLE_NO DESC
+	        </otherwise>
+	    </choose>
+	</select>
+	
+	<select id="weather" parameterType="egovMap" resultMap="holeInfoMap">
+		SELECT * FROM SENSOR_INFO S
+		JOIN WEATHER_DATA W 
+		ON S.SENSOR_NO = W.SENSOR_NO 
+		WHERE S.COURSE_TYPE = #{category} AND (S.HOLE_NO, W.TM) IN (
+		    SELECT HOLE_NO, MAX(TM)
+		    FROM SENSOR_INFO
+		    JOIN WEATHER_DATA ON SENSOR_INFO.SENSOR_NO = WEATHER_DATA.SENSOR_NO AND SENSOR_INFO.COURSE_TYPE = #{category}
+		    GROUP BY HOLE_NO
+		)
+		ORDER BY S.HOLE_NO;
+	</select>
+	
+	<select id="ndviData" parameterType="egovMap" resultMap="holeInfoMap">
+		SELECT * FROM SENSOR_INFO S
+		JOIN NDVI_DATA N
+		ON S.SENSOR_NO = N.SENSOR_NO 
+		WHERE S.COURSE_TYPE = #{category} AND (S.HOLE_NO, N.TM) IN (
+		    SELECT HOLE_NO, MAX(TM)
+		    FROM SENSOR_INFO
+		    JOIN NDVI_DATA ON SENSOR_INFO.SENSOR_NO = NDVI_DATA.SENSOR_NO AND SENSOR_INFO.COURSE_TYPE = #{category}
+		    GROUP BY HOLE_NO
+		)
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY S.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY S.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
+	</select>
+	
+	<select id="soilData" parameterType="egovMap" resultMap="holeInfoMap">
+		SELECT * FROM ROBOT_INFO R
+		JOIN SOIL_DATA S ON R.ROBOT_NO = S.ROBOT_NO 
+		WHERE S.COURSE_TYPE = #{category} AND (S.HOLE_NO, S.TM) IN (
+			SELECT HOLE_NO, MAX(TM) 
+			FROM ROBOT_INFO
+			JOIN SOIL_DATA on ROBOT_INFO.ROBOT_NO = SOIL_DATA.ROBOT_NO and SOIL_DATA.COURSE_TYPE = #{category}
+			GROUP by SOIL_DATA.HOLE_NO 
+		)
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY S.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY S.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
+	</select>
+
+
+
+</mapper>
