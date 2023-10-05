@@ -647,6 +647,10 @@ function workReportAllList(data){
 		let dateEndTime = `\${data[i].workEnd}`.slice(11, 16);
 		let dateStart = '';
 		let dateEnd = '';
+		let imgPath = `\${data[i].workReportImageList[0].filePath}`;
+		var fileName = imgPath.substring(2);
+		console.log(fileName);
+
 		
 		//하루종일 날짜와 시간별 날짜 구분하기
 		if(`\${data[i].workStart}`.slice(11, 16) == '00:00' && `\${data[i].workEnd}`.slice(11, 16) == '00:00'){
@@ -708,69 +712,36 @@ function workReportAllList(data){
 								<div class="col-lg-4">
 									<div class="card">
 										<div class="card-img-actions m-1">
-		      									<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
-		      									<div class="card-img-actions-overlay card-img">
-		      										<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-		      											<i class="icon-plus3"></i>
-		      										</a>
-		      										<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-		      											<i class="icon-link"></i>
-		      										</a>
-		      									</div>
-		      								</div>
-		      							</div>
-		      						</div>
-		
-		       					<div class="col-lg-4">
-		       						<div class="card">
-		       							<div class="card-img-actions m-1">
-		       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
-		       								<div class="card-img-actions-overlay card-img">
-		       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-		       										<i class="icon-plus3"></i>
-		       									</a>
-		
-		       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-		       										<i class="icon-link"></i>
-		       									</a>
-		       								</div>
-		       							</div>
-		       						</div>
-		       					</div>
-		
-		       					<div class="col-lg-4">
-		       						<div class="card">
-		       							<div class="card-img-actions m-1">
-		       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
-		       								<div class="card-img-actions-overlay card-img">
-		       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-		       										<i class="icon-plus3"></i>
-		       									</a>
-		
-		       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-		       										<i class="icon-link"></i>
-		       									</a>
-		       								</div>
-		       							</div>
-		       						</div>
-		       					</div>
-		
-		      						<div class="col-lg-4">
-		      							<div class="card">
-		      								<div class="card-img-actions m-1">
-		      									<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
-		      									<div class="card-img-actions-overlay card-img">
-		      										<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-		      											<i class="icon-plus3"></i>
-		      										</a>
-		      										<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-		      											<i class="icon-link"></i>
-		      										</a>
-		      									</div>
+											<img class="card-img img-fluid" src="\${fileName}" alt="">
+											<div class="card-img-actions-overlay card-img">
+												<a href="\${fileName}" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+													<i class="icon-plus3"></i>
+		      									</a>
+		      									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+		      										<i class="icon-link"></i>
+		      									</a>
 		      								</div>
 		      							</div>
 		      						</div>
 		      					</div>
+		
+		      					<div class="col-lg-4">
+		      						<div class="card">
+		      							<div class="card-img-actions m-1">
+		      								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
+		      								<div class="card-img-actions-overlay card-img">
+		      									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+		      										<i class="icon-plus3"></i>
+		      									</a>
+		      									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+		      										<i class="icon-link"></i>
+		      									</a>
+		      								</div>
+		      							</div>
+		      						</div>
+		      					</div>
+		      					
+		      				</div>
 						</div>
 					</div>
 				</div>
