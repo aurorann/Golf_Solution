@@ -54,4 +54,14 @@ public class AllCourseController {
 		//log.debug(param.toString());
 		return allCourseService.getHoleInfoOne(param);
 	}
+	
+	/**
+	 * 전체검색
+	 * @return
+	 */
+	@GetMapping("/getAllData")
+	@ResponseBody
+	public EgovMap getAllData(@RequestParam Map<String, Object> param){
+		return allCourseService.getAllData(param);
+	}
 }

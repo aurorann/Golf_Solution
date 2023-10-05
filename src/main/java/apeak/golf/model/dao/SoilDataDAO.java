@@ -1,6 +1,5 @@
 package apeak.golf.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import apeak.golf.model.dto.HoleInfoDTO;
-import apeak.golf.model.dto.SensorInfoDTO;
-import apeak.golf.model.dto.RobotInfoDTO;
+import apeak.golf.model.dto.SoilDataDTO;
 
 @Repository
 public class SoilDataDAO {
@@ -36,7 +34,7 @@ public class SoilDataDAO {
 		return session.selectList("allCourseMapper.getSoilDataList",param);
 	}
 
-	public EgovMap getCurrentSoilData(Map<String, Object> param) {
+	public SoilDataDTO getCurrentSoilData(Map<String, Object> param) {
 		return session.selectOne("allCourseMapper.getCurrentSoilData",param);
 	}
 

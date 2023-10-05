@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import apeak.golf.model.dto.HoleInfoDTO;
+import apeak.golf.model.dto.NdviDataDTO;
 import apeak.golf.model.dto.SensorInfoDTO;
 import apeak.golf.model.dto.RobotInfoDTO;
 
@@ -30,7 +31,7 @@ public class NdviDataDAO {
 	}
 
 
-	public EgovMap getCurrentNdviData(Map<String, Object> param) {
+	public NdviDataDTO getCurrentNdviData(Map<String, Object> param) {
 		return session.selectOne("allCourseMapper.getCurrentNdviData",param);
 	}
 

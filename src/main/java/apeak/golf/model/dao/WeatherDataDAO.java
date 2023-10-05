@@ -46,7 +46,7 @@ public class WeatherDataDAO {
 	}
 
 
-	public EgovMap getCurrentWeatherData(Map<String, Object> param) {
+	public WeatherDataDTO getCurrentWeatherData(Map<String, Object> param) {
 		return session.selectOne("allCourseMapper.getCurrentWeatherData",param);
 	}
 

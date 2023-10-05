@@ -8,6 +8,7 @@ import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import apeak.golf.model.dto.HoleInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @Repository
@@ -21,4 +22,7 @@ public class LayerDataDAO {
 		return session.selectList("allCourseMapper.getLayerData",param);
 	}	
 	
+	public List<HoleInfoDTO> getLayerDataAllList(Map<String, Object> param){
+		return session.selectList("allCourseMapper.getLayerDataAllList",param);
+	}
 }

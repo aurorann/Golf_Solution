@@ -21,7 +21,7 @@
 	</div>
 
 	<div class="navbar-brand text-center text-lg-left">
-		<a href="index.html" class="d-inline-block"> <img src="/resources/assets/img/golf_logo.png"
+		<a href="#" class="d-inline-block"> <img src="/resources/assets/img/golf_logo.png"
 			class="d-none d-sm-block" alt="Logo"> <img src="/resources/assets/img/golf_logo.png" class="d-sm-none"
 			alt="Logo">
 		</a>

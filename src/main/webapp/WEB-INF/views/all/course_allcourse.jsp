@@ -13,7 +13,7 @@
 			<div class="page-title" style="width: 100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2" data-toggle="buttons" id="holeList">
-					<!--<button type="button" class="btn btn-light active">전체</button>-->
+					<button type="button" class="btn btn-light active">전체</button>
 					<button type="button" class="btn btn-light active">H1</button>
 					<button type="button" class="btn btn-light">H2</button>
 					<button type="button" class="btn btn-light">H3</button>
@@ -168,6 +168,46 @@
 	<!-- /content area -->
 	
 	<script>
+	function unifyArrayLengthWithTime(arrays) {
+	    let times = [];
+	    let resultMap = {};
+	    
+	    // 모든 시간 값을 가져와서 하나의 배열로 만들기
+	    arrays.forEach(array => {
+	        array.forEach(item => {
+	            times.push(item.tm);
+	        });
+	    });
+
+	    // 중복 제거 및 시간순으로 정렬
+	    times = Array.from(new Set(times)).sort();
+
+	    // 시간대에 따라 적절한 위치에 null 삽입
+	    const list = arrays.map(array => {
+	        let newArray = [];
+	        times.forEach(time => {
+	            const found = array.find(item => item.tm === time);
+	            newArray.push(found || null);
+	        });
+	        //resultMap["times"] = times;
+	        //resultMap["list"] = newArray;
+	        return newArray;
+	    });
+
+	    return {
+	        times,
+	        list
+	    };
+	}
+
+	// 예시 데이터
+	const arrays = [
+	    [{tm:'2023-10-04 10:00:00'},{tm:'2023-10-04 11:00:00'},{tm:'2023-10-04 12:00:00'}],
+	    [{tm:'2023-10-04 10:00:00'},{tm:'2023-10-04 13:00:00'},{tm:'2023-10-04 14:00:00'}],
+	    [{tm:'2023-10-04 13:00:00'},{tm:'2023-10-04 14:00:00'}]
+	];
+
+	console.log(unifyArrayLengthWithTime(arrays));
 
 	function getWdText(wdir){
 		//16방
@@ -221,8 +261,11 @@
 
 		let chartList = [];
 		let markerList = new Array(); // 마커 정보를 담는 배열
-		let infoWindowList = new Array(); // 정보창을 담는 배열
+		let infoWindowMap = {}; // 정보창을 담아두는 맵
+		let infoDataMap = {}; // 데이터를 담아두는 맵
 		let overLayList = new Array(); // 그라운드 오버레이 배열
+		let overLayAllList = {};//그라운드 오버레이 전체 저장용 맵
+		let customOverlayList = [];//전체용 커스텀 오버레이 배열
 		let nowHole = "H1";
 		let nowCourse = "Fairway";
 		let nowDataType = "ndvi";
@@ -230,11 +273,72 @@
 		let playState = false;
 		let playTimer;
 		let playIdx = 0;
+
+		var map = new naver.maps.Map('map', {
+		    center: new naver.maps.LatLng(35.591352, 127.902073),
+		    zoom: 18
+		});
+
+		map.setMapTypeId('satellite'); 
+	    naver.maps.Event.addListener(map, 'click', function(e) {
+	        var coord = e.coord;
+	        var lat = coord.lat();
+	        var lng = coord.lng();
+
+	        console.log('클릭한 위치의 좌표는 ' + lat + ', ' + lng + ' 입니다.');
+	    });
+
+	    var CustomOverlay = function(options) {
+	        this._element = $(options.content);
+
+	        this.setPosition(options.position);
+	        this.setMap(options.map || null);
+	    };
+
+	    CustomOverlay.prototype = new naver.maps.OverlayView();
+	    CustomOverlay.prototype.constructor = CustomOverlay;
+
+	    CustomOverlay.prototype.setPosition = function(position) {
+	        this._position = position;
+	        this.draw();
+	    };
+
+	    CustomOverlay.prototype.getPosition = function() {
+	        return this._position;
+	    };
+
+	    CustomOverlay.prototype.onAdd = function() {
+	        var overlayLayer = this.getPanes().overlayLayer;
+
+	        this._element.appendTo(overlayLayer);
+	    };
+
+	    CustomOverlay.prototype.draw = function() {
+	        if (!this.getMap()) {
+	            return;
+	        }
+
+	        var projection = this.getProjection(),
+	            position = this.getPosition(),
+	            pixelPosition = projection.fromCoordToOffset(position);
+
+	        this._element.css('left', pixelPosition.x);
+	        this._element.css('top', pixelPosition.y);
+	    };
+
+	    CustomOverlay.prototype.onRemove = function() {
+	        var overlayLayer = this.getPanes().overlayLayer;
+
+	        this._element.remove();
+	        this._element.off();
+	    };
 		
 
 		function createMarker(lat,lon){
 			
 			var position = new naver.maps.LatLng(lat, lon);
+			var data = getCurrentData(nowHole,nowCourse)
+			let hole = nowHole;
 
 		    /* 정보창 */
 			var infoWindow = new naver.maps.InfoWindow({
@@ -253,32 +357,23 @@
 			    }
 			});
 
-			infoWindowList.push(infoWindow)
-			markerList.push(marker)
+			infoWindowMap[`${nowHole}\${nowCourse}`] = infoWindow
+			infoDataMap[`${nowHole}\${nowCourse}`] = data;
 			
-			var data = {
-				sec : 0.1,
-				stp : 0.1,
-				smo : 99.2,
-				ndvi : 0.611,
-			    ndvi2 : 0.611,
-			    temp : 20,
-			    rain : 10,
-			    ws : 5,
-			    wd : 10,
-			    humi : 60,
-			    solar : 10,
-			}
+			markerList.push(marker)
 			
 			naver.maps.Event.addListener(marker, "click", function(e) {
 				if(infoWindow.getMap()){
 					infoWindow.close();
 				}else{
-					data = getCurrentData(nowHole,nowCourse,nowDataType)
-					infoWindow.setContent(drawInfoWindow(nowDataType,nowHole,data));
+					let infoHtml = drawInfoWindow(nowDataType,hole,data);
+					infoWindow.setContent(infoHtml)
 					infoWindow.open(map, marker);
 				}
 			});
+
+			naver.maps.Event.trigger(marker,"click")
+			//marker.click();
 
 		}
 
@@ -303,11 +398,77 @@
 	    	$('#overlayList').append(`<button class="overlayBtn" data-idx="\${idx}">\${tm}</button>`)
 		}
 
+		function createGroundTimeAll(times){
+			for(let i=0;i<times.length;i++){
+				var tm = times[i];
+				overLayAllList[tm] = [];
+				$('#overlayList').append(`<button class="overlayBtn" data-tm="\${tm}">\${tm}</button>`)
+			}
+		}
+
+		function createGroundOverlayAll(list,startLat,startLon,endLat,endLon){
+
+			for(var i=0;i<list.length;i++){
+				for(var j=0;j<list[i].length;j++){
+
+					if(list[i][j]==null){
+						continue;
+					}
+
+					//startLat,startLon,endLat,endLon
+					
+				    var bounds = new naver.maps.LatLngBounds(
+			            new naver.maps.LatLng(startLat[list[i][j].holeNo], startLon[list[i][j].holeNo]),
+			            new naver.maps.LatLng(endLat[list[i][j].holeNo], endLon[list[i][j].holeNo])
+			        );
+
+				    var groundOverlay = new naver.maps.GroundOverlay(
+				    	list[i][j].layerPath,
+			    	    bounds,
+			    	    {
+			    	        opacity: 0.5,
+			    	        clickable: false
+			    	    }
+			    	);
+
+				    overLayAllList[list[i][j].tm].push(groundOverlay)
+				    overLayList.push(groundOverlay)
+
+				    //groundOverlay.setMap(map)
+
+				    console.log(list[i][j].path)
+				}
+			}
+
+			//alert(overLayList.length)
+
+	    	//groundOverlay.setMap(map);
+		}
+
 		function clearMarker(){
 
 			for(var i=0;i<markerList.length;i++){
 				markerList[i].setMap(null);
 			}
+
+			markerList = []
+		}
+
+		function clearInfoWindow(){
+
+			Object.values(infoWindowMap).forEach(value => {
+			   value.close();
+			});
+
+			infoWindowMap = {};
+		}
+
+		function clearCustomOverlay(){
+			for(var i=0;i<customOverlayList.length;i++){
+				customOverlayList[i].setMap(null);
+			}
+
+			customOverlayList = []
 		}
 
 		function clearGroundOverlay(){
@@ -317,6 +478,7 @@
 			}
 
 			overLayList = [];
+			overLayAllList = {};
 
 			$('#overlayList').empty();
 			$('#overlayList').html(`<button id="overlayPlay"> 재생 </button>`)
@@ -337,6 +499,20 @@
 			$("#overlayList [data-idx='"+idx+"']").addClass('nowOver')
 		}
 
+		function showGroundOverlayAll(tm){
+
+			let targetList = overLayAllList[tm];
+
+			$("#overlayList .overlayBtn").removeClass('nowOver')
+			$("#overlayList [data-tm='"+tm+"']").addClass('nowOver')
+			
+			console.log(targetList.length)
+
+			for(var i=0;i<targetList.length;i++){
+				targetList[i].setMap(map);
+			}
+		}
+
 		function playOverlay(){
 			if(playState==true){
 				clearInterval(playTimer)
@@ -347,7 +523,8 @@
 					console.log(overLayList.length)
 					console.log(playIdx)
 					hideGroundOverlay()
-					showGroundOverlay(playIdx%overLayList.length)
+					//showGroundOverlay(playIdx%overLayList.length)
+					$('#overlayList .overlayBtn:eq('+playIdx%$('.overlayBtn').length+')').click();
 					playIdx++;
 				}, 1000);
 				playState = true;
@@ -363,6 +540,8 @@
 
 			switch(type){
 			case "NDVI":
+				data = data.ndvi;
+				console.log(data.ndvi);
 				template = `<div class="course1 position-absolute card bg-success-100 border-success text-center" style="width:225px;">
 								<div class="text-body pb-1">
 									<div class="card-header bg-success text-white pt-1 pb-1">
@@ -385,6 +564,7 @@
 							</div>`
 					break;
 			case "기상정보":
+				data = data.weather;
 				template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:330px;">
 								<div class="text-body">
 									<div class="card-header bg-primary text-white pt-1 pb-1">
@@ -432,28 +612,29 @@
 							</div>`
 					break;
 			case '토양정보' : 
-					template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
-										<div class="text-body pb-1">
-										<div class="card-header bg-warning text-white pt-1 pb-1">
-											<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
-										</div> <!--토양정보 3종-->
-										<div class="card-body pt-1 pb-2">
-											<div class="float-left mr-3">
-												<h2 class="mb-0 font-weight-semibold">\${data.smo}<small class="weather-unit">%</small></h2>
-												<div class="font-size-sm text-muted">토양 수분</div>
-											</div>
-											<div class="float-left mr-3">
-												<h2 class="mb-0 font-weight-semibold">\${data.stp}<small class="weather-unit">ºC</small></h2>
-												<div class="font-size-sm text-muted">토양 온도</div>
-											</div>
-											<div class="float-left">
-												<h2 class="mb-0 font-weight-semibold">\${data.sec}</h2>
-												<div class="font-size-sm text-muted">토양 양분</div>
-											</div>
+				data = data.soil;
+				template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
+									<div class="text-body pb-1">
+									<div class="card-header bg-warning text-white pt-1 pb-1">
+										<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+									</div> <!--토양정보 3종-->
+									<div class="card-body pt-1 pb-2">
+										<div class="float-left mr-3">
+											<h2 class="mb-0 font-weight-semibold">\${data.smo}<small class="weather-unit">%</small></h2>
+											<div class="font-size-sm text-muted">토양 수분</div>
+										</div>
+										<div class="float-left mr-3">
+											<h2 class="mb-0 font-weight-semibold">\${data.stp}<small class="weather-unit">ºC</small></h2>
+											<div class="font-size-sm text-muted">토양 온도</div>
+										</div>
+										<div class="float-left">
+											<h2 class="mb-0 font-weight-semibold">\${data.sec}</h2>
+											<div class="font-size-sm text-muted">토양 양분</div>
 										</div>
 									</div>
-								</div>`
-						break;
+								</div>
+							</div>`
+					break;
 			}
 
 			return template;
@@ -710,26 +891,13 @@
 			return retData;
 		}
 
-		function getCurrentData(holeNo,courseType,type){
+		function getCurrentData(holeNo,courseType){
 
 			let retData = null;
 
-			if(type=="NDVI"){
-				type = "ndvi"
-			}
-
-			if(type=="기상정보"){
-				type ="weather"
-			}
-
-			if(type=="토양정보"){
-				type ="soil"
-			}
-			
 			let param = {
 				holeNo : holeNo.substring(1,holeNo.length),
-				courseType : courseType.toUpperCase(),
-				type : type
+				courseType : courseType.toUpperCase()
 			}
 
 			
@@ -808,6 +976,30 @@
 			return retData;
 		}
 
+		function getAllData(courseType){
+			let retData = null;
+
+			let searchDate = $('#searchDate').val();
+
+			let param = {
+				courseType : courseType.toUpperCase(),
+				startDate : searchDate.split('~')[0].trim(),
+				endDate : searchDate.split('~')[1].trim(),
+				layerType : nowLayerType
+			}
+
+			$.ajax({
+				url : "/all/getAllData",
+				data : param,
+				async : false,
+				success : function(result){
+					retData = result;
+				}
+			})
+
+			return retData;
+		}
+
 		$('#holeList button,#courseType button,#dataType button').on('click',function(){
 			//alert($(this).text());
 			$(this).parent().find('button').removeClass('active')
@@ -823,6 +1015,10 @@
 				hole = now
 			}
 
+			if(hole=="전체"){
+				hole = "0"
+			}
+
 			if(course==""){
 				course = now
 			}
@@ -835,70 +1031,194 @@
 			nowCourse = course;
 			nowDataType = dataType
 
-			var holeInfo = getHoleInfo(hole,course)
-			var moveTo = new naver.maps.LatLng(holeInfo.lat, holeInfo.lon);
-			if(map){
-				map.panTo(moveTo)
-			}
-
+			//전체 오버레이 초기화
+			clearCustomOverlay();
+			//전체 마커 초기화
 			clearMarker()
-			createMarker(holeInfo.lat,holeInfo.lon)
-			$('#chartHole').html("Hole "+nowHole);
+			clearInfoWindow()
+
+			if(hole!="0"){
+				//개별검색			
+				var holeInfo = getHoleInfo(hole,course)
+				var moveTo = new naver.maps.LatLng(holeInfo.lat, holeInfo.lon);
+				if(map){
+					map.panTo(moveTo)
+				}
+	
+				
+				createMarker(holeInfo.lat,holeInfo.lon)
+				$('#chartHole').html("Hole "+nowHole);
+	
+	
+				var chartData = getChartData(hole,course,nowDataType);
+				var dataTypeList = getDataTypeList(nowDataType);
+	
+				setChartLayer(dataTypeList);
+	
+				
+				for(var i=0;i<dataTypeList.length;i++){
+					drawChart(dataTypeList[i],chartData);
+				}
+	
+				clearGroundOverlay();
+				//alert(layerType)
+				if(nowLayerType=="NULL"){
+					return;
+				}
+	
+				var result = getLayerData(nowHole,nowCourse)
+	
+				$.each(result,function(index,item){
+					createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+				})
+	
+				hideGroundOverlay()
+				showGroundOverlay(result.length-1)
+			}else{
+				
+				//전체검색
+				var result = getAllData(nowCourse);
+				var layerDataList = result.layerDataList;
+				var soilDataList = result.soilDataList;
+				var ndviDataList = result.ndviDataList;
+				var weatherDataList = result.weatherDataList;
+				var layerParam = [];
+				var startLat = {};
+				var endLat = {};
+				var startLon = {};
+				var endLon = {};
+
+				for(var i=0;i<layerDataList.length;i++){
+					startLat[layerDataList[i].holeNo] = layerDataList[i].startLat
+					endLat[layerDataList[i].holeNo] = layerDataList[i].endLat
+					startLon[layerDataList[i].holeNo] = layerDataList[i].startLon
+					endLon[layerDataList[i].holeNo] = layerDataList[i].endLon
+					layerParam.push(layerDataList[i].layerDataList)
+				}
+				
+				var res = unifyArrayLengthWithTime(layerParam);
+
+				clearGroundOverlay();
+				createGroundTimeAll(res.times)
+				createGroundOverlayAll(res.list,startLat,startLon,endLat,endLon)
+				
+				if(nowDataType=="토양정보"){
+					for(var i=0;i<soilDataList.length;i++){
+						var data = soilDataList[i].soilDataList[soilDataList[i].soilDataList.length-1]
+						data.soil = data;
+						//console.log(data)
+						var contentString = [
+							drawInfoWindow("토양정보",data.holeNo,data)
+					    ].join('');
 			
-			for(var i=0;i<infoWindowList.length;i++){
-				if(infoWindowList[i]){
-					infoWindowList[i].close();
+					    var position = new naver.maps.LatLng(data.lat, data.lon);
+			
+					    var customOverlay = new CustomOverlay({
+					        content: contentString,
+					        position: position,
+					        map: map
+					    });
+
+					    customOverlayList.push(customOverlay)
+					}
+				}
+
+				if(nowDataType=="NDVI"){
+					for(var i=0;i<ndviDataList.length;i++){
+						var data = {};
+						var data2 = ndviDataList[i].sensorInfoList[0].ndviDataList[ndviDataList[i].sensorInfoList[0].ndviDataList.length-1]
+						data.ndvi = data2;
+						//console.log(data)
+						var contentString = [
+							drawInfoWindow("NDVI",ndviDataList[i].sensorInfoList[0].holeNo,data)
+					    ].join('');
+		
+					    //console.log(drawInfoWindow("기상정보",data2.holeNo,data))
+			
+					    var position = new naver.maps.LatLng(ndviDataList[i].sensorInfoList[0].lat, ndviDataList[i].sensorInfoList[0].lon);
+			
+					    var customOverlay = new CustomOverlay({
+					        content: contentString,
+					        position: position,
+					        map: map
+					    });
+
+					    customOverlayList.push(customOverlay)
+					}
+				}
+				if(nowDataType=="기상정보"){
+					for(var i=0;i<weatherDataList.length;i++){
+						var data = {};
+						var data2 = weatherDataList[i].sensorInfoList[0].weatherDataList[weatherDataList[i].sensorInfoList[0].weatherDataList.length-1]
+						data.weather = data2;
+						//console.log(data)
+						var contentString = [
+							drawInfoWindow("기상정보",weatherDataList[i].sensorInfoList[0].holeNo,data)
+					    ].join('');
+	
+					    //console.log(drawInfoWindow("기상정보",data2.holeNo,data))
+			
+					    var position = new naver.maps.LatLng(weatherDataList[i].sensorInfoList[0].lat, weatherDataList[i].sensorInfoList[0].lon);
+			
+					    var customOverlay = new CustomOverlay({
+					        content: contentString,
+					        position: position,
+					        map: map
+					    });
+
+					    customOverlayList.push(customOverlay)
+					}
 				}
 			}
-
-
-			var chartData = getChartData(hole,course,nowDataType);
-			var dataTypeList = getDataTypeList(nowDataType);
-
-			setChartLayer(dataTypeList);
-
-			
-			for(var i=0;i<dataTypeList.length;i++){
-				drawChart(dataTypeList[i],chartData);
-			}
-
-			clearGroundOverlay();
-			//alert(layerType)
-			if(nowLayerType=="NULL"){
-				return;
-			}
-
-			var result = getLayerData(nowHole,nowCourse)
-
-			$.each(result,function(index,item){
-				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
-			})
-
-			hideGroundOverlay()
-			showGroundOverlay(result.length-1)
 		})
 		
 		
 		$('#layerType button').on('click',function(){
+			
 			$(this).parent().find('button').removeClass('active')
 			var layerType = $(this).data('layertype');
 			
 			nowLayerType = layerType;
 
-			clearGroundOverlay();
-			//alert(layerType)
-			if(layerType=="NULL"){
-				return;
+			if(nowHole!="0"){
+				clearGroundOverlay();
+				//alert(layerType)
+				if(layerType=="NULL"){
+					return;
+				}
+	
+				var result = getLayerData(nowHole,nowCourse)
+	
+				$.each(result,function(index,item){
+					createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+				})
+	
+				hideGroundOverlay()
+				showGroundOverlay(result.length-1)
+			}else{
+				//전체검색
+				var result = getAllData(nowCourse);
+				var layerDataList = result.layerDataList;
+				var layerParam = [];
+				var startLat = {};
+				var endLat = {};
+				var startLon = {};
+				var endLon = {};
+
+				for(var i=0;i<layerDataList.length;i++){
+					startLat[layerDataList[i].holeNo] = layerDataList[i].startLat
+					endLat[layerDataList[i].holeNo] = layerDataList[i].endLat
+					startLon[layerDataList[i].holeNo] = layerDataList[i].startLon
+					endLon[layerDataList[i].holeNo] = layerDataList[i].endLon
+					layerParam.push(layerDataList[i].layerDataList)
+				}
+				
+				var res = unifyArrayLengthWithTime(layerParam);
+
+				clearGroundOverlay();
+				createGroundTimeAll(res.times)
+				createGroundOverlayAll(res.list,startLat,startLon,endLat,endLon)
 			}
-
-			var result = getLayerData(nowHole,nowCourse)
-
-			$.each(result,function(index,item){
-				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
-			})
-
-			hideGroundOverlay()
-			showGroundOverlay(result.length-1)
 		})
 		
 		$('#searchBtn').on('click',function(){
@@ -928,7 +1248,7 @@
 			showGroundOverlay(result.length-1)
 		})
 		
-		$('#holeList button:eq(0)').click();
+		$('#holeList button:eq(1)').click();
 		//$('#layerType button:eq(0)').click();
 		
 		$(document).on('click','#overlayPlay',function(){
@@ -938,24 +1258,16 @@
 		
 		$(document).on('click','.overlayBtn',function(){
 			var idx = $(this).data('idx')
+			var tm = $(this).data('tm')
 
 			hideGroundOverlay()
-			showGroundOverlay(idx)
+			if(!tm){
+				showGroundOverlay(idx)
+			}else{
+				showGroundOverlayAll(tm)
+			}
+			
 		})
-
-		var map = new naver.maps.Map('map', {
-		    center: new naver.maps.LatLng(35.591352, 127.902073),
-		    zoom: 18
-		});
-
-		map.setMapTypeId('satellite'); 
-	    naver.maps.Event.addListener(map, 'click', function(e) {
-	        var coord = e.coord;
-	        var lat = coord.lat();
-	        var lng = coord.lng();
-
-	        console.log('클릭한 위치의 좌표는 ' + lat + ', ' + lng + ' 입니다.');
-	    });
 	    
 		createMarker(35.5913518, 127.9020725);
 		
@@ -1002,7 +1314,7 @@
 				<li class="nav-item text-center pl-2 pr-2">
 					<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
 						<label class="btn btn-light active">
-							<input type="radio" name="options" id="option1" autocomplete="off" checked="">
+							<input type="radio" name="options" id="option1" autocomplete="off">
 							전체
 						</label>
 

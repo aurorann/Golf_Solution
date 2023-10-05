@@ -14,6 +14,9 @@ import apeak.golf.model.dao.NdviDataDAO;
 import apeak.golf.model.dao.SoilDataDAO;
 import apeak.golf.model.dao.WeatherDataDAO;
 import apeak.golf.model.dto.HoleInfoDTO;
+import apeak.golf.model.dto.NdviDataDTO;
+import apeak.golf.model.dto.SoilDataDTO;
+import apeak.golf.model.dto.WeatherDataDTO;
 
 @Service
 @Transactional
@@ -35,17 +38,20 @@ public class AllCourseService {
 	private LayerDataDAO layerDataDAO;
 
 	public EgovMap getCurrentData(Map<String, Object> param) {
-		String type = String.valueOf(param.get("type"));
+
+		EgovMap resultMap = new EgovMap();
 		
-		if(type.equals("ndvi")) {
-			return ndviDataDAO.getCurrentNdviData(param);
-		}else if(type.equals("weather")) {
-			return weatherDataDAO.getCurrentWeatherData(param);
-		}else if(type.equals("soil")) {
-			return soilDataDAO.getCurrentSoilData(param);
-		}else {
-			return soilDataDAO.getCurrentSoilData(param);
-		}
+		NdviDataDTO ndvi = ndviDataDAO.getCurrentNdviData(param);
+
+		WeatherDataDTO weather = weatherDataDAO.getCurrentWeatherData(param);
+
+		SoilDataDTO soil = soilDataDAO.getCurrentSoilData(param);
+		
+		resultMap.put("ndvi", ndvi);
+		resultMap.put("weather", weather);
+		resultMap.put("soil", soil);
+
+		return resultMap;
 	}
 
 	public List<EgovMap> getChartData(Map<String, Object> param) {
@@ -69,5 +75,22 @@ public class AllCourseService {
 
 	public List<EgovMap> getLayerData(Map<String, Object> param) {
 		return layerDataDAO.getLayerData(param);
+	}
+
+	public EgovMap getAllData(Map<String, Object> param) {
+		
+		EgovMap resultMap = new EgovMap();
+		
+		List<HoleInfoDTO> layerDataList = layerDataDAO.getLayerDataAllList(param);
+		List<HoleInfoDTO> soilDataList = soilDataDAO.getSoilDataAllList(param);
+		List<HoleInfoDTO> weatherDataList = weatherDataDAO.getWeatherDataAllList(param);
+		List<HoleInfoDTO> ndviDataList = ndviDataDAO.getNdviDataAllList(param);
+		
+		resultMap.put("layerDataList", layerDataList);
+		resultMap.put("soilDataList", soilDataList);
+		resultMap.put("weatherDataList", weatherDataList);
+		resultMap.put("ndviDataList", ndviDataList);
+		
+		return resultMap;
 	}
 }
