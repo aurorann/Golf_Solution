@@ -19,7 +19,7 @@ public class WorkReportDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String workbrand, String oriImgName, String comment) {
+	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String workbrand, String oriImgName, String comment, String filePath, String saveName) {
 		try {
 			System.out.println("DAO 성공");
 			
@@ -42,23 +42,23 @@ public class WorkReportDAO {
 		    Map<String, Object> params3 = new HashMap<>();
 		    
 		    //이미지 파일명만 자르기
-		    oriImgName = oriImgName.substring(oriImgName.lastIndexOf("\\") + 1);
+		    //oriImgName = oriImgName.substring(oriImgName.lastIndexOf("\\") + 1);
 		    
 		    //이미지 확장자 자르기
-		    String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
+		    //String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
 		    
 		    //이미지 랜덤명 생성
-		    String imgName = UUID.randomUUID().toString().replace("-", "");
+		    //String imgName = UUID.randomUUID().toString().replace("-", "");
 		    
 		    //이미지 저장 이름
-		    String saveName = imgName+ext;
-		    System.out.println(saveName);
+		    //String saveName = imgName+ext;
+		    //System.out.println(saveName);
 		    
 		    //이미지 경로
-		    String path = "C:\\DATA\\";		   
+		    //String path = "C:\\DATA\\";		   
 		    
 		    //이미지 저장 이름과 저장 경로
-		    String filePath = path+saveName;
+		    //String filePath = path+saveName;
 		    
 		    params3.put("filePath", filePath);
 		    params3.put("oriImgName", oriImgName);
@@ -88,7 +88,7 @@ public class WorkReportDAO {
 	
 	public void workReportDelete(String workNo) {
 		System.out.println("DAO 삭제번호"+workNo);
-		session.delete("managementCourseMapper.deleteworkreportimgae", workNo);
+		session.delete("managementCourseMapper.deleteworkreportimage", workNo);
 		session.delete("managementCourseMapper.deleteworkreporttarget", workNo);
 		session.delete("managementCourseMapper.deleteworkreport", workNo);
 	}

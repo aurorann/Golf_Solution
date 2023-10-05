@@ -1,9 +1,9 @@
 package apeak.golf.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import apeak.golf.service.AllCourseService;
 import apeak.golf.service.CourseService;
-import apeak.golf.service.DashboardService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -52,24 +52,54 @@ public class ManagementCourseController {
 	//작업등록 하기
 	@ResponseBody
 	@RequestMapping(value="/insertwork_ajax", method = RequestMethod.POST)
-	public void insertWorkAjax(@RequestParam Map<String, Object> param) {
-		try {
-	    String workstart = (String) param.get("workstart");
-	    String workend = (String) param.get("workend");
-	    String hole = (String) param.get("hole");
-	    String course = (String) param.get("course");
-	    String workclass = (String) param.get("workclass");
-	    String worktype = (String) param.get("worktype");
-	    String workbrand = (String) param.get("workbrand");
-	    String oriImgName = (String) param.get("oriImgName");
-	    String comment = (String) param.get("comment");
-	    
-	    courseService.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment);
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	    
+	public void insertWorkAjax(@RequestParam Map<String, Object> param, MultipartHttpServletRequest request) {
+	    try {
+	        String workstart = (String) param.get("workstart");
+	        String workend = (String) param.get("workend");
+	        String hole = (String) param.get("hole");
+	        String course = (String) param.get("course");
+	        String workclass = (String) param.get("workclass");
+	        String worktype = (String) param.get("worktype");
+	        String workbrand = (String) param.get("workbrand");
+	        String oriImgName = (String) param.get("oriImgName");
+	        String comment = (String) param.get("comment");
+
+	        List<MultipartFile> fileList = request.getFiles("file");
+	        String path = "C:\\DATA\\";
+	        File fileDir = new File(path);
+	        if (!fileDir.exists()) {
+	            fileDir.mkdirs();
+	        }
+		    
+		    //이미지 파일명만 자르기
+		    oriImgName = oriImgName.substring(oriImgName.lastIndexOf("\\") + 1);
+		    
+		    //이미지 확장자 자르기
+		    String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
+		    
+		    //이미지 랜덤명 생성
+	        String imgName = UUID.randomUUID().toString().replace("-", "");
+	        
+		    //이미지 저장 이름
+		    String saveName = imgName+ext;
+		    
+		    //이미지 저장 이름과 저장 경로
+		    String filePath = path+saveName;
+		    
+	        for (MultipartFile mf : fileList) {
+	            try {
+	                // 파일생성
+	                mf.transferTo(new File(path, saveName));    		
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	        courseService.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment, filePath, saveName);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}//brandAjax() end
 	
 	

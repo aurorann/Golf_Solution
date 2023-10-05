@@ -48,9 +48,9 @@ public class CourseService {
 		return workReportBrandDefDAO.branddata(worktype);
 	}
 	
-	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String workbrand, String oriImgName, String comment) {
+	public void insertWork(String workstart, String workend, String hole, String course, String workclass, String worktype, String workbrand, String oriImgName, String comment, String filePath, String saveName) {
 		System.out.println("service 성공");
-		workReportDAO.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment);
+		workReportDAO.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment, filePath, saveName);
 	}//insertWork() end
 	
 	//검색 선택작업 조회하기

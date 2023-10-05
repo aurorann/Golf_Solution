@@ -153,12 +153,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<delete id="deleteworkreportimage">
-		DELETE FROM WORK_REPORT_TARGET WHERE WORK_NO = #{workNo}
+		DELETE FROM WORK_REPORT_IMAGE WHERE WORK_NO = #{workNo}
 	</delete>
 	
 	
 	<delete id="deleteworkreporttarget">
-		DELETE FROM WORK_REPORT_IMAGE WHERE WORK_NO = #{workNo}
+		DELETE FROM WORK_REPORT_TARGET WHERE WORK_NO = #{workNo}
 	</delete>
 
 

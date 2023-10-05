@@ -520,19 +520,33 @@ function updatebrand(data){
 
 
 $(".workInsert").click(function() {
-	var dateRange = $('.dateInput:visible').val(); // 작업날짜 
-	console.log(dateRange);
-	var dates = dateRange.split(' ~ '); // 작업날짜 ~ 빼기
-	console.log(dates);
-	var workstart = dates[0]; // 작업시작날짜
-	var workend = dates[1]; // 작업종료날짜
-	var hole = $('.holebt.active').text(); //holename
-	var course = $('.coursetypebt.active').text(); // 코스종류
-	var workclass = $('.classbt.active').text(); // 작업분류
-	var worktype = $('.typebt.active').text(); // 작업종류
-	var workbrand = $('.brandname option:selected').text(); // 작업브랜드
-	var oriImgName = $('.img').val(); //작업 이미지
-	var comment = $('.comment').val(); //작업 이미지
+    var formData = new FormData();
+    var dateRange = $('.dateInput:visible').val(); // 작업날짜 
+    var dates = dateRange.split(' ~ '); // 작업날짜 ~ 빼기
+    var workstart = dates[0]; // 작업시작날짜
+    var workend = dates[1]; // 작업종료날짜
+    var hole = $('.holebt.active').text(); //holename
+    var course = $('.coursetypebt.active').text(); // 코스종류
+    var workclass = $('.classbt.active').text(); // 작업분류
+    var worktype = $('.typebt.active').text(); // 작업종류
+    var workbrand = $('.brandname option:selected').text(); // 작업브랜드
+    var oriImgName = $('.img').val(); //작업 이미지
+    var comment = $('.comment').val(); //작업 메모
+
+    // formData에 파라미터 추가
+    formData.append("workstart", workstart);
+    formData.append("workend", workend);
+    formData.append("hole", hole);
+    formData.append("course", course);
+    formData.append("workclass", workclass);
+    formData.append("worktype", worktype);
+    formData.append("workbrand", workbrand);
+    formData.append("oriImgName", oriImgName);
+    formData.append("comment", comment);
+
+    // 파일 추가
+    var file = $('.img')[0].files[0];
+    formData.append("file", file);
 
 
 	let token = $("input[name='_csrf']").val();
@@ -548,18 +562,10 @@ $(".workInsert").click(function() {
 	    $.ajax({
 	        url: '/management/insertwork_ajax',
 	        method: 'POST',
-	        data: {
-	        	workstart: workstart,
-	        	workend: workend,
-	        	hole: hole,
-	        	course: course,
-	        	workclass: workclass,
-	        	worktype: worktype,
-	        	workbrand: workbrand,
-	        	oriImgName: oriImgName,
-	        	comment: comment
-	        	},
-	        //dataType: "json",//(insert 성공하여도 자료형때문에 200에서 자료형에러를 뱉어낸다)
+	        enctype: 'multipart/form-data',
+	    	data: formData,		
+	    	processData: false,
+	    	contentType: false,
 			beforeSend : function(xhr) {  
 				xhr.setRequestHeader(header, token);
 			},
@@ -971,12 +977,7 @@ function workReportUpdateListModal(data){
 	let type = `\${data[0].workType}`;
 	let brand = `\${data[0].workBrand}`;
 	let worktime = `\${data[0].workStart}` + ' ~ ' + `\${data[0].workEnd}`;
-	
-	
-	console.log(hole);
-	console.log(course);
-	console.log(brand);
-	console.log(worktime);
+
 	
 	$("#update_modal_scrollable .dateInput").each(function() {
 		$(this).val(worktime);
