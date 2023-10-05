@@ -651,6 +651,7 @@ function workReportAllList(data){
 			dateEnd = `\${data[i].workEnd}`.slice(0, 16);	
 		}
 		let dateWorkNo = `\${data[i].workNo}`
+		console.log(dateWorkNo);
 
 		allWorkList += `
 			<div class="col-lg-12">
@@ -661,8 +662,8 @@ function workReportAllList(data){
 							<div class="dropdown position-static">
 								<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
 								<div class="dropdown-menu dropdown-menu-right" style="">
-									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${data[i].workNo}">수정</a>
-									<a href="#" class="dropdown-item workReportDelete" value="\${data[i].workNo}">삭제</a>
+									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${dateWorkNo}">수정</a>
+									<a href="#" class="dropdown-item workReportDelete" value="\${dateWorkNo}">삭제</a>
 								</div>
 							</div>
 						</div>
@@ -792,6 +793,9 @@ function searchWorkReportList(data){
 	for(var i=0; i<data.list.length; i++){
 		let dateStart = `\${data.list[i].workStart}`.slice(0, 10);
 		let dateEnd = `\${data.list[i].workEnd}`.slice(0, 10);
+
+		let dateWorkNo = `\${data.list[i].workNo}`
+
     	allWorkList += `
 			<div class="col-lg-12">
 				<div class="card more-round">
@@ -801,8 +805,8 @@ function searchWorkReportList(data){
 							<div class="dropdown position-static">
 								<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
 								<div class="dropdown-menu dropdown-menu-right" style="">
-									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${data[i].workNo}">수정</a>
-									<a href="#" class="dropdown-item workReportDelete" value="\${data[i].workNo}">삭제</a>
+									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${dateWorkNo}">수정</a>
+									<a href="#" class="dropdown-item workReportDelete" value="\${dateWorkNo}">삭제</a>
 								</div>
 							</div>
 						</div>
@@ -1025,16 +1029,22 @@ $(document).on('click','.workReportDelete',function(){
 })
 
 function deleteCheck(workNo){
+	
+	let token = $("input[name='_csrf']").val();
+	let header = "X-CSRF-TOKEN";
+	
     $.ajax({
         url: '/management/workReportDelete',
         type: 'POST',
         data: {workNo: workNo},
-        dataType: "json",
         success: function(data) {
             console.log(data);
             alert("작업을 삭제하였습니다");
             workAllList();
         },
+		beforeSend : function(xhr) {  
+			xhr.setRequestHeader(header, token);
+		},
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
 	        alert(jqXHR.statusText);

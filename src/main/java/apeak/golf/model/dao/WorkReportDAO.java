@@ -87,10 +87,10 @@ public class WorkReportDAO {
 	
 	
 	public void workReportDelete(String workNo) {
-		System.out.println("삭제번호"+workNo);
-		session.delete("managementCourseMapper.deleteworkreport", workNo);
+		System.out.println("DAO 삭제번호"+workNo);
 		session.delete("managementCourseMapper.deleteworkreportimgae", workNo);
 		session.delete("managementCourseMapper.deleteworkreporttarget", workNo);
+		session.delete("managementCourseMapper.deleteworkreport", workNo);
 	}
 	
 }
