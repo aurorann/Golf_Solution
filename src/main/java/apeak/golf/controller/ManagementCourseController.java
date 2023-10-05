@@ -115,6 +115,15 @@ public class ManagementCourseController {
 	}//brandAjax() end
 	
 	
+	//작업 삭제
+	@ResponseBody
+	@RequestMapping(value="/workReportDelete", method = RequestMethod.POST)
+	private void workReportDelete(@RequestParam(value="workNo",required=false) String workNo) {
+		System.out.println("삭제번호"+workNo);
+		courseService.workReportDelete(workNo);
+	}//brandAjax() end
+	
+	
 	
 	
 	

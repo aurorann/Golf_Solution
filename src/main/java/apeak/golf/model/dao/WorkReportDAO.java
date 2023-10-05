@@ -85,6 +85,14 @@ public class WorkReportDAO {
 		return session.selectList("managementCourseMapper.workReportUpdateList", workNo);
 	}
 	
+	
+	public void workReportDelete(String workNo) {
+		System.out.println("삭제번호"+workNo);
+		session.delete("managementCourseMapper.deleteworkreport", workNo);
+		session.delete("managementCourseMapper.deleteworkreportimgae", workNo);
+		session.delete("managementCourseMapper.deleteworkreporttarget", workNo);
+	}
+	
 }
 
 

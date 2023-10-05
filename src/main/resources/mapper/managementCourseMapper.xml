@@ -145,6 +145,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
 		WHERE WR.WORK_NO = #{workNo}
 	</select>
+	
+	
+	<delete id="deleteworkreport">
+		DELETE FROM WORK_REPORT WHERE WORK_NO = #{workNo}
+	</delete>
+	
+	
+	<delete id="deleteworkreportimage">
+		DELETE FROM WORK_REPORT_TARGET WHERE WORK_NO = #{workNo}
+	</delete>
+	
+	
+	<delete id="deleteworkreporttarget">
+		DELETE FROM WORK_REPORT_IMAGE WHERE WORK_NO = #{workNo}
+	</delete>
 
 
 

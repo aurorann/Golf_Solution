@@ -166,8 +166,6 @@
 						</div>
 					</div>
 
-
-
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">브랜드 명</label>
 						<div class="col-lg-10">
@@ -177,6 +175,7 @@
 							</select>
 						</div>
 					</div>
+					
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 이미지</label>
 						<div class="col-lg-10">
@@ -239,7 +238,7 @@
 						<label class="col-form-label col-lg-2">코스 위치</label>
 						<div class="col-lg-10 course-location-badge">
 							<c:forEach items="${list}" var="holename">
-							<a href="#"><span class="badge badge-info holebt"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+							<a href="#"><span class="badge badge-info holebt" data-value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
 							</c:forEach>
 						</div>
 					</div>
@@ -269,8 +268,6 @@
 						</div>
 					</div>
 
-
-
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">브랜드 명</label>
 						<div class="col-lg-10">
@@ -280,6 +277,7 @@
 							</select>
 						</div>
 					</div>
+					
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 이미지</label>
 						<div class="col-lg-10">
@@ -304,8 +302,8 @@
 				</div>
 
 				<div class="modal-footer pt-3">
-					<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary workUpdate">작업 등록</button>
+					<button type="button" class="btn btn-link updateClose" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary workUpdate">작업 수정</button>
 				</div>
 			</div>
 		</div>
@@ -512,7 +510,7 @@ function updatebrand(data){
 	let brand = "";
 	
        for(var i=0; i<data.length; i++){
-		brand += `<option value="opt1">\${data[i].brandName}</option>`;
+		brand += `<option>\${data[i].brandName}</option>`;
        }
    	// HTML 요소 선택 및 결과 삽입
 	let dataElement = document.querySelector('.brandname');
@@ -664,7 +662,7 @@ function workReportAllList(data){
 								<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
 								<div class="dropdown-menu dropdown-menu-right" style="">
 									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${data[i].workNo}">수정</a>
-									<a href="#" class="dropdown-item">삭제</a>
+									<a href="#" class="dropdown-item workReportDelete" value="\${data[i].workNo}">삭제</a>
 								</div>
 							</div>
 						</div>
@@ -795,125 +793,126 @@ function searchWorkReportList(data){
 		let dateStart = `\${data.list[i].workStart}`.slice(0, 10);
 		let dateEnd = `\${data.list[i].workEnd}`.slice(0, 10);
     	allWorkList += `
-               <div class="col-lg-12">
-               <div class="card more-round">
-                   <div class="card-header bg-white">
-                       <span class="font-weight-semibold float-left ml-1 mr-2 font-weight-bold">\${data.list[i].userId}</span>
-                       <div class="list-icons float-right ml-3">
-                           <div class="dropdown position-static">
-                               <a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
-                               <div class="dropdown-menu dropdown-menu-right" style="">
-                               	<a class="dropdown-item workReportUpdate">수정</a>
-                                   <a href="#" class="dropdown-item">삭제</a>
-                               </div>
-                           </div>
-                       </div>
-                       <span class="float-left text-muted">\${data.list[i].writeAt}</span>
-                   </div>
-                   <div class="card-body">
-                       <h6 class="card-title font-weight-bold">코스 \${data.list[i].workReportTargetList[0].holeNo} \${data.list[i].workType} 작업</h6>
-       		<div class="row">
-       			<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
-       			<label class="col-form-label col-lg-10">\${dateStart} - \${dateEnd}</label>
-       		</div>
+			<div class="col-lg-12">
+				<div class="card more-round">
+					<div class="card-header bg-white">
+						<span class="font-weight-semibold float-left ml-1 mr-2 font-weight-bold">\${data.list[i].userId}</span>
+						<div class="list-icons float-right ml-3">
+							<div class="dropdown position-static">
+								<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
+								<div class="dropdown-menu dropdown-menu-right" style="">
+									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${data[i].workNo}">수정</a>
+									<a href="#" class="dropdown-item workReportDelete" value="\${data[i].workNo}">삭제</a>
+								</div>
+							</div>
+						</div>
+						<span class="float-left text-muted">\${data.list[i].writeAt}</span>
+					</div>
+					
+					<div class="card-body">
+						<h6 class="card-title font-weight-bold">코스 \${data.list[i].workReportTargetList[0].holeNo} \${data.list[i].workType} 작업</h6>
+						<div class="row">
+							<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
+							<label class="col-form-label col-lg-10">\${dateStart} - \${dateEnd}</label>
+						</div>
 
-       		<div class="row">
-       			<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
-       			<div class="col-form-label col-lg-10">
-       				<span class="badge badge-info">Hole \${data.list[i].workReportTargetList[0].holeNo}</span> <!--코스 위치 라벨-->
-       				<span class="badge badge-success">\${data.list[i].workReportTargetList[0].courseType}</span> <!--코스 유형 라벨-->
-       				<span class="badge badge-warning">\${data.list[i].workClass}</span> <!--작업 분류 라벨-->
-       				<span class="badge badge-secondary">\${data.list[i].workType}</span> <!--작업 종류 라벨-->
-       			</div>
-       		</div>
+			       		<div class="row">
+			       			<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
+			       			<div class="col-form-label col-lg-10">
+			       				<span class="badge badge-info">Hole \${data.list[i].workReportTargetList[0].holeNo}</span> <!--코스 위치 라벨-->
+			       				<span class="badge badge-success">\${data.list[i].workReportTargetList[0].courseType}</span> <!--코스 유형 라벨-->
+			       				<span class="badge badge-warning">\${data.list[i].workClass}</span> <!--작업 분류 라벨-->
+			       				<span class="badge badge-secondary">\${data.list[i].workType}</span> <!--작업 종류 라벨-->
+			       			</div>
+			       		</div>
 
-       		<div class="row">
-       			<label class="col-form-label font-weight-bold col-lg-2">브랜드명</label>
-       			<label class="col-form-label col-lg-10">\${data.list[i].workBrand}</label>
-       		</div>
-
-       		<div class="row">
-       			<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
-       			<label class="col-form-label col-lg-10">\${data.list[i].workComment}</label>
-       		</div>
-
-       		<div class="form-group row mt-2">
-       			<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
-       				<div class="row">
-       					<div class="col-lg-4">
-       						<div class="card">
-       							<div class="card-img-actions m-1">
-       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
-       								<div class="card-img-actions-overlay card-img">
-       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-       										<i class="icon-plus3"></i>
-       									</a>
-
-       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-       										<i class="icon-link"></i>
-       									</a>
-       								</div>
-       							</div>
-       						</div>
-       					</div>
-
-       					<div class="col-lg-4">
-       						<div class="card">
-       							<div class="card-img-actions m-1">
-       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
-       								<div class="card-img-actions-overlay card-img">
-       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-       										<i class="icon-plus3"></i>
-       									</a>
-
-       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-       										<i class="icon-link"></i>
-       									</a>
-       								</div>
-       							</div>
-       						</div>
-       					</div>
-
-       					<div class="col-lg-4">
-       						<div class="card">
-       							<div class="card-img-actions m-1">
-       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
-       								<div class="card-img-actions-overlay card-img">
-       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-       										<i class="icon-plus3"></i>
-       									</a>
-
-       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-       										<i class="icon-link"></i>
-       									</a>
-       								</div>
-       							</div>
-       						</div>
-       					</div>
-
-       					<div class="col-lg-4">
-       						<div class="card">
-       							<div class="card-img-actions m-1">
-       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
-       								<div class="card-img-actions-overlay card-img">
-       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-       										<i class="icon-plus3"></i>
-       									</a>
-
-       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-       										<i class="icon-link"></i>
-       									</a>
-       								</div>
-       							</div>
-       						</div>
-       					</div>
-       				</div>
-       			
-       		</div>
-
-                   </div>
-               </div>
-           </div>
+			       		<div class="row">
+			       			<label class="col-form-label font-weight-bold col-lg-2">브랜드명</label>
+			       			<label class="col-form-label col-lg-10">\${data.list[i].workBrand}</label>
+			       		</div>
+			
+			       		<div class="row">
+			       			<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
+			       			<label class="col-form-label col-lg-10">\${data.list[i].workComment}</label>
+			       		</div>
+			
+			       		<div class="form-group row mt-2">
+			       			<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
+			       				<div class="row">
+			       					<div class="col-lg-4">
+			       						<div class="card">
+			       							<div class="card-img-actions m-1">
+			       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
+			       								<div class="card-img-actions-overlay card-img">
+			       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+			       										<i class="icon-plus3"></i>
+			       									</a>
+			
+			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+			       										<i class="icon-link"></i>
+			       									</a>
+			       								</div>
+			       							</div>
+			       						</div>
+			       					</div>
+			
+			       					<div class="col-lg-4">
+			       						<div class="card">
+			       							<div class="card-img-actions m-1">
+			       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
+			       								<div class="card-img-actions-overlay card-img">
+			       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+			       										<i class="icon-plus3"></i>
+			       									</a>
+			
+			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+			       										<i class="icon-link"></i>
+			       									</a>
+			       								</div>
+			       							</div>
+			       						</div>
+			       					</div>
+			
+			       					<div class="col-lg-4">
+			       						<div class="card">
+			       							<div class="card-img-actions m-1">
+			       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
+			       								<div class="card-img-actions-overlay card-img">
+			       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+			       										<i class="icon-plus3"></i>
+			       									</a>
+			
+			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+			       										<i class="icon-link"></i>
+			       									</a>
+			       								</div>
+			       							</div>
+			       						</div>
+			       					</div>
+			
+			       					<div class="col-lg-4">
+			       						<div class="card">
+			       							<div class="card-img-actions m-1">
+			       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
+			       								<div class="card-img-actions-overlay card-img">
+			       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+			       										<i class="icon-plus3"></i>
+			       									</a>
+			
+			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+			       										<i class="icon-link"></i>
+			       									</a>
+			       								</div>
+			       							</div>
+			       						</div>
+			       					</div>
+			       				</div>
+			       			
+			       		</div>
+			
+					</div>
+				</div>
+			</div>
            `;
 	}//for end
 	let dataElement = document.querySelector('.workListContent');
@@ -937,6 +936,7 @@ $(document).on('click','.workReportUpdate',function(){
     console.log(workNo);
     workReportUpdateList(workNo);
 })
+
 
 //수정작업 조회
 function workReportUpdateList(workNo){
@@ -963,22 +963,86 @@ function workReportUpdateListModal(data){
 	
 	let hole = `\${data[0].workReportTargetList[0].holeNo}`;
 	let course = `\${data[0].workReportTargetList[0].courseType}`;
+	let classtype = `\${data[0].workClass}`;
+	let type = `\${data[0].workType}`;
+	let brand = `\${data[0].workBrand}`;
+	let worktime = `\${data[0].workStart}` + ' ~ ' + `\${data[0].workEnd}`;
 	
+	
+	console.log(hole);
 	console.log(course);
+	console.log(brand);
+	console.log(worktime);
 	
-	$("#update_modal_scrollable .searchHoleBt").each(function() {
-		if($(this).val() === hole) {
+	$("#update_modal_scrollable .dateInput").each(function() {
+		$(this).val(worktime);
+	});
+	
+	$("#update_modal_scrollable .holebt").each(function() {
+		let holeNumber = $(this).text().replace("Hole ", "");
+		//console.log(holeNumber);
+		if(holeNumber === hole) {
 			$(this).addClass("active");
+			$(".selectHole").text($(this).addClass("active").text());
 		}
 	});
 	
 	$("#update_modal_scrollable .coursetypebt").each(function() {
 		if($(this).text() === course) {
 			$(this).addClass("active");
+			$(".selectCourse").text($(this).addClass("active").text());
+		}
+	});
+	
+	$("#update_modal_scrollable .classbt").each(function() {
+		if($(this).text() === classtype) {
+			$(this).addClass("active");
+			$(".selectClass").text($(this).addClass("active").text());
+		}
+	});
+	
+	$("#update_modal_scrollable .typebt").each(function() {
+		if($(this).text() === type) {
+			$(this).addClass("active");
+			$(".selectType").text($(this).addClass("active").text());
 		}
 	});
 
 }//workReportUpdateList() end
+
+
+
+//작업 삭제
+$(document).on('click','.workReportDelete',function(){
+    //alert("수정");
+    let workNo = $(this).attr('value');
+    console.log(workNo);
+	if (confirm("작업을 삭제하시겠습니까?") == true){    //확인
+		deleteCheck(workNo);
+	}else{   //취소
+		return false;
+	}
+})
+
+function deleteCheck(workNo){
+    $.ajax({
+        url: '/management/workReportDelete',
+        type: 'POST',
+        data: {workNo: workNo},
+        dataType: "json",
+        success: function(data) {
+            console.log(data);
+            alert("작업을 삭제하였습니다");
+            workAllList();
+        },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+}//deleteCheck() end
 
  
 </script>

@@ -75,5 +75,18 @@ public class CourseService {
 		return workReportDAO.workReportUpdateList(workNo);
 	}
 	
+	//작업 삭제
+	public void workReportDelete(String workNo) {
+		System.out.println("삭제번호"+workNo);
+		workReportDAO.workReportDelete(workNo);
+	}//insertWork() end
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
