@@ -134,6 +134,73 @@
 			</div>
 			<!-- /basic card -->
 
+			<!--회원 추가 button-->
+
+			<div class="" style="position: fixed; bottom: 30px; right: 30px; z-index: 1;">
+				<button type="button" class="btn btn-round" data-toggle="modal" data-target="#modal_scrollable">
+					회원 추가<i class="fas fa-plus mt-2"></i>
+				</button>
+			</div>
+			<!--회원 추가 button end-->
+
+			<!--회원 추가 modal-->
+			<div id="modal_scrollable" class="modal fade" tabindex="-1">
+				<div class="modal-dialog modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header pb-3">
+							<h5 class="modal-title">회원 추가</h5>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<div class="modal-body py-0">
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">아이디</label> <input type="text" class="form-control col-lg-10" value="">
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">비밀번호</label> <input type="text" class="form-control col-lg-10" value="">
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">회원 이름</label> <input type="text" class="form-control col-lg-10" value="">
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">회원 등급</label>
+								<div class="col-lg-10 p-0">
+									<select class="custom-select">
+										<option value="opt1">관리자</option>
+										<option value="opt2">작업자</option>
+										<option value="opt3">기타</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">소속</label> <input type="text" class="form-control col-lg-10" value="">
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">이메일</label> <input type="text" class="form-control col-lg-10" value="">
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-2">연락처</label> <input type="text" class="form-control col-lg-10" value="">
+							</div>
+
+						</div>
+
+						<div class="modal-footer pt-3">
+							<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary">회원 등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--회원 추가 modal end-->
+
 
 		</div>
 		<!-- /content area -->
