@@ -378,6 +378,7 @@ const FullCalendarStyling = function() {
         // Initialize
         if(calendarEventColorsElement) {
             const calendarEventColorsInit = new FullCalendar.Calendar(calendarEventColorsElement, {
+            	locale: 'ko',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
