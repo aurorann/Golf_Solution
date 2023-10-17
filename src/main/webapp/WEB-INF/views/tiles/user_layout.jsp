@@ -71,7 +71,7 @@
 	<div class="page-content">
 
 		<!-- Main sidebar -->
-		<tiles:insertAttribute name="sidebar"/>
+		<tiles:insertAttribute name="usersidebar"/>
 		<!-- /main sidebar -->
 
 

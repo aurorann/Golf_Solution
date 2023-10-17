@@ -23,9 +23,9 @@
 
 				<!-- Main -->
 				<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
-				<li class="nav-item p-0"><a href="user_management.html" class="nav-link"> <i class="icon-users2"></i> <span>
+				<li class="nav-item p-0"><a href="/user/user_management" class="nav-link"> <i class="icon-users2"></i> <span>
 							회원 관리 </span>
-				</a> <a href="user_info.html" class="nav-link"> <i class="icon-vcard"></i> <span> 내 정보 </span>
+				</a> <a href="/user/user_info" class="nav-link"> <i class="icon-vcard"></i> <span> 내 정보 </span>
 				</a></li>
 				<!-- /main -->
 			</ul>

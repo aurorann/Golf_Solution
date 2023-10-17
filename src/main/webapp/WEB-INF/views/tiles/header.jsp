@@ -39,6 +39,11 @@
 					MANAGEMENT
 				</a>
 			</li>
+			<li class="nav-item">
+				<a href="/user/user_management" class="navbar-nav-link">
+					회원관리
+				</a>
+			</li>
 		</ul>
 
 	</div>

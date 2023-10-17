@@ -9,6 +9,15 @@
         <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/tiles/sidebar.jsp" />
     </definition>
+    
+   	<definition name="userlayout" template="/WEB-INF/views/tiles/user_layout.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="usersidebar" value="/WEB-INF/views/tiles/user_sidebar.jsp" />
+    </definition>
+
+	<definition name="/user/*" extends="userlayout" >
+		<put-attribute name="contents" value="/WEB-INF/views/user/{1}.jsp" />
+	</definition>    
 
 	<definition name="*" extends="defaultlayout">
 		<put-attribute name="contents" value="/WEB-INF/views/{1}.jsp" />
@@ -27,13 +36,5 @@
 		<put-attribute name="contents" value="/WEB-INF/views/management/{1}/{2}.jsp" />
 	</definition>    
 	
-	 <definition name="userlayout" template="/WEB-INF/views/tiles/user_layout.jsp">
-        <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/views/tiles/user_sidebar.jsp" />
-    </definition>
-
-	<definition name="/user/*" extends="userlayout">
-		<put-attribute name="contents" value="/WEB-INF/views/user/{1}.jsp" />
-	</definition>    
       
 </tiles-definitions>
