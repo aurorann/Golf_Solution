@@ -24,7 +24,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<!-- 회원가입 -->
-	<!--  -->
+	<!-- user 전체 조회 -->
+	<select id="userList" resultType="egovMap">
+		SELECT * FROM USER_INFO
+	</select>
+	
+	<!-- 회원등급 수정 조회 -->
+	<select id="userGradeModifyList" resultType="userInfoDTO">
+		SELECT * FROM USER_INFO
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+	<!-- 회원등급 수정 -->
+	<update id="userGradeModify" parameterType="userInfoDTO">
+		UPDATE USER_INFO SET USER_GRADE = #{grade}
+		WHERE USER_NO = #{userNo}
+	</update>
+
 	<select id="test" resultType="userInfoDTO">
 		SELECT * FROM USER_INFO
 	</select>

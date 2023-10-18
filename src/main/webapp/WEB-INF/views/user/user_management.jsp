@@ -38,34 +38,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>10</td>
-							<td>홍길동</td>
-							<td>관리자</td>
-							<td>코스관리팀</td>
-							<td>abc@gmail.com</td>
-							<td>010-1234-5678</td>
-							<td>2023-10-06 15:37:45</td>
-							<td>
-								<button class="btn btn-info" type="button" data-toggle="modal" data-target="#modal_user">수정</button>
-							</td>
-						</tr>
-						<tr>
-							<td>10</td>
-							<td>홍길동</td>
-							<td>관리자</td>
-							<td>코스관리팀</td>
-							<td>abc@gmail.com</td>
-							<td>010-1234-5678</td>
-							<td>2023-10-06 15:37:45</td>
-							<td>
-								<button class="btn btn-info" type="button" data-toggle="modal" data-target="#modal_user">수정</button>
-							</td>
-						</tr>
+						<c:forEach items="${list}" var="userList">
+							<tr>
+								<td><c:out value="${userList.userNo}"></c:out></td>
+								<td><c:out value="${userList.userName}"></c:out></td>
+								<td><c:out value="${userList.userGrade}"></c:out></td>
+								<td><c:out value="${userList.userDepartment}"></c:out></td>
+								<td><c:out value="${userList.email}"></c:out></td>
+								<td><c:out value="${userList.hp}"></c:out></td>
+								<td><c:out value="${userList.regiDate}"></c:out></td>
+								<td>
+									<button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="${userList.userNo}">수정</button>
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 
-				<div id="modal_user" class="modal fade" tabindex="-1">
+				<div id="modal_user" class="modal fade userGradeModify" tabindex="-1">
 					<div class="modal-dialog modal-dialog-scrollable">
 						<div class="modal-content">
 							<div class="modal-header pb-3">
@@ -75,25 +65,26 @@
 
 							<div class="modal-body py-0">
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <label class="col-form-label col-lg-10">홍길동</label>
+									<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <label class="col-form-label col-lg-10 userName"></label>
 								</div>
 
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">소속</label> <label class="col-form-label col-lg-10">코스관리팀</label>
+									<label class="col-form-label font-weight-bold col-lg-2">소속</label> <label class="col-form-label col-lg-10 userDepartment"></label>
 								</div>
 
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <label class="col-form-label col-lg-10">abc@gmail.com</label>
+									<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <label class="col-form-label col-lg-10 email"></label>
 								</div>
 
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <label class="col-form-label col-lg-10">010-1234-5678</label>
+									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <label class="col-form-label col-lg-10 userPhone"></label>
 								</div>
 
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> <label class="col-form-label col-lg-10">2023-10-06
-										15:37:45</label>
+									<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> <label class="col-form-label col-lg-10 regiDate"></label>
 								</div>
+								
+								<input type="hidden" class="userNo" value="">
 
 								<div class="row mt-3">
 									<label class="col-form-label font-weight-bold col-lg-2">회원 등급</label>
@@ -101,14 +92,14 @@
 										<select class="custom-select">
 											<option value="opt1">관리자</option>
 											<option value="opt2">작업자</option>
-											<option value="opt2">승인 대기</option>
+											<option value="opt3">승인 대기</option>
 										</select>
 									</div>
 								</div>
 
 								<div class="modal-footer pt-3">
-									<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
-									<button type="button" class="btn btn-primary">회원등급 수정</button>
+									<button type="button" class="btn btn-link userGradeModifyClose" data-dismiss="modal">닫기</button>
+									<button type="button" class="btn btn-primary userModify">회원등급 수정</button>
 								</div>
 							</div>
 						</div>
@@ -210,3 +201,133 @@
 	</div>
 	<!-- /main content -->
 </div>
+
+<script>
+
+$(document).ready(function() {
+	
+});
+
+//수정버튼 클릭
+$(document).on("click",".listUserModify", function(){
+	var userNo = $(this).attr("value");
+	//console.log(userNo);
+	userGradeModifyList(userNo);
+});
+
+//회원등급 수정 조회
+function userGradeModifyList(userNo){
+	
+    $.ajax({
+        url: '/user/userGradeModifyList',
+        method: 'GET',
+        data: {userNo: userNo},
+        success: function(data) {
+        	console.log(data);
+        	userGradeModifyListModal(data);
+        },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+	
+}
+
+//회원등급 수정 모달창
+function userGradeModifyListModal(data){
+	
+	var name = `\${data[0].userName}`;
+	var department = `\${data[0].userDepartment}`;
+	var email = `\${data[0].email}`;
+	var phone = `\${data[0].hp}`;
+	var regiDate = `\${data[0].regiDate}`;
+	var grade = `\${data[0].userGrade}`;
+	var userNo = `\${data[0].userNo}`;
+	
+	
+	$(".userGradeModify .userName").each(function() {
+		$(this).text(name)
+	})
+	
+	$(".userGradeModify .userDepartment").each(function() {
+		$(this).text(department)
+	})
+	
+	$(".userGradeModify .email").each(function() {
+		$(this).text(email)
+	})
+	
+	$(".userGradeModify .userPhone").each(function() {
+		$(this).text(phone)
+	})
+	
+	$(".userGradeModify .regiDate").each(function() {
+		$(this).text(regiDate)
+	})
+	
+	$(".userGradeModify .userNo").each(function() {
+		$(this).val(userNo)
+	})
+	
+	$(".userGradeModify .custom-select").each(function() {
+		
+		if(grade == "관리자"){
+			$(this).val('opt1');
+		}else if(grade == "작업자"){
+			$(this).val('opt2');
+		}else{
+			$(this).val('opt3');
+		}//if end
+		
+	})
+	
+}
+
+
+$(document).on("click",".userGradeModifyClose", function(){
+
+});
+
+
+$(document).on("click",".userModify", function(){
+	var grade = $(".userGradeModify .custom-select option:checked").text()
+	var userNo = $(".userGradeModify .userNo").val()
+	//console.log(grade);
+	//console.log(userNo);
+	userGradeModify(grade, userNo);
+});
+
+
+//회원등급 수정
+function userGradeModify(grade, userNo){
+	
+    $.ajax({
+        url: '/user/userGradeModify',
+        method: 'GET',
+        data: { grade: grade,
+        		userNo: userNo },
+        success: function(data) {
+        	console.log(data);
+        	alert("회원등급이 수정 되었습니다.");
+        	location.reload();
+       },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+	
+}
+
+
+
+
+
+
+
+</script>

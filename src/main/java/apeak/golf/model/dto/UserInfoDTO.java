@@ -9,12 +9,16 @@ import java.util.List;
 @Setter
 @ToString
 public class UserInfoDTO {
+	private int userNo;
 	private String userId;
 	private String userPw;
 	private String userName;
 	private String hp;
+	private String email;
 	private String regiDate;
 	private String lastLogin;
+	private String userGrade;
+	private String userDepartment;
 	
 	private List<UserAuthDTO> userAuthList;
 }
