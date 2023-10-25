@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="allCourseMapper">
 
-	<resultMap type="holeInfoDTO" id="holeLayerSoilMap" autoMapping="true">
+	<resultMap type="apeak.golf.model.dto.HoleInfoDTO" id="holeLayerSoilMap" autoMapping="true">
 		<id property="holeNo" column="HOLE_NO"/>
 		<id property="courseType" column="COURSE_TYPE"/>
 		<collection property="layerDataList" column="layerData" ofType="LayerDataDTO" autoMapping="true">
@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	AND LAYER_TYPE=#{layerType}
 	</select>
 	
-	<select id="getHoleInfoOne" parameterType="map" resultType="holeInfoDTO">
+	<select id="getHoleInfoOne" parameterType="map" resultType="apeak.golf.model.dto.HoleInfoDTO">
 	SELECT * FROM HOLE_INFO 
 	WHERE HOLE_NO=#{holeNo} AND COURSE_TYPE=#{courseType} LIMIT 1
 	</select>

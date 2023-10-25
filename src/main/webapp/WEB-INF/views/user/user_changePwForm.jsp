@@ -31,6 +31,8 @@
 						<div class="col-lg-12">
 							<div class="card more-round">
 								<div class="card-body">
+									<form action="/user/updateUserPw" method="post" onsubmit="return formCheck(this);">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="modal-body py-0">
 
 										<div class="mt-2 mb-3">
@@ -38,19 +40,20 @@
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">새 비밀번호</label> <input type="password"
-												class="form-control h-auto col-lg-2">
+											<label class="col-form-label font-weight-bold col-lg-2">새 비밀번호</label> 
+											<input type="password" name="password" class="form-control h-auto col-lg-2">
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">비밀번호 확인</label> <input type="password"
-												class="form-control h-auto col-lg-2">
+											<label class="col-form-label font-weight-bold col-lg-2">비밀번호 확인</label> 
+											<input type="password" name="passwordChk" class="form-control h-auto col-lg-2">
 										</div>
 
 										<div class="text-center mt-2">
-											<button type="button" class="btn btn-lg btn-primary">비밀번호 변경</button>
+											<button type="submit" class="btn btn-lg btn-primary">비밀번호 변경</button>
 										</div>
 									</div>
+									</form>
 								</div>
 							</div>
 
@@ -72,3 +75,17 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+function formCheck(frm){
+	if(frm.password.value != frm.passwordChk.value){
+		alert("비밀번호 확인이 일치하지 않습니다.")
+		return false;
+	}
+
+	if(!confirm("비밀번호를 변경하시겠습니까?")){
+		return false;
+	}
+
+	return true;
+}
+</script>

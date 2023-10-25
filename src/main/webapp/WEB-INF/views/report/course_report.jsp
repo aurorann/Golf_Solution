@@ -271,7 +271,7 @@
 	    getData($(".holebt.active").val(), category, selectDate, beforeDate);
 	});
 
-	$(document).on('click','#layerType button',function(){
+	$(document).on('click','#layerType label',function(){
 		var layerType = $(this).data('layertype');
 		
 		nowLayerType = layerType;
@@ -403,10 +403,19 @@
 							<div class="card-header">
 								<h5 class="card-title holename">
 									\${data.list4[0].holeName}
-									<div class="btn-group ml-3" data-toggle="buttons" id="layerType">
-										<button type="button" class="btn btn-light" data-layertype="NDVI">생육</button>
-										<button type="button" class="btn btn-light" data-layertype="TEMP">열</button>
-										<button type="button" class="btn btn-light" data-layertype="HUMI">습도</button>
+									<div class="btn-group btn-group-toggle ml-3" data-toggle="buttons" id="layerType">
+										<label class="btn btn-light active" data-layertype="NDVI">
+											<input type="radio" name="layerType${i}" autocomplete="off" >
+											생육
+										</label>
+										<label class="btn btn-light" data-layertype="TEMP">
+											<input type="radio" name="layerType${i}" autocomplete="off" >
+											열
+										</label>
+										<label class="btn btn-light" data-layertype="HUMI">
+											<input type="radio" name="layerType${i}" autocomplete="off" >
+											습도
+										</label>
 									</div>
 									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
 								</h5>

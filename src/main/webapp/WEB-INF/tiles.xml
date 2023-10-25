@@ -17,10 +17,6 @@
 
 	<definition name="/user/*" extends="userlayout" >
 		<put-attribute name="contents" value="/WEB-INF/views/user/{1}.jsp" />
-	</definition>    
-
-	<definition name="*" extends="defaultlayout">
-		<put-attribute name="contents" value="/WEB-INF/views/{1}.jsp" />
 	</definition>
 	
 	<definition name="/*/*" extends="defaultlayout">

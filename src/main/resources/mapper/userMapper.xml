@@ -49,5 +49,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM SENSOR_INFO JOIN WEATHER_DATA
 		USING(SENSOR_NO)
 	</select>
+	
+	<select id="selectUserById" parameterType="string" resultType="userInfoDTO">
+		SELECT * FROM USER_INFO WHERE USER_ID=#{value}
+	</select>
+	
+	<select id="selectAuthorityByUserId" parameterType="string" resultType="userAuthDTO">
+		SELECT * FROM USER_AUTH WHERE USER_ID=#{value}
+	</select>
+	
+	<select id="getUserListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM USER_INFO
+	</select>
+	
+	<select id="getUserList" parameterType="map" resultType="userInfoDTO">
+		SELECT * FROM USER_INFO 
+		LIMIT ${startIndex},${pageSize}
+	</select>
+	
+	<update id="updateUserPw" parameterType="map">
+		UPDATE USER_INFO SET USER_PW=#{userPw} WHERE USER_ID=#{userId}
+	</update>
+	
+	<update id="updateUserInfo" parameterType="userInfoDTO">
+		UPDATE USER_INFO SET EMAIL=#{email} , HP=#{hp} 
+		WHERE USER_ID=#{userId}
+	</update>
 
 </mapper>

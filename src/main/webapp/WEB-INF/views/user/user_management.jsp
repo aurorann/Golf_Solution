@@ -23,11 +23,12 @@
 			<div class="card-header">
 				<h5 class="card-title">회원 리스트</h5>
 			</div>
-			<div class="table-responsive table-scrollable">
-				<table class="table">
+			<div class="table-responsive">
+				<table class="table text-center">
 					<thead>
 						<tr>
 							<th>번호</th>
+							<th>아이디</th>
 							<th>회원 이름</th>
 							<th>회원 등급</th>
 							<th>소속</th>
@@ -37,10 +38,11 @@
 							<th>회원등급 수정</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="userList">
 						<c:forEach items="${list}" var="userList">
 							<tr>
 								<td><c:out value="${userList.userNo}"></c:out></td>
+								<td><c:out value="${userList.userId}"></c:out></td>
 								<td><c:out value="${userList.userName}"></c:out></td>
 								<td><c:out value="${userList.userGrade}"></c:out></td>
 								<td><c:out value="${userList.userDepartment}"></c:out></td>
@@ -111,7 +113,7 @@
 
 
 				<div class="mt-3 mb-3 text-center">
-					<ul class="pagination pagination-flat align-self-center">
+					<ul class="pagination pagination-flat align-self-center" id="pager">
 						<li class="page-item"><a href="#" class="page-link">← &nbsp; Prev</a></li>
 						<li class="page-item active"><a href="#" class="page-link">1</a></li>
 						<li class="page-item"><a href="#" class="page-link">2</a></li>
@@ -286,6 +288,69 @@ function userGradeModifyListModal(data){
 	
 }
 
+function nvl(data){
+	if(!data || data=='null'){
+		return "";
+	}else{
+		return data;
+	}
+}
+
+getUserList = function(curPage){
+	var keyword = "";
+	
+	if(!curPage){curPage=1}
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/user/getUserList",
+		data: "curPage="+curPage,
+		success: function(result){
+			console.log(result);
+			
+			var list = result.list;
+			
+			var table = ''
+			$.each(list,function(index,item){
+				
+				table+=`<tr>`
+				table+=`<td>\${nvl(item.userNo)}</td>`
+				table+=`<td>\${nvl(item.userId)}</td>`
+				table+=`<td>\${nvl(item.userName)}</td>`
+				table+=`<td>\${nvl(item.userGrade)}</td>`
+				table+=`<td>\${nvl(item.userDepartment)}</td>`
+				table+=`<td>\${nvl(item.email)}</td>`
+				table+=`<td>\${nvl(item.hp)}</td>`
+				table+=`<td>\${nvl(item.regiDate)}</td>`
+				table+=`<td><button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="\${item.userNo}">수정</button></td>`
+				table+= `</tr>`
+			})
+			$('#userList').html(table);
+			
+			var pager = result.pager;
+			
+			var pagerContent = "";
+			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.startPage-1)+")'><a href='#' class='page-link'><<a></li>"}
+			for(i=pager.startPage;i<=pager.endPage;i++){
+				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
+				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
+			}
+			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.endPage+1)+")'><a href='#' class='page-link'>></a></li>"}
+			
+			if(table!=''){
+				$("#pager").html(pagerContent);
+			}else{
+				$('#userList').html('<tr><td colspan="8">사용자가 없습니다.</td></tr>');
+				$("#pager").html('');
+			}
+		},
+		error:function(request,status,error){
+		   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		}
+			
+	})
+}
+
+getUserList(1)
 
 $(document).on("click",".userGradeModifyClose", function(){
 
@@ -331,3 +396,12 @@ function userGradeModify(grade, userNo){
 
 
 </script>
+<style>
+<!--
+#pager{
+	justify-content: center;
+	border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+-->
+</style>

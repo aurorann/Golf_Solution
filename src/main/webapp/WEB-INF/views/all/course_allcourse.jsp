@@ -35,7 +35,7 @@
 				</div>
 
 				<div class="btn-group mr-2 float-right" data-toggle="buttons" id="layerType">
-					<button type="button" class="btn btn-light" data-layertype="NDVI">
+					<button type="button" class="btn btn-light active" data-layertype="NDVI">
 						<i class="fas fa-seedling"></i>
 						<!--생육-->
 					</button>
@@ -152,13 +152,54 @@
 			
 			</div>
 			
-			
-			<div id="overlayList" style="margin-top: 10px;">
-				<button id="overlayPlay"> 재생 </button>
-				<button class="overlayBtn">2023-09-22 16:15:09</button>
-				<button class="overlayBtn">2023-09-22 16:15:09</button>
-				<button class="overlayBtn">2023-09-22 16:15:09</button>
-				<button class="overlayBtn">2023-09-22 16:15:09</button>
+			<div class="image-player-wrapper mt-2">
+				<div class="col-lg-12 mb-2">
+					<div class="row">
+						<div class="col-lg-9 col-sm-12 mt-2">
+							<label class="font-weight-bold mr-3">기준시간</label>
+							<label class="">2023-09-26 16:15:09</label>
+						</div>
+
+						<div class="col-lg-3 col-sm-12 p-0 text-right">
+							<label class="col-lg-5 col-md-4 col-sm-12">재생 속도</label>
+							<select class="custom-select col-lg-6 col-md-6" id="playSpeed">
+								<option value="1000">1초</option>
+								<option value="5000">5초</option>
+								<option value="10000">10초</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+						
+				<div class="control-movi-wrap image-control-form-player">
+					<div class="btn-wrap col-lg-7 col-md-12 float-left">
+						<button class="btn start-btn" data-role="play-slide" title="이전" id="overlayPrev">
+							<i class="icon-backward2 icon-2x"></i>
+						</button>
+						<button class="btn start-btn" data-role="play-slide" title="정지" id="overlayPlay">
+							<i class="icon-play3 icon-2x"></i>
+						</button>
+						<button class="btn start-btn" data-role="play-slide" title="다음" id="overlayNext">
+							<i class="icon-forward3 icon-2x"></i>
+						</button>
+					</div>
+					<div class="control-movi-lap">
+						<div class="movi-line ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" id="overlayList">
+							<!--활성화 시 class='ui-state-on' / 비활성화 시 class='ui-state-default' -->
+							<button tabindex="0" class="slider-handle ui-state-default">230928 16:15:17</button>
+							<button tabindex="0" class="slider-handle ui-state-default">230928 16:15:18</button>
+							<button tabindex="0" class="slider-handle ui-state-on">230928 16:15:19</button>
+							<button tabindex="0" class="slider-handle ui-state-default">230928 16:15:20</button>
+							<button tabindex="0" class="slider-handle ui-state-default">230928 16:15:21</button>
+						</div>
+						<div class="movi-bar-wrap" id="moviBarZone">
+							<div class="movi-bar"></div>
+						</div>
+						
+					</div>
+				</div>
+
 			</div>
 		</div>
 		<!-- /basic card -->
@@ -168,6 +209,33 @@
 	<!-- /content area -->
 	
 	<script>
+	function findMiddleValue(array) {
+	    const result = []; // 결과를 저장할 배열
+	    
+	    // 배열의 길이가 3 이하인 경우, 모든 값을 결과로 반환
+	    if (array.length <= 3) {
+	        return array;
+	    }
+	    
+	    const step = Math.floor(array.length / 3); // 간격 계산
+	    
+	    // 첫 번째 중간값
+	    result.push(array[step]);
+	    
+	    // 두 번째 중간값 (배열의 길이가 충분할 때만)
+	    if (array.length > step * 2) {
+	        result.push(array[step * 2]);
+	    }
+	    
+	    // 세 번째 중간값 (배열의 길이가 충분할 때만)
+	    if (array.length > step * 3) {
+	        result.push(array[step * 3]);
+	    }
+
+	    return result;
+	}
+
+	
 	function unifyArrayLengthWithTime(arrays) {
 	    let times = [];
 	    let resultMap = {};
@@ -273,6 +341,7 @@
 		let playState = false;
 		let playTimer;
 		let playIdx = 0;
+		let playSpeed = 1000;
 
 		var map = new naver.maps.Map('map', {
 		    center: new naver.maps.LatLng(35.591352, 127.902073),
@@ -350,8 +419,8 @@
 			    position: position,
 			    icon: {
 			        //content: contentString,
-			        url: "http://15.165.143.75/growth/img/pin3.png",
-			        size: new naver.maps.Size(42, 42),
+			        url: "/resources/assets/img/pin.png",
+			        size: new naver.maps.Size(30, 44),
 			        origin: new naver.maps.Point(0, 0),
 			        anchor: new naver.maps.Point(25, 26)
 			    }
@@ -377,7 +446,7 @@
 
 		}
 
-		function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx){
+		function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx,mode,moviWidth){
 		    var bounds = new naver.maps.LatLngBounds(
 	            new naver.maps.LatLng(startLat, startLon),
 	            new naver.maps.LatLng(endLat, endLon)
@@ -395,14 +464,36 @@
 		    overLayList.push(groundOverlay)
 	    	groundOverlay.setMap(map);
 
-	    	$('#overlayList').append(`<button class="overlayBtn" data-idx="\${idx}">\${tm}</button>`)
+	    	$('#moviBarZone').append(`<div class="movi-bar" style="width:\${moviWidth}%" data-idx="\${idx}" title="\${tm}"></div>`)
+
+		    if(mode=='hide'){
+
+		    }else{
+		    	$('#overlayList').append(`<button class="slider-handle ui-state-default overlayBtn" data-idx="\${idx}">\${tm}</button>`)
+		    }
+	    	//$('#overlayList').append(`<button class="overlayBtn" data-idx="\${idx}">\${tm}</button>`)
 		}
 
 		function createGroundTimeAll(times){
+
+			var movieWidth = 100/times.length;
+			var layerCnt = times.length;
+
+			var layerList = [0];
+			var array = Array.from({length: layerCnt}, (_, index) => index);
+			layerList = layerList.concat(findMiddleValue(array));
+			layerList.push(layerCnt-1)
+			
 			for(let i=0;i<times.length;i++){
 				var tm = times[i];
 				overLayAllList[tm] = [];
-				$('#overlayList').append(`<button class="overlayBtn" data-tm="\${tm}">\${tm}</button>`)
+				if(layerList.indexOf(i)!=-1){
+					$('#overlayList').append(`<button class="slider-handle ui-state-default overlayBtn" data-tm="\${tm}">\${tm}</button>`)
+				}
+				
+				$('#moviBarZone').append(`<div class="movi-bar" style="width:\${movieWidth}%" data-tm="\${tm}" title="\${tm}"></div>`)
+				
+				//$('#overlayList').append(`<button class="overlayBtn" data-tm="\${tm}">\${tm}</button>`)
 			}
 		}
 
@@ -481,7 +572,7 @@
 			overLayAllList = {};
 
 			$('#overlayList').empty();
-			$('#overlayList').html(`<button id="overlayPlay"> 재생 </button>`)
+			//$('#overlayList').html(`<button id="overlayPlay"> 재생 </button>`)
 
 			clearInterval(playTimer)
 			playState = false;
@@ -494,20 +585,20 @@
 		}
 
 		function showGroundOverlay(idx){
-			overLayList[idx].setMap(map);
-			$("#overlayList .overlayBtn").removeClass('nowOver')
-			$("#overlayList [data-idx='"+idx+"']").addClass('nowOver')
+			if(idx!=-1){
+				overLayList[idx].setMap(map);
+				$("#overlayList .overlayBtn").removeClass('ui-state-on')
+				$("#overlayList [data-idx='"+idx+"']").addClass('ui-state-on')
+			}
 		}
 
 		function showGroundOverlayAll(tm){
 
 			let targetList = overLayAllList[tm];
 
-			$("#overlayList .overlayBtn").removeClass('nowOver')
-			$("#overlayList [data-tm='"+tm+"']").addClass('nowOver')
+			$("#overlayList .overlayBtn").removeClass('ui-state-on')
+			$("#overlayList [data-tm='"+tm+"']").addClass('ui-state-on')
 			
-			console.log(targetList.length)
-
 			for(var i=0;i<targetList.length;i++){
 				targetList[i].setMap(map);
 			}
@@ -517,18 +608,22 @@
 			if(playState==true){
 				clearInterval(playTimer)
 				playState = false;
-				$('#overlayPlay').text('재생')
+				$('#overlayPlay').addClass('start-btn')
+				$('#overlayPlay').removeClass('pause-btn')
+				$('#overlayPlay').attr('title','재생')
+				$('#overlayPlay').html(`<i class="icon-play3 icon-2x"></i>`)
 			}else{
 				playTimer = setInterval(function() {
-					console.log(overLayList.length)
-					console.log(playIdx)
 					hideGroundOverlay()
 					//showGroundOverlay(playIdx%overLayList.length)
-					$('#overlayList .overlayBtn:eq('+playIdx%$('.overlayBtn').length+')').click();
+					$('#moviBarZone .movi-bar:eq('+playIdx%$('.movi-bar').length+')').click();
 					playIdx++;
-				}, 1000);
+				}, playSpeed);
 				playState = true;
-				$('#overlayPlay').text('정지')
+				$('#overlayPlay').addClass('pause-btn')
+				$('#overlayPlay').removeClass('start-btn')
+				$('#overlayPlay').attr('title','정지')
+				$('#overlayPlay').html(`<i class="icon-pause icon-2x"></i>`)
 			}
 		}
 		
@@ -1036,8 +1131,17 @@
 			//전체 마커 초기화
 			clearMarker()
 			clearInfoWindow()
+			
+			//시간축 초기화
+			$('#moviBarZone').empty();
+			playState = true;
+			playOverlay()
+			
+			//재생위치 초기화
+			playIdx = 0;
 
 			if(hole!="0"){
+
 				//개별검색			
 				var holeInfo = getHoleInfo(hole,course)
 				var moveTo = new naver.maps.LatLng(holeInfo.lat, holeInfo.lon);
@@ -1067,10 +1171,41 @@
 				}
 	
 				var result = getLayerData(nowHole,nowCourse)
+				var layerCnt = result.length;
+
+				if(layerCnt==0){
+					$('.image-player-wrapper').hide()
+				}else{
+					$('.image-player-wrapper').show()
+				}
+				
+				var layerList = [0];
+				
+				var showRepeat = 1;
+				var moviWidth = 20;
+
+				let array = Array.from({length: layerCnt}, (_, index) => index);
+				layerList = layerList.concat(findMiddleValue(array));
+				layerList.push(layerCnt-1)
+								
+				moviWidth = 100/layerCnt;
+				
+				if(result.length>5){
+					showRepeat = Math.round(result.length/5);
+				}
 	
 				$.each(result,function(index,item){
-					createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+					let mode = 'show';
+					/*if(index%showRepeat==0){
+						mode = 'hide'
+					}*/
+					if(layerList.indexOf(index)==-1){
+						mode = 'hide'
+					}
+
+					createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index,mode,moviWidth)
 				})
+				
 	
 				hideGroundOverlay()
 				showGroundOverlay(result.length-1)
@@ -1097,6 +1232,12 @@
 				}
 				
 				var res = unifyArrayLengthWithTime(layerParam);
+
+				if(res.times.length==0){
+					$('.image-player-wrapper').hide()
+				}else{
+					$('.image-player-wrapper').show()
+				}
 
 				clearGroundOverlay();
 				createGroundTimeAll(res.times)
@@ -1180,25 +1321,109 @@
 			
 			nowLayerType = layerType;
 
+			//시간축 초기화
+			$('#moviBarZone').empty();
+			playState = true;
+			playOverlay()
+			
+			//재생위치 초기화
+			playIdx = 0;
+			
 			if(nowHole!="0"){
+				/*
 				clearGroundOverlay();
-				//alert(layerType)
 				if(layerType=="NULL"){
 					return;
 				}
 	
 				var result = getLayerData(nowHole,nowCourse)
+				var showRepeat = 1;
+				if(result.length>5){
+					showRepeat = Math.round(result.length/5);
+				}
+
 	
 				$.each(result,function(index,item){
-					createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
+					let mode = 'show';
+					if(index%showRepeat==0){
+						mode = 'hide'
+					}
 				})
 	
 				hideGroundOverlay()
 				showGroundOverlay(result.length-1)
+
+				//개별검색			
+				var holeInfo = getHoleInfo(hole,course)
+				var moveTo = new naver.maps.LatLng(holeInfo.lat, holeInfo.lon);
+				if(map){
+					map.panTo(moveTo)
+				}
+	
+				
+				createMarker(holeInfo.lat,holeInfo.lon)
+				$('#chartHole').html("Hole "+nowHole);
+	
+	
+				var chartData = getChartData(hole,course,nowDataType);
+				var dataTypeList = getDataTypeList(nowDataType);
+	
+				setChartLayer(dataTypeList);
+	
+				
+				for(var i=0;i<dataTypeList.length;i++){
+					drawChart(dataTypeList[i],chartData);
+				}*/
+
+				clearGroundOverlay();
+				if(nowLayerType=="NULL"){
+					return;
+				}
+	
+				var result = getLayerData(nowHole,nowCourse)
+				var layerCnt = result.length;
+
+				if(layerCnt==0){
+					$('.image-player-wrapper').hide()
+				}else{
+					$('.image-player-wrapper').show()
+				}
+				
+				var layerList = [0];
+				
+				var showRepeat = 1;
+				var moviWidth = 20;
+
+				let array = Array.from({length: layerCnt}, (_, index) => index);
+				layerList = layerList.concat(findMiddleValue(array));
+				layerList.push(layerCnt-1)
+								
+				moviWidth = 100/layerCnt;
+				
+				if(result.length>5){
+					showRepeat = Math.round(result.length/5);
+				}
+	
+				$.each(result,function(index,item){
+					let mode = 'show';
+					if(layerList.indexOf(index)==-1){
+						mode = 'hide'
+					}
+
+					createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index,mode,moviWidth)
+				})
+				
+	
+				hideGroundOverlay()
+				showGroundOverlay(result.length-1)
 			}else{
+				
 				//전체검색
 				var result = getAllData(nowCourse);
 				var layerDataList = result.layerDataList;
+				var soilDataList = result.soilDataList;
+				var ndviDataList = result.ndviDataList;
+				var weatherDataList = result.weatherDataList;
 				var layerParam = [];
 				var startLat = {};
 				var endLat = {};
@@ -1214,6 +1439,12 @@
 				}
 				
 				var res = unifyArrayLengthWithTime(layerParam);
+
+				if(res.times.length==0){
+					$('.image-player-wrapper').hide()
+				}else{
+					$('.image-player-wrapper').show()
+				}
 
 				clearGroundOverlay();
 				createGroundTimeAll(res.times)
@@ -1240,9 +1471,24 @@
 
 			var result = getLayerData(nowHole,nowCourse)
 
+			var showRepeat = 1;
+			if(result.length>5){
+				showRepeat = Math.round(result.length/5);
+				//alert(result.length+","+showRepeat)
+			}
+
+
+			$.each(result,function(index,item){
+				let mode = 'show';
+				if(index%showRepeat==0){
+					mode = 'hide'
+				}
+				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index,mode)
+			})
+			/*
 			$.each(result,function(index,item){
 				createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index)
-			})
+			})*/
 
 			hideGroundOverlay()
 			showGroundOverlay(result.length-1)
@@ -1259,14 +1505,76 @@
 		$(document).on('click','.overlayBtn',function(){
 			var idx = $(this).data('idx')
 			var tm = $(this).data('tm')
+			
+			let movieBar = $('#moviBarZone').find('[data-idx="'+idx+'"]')
+			hideGroundOverlay()
+			if(!tm){
+				showGroundOverlay(idx)
+			}else{
+				showGroundOverlayAll(tm)
+				movieBar = $('#moviBarZone').find('[data-tm="'+tm+'"]')
+			}
+
+			let now = $(movieBar).index('.movi-bar')
+			playIdx = now;
+
+			for(let i=0;i<=now;i++){
+				$('.movi-bar:eq('+i+')').removeClass('movi-wait')
+			}
+			
+			for(let i=now+1;i<$('.movi-bar').length;i++){
+				$('.movi-bar:eq('+i+')').addClass('movi-wait')
+			}
+		})
+		
+		$(document).on('click','#moviBarZone .movi-bar',function(){
+			let now = $(this).index('.movi-bar');
+
+			playIdx = now;
+
+			for(let i=0;i<=now;i++){
+				$('.movi-bar:eq('+i+')').removeClass('movi-wait')
+			}
+			
+			for(let i=now+1;i<$('.movi-bar').length;i++){
+				$('.movi-bar:eq('+i+')').addClass('movi-wait')
+			}
+
+			let idx = $(this).data('idx');
+			let tm = $(this).data('tm')
 
 			hideGroundOverlay()
+			
 			if(!tm){
 				showGroundOverlay(idx)
 			}else{
 				showGroundOverlayAll(tm)
 			}
 			
+		})
+		
+		$(document).on('change','#playSpeed',function(){
+			playSpeed = $(this).val()*1;
+
+			//만약 이미 재생중이면 재실행
+			if(playState==true){
+				clearInterval(playTimer)
+				playTimer = setInterval(function() {
+					hideGroundOverlay()
+					$('#moviBarZone .movi-bar:eq('+playIdx%$('.movi-bar').length+')').click();
+					playIdx++;
+				}, playSpeed);
+			}
+		})
+		
+		$(document).on('click','#overlayPrev',function(){
+			var now = $('.movi-wait:eq(0)').index('.movi-bar')-2;
+			$('#moviBarZone .movi-bar:eq('+now+')').click();
+		})
+		
+		$(document).on('click','#overlayNext',function(){
+			var now = $('.movi-wait:eq(0)').index('.movi-bar');
+			$('#moviBarZone .movi-bar:eq('+now+')').click();
 		})
 	    
 		createMarker(35.5913518, 127.9020725);
@@ -1292,6 +1600,17 @@
 		#chartZone > #ndviChart{
 			height: 300px;
 		}
+		
+		.movi-bar{
+			display: inline-block;
+			float: left;
+			cursor: pointer;
+			border-right: 1px solid white;
+		}
+		
+		.movi-wait{
+			background-color : #ddd !important;
+		}
 	</style>
 </div>
 <!-- /main content -->
@@ -1314,12 +1633,12 @@
 				<li class="nav-item text-center pl-2 pr-2">
 					<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
 						<label class="btn btn-light active">
-							<input type="radio" name="options" id="option1" autocomplete="off">
+							<input type="radio" name="options" id="option1" autocomplete="off" value="all">
 							전체
 						</label>
 
 						<label class="btn btn-light">
-							<input type="radio" name="options" id="option2" autocomplete="off">
+							<input type="radio" name="options" id="option2" autocomplete="off" value="each">
 							개별
 						</label>
 					</div>

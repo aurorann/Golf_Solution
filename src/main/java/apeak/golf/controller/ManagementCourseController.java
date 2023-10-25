@@ -1,6 +1,7 @@
 package apeak.golf.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -52,50 +53,57 @@ public class ManagementCourseController {
 	//작업등록 하기
 	@ResponseBody
 	@RequestMapping(value="/insertwork_ajax", method = RequestMethod.POST)
-	public void insertWorkAjax(@RequestParam Map<String, Object> param, MultipartHttpServletRequest request) {
+	public void insertWorkAjax(@RequestParam("files[]") List<MultipartFile> fileList,@RequestParam Map<String, Object> param) {
+		
+		System.out.println(param.toString());
+		
+		System.out.println(fileList.size());
+		
 	    try {
-	        String workstart = (String) param.get("workstart");
-	        String workend = (String) param.get("workend");
-	        String hole = (String) param.get("hole");
+	        String workStart = (String) param.get("workStart");
+	        String workEnd = (String)param.get("workEnd");
+	        String hole = (String)param.get("hole");
 	        String course = (String) param.get("course");
-	        String workclass = (String) param.get("workclass");
-	        String worktype = (String) param.get("worktype");
-	        String workbrand = (String) param.get("workbrand");
-	        String oriImgName = (String) param.get("oriImgName");
+	        String workClass = (String) param.get("workClass");
+	        String workType = (String) param.get("workType");
+	        String workBrand = (String) param.get("workBrand");
 	        String comment = (String) param.get("comment");
+	        
+	        
+	        List<String> oriImgNameList = new ArrayList<String>();
+	        List<String> saveNameList = new ArrayList<String>();
+	        List<String> filePathList = new ArrayList<String>();
 
-	        List<MultipartFile> fileList = request.getFiles("file");
+	        //List<MultipartFile> fileList = request.getFiles("files[]");
 	        String path = "C:\\DATA\\";
 	        File fileDir = new File(path);
 	        if (!fileDir.exists()) {
 	            fileDir.mkdirs();
 	        }
 		    
-		    //이미지 파일명만 자르기
-		    oriImgName = oriImgName.substring(oriImgName.lastIndexOf("\\") + 1);
-		    
-		    //이미지 확장자 자르기
-		    String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
-		    
-		    //이미지 랜덤명 생성
-	        String imgName = UUID.randomUUID().toString().replace("-", "");
-	        
-		    //이미지 저장 이름
-		    String saveName = imgName+ext;
-		    
-		    //이미지 저장 이름과 저장 경로
-		    String filePath = path+saveName;
 		    
 	        for (MultipartFile mf : fileList) {
 	            try {
-	                // 파일생성
+	            	//이미지 확장자 자르기
+	            	String ext = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+	    		    //이미지 랜덤명 생성
+	    	        String imgName = UUID.randomUUID().toString().replace("-", "");
+	    		    //이미지 저장 이름
+	    		    String saveName = imgName+ext;
+	            	
+	    		    saveNameList.add(saveName);
+	    		    oriImgNameList.add(mf.getOriginalFilename());
+	    		    filePathList.add(path+"\\"+mf.getOriginalFilename());
+	    		    
+	    		    System.out.println(mf.getOriginalFilename());
+	    		    
 	                mf.transferTo(new File(path, saveName));    		
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
 	        }
 
-	        courseService.insertWork(workstart, workend, hole, course, workclass, worktype, workbrand, oriImgName, comment, filePath, saveName);
+	        //courseService.insertWork(workStart, workEnd, hole, course, workClass, workType, workBrand, oriImgName, comment, filePath, saveName);
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -113,18 +121,14 @@ public class ManagementCourseController {
 	
 	//검색 선택작업 조회하기
 	@ResponseBody
-	@RequestMapping(value="/searchWorkReportListAjax", method = RequestMethod.GET)
-	private EgovMap searchWorkReportList(@RequestParam(value="searchHole",required=false) String searchHole,
-										@RequestParam(value="searchCourseType",required=false) String searchCourseType,
-										@RequestParam(value="searchClass",required=false) String searchClass,
-										@RequestParam(value="searchType",required=false) String searchType) {
-		
-		System.out.println(searchHole);
-		System.out.println(searchCourseType);
-		System.out.println(searchClass);
-		System.out.println(searchType);
-		
-		return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
+	@RequestMapping(value="/searchWorkReportListAjax", method = RequestMethod.POST)
+	private EgovMap searchWorkReportList(@RequestParam(value="searchHole[]",required=false) String[] searchHole,
+										@RequestParam(value="searchCourseType[]",required=false) String[] searchCourseType,
+										@RequestParam(value="searchClass[]",required=false) String[] searchClass,
+										@RequestParam(value="searchType[]",required=false) String[] searchType) {
+		System.out.print(searchHole.length+"길이");
+		return null;
+		//return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
 	}//brandAjax() end
 	
 	
@@ -140,8 +144,8 @@ public class ManagementCourseController {
 	//작업종류에 따른 제품브랜드 가져오기
 	@ResponseBody
 	@RequestMapping(value="/getbrand_ajax", method = RequestMethod.GET)
-	private List<EgovMap> brandAjax(@RequestParam(value="worktype",required=false) String worktype) {
-		return courseService.branddata(worktype);
+	private List<EgovMap> brandAjax(@RequestParam(value="workType",required=false) String workType) {
+		return courseService.branddata(workType);
 	}//brandAjax() end
 	
 	

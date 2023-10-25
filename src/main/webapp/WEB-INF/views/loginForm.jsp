@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!DOCTYPE html>
 <html lang="en" class="layout-static">
 <head>
@@ -47,49 +46,82 @@
 	<script src="/resources/assets/js/jquery.event.move.js"></script>
 	<script src="/resources/assets/js/jquery.twentytwenty.js"></script>
 	<link href="/resources/assets/css/twentytwenty.css" rel="stylesheet" type="text/css">
-	<!-- twentytwenty end -->	
-	
-    <!--fullcarendar js-->
-    <script src="/resources/assets/js/fullcalendar/main.min.js"></script>
-    <!-- <script src="/resources/assets/js/fullcalendar/fullcalendar_styling.js"></script> -->
-    
+	<!-- twentytwenty end -->
 	
 	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=tcdt00u6f1"></script>
 	
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/highcharts-more.js"></script>
 	<link href="https://code.highcharts.com/css/highcharts.css" rel="stylesheet"/>
-    
-    <meta name="_csrf" content="${_csrf.token}"/>
-	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 
 <body>
 
-	<tiles:insertAttribute name="header"/>
-
-
 	<!-- Page content -->
-	<div class="page-content">
-
-		<!-- Main sidebar -->
-		<tiles:insertAttribute name="managementsidebar"/>
-		<!-- /main sidebar -->
-
+	<div class="page-content all-bg">
 
 		<!-- Main content -->
-		<tiles:insertAttribute name="contents"/>
+		<div class="content-wrapper">
+
+			<!-- Inner content -->
+			<div class="content-inner">
+
+				<!-- Content area -->
+				<div class="content d-flex justify-content-center align-items-center">
+
+					<!-- Login form -->
+					<form class="login-form" action="/login" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<div class="card mb-0">
+							<div class="card-body">
+                                <div class="position-relative text-center">
+                                    <img src="/resources/assets/img/golf_logo.png" width="200" class="" alt="Logo">
+                                </div>
+								<div class="text-center mb-3">
+									<h5 class="mt-2 mb-2">골프 코스관리 솔루션</h5>
+									<span class="d-block text-muted">아이디와 비밀번호를 입력하세요.</span>
+								</div>
+
+								<div class="form-group form-group-feedback form-group-feedback-left">
+									<input type="text" class="form-control" placeholder="아이디" name="userId" required="required">
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group form-group-feedback form-group-feedback-left">
+									<input type="password" class="form-control" placeholder="비밀번호" name="password" required="required">
+									<div class="form-control-feedback">
+										<i class="icon-lock2 text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary btn-block">로그인</button>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- /login form -->
+
+				</div>
+				<!-- /content area -->
+
+
+
+			</div>
+			<!-- /inner content -->
+
+		</div>
 		<!-- /main content -->
 
 	</div>
 	<!-- /page content -->
-	
-	<script>
-	$(function(){
-		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
-		$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
-	});
-	</script>
+
 
 </body>
+
+
+
+
 </html>

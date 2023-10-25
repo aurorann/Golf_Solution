@@ -21,6 +21,7 @@ public class AccessDecsionHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException ade) throws IOException, ServletException {
 
+		System.out.println("권한부족");
 		/*
 		logger.info("Exceiption : {}",ade);
 		logger.info("LocalizedMessage : {}",ade.getLocalizedMessage());

@@ -55,7 +55,7 @@
 									<li class="nav-item-header">코스 위치</li>
 									<li class="nav-item pl-3 pr-3 course-location-badge">
 										<c:forEach items="${list}" var="holename">
-										<a href="#"><span class="badge badge-info searchHoleBt" value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+										<label class="badge badge-info">${holename.holeName}<input class="searchHoleBt" type="checkbox" name="searchHoleBt" value="${holename.holeNo}"></label>
 										</c:forEach>
 									</li>
 								</ul>
@@ -63,25 +63,25 @@
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">코스 유형</li>
 									<li class="nav-item pl-3 pr-3 course-category-badge">
-										<a href="#"><span class="badge badge-success searchCourseTypeBt">Green</span></a><!--코스 유형 라벨-->
-										<a href="#"><span class="badge badge-success searchCourseTypeBt">Fairway</span></a>						
+										<label class="badge badge-success">Green<input class="searchCourseTypeBt" type="checkbox" name="searchCourseTypeBt" value="Green"></label>
+										<label class="badge badge-success">Fairway<input class="searchCourseTypeBt" type="checkbox" name="searchCourseTypeBt" value="Fairway"></label>			
 									</li>
 								</ul>
 
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">작업 분류</li>
 									<li class="nav-item pl-3 pr-3 work-class-badge">
-										<a href="#"><span class="badge badge-warning searchClassBt">갱신</span></a><!--작업 분류 라벨-->
-										<a href="#"><span class="badge badge-warning searchClassBt">예고</span></a>				
-										<a href="#"><span class="badge badge-warning searchClassBt">기타</span></a>				
+										<label class="badge badge-warning">갱신<input class="searchClassBt" type="checkbox" name="searchClassBt" value="갱신"></label>
+										<label class="badge badge-warning">예고<input class="searchClassBt" type="checkbox" name="searchClassBt" value="예고"></label>
+										<label class="badge badge-warning">기타<input class="searchClassBt" type="checkbox" name="searchClassBt" value="기타"></label>
 									</li>
 								</ul>
 						
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">작업 종류</li>
 									<li class="nav-item pl-3 pr-3 work-category-badge">
-										<a href="#"><span class="badge badge-secondary searchTypeBt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
-										<a href="#"><span class="badge badge-secondary searchTypeBt" data-value="시비">시약</span></a>				 					
+										<label class="badge badge-secondary">시비<input class="searchTypeBt" type="checkbox" name="searchTypeBt" value="시비"></label>
+										<label class="badge badge-secondary">시약<input class="searchTypeBt" type="checkbox" name="searchTypeBt" value="시약"></label>					
 									</li>
 								</ul>
 							</div>
@@ -136,7 +136,7 @@
 						<label class="col-form-label col-lg-2">코스 위치</label>
 						<div class="col-lg-10 course-location-badge">
 							<c:forEach items="${list}" var="holename">
-							<a href="#"><span class="badge badge-info holebt"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+							<label class="badge badge-info">${holename.holeName}<input class="holeBt" type="checkbox" name="holeBt" value="${holename.holeNo}"></label>
 							</c:forEach>
 						</div>
 					</div>
@@ -144,32 +144,32 @@
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">코스 종류</label>
 						<div class="col-lg-10 course-category-badge">
-							<a href="#"><span class="badge badge-success coursetypebt">Green</span></a><!--코스 유형 라벨-->
-							<a href="#"><span class="badge badge-success coursetypebt">Fairway</span></a>						
+							<label class="badge badge-success">Green<input class="courseTypeBt" type="checkbox" name="courseTypeBt" value="Green"></label>
+							<label class="badge badge-success">Fairway<input class="courseTypeBt" type="checkbox" name="courseTypeBt" value="Fairway"></label>					
 						</div>
 					</div>
 
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 분류</label>
 						<div class="col-lg-10 work-class-badge">
-							<a href="#"><span class="badge badge-warning classbt">갱신</span></a><!--작업 분류 라벨-->
-							<a href="#"><span class="badge badge-warning classbt">예고</span></a>				
-							<a href="#"><span class="badge badge-warning classbt">기타</span></a>							
+							<label class="badge badge-warning">갱신<input class="classBt" type="checkbox" name="classBt" value="갱신"></label>
+							<label class="badge badge-warning">예고<input class="classBt" type="checkbox" name="classBt" value="예고"></label>
+							<label class="badge badge-warning">기타<input class="classBt" type="checkbox" name="classBt" value="기타"></label>				
 						</div>
 					</div>
 
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 종류</label>
 						<div class="col-lg-10 work-category-badge">
-							<a href="#"><span class="badge badge-secondary typebt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
-							<a href="#"><span class="badge badge-secondary typebt" data-value="시약">시약</span></a>				 											
+							<label class="badge badge-secondary">시비<input class="typeBt" type="checkbox" name="typeBt" value="시비"></label>
+							<label class="badge badge-secondary">시약<input class="typeBt" type="checkbox" name="typeBt" value="시약"></label>				 											
 						</div>
 					</div>
 
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">브랜드 명</label>
 						<div class="col-lg-10">
-							<select class="custom-select brandname">
+							<select class="custom-select brandName">
 								<!-- 브랜드 선택 -->
 								  <option value='' selected>브랜드 선택</option>
 							</select>
@@ -179,7 +179,7 @@
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 이미지</label>
 						<div class="col-lg-10">
-							<input type="file" class="form-control h-auto img">
+							<input type="file" class="form-control h-auto img" multiple="multiple">
 						</div>
 					</div>
 					<div class="form-group row mt-3">
@@ -189,11 +189,11 @@
 						</div>
 					</div>
 					<div class="form-group">
-	        			<div class="col-form-label col-lg-10 selectItem">
-	        				<span class="badge badge-info selectHole"></span> <!--코스 위치 라벨-->
-	        				<span class="badge badge-success selectCourse"></span> <!--코스 유형 라벨-->
-	        				<span class="badge badge-warning selectClass"></span> <!--작업 분류 라벨-->
-	        				<span class="badge badge-secondary selectType"></span> <!--작업 종류 라벨-->
+	        			<div class="col-form-label col-lg-12 selectItem">
+	        				<span class="holeBtSelect"></span> <!--코스 위치 라벨-->
+	        				<span class="courseTypeBtSelect"></span> <!--코스 유형 라벨-->
+	        				<span class="classBtSelect"></span> <!--작업 분류 라벨-->
+	        				<span class="typeBtSelect"></span> <!--작업 종류 라벨-->
 	        			</div>
 	        			<div class="inputText"></div>
 					</div>
@@ -238,7 +238,7 @@
 						<label class="col-form-label col-lg-2">코스 위치</label>
 						<div class="col-lg-10 course-location-badge">
 							<c:forEach items="${list}" var="holename">
-							<a href="#"><span class="badge badge-info holebt" data-value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
+							<a href="#"><span class="badge badge-info holeBt" data-value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
 							</c:forEach>
 						</div>
 					</div>
@@ -246,32 +246,32 @@
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">코스 종류</label>
 						<div class="col-lg-10 course-category-badge">
-							<a href="#"><span class="badge badge-success coursetypebt">Green</span></a><!--코스 유형 라벨-->
-							<a href="#"><span class="badge badge-success coursetypebt">Fairway</span></a>						
+							<a href="#"><span class="badge badge-success courseTypeBt">Green</span></a><!--코스 유형 라벨-->
+							<a href="#"><span class="badge badge-success courseTypeBt">Fairway</span></a>						
 						</div>
 					</div>
 
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 분류</label>
 						<div class="col-lg-10 work-class-badge">
-							<a href="#"><span class="badge badge-warning classbt">갱신</span></a><!--작업 분류 라벨-->
-							<a href="#"><span class="badge badge-warning classbt">예고</span></a>				
-							<a href="#"><span class="badge badge-warning classbt">기타</span></a>							
+							<a href="#"><span class="badge badge-warning classBt">갱신</span></a><!--작업 분류 라벨-->
+							<a href="#"><span class="badge badge-warning classBt">예고</span></a>				
+							<a href="#"><span class="badge badge-warning classBt">기타</span></a>							
 						</div>
 					</div>
 
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 종류</label>
 						<div class="col-lg-10 work-category-badge">
-							<a href="#"><span class="badge badge-secondary typebt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
-							<a href="#"><span class="badge badge-secondary typebt" data-value="시약">시약</span></a>				 											
+							<a href="#"><span class="badge badge-secondary typeBt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
+							<a href="#"><span class="badge badge-secondary typeBt" data-value="시약">시약</span></a>				 											
 						</div>
 					</div>
 
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">브랜드 명</label>
 						<div class="col-lg-10">
-							<select class="custom-select brandname">
+							<select class="custom-select brandName">
 								<!-- 브랜드 선택 -->
 								  <option value='' selected>브랜드 선택</option>
 							</select>
@@ -292,10 +292,10 @@
 					</div>
 					<div class="form-group">
 	        			<div class="col-form-label col-lg-10 selectItem">
-	        				<span class="badge badge-info selectHole"></span> <!--코스 위치 라벨-->
-	        				<span class="badge badge-success selectCourse"></span> <!--코스 유형 라벨-->
-	        				<span class="badge badge-warning selectClass"></span> <!--작업 분류 라벨-->
-	        				<span class="badge badge-secondary selectType"></span> <!--작업 종류 라벨-->
+	        				<span class="selectHole"><span class="badge badge-info"></span></span> <!--코스 위치 라벨-->
+	        				<span class="selectCourse"><span class="badge badge-success"></span></span> <!--코스 유형 라벨-->
+	        				<span class="selectClass"><span class="badge badge-warning"></span></span> <!--작업 분류 라벨-->
+	        				<span class="selectType"><span class="badge badge-secondary"></span></span> <!--작업 종류 라벨-->
 	        			</div>
 	        			<div class="inputText"></div>
 					</div>
@@ -317,24 +317,17 @@
 
 <script>
 
-$(document).ready(function() {
-    // 페이지가 로드될 때 workAllList 함수 호출
-	workAllList();
-});
-
 function searchCheck(){
-	if(!$(".searchHoleBt").hasClass("active") && !$(".searchCourseTypeBt").hasClass("active") && !$(".searchClassBt").hasClass("active") && !$(".searchTypeBt").hasClass("active")){
+
+    var hole = $("input[name='holeBt']:checked").map(function(){return $(this).val();}).get();// $('.holeBt.active').text(); //holename    
+    var course = $("input[name='courseTypeBt']:checked").map(function(){return $(this).val();}).get();// $('.courseTypeBt.active').text(); // 코스종류
+    var workClass = $("input[name='classBt']:checked").map(function(){return $(this).val();}).get();// $('.classBt.active').text(); // 작업분류
+    var workType = $("input[name='typeBt']:checked").map(function(){return $(this).val();}).get();// $('.typeBt.active').text(); // 작업종류
+	
+	if(hole.length == 0 && course.length == 0 && workClass.length == 0 && workType.length == 0){
 		workAllList();
 	}//if end
 }
-
-
-<!-- twentytwenty -->
-	$(function(){
-		$(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
-		$(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
-	});
-<!-- twentytwenty end -->
 
 $('.allDayWork').change(function() {
 	
@@ -351,145 +344,72 @@ $('.allDayWork').change(function() {
 	
 //작업등록 버튼 클릭시 리셋
 $(".work").click(function() {
-	$(".coursetypebt").removeClass("active");			
-	$(".holebt").removeClass("active");			
-	$(".classbt").removeClass("active");			
-	$(".typebt").removeClass("active");
+	$(".courseTypeBt").parent().removeClass("active");			
+	$(".holeBt").parent().removeClass("active");			
+	$(".classBt").parent().removeClass("active");			
+	$(".typeBt").parent().removeClass("active");
 	$('.img').val('');
 	$('.comment').val('');
-	$('.brandname').val('default');
+	$('.brandName').val('default');
 	$('.selectHole').text('');
 	$('.selectCourse').text('');
 	$('.selectClass').text('');
 	$('.selectType').text('');
 });
 
-//코스 위치 active 클래스 추가
-$(".holebt").click(function() {
-	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".holebt").removeClass("active");
-		$('.selectHole').text('');
-	}else{
-		$(".holebt").removeClass("active");			
-	    $(this).addClass("active");
-		$(".selectHole").text($(this).addClass("active").text());
-	}//if end
-});
-
 //코스 위치2 active 클래스 추가
-$(".searchHoleBt").click(function() {
+$(document).on('click','.searchHoleBt,.searchCourseTypeBt,.searchClassBt,.searchTypeBt',function() {
+	console.log($(this).parent().hasClass("active"))
 	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".searchHoleBt").removeClass("active");		
+	
+	if($(this).parent().hasClass("active")){
+		$(this).parent().removeClass("active");		
 	}else{
-		$(".searchHoleBt").removeClass("active");			
-	    $(this).addClass("active");
+	    $(this).parent().addClass("active");
 	}//if end
 	
-	var searchHole = $(".searchHoleBt.active").attr('value');
-	console.log("active추가"+searchHole)
-	workSelectList(searchHole, $(".searchCourseTypeBt.active").text(), $(".searchClassBt.active").text(), $(".searchTypeBt.active").text());
-	searchCheck();
+	var searchHole = $("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();
+	var searchCourseType = $("input[name='searchCourseTypeBt']:checked").map(function(){return $(this).val();}).get();
+	var searchClass = $("input[name='searchClassBt']:checked").map(function(){return $(this).val();}).get();
+	var searchType = $("input[name='searchTypeBt']:checked").map(function(){return $(this).val();}).get();
+	
+	workSelectList(searchHole, searchCourseType, searchClass, searchType);
+	//searchCheck();
 });
 
 
 //코스종류 active 클래스 추가
-$(".coursetypebt").click(function() {
+$(".holeBt,.courseTypeBt,.classBt,.typeBt").click(function() {
 	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".coursetypebt").removeClass("active");
-		$('.selectCourse').text('');
+	
+	let target = $(this).attr('class');
+	let value = $(this).val();
+	
+	if($(this).parent().hasClass("active")){
+		$(this).parent().removeClass("active");
+		$("."+target+"Select").find('input[value="'+value+'"]').parent().remove();
 	}else{
-		$(".coursetypebt").removeClass("active");			
-	    $(this).addClass("active");
-		$(".selectCourse").text($(this).addClass("active").text());
+	    $(this).parent().addClass("active");
+		$("."+target+"Select").append($(this).parent().clone());
 	}//if end
 });
 
-//코스종류2 active 클래스 추가
-$(".searchCourseTypeBt").click(function() {
-	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".searchCourseTypeBt").removeClass("active");			
-	}else{
-		$(".searchCourseTypeBt").removeClass("active");			
-	    $(this).addClass("active");
-	}//if end
-	var searchCourseType = $(".searchCourseTypeBt.active").text();
-	console.log("active추가"+searchCourseType)
-	workSelectList($(".searchHoleBt.active").attr('value'), searchCourseType, $(".searchClassBt.active").text(), $(".searchTypeBt.active").text());
-	searchCheck();
-});
-
-
-//작업분류 active 클래스 추가
-$(".classbt").click(function() {
-	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".classbt").removeClass("active");
-		$('.selectClass').text('');
-	}else{
-		$(".classbt").removeClass("active");			
-	    $(this).addClass("active");
-		$(".selectClass").text($(this).addClass("active").text());
-	}//if end
-});
-
-//작업분류2 active 클래스 추가
-$(".searchClassBt").click(function() {
-	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".searchClassBt").removeClass("active");			
-	}else{
-		$(".searchClassBt").removeClass("active");			
-	    $(this).addClass("active");
-	}//if end
-	var searchClass = $(".searchClassBt.active").text();
-	console.log("active추가"+searchClass)
-	workSelectList($(".searchHoleBt.active").attr('value'), $(".searchCourseTypeBt.active").text(), searchClass, $(".searchTypeBt.active").text());
-	searchCheck();
-});
-
-//작업종류2 active 클래스 추가
-$(".searchTypeBt").click(function() {
-	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".searchTypeBt").removeClass("active");			
-	}else{
-		$(".searchTypeBt").removeClass("active");			
-	    $(this).addClass("active");
-	}//if end
-	var searchType = $(".searchTypeBt.active").text();
-	console.log("active추가"+searchType)
-	workSelectList($(".searchHoleBt.active").attr('value'), $(".searchCourseTypeBt.active").text(), $(".searchClassBt.active").text(), searchType);
-	searchCheck();
-});
-
-		
-//작업종류 active 클래스 추가
-$(".typebt").click(function() {
-	//클릭시 이미 active 클래스면 active 제거
-	if($(this).hasClass("active")){
-		$(".typebt").removeClass("active");
-		$('.selectType').text('');
-	}else{
-	    var worktype = $(this).data('value');
-		getbrand(worktype);
-		$(".typebt").removeClass("active");			
-	    $(this).addClass("active");
-		$(".selectType").text($(this).addClass("active").text());
-	}//if end
-});
-
+$(document).on('click',".holeBtSelect label,.courseTypeBtSelect label,.classBtSelect label,.typeBtSelect label",function() {
+	let value = $(this).find('input').val();
+	$(this).closest('.modal-body').find('input[value="'+value+'"]').click();
+	//$(this).remove();
+})
 
 //작업종류에 따라 브랜드 보여주기
 function getbrand(worktype){
     $.ajax({
         url: '/management/getbrand_ajax',
-        type: 'GET',
+        type: 'POST',
         data: {worktype: worktype},
         dataType: "json",
+        beforeSend : function(xhr){
+        	xhr.setRequestHeader(header, token);
+        },
         success: function(data) {
             console.log(data);
             updatebrand(data);
@@ -513,7 +433,7 @@ function updatebrand(data){
 		brand += `<option>\${data[i].brandName}</option>`;
        }
    	// HTML 요소 선택 및 결과 삽입
-	let dataElement = document.querySelector('.brandname');
+	let dataElement = document.querySelector('.brandName');
 	dataElement.innerHTML = brand;
 }//updatebrand() end
 
@@ -523,30 +443,31 @@ $(".workInsert").click(function() {
     var formData = new FormData();
     var dateRange = $('.dateInput:visible').val(); // 작업날짜 
     var dates = dateRange.split(' ~ '); // 작업날짜 ~ 빼기
-    var workstart = dates[0]; // 작업시작날짜
-    var workend = dates[1]; // 작업종료날짜
-    var hole = $('.holebt.active').text(); //holename
-    var course = $('.coursetypebt.active').text(); // 코스종류
-    var workclass = $('.classbt.active').text(); // 작업분류
-    var worktype = $('.typebt.active').text(); // 작업종류
-    var workbrand = $('.brandname option:selected').text(); // 작업브랜드
-    var oriImgName = $('.img').val(); //작업 이미지
+    var workStart = dates[0]; // 작업시작날짜
+    var workEnd = dates[1]; // 작업종료날짜
+    var hole = $("input[name='holeBt']:checked").map(function(){return $(this).val();}).get();// $('.holeBt.active').text(); //holename    
+    var course = $("input[name='courseTypeBt']:checked").map(function(){return $(this).val();}).get();// $('.courseTypeBt.active').text(); // 코스종류
+    var workClass = $("input[name='classBt']:checked").map(function(){return $(this).val();}).get();// $('.classBt.active').text(); // 작업분류
+    var workType = $("input[name='typeBt']:checked").map(function(){return $(this).val();}).get();// $('.typeBt.active').text(); // 작업종류
+    var workBrand = /*$("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();*/ $('.brandName option:selected').text(); // 작업브랜드
     var comment = $('.comment').val(); //작업 메모
 
     // formData에 파라미터 추가
-    formData.append("workstart", workstart);
-    formData.append("workend", workend);
+    formData.append("workStart", workStart);
+    formData.append("workEnd", workEnd);
     formData.append("hole", hole);
     formData.append("course", course);
-    formData.append("workclass", workclass);
-    formData.append("worktype", worktype);
-    formData.append("workbrand", workbrand);
-    formData.append("oriImgName", oriImgName);
+    formData.append("workClass", workClass);
+    formData.append("workType", workType);
+    formData.append("workBrand", workBrand);
     formData.append("comment", comment);
 
     // 파일 추가
-    var file = $('.img')[0].files[0];
-    formData.append("file", file);
+    var files = $('.img')[0].files;
+
+    $.each(files, function(i, file) {
+        formData.append('files[]', file);
+    });
 
 
 	let token = $("input[name='_csrf']").val();
@@ -572,7 +493,7 @@ $(".workInsert").click(function() {
 	        success: function(result) {
 	            alert("등록되었습니다")
 	            $('#modal_scrollable').modal('hide');  // 모달 창 닫기
-	            workAllList();
+	            //workAllList();
 	        },
 		    error: function(jqXHR, textStatus, errorThrown) {
 		        alert(jqXHR.status);
@@ -590,9 +511,16 @@ $(".workInsert").click(function() {
 
 //모든작업 조회
 function workAllList(){
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
     $.ajax({
         url: '/management/workReportAllList',
         method: 'GET',
+        beforeSend : function(xhr){
+        	xhr.setRequestHeader(header, token);
+        },
         success: function(data) {
         	console.log(data);
         	workReportAllList(data);
@@ -606,13 +534,27 @@ function workAllList(){
     });//ajax end
 }//workAllList() end
 
-
+workAllList()
 //선택작업 조회
 function workSelectList(searchHole, searchCourseType, searchClass, searchType){
+
+	var param = {
+		searchHole: searchHole,
+		searchCourseType: searchCourseType,
+		searchClass: searchClass,
+		searchType: searchType
+	}
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
     $.ajax({
         url: '/management/searchWorkReportListAjax',
-        method: 'GET',
-        data: {searchHole: searchHole, searchCourseType: searchCourseType, searchClass: searchClass, searchType: searchType},
+        method: 'POST',
+        data: param,
+        beforeSend : function(xhr){
+        	xhr.setRequestHeader(header, token);
+        },
         success: function(data) {
         	console.log(data);
         	searchWorkReportList(data);
@@ -921,10 +863,17 @@ $(document).on('click','.workReportUpdate',function(){
 
 //수정작업 조회
 function workReportUpdateList(workNo){
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
     $.ajax({
         url: '/management/workReportUpdateList',
-        method: 'GET',
+        method: 'POST',
         data: {workNo: workNo},
+        beforeSend : function(xhr){
+        	xhr.setRequestHeader(header, token);
+        },
         success: function(data) {
         	console.log(data);
         	workReportUpdateListModal(data);
@@ -944,42 +893,42 @@ function workReportUpdateListModal(data){
 	
 	let hole = `\${data[0].workReportTargetList[0].holeNo}`;
 	let course = `\${data[0].workReportTargetList[0].courseType}`;
-	let classtype = `\${data[0].workClass}`;
+	let classType = `\${data[0].workClass}`;
 	let type = `\${data[0].workType}`;
 	let brand = `\${data[0].workBrand}`;
-	let worktime = `\${data[0].workStart}` + ' ~ ' + `\${data[0].workEnd}`;
+	let workTime = `\${data[0].workStart}` + ' ~ ' + `\${data[0].workEnd}`;
 
 	
 	$("#update_modal_scrollable .dateInput").each(function() {
-		$(this).val(worktime);
+		$(this).val(workTime);
 	});
 	
-	$("#update_modal_scrollable .holebt").each(function() {
-		let holeNumber = $(this).text().replace("Hole ", "");
+	$("#update_modal_scrollable .holeBt").each(function() {
+		let holeNumber = $(this).parent().text().replace("Hole ", "");
 		//console.log(holeNumber);
 		if(holeNumber === hole) {
-			$(this).addClass("active");
+			$(this).parent().addClass("active");
 			$(".selectHole").text($(this).addClass("active").text());
 		}
 	});
 	
-	$("#update_modal_scrollable .coursetypebt").each(function() {
-		if($(this).text() === course) {
-			$(this).addClass("active");
+	$("#update_modal_scrollable .courseTypeBt").each(function() {
+		if($(this).parent().text() === course) {
+			$(this).parent().addClass("active");
 			$(".selectCourse").text($(this).addClass("active").text());
 		}
 	});
 	
-	$("#update_modal_scrollable .classbt").each(function() {
-		if($(this).text() === classtype) {
-			$(this).addClass("active");
+	$("#update_modal_scrollable .classBt").each(function() {
+		if($(this).parent().text() === classType) {
+			$(this).parent().addClass("active");
 			$(".selectClass").text($(this).addClass("active").text());
 		}
 	});
 	
-	$("#update_modal_scrollable .typebt").each(function() {
-		if($(this).text() === type) {
-			$(this).addClass("active");
+	$("#update_modal_scrollable .typeBt").each(function() {
+		if($(this).parent().text() === type) {
+			$(this).parent().addClass("active");
 			$(".selectType").text($(this).addClass("active").text());
 		}
 	});
@@ -1028,10 +977,15 @@ function deleteCheck(workNo){
 
  
 </script>
-
-
-
-
-
-
-
+<style>
+label input[type="checkbox"]{
+	/*display: none;*/
+}
+label {
+	cursor: pointer;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none
+}
+</style>

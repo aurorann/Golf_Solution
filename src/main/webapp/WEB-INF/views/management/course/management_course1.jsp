@@ -343,10 +343,11 @@ function workAllList(){
         console.log(data);
         // data를 반복하여 eventColors 배열에 추가합니다.
         for(let i = 0; i < data.length; i++) {
+            console.log(data[i])
           eventColors.push({
             title: 'Hole ' + data[i].workReportTargetList[0].holeNo + ' / ' + data[i].workReportTargetList[0].courseType + ' / ' + data[i].workClass + ' / ' + data[i].workType,
-            start: data[i].workStart,
-            end: data[i].workEnd,
+            start: data[i].workStart,//.replace(" ","T"),
+            end: data[i].workEnd,//.replace(" ","T"),
             color: colors[i % colors.length]
           });
         }
@@ -382,7 +383,8 @@ const FullCalendarStyling = function() {
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                    //right: 'dayGridMonth,dayGridWeek,dayGridDay',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 navLinks: true, // can click day/week names to navigate views
                 businessHours: true, // display business hours
@@ -390,7 +392,9 @@ const FullCalendarStyling = function() {
                 selectable: true,
                 editable: true,
                 direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
-                events: eventColors
+                events: eventColors,
+                height: 850,
+                displayEventTime : true
             });
 
             // Init

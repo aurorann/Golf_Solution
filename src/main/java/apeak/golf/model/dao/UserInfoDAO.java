@@ -35,6 +35,26 @@ public class UserInfoDAO {
 		paramMap.put("userNo", userNo);
 		return session.update("userMapper.userGradeModify", paramMap);
 	}
+
+	public UserInfoDTO selectUserById(String userId) {
+		return session.selectOne("userMapper.selectUserById",userId);
+	}
+
+	public int getUserListCnt(Map<String, Object> paramMap) {
+		return session.selectOne("userMapper.getUserListCnt",paramMap);
+	}
+
+	public List<UserInfoDTO> getUserList(Map<String, Object> paramMap) {
+		return session.selectList("userMapper.getUserList",paramMap);
+	}
+
+	public void updateUserPw(EgovMap paramMap) {
+		session.update("userMapper.updateUserPw",paramMap);
+	}
+
+	public void updateUserInfo(UserInfoDTO userInfo) {
+		session.update("userMapper.updateUserInfo",userInfo);
+	}
 	
 	
 }

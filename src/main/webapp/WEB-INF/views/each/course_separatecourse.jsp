@@ -171,13 +171,22 @@ function updatedata(data){
 							</div>
 						</div>
 						<!--이미지 end-->
-						<div class="btn-group mr-2">
-							<button type="button" class="btn btn-light active grow" onclick="change(event)">생육</button>
-							<button type="button" class="btn btn-light temp" onclick="change(event)">열</button>
-							<button type="button" class="btn btn-light moisture" onclick="change(event)">습도</button>
+						<div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+							<label class="btn btn-light active grow" onclick="change(event)">
+								<input type="radio" name="layerType\${i}" id="option1" autocomplete="off" checked>
+								생육
+							</label>
+							<label class="btn btn-light temp" onclick="change(event)">
+								<input type="radio" name="layerType\${i}" autocomplete="off">
+								열
+							</label>
+							<label class="btn btn-light moisture" onclick="change(event)">
+								<input type="radio" name="layerType\${i}" autocomplete="off" >
+								습도
+							</label>
 						</div>
 	
-						<span class="btn-group mr-2">
+						<span class="btn-group mr-2" data-toggle="buttons">
 							<button type="button" class="btn btn-light ndvi" onclick="change(event)">NDVI 비교</button>
 						</span>
 	

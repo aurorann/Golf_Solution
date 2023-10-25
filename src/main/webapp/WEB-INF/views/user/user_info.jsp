@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="userInfo"/>
+</sec:authorize>
 <div class="content-wrapper">
 
 	<!-- Page header -->
@@ -31,48 +34,57 @@
 						<div class="col-lg-12">
 							<div class="card more-round">
 								<div class="card-body">
+									<form id="updateForm" action="/user/updateUserInfo" method="post">
 									<div class="modal-body py-0">
 										<div class="row">
-											<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <label class="col-form-label col-lg-10">홍길동</label>
+											<label class="col-form-label font-weight-bold col-lg-2">회원명</label> 
+											<label class="col-form-label col-lg-10">${userInfo.userName}</label>
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">아이디</label> <label class="col-form-label col-lg-10">abc1234</label>
+											<label class="col-form-label font-weight-bold col-lg-2">아이디</label> 
+											<label class="col-form-label col-lg-10">${userInfo.userId}</label>
+										</div>
+
+										
+										<div class="row mt-2">
+											<label class="col-form-label font-weight-bold col-lg-2">비밀번호</label> 
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+											<input type="password" name="password" class="form-control h-auto col-lg-3" placeholder="기존 비밀번호를 입력해 주세요.">
+											<button id="changePwBtn" type="button" class="btn btn-info ml-2">비밀번호 변경</button>
+										</div>
+										
+
+										<div class="row mt-2">
+											<label class="col-form-label font-weight-bold col-lg-2">회원 등급</label> 
+											<label class="col-form-label col-lg-10">${userInfo.userGrade}</label>
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">비밀번호</label> <input type="password"
-												class="form-control h-auto col-lg-3" placeholder="기존 비밀번호를 입력해 주세요.">
-											<button class="btn btn-info ml-2">비밀번호 변경</button>
+											<label class="col-form-label font-weight-bold col-lg-2">소속</label> 
+											<label class="col-form-label col-lg-10">${userInfo.userDepartment}</label>
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">회원 등급</label> <label class="col-form-label col-lg-10">관리자</label>
+											<label class="col-form-label font-weight-bold col-lg-2">이메일</label> 
+											<input type="email" name="email" class="form-control h-auto col-lg-2" value="${userInfo.email}">
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">소속</label> <label class="col-form-label col-lg-10">코스관리팀</label>
+											<label class="col-form-label font-weight-bold col-lg-2">연락처</label> 
+											<input type="text" name="hp" class="form-control h-auto col-lg-2" value="${userInfo.hp}">
 										</div>
 
 										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <input type="mail"
-												class="form-control h-auto col-lg-2" value="abc@gmail.com">
-										</div>
-
-										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <input type="mail"
-												class="form-control h-auto col-lg-2" value="010-1234-5678">
-										</div>
-
-										<div class="row mt-2">
-											<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> <label class="col-form-label col-lg-10">2023-10-06
-												15:37:45</label>
+											<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> 
+											<label class="col-form-label col-lg-10">${userInfo.regiDate}</label>
 										</div>
 
 										<div class="text-center mt-2">
-											<button type="button" class="btn btn-lg btn-primary">정보 수정</button>
+											<button type="button" id="changeUserBtn" class="btn btn-lg btn-primary">정보 수정</button>
 										</div>
 									</div>
+									</form>
 								</div>
 							</div>
 
@@ -94,3 +106,19 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+$(document).on('click','#changePwBtn',function(){
+	$('#updateForm').attr('action','/user/user_changePwForm');
+	$('#updateForm').submit();
+})
+
+$(document).on('click','#changeUserBtn',function(){
+
+	if(!confirm('회원정보를 변경하시겠습니까?')){
+		return;
+	}
+	
+	$('#updateForm').attr('action','/user/updateUserInfo');
+	$('#updateForm').submit();
+})
+</script>

@@ -8,16 +8,18 @@
 
    <!-- Spring Security 인증처리로직를 정의한 클래스 -->
    <sec:http use-expressions="true" auto-config="true" >
-      <sec:intercept-url pattern="/admin/**"  access="hasRole('ROLE_ADMIN')" />
+      <sec:intercept-url pattern="/*/*"  access="isAuthenticated()" />
+      <sec:intercept-url pattern="/user/user_management"  access="hasRole('ROLE_ADMIN')" />
+      <!--<sec:intercept-url pattern="/management/dashboard"  access="hasRole('ROLE_ADMIN')"/>-->
       <!--<sec:intercept-url pattern="/user/**"  access="isAuthenticated()" />
       <sec:intercept-url pattern="/"  access="isAuthenticated()" />
       <sec:intercept-url pattern="/board/**"  access="isAuthenticated()" />-->
       
-      <sec:form-login login-page="/sign/loginForm"
+      <sec:form-login login-page="/"
          login-processing-url="/login" 
          username-parameter="userId"
          password-parameter="password" 
-         default-target-url="/"
+         default-target-url="/all/course_allcourse"
          authentication-failure-handler-ref="memberAuthenticationFailureHandler"
          authentication-success-handler-ref="memberAuthenticationSuccessHandler"
          />
