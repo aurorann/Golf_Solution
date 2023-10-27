@@ -56,5 +56,22 @@ public class UserInfoDAO {
 		session.update("userMapper.updateUserInfo",userInfo);
 	}
 	
+	//회원아이디 중복 확인
+	public int userIdChk(String userId){
+		return session.selectOne("userMapper.userIdChk", userId);
+	}
+		
+	//회원추가
+	public void userInsert(EgovMap paramMap){
+		//session.update("userMapper.userGradeModify", paramMap);
+		session.insert("userMapper.userInsert", paramMap);
+		session.insert("userMapper.userRoleInsert", paramMap);
+		//session.selectOne("userMapper.userExist", paramMap);
+
+		
+	}
+
+	
+	
 	
 }

@@ -75,5 +75,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE USER_INFO SET EMAIL=#{email} , HP=#{hp} 
 		WHERE USER_ID=#{userId}
 	</update>
+		
+	<insert id="userInsert" parameterType="map">
+		INSERT INTO USER_INFO(USER_NAME, USER_GRADE, USER_DEPARTMENT, USER_ID, USER_PW, HP, EMAIL, REGI_DATE)
+		VALUES(#{userName}, #{userGrade}, #{userDepartment}, #{userId}, #{userPw}, #{userPhone}, #{userEmail}, NOW())
+	</insert>
+		
+	<insert id="userRoleInsert" parameterType="map">
+		INSERT INTO USER_AUTH(USER_ID, AUTH)
+		VALUES(#{userId},
+			<choose>
+				<when test="userGrade == '관리자'">
+					'ROLE_ADMIN'
+				</when>
+				<when test="userGrade == '작업자'">
+					'ROLE_USER'
+				</when>
+				<otherwise>
+					''
+				</otherwise>
+			</choose>
+		)
+	</insert>
 
+	
+	<!-- 회원아이디 중복 조회 -->
+	<select id="userIdChk" resultType="int">
+		SELECT COUNT(*) FROM USER_INFO WHERE USER_ID = #{userID}
+	</select>
+	
+	
+	
+	
 </mapper>

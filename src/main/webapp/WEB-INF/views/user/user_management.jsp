@@ -18,6 +18,7 @@
 
 	<!-- Content area -->
 	<div class="content">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<!-- Basic card -->
 		<div class="card">
 			<div class="card-header">
@@ -130,7 +131,7 @@
 			<!--회원 추가 button-->
 
 			<div class="" style="position: fixed; bottom: 30px; right: 30px; z-index: 1;">
-				<button type="button" class="btn btn-round" data-toggle="modal" data-target="#modal_scrollable">
+				<button type="button" class="btn btn-round userInsertModal" data-toggle="modal" data-target="#modal_scrollable">
 					회원 추가<i class="fas fa-plus mt-2"></i>
 				</button>
 			</div>
@@ -145,48 +146,56 @@
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 
-						<div class="modal-body py-0">
+						<div class="modal-body py-0 userInsert">
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">아이디</label> <input type="text" class="form-control col-lg-10" value="">
+								<label class="col-form-label col-lg-3">아이디</label> <input type="text" class="form-control col-lg-9 userId" value="" maxlength="10">
+								<div class="col-lg-3"></div>
+								<div class="userIdChkMsg col-lg-9"></div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">비밀번호</label> <input type="text" class="form-control col-lg-10" value="">
+								<label class="col-form-label col-lg-3">비밀번호</label> <input type="password" class="form-control col-lg-9 userPw" value="">
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">회원 이름</label> <input type="text" class="form-control col-lg-10" value="">
+								<label class="col-form-label col-lg-3">비밀번호 확인</label> <input type="password" class="form-control col-lg-9 userPwChk" value="">
+								<div class="col-lg-3"></div>
+								<div class="col-lg-9 userPswChkMsg"></div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">회원 등급</label>
-								<div class="col-lg-10 p-0">
-									<select class="custom-select">
+								<label class="col-form-label col-lg-3">회원 이름</label> <input type="text" class="form-control col-lg-9 userName" value="">
+							</div>
+
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-3">회원 등급</label>
+								<div class="col-lg-9 p-0">
+									<select class="custom-select userGrade">
 										<option value="opt1">관리자</option>
 										<option value="opt2">작업자</option>
-										<option value="opt3">기타</option>
+										<option value="opt3">승인대기</option>
 									</select>
 								</div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">소속</label> <input type="text" class="form-control col-lg-10" value="">
+								<label class="col-form-label col-lg-3">소속</label> <input type="text" class="form-control col-lg-9 userDepartment" value="">
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">이메일</label> <input type="text" class="form-control col-lg-10" value="">
+								<label class="col-form-label col-lg-3">이메일</label> <input type="text" class="form-control col-lg-9 userEmail" value="">
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-2">연락처</label> <input type="text" class="form-control col-lg-10" value="">
+								<label class="col-form-label col-lg-3">연락처</label> <input type="text" class="form-control col-lg-9 userPhone" value="">
 							</div>
 
 						</div>
 
 						<div class="modal-footer pt-3">
 							<button type="button" class="btn btn-link" data-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary">회원 등록</button>
+							<button type="button" class="btn btn-primary userInsertBt">회원 등록</button>
 						</div>
 					</div>
 				</div>
@@ -388,6 +397,126 @@ function userGradeModify(grade, userNo){
     });//ajax end
 	
 }
+
+
+//회원추가 버튼 클릭
+$(document).on("click",".userInsertModal", function(){
+	var fields = ['userId', 'userPw', 'userPwChk', 'userName', 'userGrade', 'userDepartment', 'userEmail', 'userPhone'];
+	fields.forEach(function(field) {
+		$(".userInsert ." + field).val('');
+	});
+	$(".userIdChkMsg").text('');
+	$(".userPswChkMsg").text('');
+});
+
+
+//아이디 중복 확인
+$(".userId").keyup(function() {
+	var userId = $(this).val();
+	var isID = /^[a-z0-9][a-z0-9_\-]{4,9}$/;  // ID 유효성 검사 정규식
+	if (userId !== '') {
+		userId = userId.replace(/\s/g, '');  // 스페이스 제거
+		$(this).val(userId);  // 수정된 값 다시 설정
+		if (!isID.test(userId)) {  // ID 유효성 검사
+			$(".userIdChkMsg").css("color", "red").text("5~10자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.");
+		} else {
+			$(".userIdChkMsg").css("color", "black").text(userId);
+			userIdChk(userId);
+	    }
+	}else{
+		$(".userIdChkMsg").css("color", "black").text("아이디를 입력해주세요.");
+	}
+});
+
+
+//아이디 중복 확인
+function userIdChk(userId){
+    $.ajax({
+        url: '/user/userIdChk',
+        method: 'GET',
+        data: { userId: userId
+        },
+        success: function(data) {
+        	console.log(data);
+        	if(data == 1){
+        		$(".userIdChkMsg").css("color", "red").text(userId+"는(은) 사용중인 아이디 입니다");
+        	}else{
+        		$(".userIdChkMsg").css("color", "green").text(userId+"는(은) 사용가능한 아이디 입니다");
+        	}
+       },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+}//userIdChk() end
+
+
+//비밀번호 확인
+$(".userPw, .userPwChk").on('keyup', function() {
+    var userPw = $(".userPw").val();
+    var userPwChk = $(".userPwChk").val();
+    if (userPw !== userPwChk) {
+        $(".userPswChkMsg").css("color", "red").text('비밀번호가 일치하지 않습니다');
+    } else {
+        $(".userPswChkMsg").css("color", "green").text('비밀번호가 일치합니다');
+    }
+});
+
+
+//모달 회원등록 버튼 클릭
+$(document).on("click",".userInsertBt", function(){
+	var userId = $(".userInsert .userId").val();
+	var userPw = $(".userInsert .userPw").val();
+	var userName = $(".userInsert .userName").val();
+	var userGrade = $(".userInsert .userGrade option:selected").text();
+	var userDepartment = $(".userInsert .userDepartment").val();
+	var userEmail = $(".userInsert .userEmail").val();
+	var userPhone = $(".userInsert .userPhone").val();
+	
+	if(userId == '' || userPw == '' ||  userName == '' ||  userGrade == '' ||  userDepartment == '' ||  userEmail == '' ||  userPhone == ''){
+		alert("회원 정보를 확인해 주세요");
+	}else{
+		userInsert(userId, userPw, userName, userGrade, userDepartment, userEmail, userPhone);
+	}
+});
+
+
+//회원등록
+function userInsert(userId, userPw, userName, userGrade, userDepartment, userEmail, userPhone){
+	let token = $("input[name='_csrf']").val();
+	let header = "X-CSRF-TOKEN";
+	
+    $.ajax({
+        url: '/user/userInsert',
+        method: 'POST',
+        data: { userId: userId, 
+        		userPw: userPw, 
+        		userName: userName, 
+        		userGrade: userGrade, 
+        		userDepartment: userDepartment, 
+        		userEmail: userEmail, 
+        		userPhone: userPhone
+        },
+		beforeSend : function(xhr) {  
+			xhr.setRequestHeader(header, token);
+		},
+        success: function(data) {
+        	console.log(data);
+			alert("회원이 추가 되었습니다.");
+           	location.reload();
+       },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+	
+}//userInsert() end
 
 
 

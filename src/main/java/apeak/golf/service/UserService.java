@@ -5,7 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 
 import java.util.HashMap;
@@ -89,4 +89,24 @@ public class UserService {
 		info.setEmail(userInfo.getEmail());
 		info.setHp(userInfo.getHp());
 	}
+	
+	
+	//회원 아이디 중복 확인
+	public int userIdChk(String userId) {
+		return userInfoDAO.userIdChk(userId);
+	}//userGradeModifyList() end	
+	
+	
+	//회원추가
+	public void userInsert(EgovMap paramMap) {
+		paramMap.put("userPw", passwordEncoder.encode(paramMap.get("userPw").toString()));
+		userInfoDAO.userInsert(paramMap);
+	}//userGradeModifyList() end
+	
+
+	
+	
+	
+	
+	
 }

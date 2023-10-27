@@ -107,6 +107,45 @@ public class UserController {
 		return userService.userGradeModify(grade, userNo);
 	}
 	
+	//회원아이디 중복 확인
+	@ResponseBody
+	@RequestMapping("/userIdChk")
+	public int userIdChk(@RequestParam(value="userId") String userId) {
+		
+		return userService.userIdChk(userId);
+	}
+	
+	//회원추가
+	@ResponseBody
+	@RequestMapping("/userInsert")
+	public String userInsert(@RequestParam(value="userId") String userId,
+									@RequestParam(value="userPw") String userPw,
+									@RequestParam(value="userName") String userName,
+									@RequestParam(value="userGrade") String userGrade,
+									@RequestParam(value="userDepartment") String userDepartment,
+									@RequestParam(value="userEmail") String userEmail,
+									@RequestParam(value="userPhone") String userPhone) {
+		
+		
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    
+	    UserInfoDTO userInfo = (UserInfoDTO)authentication.getPrincipal();
+		
+		EgovMap paramMap = new EgovMap();
+		paramMap.put("userId", userId);
+		paramMap.put("userPw", userPw);
+		paramMap.put("userName", userName);
+		paramMap.put("userGrade", userGrade);
+		paramMap.put("userDepartment", userDepartment);
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("userPhone", userPhone);
+		
+		userService.userInsert(paramMap);
+		
+	    return "redirect:/";
+
+	}
+	
 	
 	
 	
