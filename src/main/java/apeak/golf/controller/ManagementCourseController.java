@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,9 +57,7 @@ public class ManagementCourseController {
 	@RequestMapping(value="/insertwork_ajax", method = RequestMethod.POST)
 	public void insertWorkAjax(@RequestParam("files[]") List<MultipartFile> fileList,@RequestParam Map<String, Object> param) {
 		
-		System.out.println(param.toString());
-		
-		System.out.println(fileList.size());
+		UserInfoDTO userInfo = (UserInfoDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 	    try {
 	        String workStart = (String) param.get("workStart");
@@ -68,6 +68,7 @@ public class ManagementCourseController {
 	        String workType = (String) param.get("workType");
 	        String workBrand = (String) param.get("workBrand");
 	        String comment = (String) param.get("comment");
+	        String userId = userInfo.getUserId();
 	        
 	        
 	        List<String> oriImgNameList = new ArrayList<String>();
@@ -84,18 +85,19 @@ public class ManagementCourseController {
 		    
 	        for (MultipartFile mf : fileList) {
 	            try {
+	            	
+	            	String oriImgName = mf.getOriginalFilename();
 	            	//이미지 확장자 자르기
-	            	String ext = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+	            	String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
 	    		    //이미지 랜덤명 생성
 	    	        String imgName = UUID.randomUUID().toString().replace("-", "");
 	    		    //이미지 저장 이름
 	    		    String saveName = imgName+ext;
 	            	
 	    		    saveNameList.add(saveName);
-	    		    oriImgNameList.add(mf.getOriginalFilename());
-	    		    filePathList.add(path+"\\"+mf.getOriginalFilename());
+	    		    oriImgNameList.add(oriImgName);
+	    		    filePathList.add(path+"\\"+saveName);
 	    		    
-	    		    System.out.println(mf.getOriginalFilename());
 	    		    
 	                mf.transferTo(new File(path, saveName));    		
 	            } catch (Exception e) {
@@ -103,7 +105,7 @@ public class ManagementCourseController {
 	            }
 	        }
 
-	        //courseService.insertWork(workStart, workEnd, hole, course, workClass, workType, workBrand, oriImgName, comment, filePath, saveName);
+	        courseService.insertWorkReport(workStart, workEnd, hole, course, workClass, workType, workBrand, oriImgNameList, comment, filePathList, saveNameList,userId);
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -122,13 +124,11 @@ public class ManagementCourseController {
 	//검색 선택작업 조회하기
 	@ResponseBody
 	@RequestMapping(value="/searchWorkReportListAjax", method = RequestMethod.POST)
-	private EgovMap searchWorkReportList(@RequestParam(value="searchHole[]",required=false) String[] searchHole,
-										@RequestParam(value="searchCourseType[]",required=false) String[] searchCourseType,
-										@RequestParam(value="searchClass[]",required=false) String[] searchClass,
-										@RequestParam(value="searchType[]",required=false) String[] searchType) {
-		System.out.print(searchHole.length+"길이");
-		return null;
-		//return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
+	private EgovMap searchWorkReportList(@RequestParam(value="searchHole[]",required=false) String searchHole,
+										@RequestParam(value="searchCourseType[]",required=false) String searchCourseType,
+										@RequestParam(value="searchClass[]",required=false) String searchClass,
+										@RequestParam(value="searchType[]",required=false) String searchType) {
+		return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
 	}//brandAjax() end
 	
 	
@@ -145,7 +145,7 @@ public class ManagementCourseController {
 	@ResponseBody
 	@RequestMapping(value="/getbrand_ajax", method = RequestMethod.GET)
 	private List<EgovMap> brandAjax(@RequestParam(value="workType",required=false) String workType) {
-		return courseService.branddata(workType);
+		return courseService.getBrandData(workType);
 	}//brandAjax() end
 	
 	

@@ -208,114 +208,14 @@
 	</div>
 	<!-- /scrollable modal -->
 
-	<!-- Update Scrollable modal -->
-	<div id="update_modal_scrollable" class="modal fade" tabindex="-1">
-		<div class="modal-dialog modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header pb-3">
-					<h5 class="modal-title">작업일정 수정</h5>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-
-				<div class="modal-body py-0">
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">작업 날짜</label>
-						<div class="col-lg-10">
-							<div class="input-group">
-								<span class="input-group-prepend">
-									<span class="input-group-text"><i class="icon-calendar22"></i></span>
-								</span>
-								<input type="text" class="form-control daterange-time dateInputTime dateInput" value="" style="display:show">
-								<input type="text" class="form-control daterange-basic dateInputBasic dateInput"  value="" style="display:none">
-								<input type="checkbox" class="allDayWork" name="allDay" style="margin-left: 1rem!important; margin-right: .2rem!important;"/>
-							    <label for="allDay" style="margin: auto;">하루종일</label>
-							</div>
-						</div>
-						
-					</div>
-
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">코스 위치</label>
-						<div class="col-lg-10 course-location-badge">
-							<c:forEach items="${list}" var="holename">
-							<a href="#"><span class="badge badge-info holeBt" data-value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></span></a> <!--코스 위치 라벨-->
-							</c:forEach>
-						</div>
-					</div>
-
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">코스 종류</label>
-						<div class="col-lg-10 course-category-badge">
-							<a href="#"><span class="badge badge-success courseTypeBt">Green</span></a><!--코스 유형 라벨-->
-							<a href="#"><span class="badge badge-success courseTypeBt">Fairway</span></a>						
-						</div>
-					</div>
-
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">작업 분류</label>
-						<div class="col-lg-10 work-class-badge">
-							<a href="#"><span class="badge badge-warning classBt">갱신</span></a><!--작업 분류 라벨-->
-							<a href="#"><span class="badge badge-warning classBt">예고</span></a>				
-							<a href="#"><span class="badge badge-warning classBt">기타</span></a>							
-						</div>
-					</div>
-
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">작업 종류</label>
-						<div class="col-lg-10 work-category-badge">
-							<a href="#"><span class="badge badge-secondary typeBt" data-value="시비">시비</span></a> <!--작업 종류 라벨-->
-							<a href="#"><span class="badge badge-secondary typeBt" data-value="시약">시약</span></a>				 											
-						</div>
-					</div>
-
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">브랜드 명</label>
-						<div class="col-lg-10">
-							<select class="custom-select brandName">
-								<!-- 브랜드 선택 -->
-								  <option value='' selected>브랜드 선택</option>
-							</select>
-						</div>
-					</div>
-					
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">작업 이미지</label>
-						<div class="col-lg-10">
-							<input type="file" class="form-control h-auto img">
-						</div>
-					</div>
-					<div class="form-group row mt-3">
-						<label class="col-form-label col-lg-2">작업 메모</label>
-						<div class="col-lg-10">
-							<textarea rows="1" cols="3" class="form-control comment" placeholder="작업 내용을 입력해 주세요."></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-	        			<div class="col-form-label col-lg-10 selectItem">
-	        				<span class="selectHole"><span class="badge badge-info"></span></span> <!--코스 위치 라벨-->
-	        				<span class="selectCourse"><span class="badge badge-success"></span></span> <!--코스 유형 라벨-->
-	        				<span class="selectClass"><span class="badge badge-warning"></span></span> <!--작업 분류 라벨-->
-	        				<span class="selectType"><span class="badge badge-secondary"></span></span> <!--작업 종류 라벨-->
-	        			</div>
-	        			<div class="inputText"></div>
-					</div>
-				</div>
-
-				<div class="modal-footer pt-3">
-					<button type="button" class="btn btn-link updateClose" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary workUpdate">작업 수정</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Update scrollable modal -->
-
 				
 
 </div>
 <!-- /main content -->
 
 <script>
+
+$(function(){
 
 function searchCheck(){
 
@@ -329,6 +229,23 @@ function searchCheck(){
 	}//if end
 }
 
+function resetModal(){
+	$(".courseTypeBt").parent().removeClass("active");			
+	$(".holeBt").parent().removeClass("active");			
+	$(".classBt").parent().removeClass("active");			
+	$(".typeBt").parent().removeClass("active");
+
+	$("#modal_scrollable input[type='checkbox']").prop('checked',false)
+	
+	$('.img').val('');
+	$('.comment').val('');
+	$('.brandName').val('default');
+	$('.holeBtSelect').empty();
+	$('.courseTypeBtSelect').empty();
+	$('.classBtSelect').empty();
+	$('.typeBtSelect').empty();
+}
+
 $('.allDayWork').change(function() {
 	
     if(this.checked) {
@@ -340,21 +257,10 @@ $('.allDayWork').change(function() {
     }
 });
 
-
 	
 //작업등록 버튼 클릭시 리셋
 $(".work").click(function() {
-	$(".courseTypeBt").parent().removeClass("active");			
-	$(".holeBt").parent().removeClass("active");			
-	$(".classBt").parent().removeClass("active");			
-	$(".typeBt").parent().removeClass("active");
-	$('.img').val('');
-	$('.comment').val('');
-	$('.brandName').val('default');
-	$('.selectHole').text('');
-	$('.selectCourse').text('');
-	$('.selectClass').text('');
-	$('.selectType').text('');
+	resetModal()
 });
 
 //코스 위치2 active 클래스 추가
@@ -379,11 +285,15 @@ $(document).on('click','.searchHoleBt,.searchCourseTypeBt,.searchClassBt,.search
 
 
 //코스종류 active 클래스 추가
-$(".holeBt,.courseTypeBt,.classBt,.typeBt").click(function() {
+$(document).on('click','.holeBt,.courseTypeBt,.classBt,.typeBt',function() {
 	//클릭시 이미 active 클래스면 active 제거
+	console.log('호출')
 	
 	let target = $(this).attr('class');
 	let value = $(this).val();
+
+	console.log(target)
+	console.log(value)
 	
 	if($(this).parent().hasClass("active")){
 		$(this).parent().removeClass("active");
@@ -445,10 +355,10 @@ $(".workInsert").click(function() {
     var dates = dateRange.split(' ~ '); // 작업날짜 ~ 빼기
     var workStart = dates[0]; // 작업시작날짜
     var workEnd = dates[1]; // 작업종료날짜
-    var hole = $("input[name='holeBt']:checked").map(function(){return $(this).val();}).get();// $('.holeBt.active').text(); //holename    
-    var course = $("input[name='courseTypeBt']:checked").map(function(){return $(this).val();}).get();// $('.courseTypeBt.active').text(); // 코스종류
-    var workClass = $("input[name='classBt']:checked").map(function(){return $(this).val();}).get();// $('.classBt.active').text(); // 작업분류
-    var workType = $("input[name='typeBt']:checked").map(function(){return $(this).val();}).get();// $('.typeBt.active').text(); // 작업종류
+    var hole = $("input[name='holeBt']:checked").not('.selectItem input[name="holeBt"]:checked').map(function(){return $(this).val();}).get();// $('.holeBt.active').text(); //holename    
+    var course = $("input[name='courseTypeBt']:checked").not('.selectItem input[name="courseTypeBt"]:checked').map(function(){return $(this).val();}).get();// $('.courseTypeBt.active').text(); // 코스종류
+    var workClass = $("input[name='classBt']:checked").not('.selectItem input[name="classBt"]:checked').map(function(){return $(this).val();}).get();// $('.classBt.active').text(); // 작업분류
+    var workType = $("input[name='typeBt']:checked").not('.selectItem input[name="typeBt"]:checked').map(function(){return $(this).val();}).get();// $('.typeBt.active').text(); // 작업종류
     var workBrand = /*$("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();*/ $('.brandName option:selected').text(); // 작업브랜드
     var comment = $('.comment').val(); //작업 메모
 
@@ -493,7 +403,7 @@ $(".workInsert").click(function() {
 	        success: function(result) {
 	            alert("등록되었습니다")
 	            $('#modal_scrollable').modal('hide');  // 모달 창 닫기
-	            //workAllList();
+	            workAllList();
 	        },
 		    error: function(jqXHR, textStatus, errorThrown) {
 		        alert(jqXHR.status);
@@ -557,7 +467,7 @@ function workSelectList(searchHole, searchCourseType, searchClass, searchType){
         },
         success: function(data) {
         	console.log(data);
-        	searchWorkReportList(data);
+        	workReportAllList(data.list);
         },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
@@ -614,7 +524,7 @@ function workReportAllList(data){
 							<div class="dropdown position-static">
 								<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
 								<div class="dropdown-menu dropdown-menu-right" style="">
-									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${dateWorkNo}">수정</a>
+									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#modal_scrollable" value="\${dateWorkNo}">수정</a>
 									<a href="#" class="dropdown-item workReportDelete" value="\${dateWorkNo}">삭제</a>
 								</div>
 							</div>
@@ -622,7 +532,7 @@ function workReportAllList(data){
 						<span class="float-left text-muted">\${data[i].writeAt}</span>
 					</div>
 					<div class="card-body">
-						<h6 class="card-title font-weight-bold">코스 \${data[i].workReportTargetList[0].holeNo} \${data[i].workType} 작업</h6>
+						<h6 class="card-title font-weight-bold">코스 \${data[i].workHole} \${data[i].workType} 작업</h6>
 						<div class="row">
 							<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
 							<label class="col-form-label col-lg-10">\${dateStart} - \${dateEnd}</label>
@@ -631,8 +541,8 @@ function workReportAllList(data){
 						<div class="row">
 							<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
 							<div class="col-form-label col-lg-10">
-								<span class="badge badge-info">Hole \${data[i].workReportTargetList[0].holeNo}</span> <!--코스 위치 라벨-->
-								<span class="badge badge-success">\${data[i].workReportTargetList[0].courseType}</span> <!--코스 유형 라벨-->
+								<span class="badge badge-info">Hole \${data[i].workHole}</span> <!--코스 위치 라벨-->
+								<span class="badge badge-success">\${data[i].workCourse}</span> <!--코스 유형 라벨-->
 								<span class="badge badge-warning">\${data[i].workClass}</span> <!--작업 분류 라벨-->
 								<span class="badge badge-secondary">\${data[i].workType}</span> <!--작업 종류 라벨-->
 							</div>
@@ -650,23 +560,35 @@ function workReportAllList(data){
 		
 						<div class="form-group row mt-2">
 							<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
-							<div class="row">
-								<div class="col-lg-4">
-									<div class="card">
-										<div class="card-img-actions m-1">
-											<img class="card-img img-fluid" src="\${fileName}" alt="">
-											<div class="card-img-actions-overlay card-img">
-												<a href="\${fileName}" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-													<i class="icon-plus3"></i>
-		      									</a>
-		      									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-		      										<i class="icon-link"></i>
-		      									</a>
-		      								</div>
-		      							</div>
-		      						</div>
-		      					</div>
-		
+							<div class="row col-lg-12">
+		`
+		if(data[i].workReportImageList){
+			for(let j=0;j<data[i].workReportImageList.length;j++){
+			if(!data[i].workReportImageList[j].filePath){
+				continue;
+			}
+			let imgP = data[i].workReportImageList[j].filePath.substring(2);
+				allWorkList += `
+									<div class="col-lg-4">
+										<div class="card">
+											<div class="card-img-actions m-1">
+												<img class="card-img img-fluid" src="\${imgP}" alt="">
+												<div class="card-img-actions-overlay card-img">
+													<a href="\${imgP}" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+														<i class="icon-plus3"></i>
+			      									</a>
+			      									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+			      										<i class="icon-link"></i>
+			      									</a>
+			      								</div>
+			      							</div>
+			      						</div>
+			      					</div>
+				`
+			}
+		}
+		allWorkList += `
+								<!--
 		      					<div class="col-lg-4">
 		      						<div class="card">
 		      							<div class="card-img-actions m-1">
@@ -681,7 +603,7 @@ function workReportAllList(data){
 		      								</div>
 		      							</div>
 		      						</div>
-		      					</div>
+		      					</div>-->
 		      					
 		      				</div>
 						</div>
@@ -694,156 +616,6 @@ function workReportAllList(data){
 	dataElement.innerHTML = allWorkList;
 	
 }//workReportAllList() end
-
- 
-
-//검색작업 일정 보여주기
-function searchWorkReportList(data){
-	allWorkList="";
-	console.log("작업일정 갯수 "+data.list.length)
-   	allWorkList += `
-					<div class="mb-3">
-						<h6 class="mb-0 font-weight-bold">
-							검색 보기
-						</h6>
-					</div>
-					`;
-            
-	for(var i=0; i<data.list.length; i++){
-		let dateStart = `\${data.list[i].workStart}`.slice(0, 10);
-		let dateEnd = `\${data.list[i].workEnd}`.slice(0, 10);
-
-		let dateWorkNo = `\${data.list[i].workNo}`
-
-    	allWorkList += `
-			<div class="col-lg-12">
-				<div class="card more-round">
-					<div class="card-header bg-white">
-						<span class="font-weight-semibold float-left ml-1 mr-2 font-weight-bold">\${data.list[i].userId}</span>
-						<div class="list-icons float-right ml-3">
-							<div class="dropdown position-static">
-								<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2 mr-1"></i></a>
-								<div class="dropdown-menu dropdown-menu-right" style="">
-									<a class="dropdown-item workReportUpdate" data-toggle="modal" data-target="#update_modal_scrollable" value="\${dateWorkNo}">수정</a>
-									<a href="#" class="dropdown-item workReportDelete" value="\${dateWorkNo}">삭제</a>
-								</div>
-							</div>
-						</div>
-						<span class="float-left text-muted">\${data.list[i].writeAt}</span>
-					</div>
-					
-					<div class="card-body">
-						<h6 class="card-title font-weight-bold">코스 \${data.list[i].workReportTargetList[0].holeNo} \${data.list[i].workType} 작업</h6>
-						<div class="row">
-							<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
-							<label class="col-form-label col-lg-10">\${dateStart} - \${dateEnd}</label>
-						</div>
-
-			       		<div class="row">
-			       			<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
-			       			<div class="col-form-label col-lg-10">
-			       				<span class="badge badge-info">Hole \${data.list[i].workReportTargetList[0].holeNo}</span> <!--코스 위치 라벨-->
-			       				<span class="badge badge-success">\${data.list[i].workReportTargetList[0].courseType}</span> <!--코스 유형 라벨-->
-			       				<span class="badge badge-warning">\${data.list[i].workClass}</span> <!--작업 분류 라벨-->
-			       				<span class="badge badge-secondary">\${data.list[i].workType}</span> <!--작업 종류 라벨-->
-			       			</div>
-			       		</div>
-
-			       		<div class="row">
-			       			<label class="col-form-label font-weight-bold col-lg-2">브랜드명</label>
-			       			<label class="col-form-label col-lg-10">\${data.list[i].workBrand}</label>
-			       		</div>
-			
-			       		<div class="row">
-			       			<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
-			       			<label class="col-form-label col-lg-10">\${data.list[i].workComment}</label>
-			       		</div>
-			
-			       		<div class="form-group row mt-2">
-			       			<label class="col-form-label font-weight-bold col-lg-12">작업 이미지</label>
-			       				<div class="row">
-			       					<div class="col-lg-4">
-			       						<div class="card">
-			       							<div class="card-img-actions m-1">
-			       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
-			       								<div class="card-img-actions-overlay card-img">
-			       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-			       										<i class="icon-plus3"></i>
-			       									</a>
-			
-			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-			       										<i class="icon-link"></i>
-			       									</a>
-			       								</div>
-			       							</div>
-			       						</div>
-			       					</div>
-			
-			       					<div class="col-lg-4">
-			       						<div class="card">
-			       							<div class="card-img-actions m-1">
-			       								<img class="card-img img-fluid" src="/resources/assets/img/ndvi-1.png" alt="">
-			       								<div class="card-img-actions-overlay card-img">
-			       									<a href="/resources/assets/img/ndvi-1.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-			       										<i class="icon-plus3"></i>
-			       									</a>
-			
-			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-			       										<i class="icon-link"></i>
-			       									</a>
-			       								</div>
-			       							</div>
-			       						</div>
-			       					</div>
-			
-			       					<div class="col-lg-4">
-			       						<div class="card">
-			       							<div class="card-img-actions m-1">
-			       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
-			       								<div class="card-img-actions-overlay card-img">
-			       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-			       										<i class="icon-plus3"></i>
-			       									</a>
-			
-			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-			       										<i class="icon-link"></i>
-			       									</a>
-			       								</div>
-			       							</div>
-			       						</div>
-			       					</div>
-			
-			       					<div class="col-lg-4">
-			       						<div class="card">
-			       							<div class="card-img-actions m-1">
-			       								<img class="card-img img-fluid" src="/resources/assets/img/noimage.png" alt="">
-			       								<div class="card-img-actions-overlay card-img">
-			       									<a href="/resources/assets/img/noimage.png" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
-			       										<i class="icon-plus3"></i>
-			       									</a>
-			
-			       									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
-			       										<i class="icon-link"></i>
-			       									</a>
-			       								</div>
-			       							</div>
-			       						</div>
-			       					</div>
-			       				</div>
-			       			
-			       		</div>
-			
-					</div>
-				</div>
-			</div>
-           `;
-	}//for end
-	let dataElement = document.querySelector('.workListContent');
-	dataElement.innerHTML = allWorkList;
-	
-}//workReportAllList() end
-
-
 
 //수정 버튼 클릭
 /*
@@ -869,7 +641,7 @@ function workReportUpdateList(workNo){
 	
     $.ajax({
         url: '/management/workReportUpdateList',
-        method: 'POST',
+        method: 'GET',
         data: {workNo: workNo},
         beforeSend : function(xhr){
         	xhr.setRequestHeader(header, token);
@@ -890,48 +662,36 @@ function workReportUpdateList(workNo){
 
 //수정 할 작업 보여주기
 function workReportUpdateListModal(data){
+
+	resetModal();
 	
-	let hole = `\${data[0].workReportTargetList[0].holeNo}`;
-	let course = `\${data[0].workReportTargetList[0].courseType}`;
-	let classType = `\${data[0].workClass}`;
-	let type = `\${data[0].workType}`;
+	let hole = `\${data[0].workHole}`.split(',');
+	let course = `\${data[0].workCourse}`.split(',');
+	let classType = `\${data[0].workClass}`.split(',');
+	let type = `\${data[0].workType}`.split(',');
 	let brand = `\${data[0].workBrand}`;
 	let workTime = `\${data[0].workStart}` + ' ~ ' + `\${data[0].workEnd}`;
 
 	
-	$("#update_modal_scrollable .dateInput").each(function() {
+	$("#modal_scrollable .dateInput").each(function() {
 		$(this).val(workTime);
 	});
 	
-	$("#update_modal_scrollable .holeBt").each(function() {
-		let holeNumber = $(this).parent().text().replace("Hole ", "");
-		//console.log(holeNumber);
-		if(holeNumber === hole) {
-			$(this).parent().addClass("active");
-			$(".selectHole").text($(this).addClass("active").text());
-		}
-	});
-	
-	$("#update_modal_scrollable .courseTypeBt").each(function() {
-		if($(this).parent().text() === course) {
-			$(this).parent().addClass("active");
-			$(".selectCourse").text($(this).addClass("active").text());
-		}
-	});
-	
-	$("#update_modal_scrollable .classBt").each(function() {
-		if($(this).parent().text() === classType) {
-			$(this).parent().addClass("active");
-			$(".selectClass").text($(this).addClass("active").text());
-		}
-	});
-	
-	$("#update_modal_scrollable .typeBt").each(function() {
-		if($(this).parent().text() === type) {
-			$(this).parent().addClass("active");
-			$(".selectType").text($(this).addClass("active").text());
-		}
-	});
+	for(var i=0;i<hole.length;i++){
+		$('#modal_scrollable .holeBt[value="'+hole[i]+'"]').click();
+	}
+
+	for(var i=0;i<course.length;i++){
+		$('#modal_scrollable .courseTypeBt[value="'+course[i]+'"]').click();
+	}
+
+	for(var i=0;i<classType.length;i++){
+		$('#modal_scrollable .classBt[value="'+classType[i]+'"]').click();
+	}
+
+	for(var i=0;i<type.length;i++){
+		$('#modal_scrollable .typeBt[value="'+type[i]+'"]').click();
+	}
 
 }//workReportUpdateList() end
 
@@ -975,7 +735,7 @@ function deleteCheck(workNo){
     });//ajax end
 }//deleteCheck() end
 
- 
+})
 </script>
 <style>
 label input[type="checkbox"]{

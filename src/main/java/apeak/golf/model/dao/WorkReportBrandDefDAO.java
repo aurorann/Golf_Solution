@@ -15,9 +15,8 @@ public class WorkReportBrandDefDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public List<EgovMap> branddata(String worktype){
-		System.out.println("DAO 성공");
-		return session.selectList("managementCourseMapper.branddata", worktype);
+	public List<EgovMap> getBrandData(String worktype){
+		return session.selectList("managementCourseMapper.getBrandData", worktype);
 	}
 
 	

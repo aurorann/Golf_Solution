@@ -71,12 +71,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<result property="oriName" column="ORI_NAME"/>
 				<result property="saveName" column="SAVE_NAME"/>
 		</collection>
-		<collection property="workReportTargetList" column="WORK_NO" ofType="WorkReportTargetDTO" javaType="List" autoMapping="true">
-				<id column="TARGET_NO" property="targetNo"/>
-				<result property="workNo" column="WORK_NO"/>
-				<result property="holeNo" column="HOLE_NO"/>
-				<result property="courseType" column="COURSE_TYPE"/>
-		</collection>
 	</resultMap>
 	
 	<resultMap type="workReportBrandDefDTO" id="brandInfoMap">
@@ -94,70 +88,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM HOLE_INFO
 	</select>
 
-	<select id="branddata" parameterType="map" resultMap="brandInfoMap">
-		SELECT * FROM WORK_REPORT_BRAND_DEF WHERE WORK_TYPE = #{worktype}
+	<select id="getBrandData" parameterType="map" resultMap="brandInfoMap">
+		SELECT * FROM WORK_REPORT_BRAND_DEF WHERE WORK_TYPE = #{workType}
 	</select>
 	
-	<insert id="insertworkreport" parameterType="map">
-		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END, WORK_CLASS, WORK_TYPE, WORK_BRAND, WORK_COMMENT)
-		VALUES(now(), #{workstart},#{workend},#{workclass},#{worktype},#{workbrand},#{comment})
+	<insert id="insertWorkReport" parameterType="map">
+		INSERT INTO WORK_REPORT(WRITE_AT, WORK_START, WORK_END, WORK_CLASS, WORK_TYPE, WORK_BRAND, WORK_COMMENT,WORK_HOLE,WORK_COURSE,USER_ID)
+		VALUES(now(), #{workStart},#{workEnd},#{workClass},#{workType},#{workBrand},#{comment},#{hole},#{course},#{userId})
 	</insert>
 	
-	<insert id="insertworkreporttarget" parameterType="map">
+	<insert id="insertWorkReportTarget" parameterType="map">
 		INSERT INTO WORK_REPORT_TARGET (WORK_NO, HOLE_NO, COURSE_TYPE)
 		VALUES ((select max(work_no) from WORK_REPORT)
 				,(SELECT HOLE_NO  from HOLE_INFO WHERE HOLE_NAME = #{hole} and COURSE_TYPE = #{course})
 				,#{course})
 	</insert>
 	
-	<insert id="insertworkreportimg" parameterType="map">
+	<insert id="insertWorkReportImg" parameterType="map">
 		INSERT INTO WORK_REPORT_IMAGE (WORK_NO, FILE_PATH, ORI_NAME, SAVE_NAME)
 		VALUES ((SELECT MAX(work_no) FROM WORK_REPORT),	#{filePath}, #{oriImgName}, #{saveName})
 	</insert>
 	
 	
 	<select id="workReportAllList" parameterType="egovMap" resultMap="workReportInfo">
-		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
+		SELECT WR.*, WRI.FILE_PATH 
 		FROM WORK_REPORT WR
-		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
-		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
+		LEFT JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
 		<where>
 			<if test="searchHole!=null and !searchHole.equals('')">
-			WRT.HOLE_NO = #{searchHole}
+			WR.WORK_HOLE REGEXP #{searchHole}
 			</if>
 			<if test="searchCourseType!=null and !searchCourseType.equals('')">
-			AND WRT.COURSE_TYPE = #{searchCourseType}
+			AND WR.WORK_COURSE REGEXP #{searchCourseType}
 			</if>
 			<if test="searchClass!=null and !searchClass.equals('')">
-			AND WR.WORK_CLASS = #{searchClass}
+			AND WR.WORK_CLASS REGEXP #{searchClass}
 			</if>
 			<if test="searchType!=null and !searchType.equals('')">
-			AND WR.WORK_TYPE = #{searchType}
+			AND WR.WORK_TYPE REGEXP #{searchType}
 			</if>
 		</where>
 		ORDER BY WR.WORK_NO DESC 
 	</select>
 
 	<select id="workReportUpdateList" parameterType="map" resultMap="workReportInfo">
-		SELECT WR.*, WRT.HOLE_NO, WRT. COURSE_TYPE, WRI.FILE_PATH 
+		SELECT WR.*, WRI.FILE_PATH 
 		FROM WORK_REPORT WR 
-		JOIN WORK_REPORT_TARGET WRT ON WR.WORK_NO = WRT.WORK_NO 
 		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
 		WHERE WR.WORK_NO = #{workNo}
 	</select>
 	
 	
-	<delete id="deleteworkreport">
+	<delete id="deleteWorkReport" parameterType="string">
 		DELETE FROM WORK_REPORT WHERE WORK_NO = #{workNo}
 	</delete>
 	
 	
-	<delete id="deleteworkreportimage">
+	<delete id="deleteWorkReportImage" parameterType="string">
 		DELETE FROM WORK_REPORT_IMAGE WHERE WORK_NO = #{workNo}
 	</delete>
 	
 	
-	<delete id="deleteworkreporttarget">
+	<delete id="deleteWorkReportTarget">
 		DELETE FROM WORK_REPORT_TARGET WHERE WORK_NO = #{workNo}
 	</delete>
 

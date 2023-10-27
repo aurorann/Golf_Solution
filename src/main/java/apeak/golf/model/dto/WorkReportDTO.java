@@ -20,6 +20,8 @@ public class WorkReportDTO {
 	private String workComment;
 	private String workState;
 	
+	private String workHole;
+	private String workCourse;
+	
 	private List<WorkReportImageDTO> workReportImageList;
-	private List<WorkReportTargetDTO> workReportTargetList;
 }

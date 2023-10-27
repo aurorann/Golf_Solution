@@ -345,7 +345,7 @@ function workAllList(){
         for(let i = 0; i < data.length; i++) {
             console.log(data[i])
           eventColors.push({
-            title: 'Hole ' + data[i].workReportTargetList[0].holeNo + ' / ' + data[i].workReportTargetList[0].courseType + ' / ' + data[i].workClass + ' / ' + data[i].workType,
+            title: 'Hole ' + data[i].workHole + ' / ' + data[i].workCourse + ' / ' + data[i].workClass + ' / ' + data[i].workType,
             start: data[i].workStart,//.replace(" ","T"),
             end: data[i].workEnd,//.replace(" ","T"),
             color: colors[i % colors.length]
