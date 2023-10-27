@@ -58,7 +58,7 @@
 					</tbody>
 				</table>
 
-				<div id="modal_user" class="modal fade userGradeModify" tabindex="-1">
+				<div id="modal_user" class="modal fade userModify" tabindex="-1">
 					<div class="modal-dialog modal-dialog-scrollable">
 						<div class="modal-content">
 							<div class="modal-header pb-3">
@@ -68,23 +68,23 @@
 
 							<div class="modal-body py-0">
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <label class="col-form-label col-lg-10 userName"></label>
+									<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <input type="text" class="col-form-label col-lg-10 userName"></input>
 								</div>
 
-								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">소속</label> <label class="col-form-label col-lg-10 userDepartment"></label>
+								<div class="row mt-3">
+									<label class="col-form-label font-weight-bold col-lg-2">소속</label> <input type="text" class="col-form-label col-lg-10 userDepartment"></input>
 								</div>
 
-								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <label class="col-form-label col-lg-10 email"></label>
+								<div class="row mt-3">
+									<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <input type="text" class="col-form-label col-lg-10 email"></input>
 								</div>
 
-								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <label class="col-form-label col-lg-10 userPhone"></label>
+								<div class="row mt-3">
+									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <input type="text" class="col-form-label col-lg-10 userPhone"></input>
 								</div>
 
-								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> <label class="col-form-label col-lg-10 regiDate"></label>
+								<div class="row mt-3">
+									<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> <input type="text" class="col-form-label col-lg-10 regiDate"></input>
 								</div>
 								
 								<input type="hidden" class="userNo" value="">
@@ -102,7 +102,7 @@
 
 								<div class="modal-footer pt-3">
 									<button type="button" class="btn btn-link userGradeModifyClose" data-dismiss="modal">닫기</button>
-									<button type="button" class="btn btn-primary userModify">회원등급 수정</button>
+									<button type="button" class="btn btn-primary userModifyBt">회원정보 수정</button>
 								</div>
 							</div>
 						</div>
@@ -259,31 +259,31 @@ function userGradeModifyListModal(data){
 	var userNo = `\${data[0].userNo}`;
 	
 	
-	$(".userGradeModify .userName").each(function() {
-		$(this).text(name)
+	$(".userModify .userName").each(function() {
+		$(this).val(name)
 	})
 	
-	$(".userGradeModify .userDepartment").each(function() {
-		$(this).text(department)
+	$(".userModify .userDepartment").each(function() {
+		$(this).val(department)
 	})
 	
-	$(".userGradeModify .email").each(function() {
-		$(this).text(email)
+	$(".userModify .email").each(function() {
+		$(this).val(email)
 	})
 	
-	$(".userGradeModify .userPhone").each(function() {
-		$(this).text(phone)
+	$(".userModify .userPhone").each(function() {
+		$(this).val(phone)
 	})
 	
-	$(".userGradeModify .regiDate").each(function() {
-		$(this).text(regiDate)
+	$(".userModify .regiDate").each(function() {
+		$(this).val(regiDate)
 	})
 	
-	$(".userGradeModify .userNo").each(function() {
+	$(".userModify .userNo").each(function() {
 		$(this).val(userNo)
 	})
 	
-	$(".userGradeModify .custom-select").each(function() {
+	$(".userModify .custom-select").each(function() {
 		
 		if(grade == "관리자"){
 			$(this).val('opt1');
@@ -366,7 +366,7 @@ $(document).on("click",".userGradeModifyClose", function(){
 });
 
 
-$(document).on("click",".userModify", function(){
+$(document).on("click",".userModifyBt", function(){
 	var grade = $(".userGradeModify .custom-select option:checked").text()
 	var userNo = $(".userGradeModify .userNo").val()
 	//console.log(grade);
