@@ -23,6 +23,10 @@ public class WorkReportDAO {
 	    session.insert("managementCourseMapper.insertWorkReport", params);
 	}//insertwork() end
 	
+	public void updateWorkReport(Map<String, Object> params) {
+		session.update("managementCourseMapper.updateWorkReport", params);
+	}
+	
 	
 	public List<EgovMap> workReportAllList(){
 		return session.selectList("managementCourseMapper.workReportAllList");
@@ -39,24 +43,7 @@ public class WorkReportDAO {
 	
 	
 	public void workReportDelete(String workNo) {
-		System.out.println("DAO 삭제번호"+workNo);
-		session.delete("managementCourseMapper.deleteWorkReportImage", workNo);
-		//session.delete("managementCourseMapper.deleteWorkReportTarget", workNo);
 		session.delete("managementCourseMapper.deleteWorkReport", workNo);
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

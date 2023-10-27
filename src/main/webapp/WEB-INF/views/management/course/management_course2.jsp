@@ -111,11 +111,12 @@
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header pb-3">
-					<h5 class="modal-title">작업일정 추가</h5>
+					<h5 class="modal-title" id="modalTitle">작업일정 추가</h5>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
 				<div class="modal-body py-0">
+					<input type="hidden" name="workNo" id="workNo" value="">
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 날짜</label>
 						<div class="col-lg-10">
@@ -181,6 +182,11 @@
 						<div class="col-lg-10">
 							<input type="file" class="form-control h-auto img" multiple="multiple">
 						</div>
+						<label class="col-form-label col-lg-2"></label>
+						<input type="hidden" id="removeImgList" name="removeImgList" value="">
+						<div class="col-lg-10" id="imgList">
+						
+						</div>
 					</div>
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 메모</label>
@@ -201,7 +207,7 @@
 
 				<div class="modal-footer pt-3">
 					<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary workInsert">작업 등록</button>
+					<button type="button" id="insertUpdateBtn" class="btn btn-primary">작업 등록</button>
 				</div>
 			</div>
 		</div>
@@ -244,6 +250,10 @@ function resetModal(){
 	$('.courseTypeBtSelect').empty();
 	$('.classBtSelect').empty();
 	$('.typeBtSelect').empty();
+
+	$('#removeImgList').val('');
+
+	$('#imgList').empty();
 }
 
 $('.allDayWork').change(function() {
@@ -260,6 +270,10 @@ $('.allDayWork').change(function() {
 	
 //작업등록 버튼 클릭시 리셋
 $(".work").click(function() {
+	$("#modalTitle").text('작업일정 추가')
+	$("#insertUpdateBtn").text("작업 등록")
+	$("#insertUpdateBtn").removeClass("workUpdate")
+	$("#insertUpdateBtn").addClass("workInsert")
 	resetModal()
 });
 
@@ -311,9 +325,9 @@ $(document).on('click',".holeBtSelect label,.courseTypeBtSelect label,.classBtSe
 })
 
 //작업종류에 따라 브랜드 보여주기
-function getbrand(worktype){
+function getBrand(worktype){
     $.ajax({
-        url: '/management/getbrand_ajax',
+        url: '/management/getBrand',
         type: 'POST',
         data: {worktype: worktype},
         dataType: "json",
@@ -322,7 +336,7 @@ function getbrand(worktype){
         },
         success: function(data) {
             console.log(data);
-            updatebrand(data);
+            updateBrand(data);
         },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
@@ -335,7 +349,7 @@ function getbrand(worktype){
 
 
 //브랜드 업데이트
-function updatebrand(data){
+function updateBrand(data){
 	//사용제품 브랜드 
 	let brand = "";
 	
@@ -349,7 +363,7 @@ function updatebrand(data){
 
 
 
-$(".workInsert").click(function() {
+$(document).on('click','.workInsert,.workUpdate',function() {
     var formData = new FormData();
     var dateRange = $('.dateInput:visible').val(); // 작업날짜 
     var dates = dateRange.split(' ~ '); // 작업날짜 ~ 빼기
@@ -385,34 +399,45 @@ $(".workInsert").click(function() {
 	
 	//이미지 파일 길이
 	var fileLength = $('.img').get(0).files.length;
+
+	var requestURI = "/management/insertWork"
+	//$(this).hasClass('workInsert')
+	if($(this).hasClass('workUpdate')){
+		requestURI = "/management/updateWork"
+
+		var removeImgList = $('#removeImgList').val().substring(1);
+		formData.append("removeImgList", removeImgList);
+		formData.append("workNo",$('#workNo').val())
+	}
 	
 	//이미지 첨부 필수. 첨부 안할시 alert창
-	if(fileLength == 0){
+	if(fileLength == 0 && $(this).hasClass('workInsert')){
 		alert("이미지를 첨부해 주세요.");
-	}else{
-	    $.ajax({
-	        url: '/management/insertwork_ajax',
-	        method: 'POST',
-	        enctype: 'multipart/form-data',
-	    	data: formData,		
-	    	processData: false,
-	    	contentType: false,
-			beforeSend : function(xhr) {  
-				xhr.setRequestHeader(header, token);
-			},
-	        success: function(result) {
-	            alert("등록되었습니다")
-	            $('#modal_scrollable').modal('hide');  // 모달 창 닫기
-	            workAllList();
-	        },
-		    error: function(jqXHR, textStatus, errorThrown) {
-		        alert(jqXHR.status);
-		        alert(jqXHR.statusText);
-		        alert(jqXHR.responseText);
-		        alert(jqXHR.readyState);
-		    }
-	    });//ajax end
-	}//if end
+		return;
+	}
+	
+    $.ajax({
+        url: requestURI,
+        method: 'POST',
+        enctype: 'multipart/form-data',
+    	data: formData,		
+    	processData: false,
+    	contentType: false,
+		beforeSend : function(xhr) {  
+			xhr.setRequestHeader(header, token);
+		},
+        success: function(result) {
+            alert("등록되었습니다")
+            $('#modal_scrollable').modal('hide');  // 모달 창 닫기
+            workAllList();
+        },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
 
 
 	
@@ -440,7 +465,10 @@ function workAllList(){
 	        alert(jqXHR.statusText);
 	        alert(jqXHR.responseText);
 	        alert(jqXHR.readyState);
-	    }
+	    },
+	    complete: function(){
+	    	Gallery.init();
+		}
     });//ajax end
 }//workAllList() end
 
@@ -515,6 +543,12 @@ function workReportAllList(data){
 		let dateWorkNo = `\${data[i].workNo}`
 		console.log(dateWorkNo);
 
+		var workHoles = (data[i].workHole+"").split(',');
+		var workTypes = (data[i].workType+"").split(',');
+		var workCourses = (data[i].workCourse+"").split(',');
+		var workClasss = (data[i].workClass+"").split(',');
+		
+
 		allWorkList += `
 			<div class="col-lg-12">
 				<div class="card more-round">
@@ -541,10 +575,21 @@ function workReportAllList(data){
 						<div class="row">
 							<label class="col-form-label font-weight-bold col-lg-2">작업 내용</label>
 							<div class="col-form-label col-lg-10">
-								<span class="badge badge-info">Hole \${data[i].workHole}</span> <!--코스 위치 라벨-->
-								<span class="badge badge-success">\${data[i].workCourse}</span> <!--코스 유형 라벨-->
-								<span class="badge badge-warning">\${data[i].workClass}</span> <!--작업 분류 라벨-->
-								<span class="badge badge-secondary">\${data[i].workType}</span> <!--작업 종류 라벨-->
+		`
+		for(var j=0;j<workHoles.length;j++){
+			allWorkList +=`<span class="badge badge-info">Hole \${workHoles[j]}</span> <!--코스 위치 라벨-->	`				
+		}
+		for(var j=0;j<workCourses.length;j++){
+			allWorkList +=`<span class="badge badge-success">\${workCourses[j]}</span> <!--코스 위치 라벨-->	`				
+		}
+		for(var j=0;j<workClasss.length;j++){
+			allWorkList +=`<span class="badge badge-warning">\${workClasss[j]}</span> <!--코스 위치 라벨-->	`				
+		}
+		for(var j=0;j<workTypes.length;j++){
+			allWorkList +=`<span class="badge badge-secondary">\${workTypes[j]}</span> <!--코스 위치 라벨-->	`				
+		}
+
+		allWorkList +=`
 							</div>
 						</div>
 						
@@ -568,16 +613,17 @@ function workReportAllList(data){
 				continue;
 			}
 			let imgP = data[i].workReportImageList[j].filePath.substring(2);
+			let oriName = data[i].workReportImageList[j].oriName;
 				allWorkList += `
 									<div class="col-lg-4">
 										<div class="card">
 											<div class="card-img-actions m-1">
 												<img class="card-img img-fluid" src="\${imgP}" alt="">
 												<div class="card-img-actions-overlay card-img">
-													<a href="\${imgP}" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery1">
+													<a href="\${imgP}" class="btn btn-outline-white border-2 btn-icon rounded-pill" data-popup="lightbox" data-gallery="gallery\${i}">
 														<i class="icon-plus3"></i>
 			      									</a>
-			      									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2">
+			      									<a href="#" class="btn btn-outline-white border-2 btn-icon rounded-pill ml-2 downloadImage" data-filepath="\${imgP}" data-oriname="\${oriName}">
 			      										<i class="icon-link"></i>
 			      									</a>
 			      								</div>
@@ -618,17 +664,16 @@ function workReportAllList(data){
 }//workReportAllList() end
 
 //수정 버튼 클릭
-/*
-$(".workReportUpdate").click(function() {
-    alert("수정");
-    let workNo = $(this).data('value');
-    console.log(workNo);
-});*/
 
 $(document).on('click','.workReportUpdate',function(){
     //alert("수정");
+    
+    $("#modalTitle").text('작업일정 수정')
+	$("#insertUpdateBtn").text("작업 수정")
+	$("#insertUpdateBtn").removeClass("workInsert")
+	$("#insertUpdateBtn").addClass("workUpdate")
+    
     let workNo = $(this).attr('value');
-    console.log(workNo);
     workReportUpdateList(workNo);
 })
 
@@ -638,6 +683,8 @@ function workReportUpdateList(workNo){
 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+
+	$('#workNo').val(workNo)
 	
     $.ajax({
         url: '/management/workReportUpdateList',
@@ -693,6 +740,16 @@ function workReportUpdateListModal(data){
 		$('#modal_scrollable .typeBt[value="'+type[i]+'"]').click();
 	}
 
+	$('.comment').val(data[0].workComment);
+
+	let imgList = data[0].workReportImageList;
+	
+	for(var i=0;i<imgList.length;i++){
+		var downLoadPath = encodeURI("/management/downloadImage?filePath="+imgList[i].filePath.substring(2)+"&downloadName="+imgList[i].oriName);
+		$('#imgList').append(`<a href="\${downLoadPath}">\${imgList[i].oriName}</a>`)
+		$('#imgList').append(`<span class="removeImg" data-imgno="\${imgList[i].imgNo}">x</span>`)
+	}
+
 }//workReportUpdateList() end
 
 
@@ -735,6 +792,28 @@ function deleteCheck(workNo){
     });//ajax end
 }//deleteCheck() end
 
+
+$(document).on('click','.downloadImage',function (e) {
+
+	e.preventDefault();
+	
+    var filePath = $(this).data('filepath')
+    var downloadName = $(this).data('oriname');
+
+
+	location.href = encodeURI("/management/downloadImage?filePath="+filePath+"&downloadName="+downloadName)
+
+});
+
+$(document).on('click','.removeImg',function(){
+	let imgNo = $(this).data('imgno')
+	$(this).prev().remove();
+	$(this).remove();
+
+	$('#removeImgList').val($('#removeImgList').val()+","+imgNo)
+	console.log($('#removeImgList').val())
+})
+
 })
 </script>
 <style>
@@ -747,5 +826,21 @@ label {
 	-moz-user-select:none;
 	-ms-user-select:none;
 	user-select:none
+}
+
+#imgList a{
+    display: inline-block;
+    padding: 3px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+#imgList span{
+    margin-top: 5px;
+    padding: 3px;
+    display: inline-block;
+    cursor: pointer;
+    background: lightgray;
+    color: white;
+    line-height: 11px;
 }
 </style>

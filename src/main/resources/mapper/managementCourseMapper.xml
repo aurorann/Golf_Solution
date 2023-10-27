@@ -97,6 +97,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(now(), #{workStart},#{workEnd},#{workClass},#{workType},#{workBrand},#{comment},#{hole},#{course},#{userId})
 	</insert>
 	
+	<update id="updateWorkReport" parameterType="map">
+		UPDATE WORK_REPORT 
+		SET
+			WORK_START = #{workStart},
+			WORK_END =	 #{workEnd},
+			WORK_CLASS = #{workClass},
+			WORK_TYPE =  #{workType},
+			WORK_BRAND = #{workBrand},
+			WORK_COMMENT=#{comment},
+			WORK_HOLE =  #{hole},
+			WORK_COURSE =#{course} 
+		WHERE WORK_NO=#{workNo}
+	</update>
+	
 	<insert id="insertWorkReportTarget" parameterType="map">
 		INSERT INTO WORK_REPORT_TARGET (WORK_NO, HOLE_NO, COURSE_TYPE)
 		VALUES ((select max(work_no) from WORK_REPORT)
@@ -106,12 +120,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertWorkReportImg" parameterType="map">
 		INSERT INTO WORK_REPORT_IMAGE (WORK_NO, FILE_PATH, ORI_NAME, SAVE_NAME)
-		VALUES ((SELECT MAX(work_no) FROM WORK_REPORT),	#{filePath}, #{oriImgName}, #{saveName})
+		VALUES (
+		<if test="workNo!=null and !workNo.equals('')">
+		#{workNo},
+		</if>
+		<if test="workNo==null or workNo.equals('')">
+		(SELECT MAX(work_no) FROM WORK_REPORT),	
+		</if>
+		
+		#{filePath}, #{oriImgName}, #{saveName}
+		)
 	</insert>
 	
 	
 	<select id="workReportAllList" parameterType="egovMap" resultMap="workReportInfo">
-		SELECT WR.*, WRI.FILE_PATH 
+		SELECT WR.*, WRI.FILE_PATH , WRI.ORI_NAME 
 		FROM WORK_REPORT WR
 		LEFT JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
 		<where>
@@ -132,9 +155,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="workReportUpdateList" parameterType="map" resultMap="workReportInfo">
-		SELECT WR.*, WRI.FILE_PATH 
+		SELECT WR.*, WRI.IMG_NO,WRI.FILE_PATH , WRI.ORI_NAME
 		FROM WORK_REPORT WR 
-		JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
+		LEFT JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO 
 		WHERE WR.WORK_NO = #{workNo}
 	</select>
 	
@@ -144,8 +167,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	<delete id="deleteWorkReportImage" parameterType="string">
-		DELETE FROM WORK_REPORT_IMAGE WHERE WORK_NO = #{workNo}
+	<delete id="deleteWorkReportImage" parameterType="map">
+		DELETE FROM WORK_REPORT_IMAGE 
+		<where>
+			<if test="workNo!=null and !workNo.equals('')">
+			WORK_NO = #{workNo}
+			</if>
+			<if test="removeImgList!=null">
+			IMG_NO IN
+			<foreach collection="removeImgList" item="imgNo" open="(" close=")" separator=",">
+			#{imgNo}
+			</foreach>
+			</if>
+		</where>
 	</delete>
 	
 	

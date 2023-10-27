@@ -50,21 +50,8 @@ public class CourseService {
 		return workReportBrandDefDAO.getBrandData(worktype);
 	}
 
-	public void insertWorkReport(String workStart, String workEnd, String hole, String course, String workClass,
-			String workType, String workBrand, List<String> oriImgNameList, String comment, List<String> filePathList,
-			List<String> saveNameList, String userId) {
-
-		Map<String, Object> params = new HashMap<>();
-		params.put("workStart", workStart);
-		params.put("workEnd", workEnd);
-		params.put("workClass", workClass);
-		params.put("workType", workType);
-		params.put("workBrand", workBrand);
-		params.put("comment", comment);
-		params.put("userId", userId);
-
-		params.put("hole", hole);
-		params.put("course", course);
+	public void insertWorkReport(Map<String, Object> params, List<String> oriImgNameList, List<String> filePathList,
+			List<String> saveNameList) {
 
 		workReportDAO.insertWorkReport(params);
 
@@ -74,6 +61,33 @@ public class CourseService {
 			String filePath = filePathList.get(i);
 			String saveName = saveNameList.get(i);
 
+			param.put("filePath", filePath);
+			param.put("oriImgName", oriImgName);
+			param.put("saveName", saveName);
+			workReportImageDAO.insertWorkReportImg(param);
+		}
+
+	}// insertWork() end
+	
+	public void updateWorkReport(Map<String, Object> params, List<String> oriImgNameList, List<String> filePathList,
+			List<String> saveNameList) {
+
+		//일정표 변경
+		workReportDAO.updateWorkReport(params);
+		
+		//삭제 대상 이미지 설정 및 삭제
+		EgovMap removeMap = new EgovMap();
+		removeMap.put("removeImgList", params.get("removeImgList").toString().split(","));
+		workReportImageDAO.deleteWorkReportImage(removeMap);
+
+		//새로 추가된 이미지 설정 및 추가
+		for (int i = 0; i < oriImgNameList.size(); i++) {
+			Map<String, Object> param = new HashMap<>();
+			String oriImgName = oriImgNameList.get(i);
+			String filePath = filePathList.get(i);
+			String saveName = saveNameList.get(i);
+
+			param.put("workNo", params.get("workNo"));
 			param.put("filePath", filePath);
 			param.put("oriImgName", oriImgName);
 			param.put("saveName", saveName);
@@ -121,7 +135,10 @@ public class CourseService {
 
 	// 작업 삭제
 	public void workReportDelete(String workNo) {
+		EgovMap param = new EgovMap();
+		param.put("workNo", workNo);
+		workReportImageDAO.deleteWorkReportImage(param);
 		workReportDAO.workReportDelete(workNo);
-	}// insertWork() end
+	}
 
 }

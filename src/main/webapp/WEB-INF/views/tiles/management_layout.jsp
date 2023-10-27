@@ -29,6 +29,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ko.min.js"></script>
 	<script src="/resources/assets/js/daterangepicker.js"></script>
+	<script src="/resources/assets/js/glightbox.min.js"></script>
+	<script src="/resources/assets/js/gallery.js"></script>
 	<script src="/resources/assets/js/picker.js"></script>
 	<script src="/resources/assets/js/picker.date.js"></script>
 	<script src="/resources/assets/js/picker.time.js"></script>
