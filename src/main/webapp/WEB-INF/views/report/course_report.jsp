@@ -12,13 +12,15 @@
 			<div class="page-title" style="width: 100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="holebt btn btn-light active" value="1" data-lat="" data-lon="" data-holename="Hole 1">H1</button>
-					<button type="button" class="holebt btn btn-light" value="2" data-lat="" data-lon="" data-holename="Hole 2">H2</button>
-					<button type="button" class="holebt btn btn-light" value="3" data-lat="" data-lon="" data-holename="Hole 3">H3</button>
-					<button type="button" class="holebt btn btn-light" value="4" data-lat="" data-lon="" data-holename="Hole 4">H4</button>
-					<button type="button" class="holebt btn btn-light" value="5" data-lat="" data-lon="" data-holename="Hole 5">H5</button>
-					<button type="button" class="holebt btn btn-light" value="6" data-lat="" data-lon="" data-holename="Hole 6">H6</button>
-					<button type="button" class="holebt btn btn-light" value="7" data-lat="" data-lon="" data-holename="Hole 7">H7</button>
+					<button type="button" class="holebt btn btn-light active" value="01" data-lat="" data-lon="" data-holename="Hole 1">H1</button>
+					<button type="button" class="holebt btn btn-light" value="02" data-lat="" data-lon="" data-holename="Hole 2">H2</button>
+					<button type="button" class="holebt btn btn-light" value="03" data-lat="" data-lon="" data-holename="Hole 3">H3</button>
+					<button type="button" class="holebt btn btn-light" value="04" data-lat="" data-lon="" data-holename="Hole 4">H4</button>
+					<button type="button" class="holebt btn btn-light" value="05" data-lat="" data-lon="" data-holename="Hole 5">H5</button>
+					<button type="button" class="holebt btn btn-light" value="06" data-lat="" data-lon="" data-holename="Hole 6">H6</button>
+					<button type="button" class="holebt btn btn-light" value="07" data-lat="" data-lon="" data-holename="Hole 7">H7</button>
+					<button type="button" class="holebt btn btn-light" value="06" data-lat="" data-lon="" data-holename="Hole 8">H8</button>
+					<button type="button" class="holebt btn btn-light" value="07" data-lat="" data-lon="" data-holename="Hole 9">H9</button>
 				</div>
 
 				<div class="btn-group mr-2">
@@ -319,6 +321,15 @@
 	    });//ajax end
 	}//getData end
 
+    let currentPair = 0;
+    const pairs = [
+        ['#ndviChart', '#tempChart'],
+        ['#humiChart', '#wsChart'],
+        ['#lightChart', '#rainChart'],
+        ['#solarChart', '#smoChart'],
+        ['#secChart', '#stpChart']
+    ];
+
 	function updateChart(hole, category, selectDate, beforeDate){
 
 		$('#chartZone').empty();
@@ -389,8 +400,25 @@
 				}
 			}
 		})
-		
+
+		for(var i=2;i<10;i++){
+			$('#chartZone>div:eq('+i+')').hide()
+		}
+
+		currentPair = 0;
 	}
+
+	$(document).on('click','#prevChart',function(){
+        $(pairs[currentPair].join(', ')).toggle();
+        currentPair = (currentPair - 1) % pairs.length;
+        $(pairs[currentPair].join(', ')).toggle();
+	})
+	
+	$(document).on('click','#nextChart',function(){
+        $(pairs[currentPair].join(', ')).toggle();
+        currentPair = (currentPair + 1) % pairs.length;
+        $(pairs[currentPair].join(', ')).toggle();
+	})
 	
 	function updatePage(data) {
 		
@@ -810,7 +838,12 @@
 				
 									<div class="col-lg-12">
 										<div class="card-header">
-											<h6 class="card-title font-weight-bold">차트 보기</h6>
+											<h6 class="card-title font-weight-bold">차트 보기
+											<div class="btn-group ml-4">
+			                                    <button type="button" class="btn btn-light" id="prevChart"><i class="icon-arrow-left12"></i></button>
+			                                    <button type="button" class="btn btn-light" id="nextChart"><i class="icon-arrow-right13"></i></button>
+			                                </div>
+											</h6>
 										</div>
 				
 										<div class="chart-container row" id="chartZone">
@@ -829,8 +862,8 @@
 				dataElement.innerHTML = content;
 
 				map = new naver.maps.Map('map', {
-				    center: new naver.maps.LatLng(35.591352, 127.902073),
-				    zoom: 17
+				    center: new naver.maps.LatLng(37.0455041, 127.3907905),
+				    zoom: 15
 				});
 
 				map.setMapTypeId('satellite'); 
@@ -1242,7 +1275,12 @@
 				
 									<div class="col-lg-12">
 										<div class="card-header">
-											<h6 class="card-title font-weight-bold">차트 보기</h6>
+											<h6 class="card-title font-weight-bold">차트 보기
+											<div class="btn-group ml-4">
+			                                    <button type="button" class="btn btn-light" id="prevChart"><i class="icon-arrow-left12"></i></button>
+			                                    <button type="button" class="btn btn-light" id="nextChart"><i class="icon-arrow-right13"></i></button>
+			                                </div>
+											</h6>
 										</div>
 				
 										<div class="chart-container row" id="chartZone">

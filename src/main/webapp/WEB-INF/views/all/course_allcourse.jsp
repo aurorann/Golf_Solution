@@ -21,6 +21,8 @@
 					<button type="button" class="btn btn-light">H5</button>
 					<button type="button" class="btn btn-light">H6</button>
 					<button type="button" class="btn btn-light">H7</button>
+					<button type="button" class="btn btn-light">H8</button>
+					<button type="button" class="btn btn-light">H9</button>
 				</div>
 
 				<div class="btn-group mr-2" data-toggle="buttons" id="courseType">
@@ -157,7 +159,7 @@
 					<div class="row">
 						<div class="col-lg-9 col-sm-12 mt-2">
 							<label class="font-weight-bold mr-3">기준시간</label>
-							<label class="">2023-09-26 16:15:09</label>
+							<label class="" id="overlayTime">2023-09-26 16:15:09</label>
 						</div>
 
 						<div class="col-lg-3 col-sm-12 p-0 text-right">
@@ -173,7 +175,7 @@
 				</div>
 						
 				<div class="control-movi-wrap image-control-form-player">
-					<div class="btn-wrap col-lg-7 col-md-12 float-left">
+					<div class="btn-wrap col-lg-12 col-md-12 float-left">
 						<button class="btn start-btn" data-role="play-slide" title="이전" id="overlayPrev">
 							<i class="icon-backward2 icon-2x"></i>
 						</button>
@@ -344,8 +346,8 @@
 		let playSpeed = 1000;
 
 		var map = new naver.maps.Map('map', {
-		    center: new naver.maps.LatLng(35.591352, 127.902073),
-		    zoom: 18
+		    center: new naver.maps.LatLng(37.0455041, 127.3907905),
+		    zoom: 17
 		});
 
 		map.setMapTypeId('satellite'); 
@@ -970,7 +972,7 @@
 			let retData = null;
 
 			let param = {
-				holeNo : holeNo.substring(1,holeNo.length),
+				holeNo : "0"+holeNo.substring(1,holeNo.length),
 				courseType : courseType.toUpperCase()
 			}
 			
@@ -991,7 +993,7 @@
 			let retData = null;
 
 			let param = {
-				holeNo : holeNo.substring(1,holeNo.length),
+				holeNo : "0"+holeNo.substring(1,holeNo.length),
 				courseType : courseType.toUpperCase()
 			}
 
@@ -1014,7 +1016,7 @@
 			let searchDate = $('#searchDate').val();
 
 			let param = {
-				holeNo : holeNo.substring(1,holeNo.length),
+				holeNo : "0"+holeNo.substring(1,holeNo.length),
 				courseType : courseType.toUpperCase(),
 				layerType : nowLayerType,
 				startDate : searchDate.split('~')[0].trim(),
@@ -1052,7 +1054,7 @@
 			let searchDate = $('#searchDate').val();
 
 			let param = {
-				holeNo : holeNo.substring(1,holeNo.length),
+				holeNo : "0"+holeNo.substring(1,holeNo.length),
 				courseType : courseType.toUpperCase(),
 				type : type,
 				startDate : searchDate.split('~')[0].trim(),

@@ -52,6 +52,17 @@
 							<!-- Sidebar search -->
 							<div class="sidebar-section ">
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
+									<li class="nav-item-header">작업 일자</li>
+									<li class="nav-item pl-3 pr-3 course-location-badge">
+										<div class="input-group">
+											<span class="input-group-prepend">
+												<span class="input-group-text"><i class="icon-calendar22"></i></span>
+											</span>
+											<input type="text" class="form-control daterange-basic" value="" id="searchDate">
+										</div>
+									</li>
+								</ul>
+								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">코스 위치</li>
 									<li class="nav-item pl-3 pr-3 course-location-badge">
 										<c:forEach items="${list}" var="holename">
@@ -292,10 +303,21 @@ $(document).on('click','.searchHoleBt,.searchCourseTypeBt,.searchClassBt,.search
 	var searchCourseType = $("input[name='searchCourseTypeBt']:checked").map(function(){return $(this).val();}).get();
 	var searchClass = $("input[name='searchClassBt']:checked").map(function(){return $(this).val();}).get();
 	var searchType = $("input[name='searchTypeBt']:checked").map(function(){return $(this).val();}).get();
+	var searchDate = $("#searchDate").val();
 	
-	workSelectList(searchHole, searchCourseType, searchClass, searchType);
+	workSelectList(searchHole, searchCourseType, searchClass, searchType,searchDate);
 	//searchCheck();
 });
+
+$(document).on('change','#searchDate',function(){
+	var searchHole = $("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();
+	var searchCourseType = $("input[name='searchCourseTypeBt']:checked").map(function(){return $(this).val();}).get();
+	var searchClass = $("input[name='searchClassBt']:checked").map(function(){return $(this).val();}).get();
+	var searchType = $("input[name='searchTypeBt']:checked").map(function(){return $(this).val();}).get();
+	var searchDate = $("#searchDate").val();
+	
+	workSelectList(searchHole, searchCourseType, searchClass, searchType,searchDate);
+})
 
 
 //코스종류 active 클래스 추가
@@ -313,8 +335,11 @@ $(document).on('click','.holeBt,.courseTypeBt,.classBt,.typeBt',function() {
 		$(this).parent().removeClass("active");
 		$("."+target+"Select").find('input[value="'+value+'"]').parent().remove();
 	}else{
+		let clone = $(this).parent().clone();
+		clone.addClass('mr-1')
 	    $(this).parent().addClass("active");
-		$("."+target+"Select").append($(this).parent().clone());
+
+		$("."+target+"Select").append(clone);
 	}//if end
 });
 
@@ -429,7 +454,13 @@ $(document).on('click','.workInsert,.workUpdate',function() {
         success: function(result) {
             alert("등록되었습니다")
             $('#modal_scrollable').modal('hide');  // 모달 창 닫기
-            workAllList();
+        	var searchHole = $("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchCourseType = $("input[name='searchCourseTypeBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchClass = $("input[name='searchClassBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchType = $("input[name='searchTypeBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchDate = $("#searchDate").val();
+        	
+        	workSelectList(searchHole, searchCourseType, searchClass, searchType,searchDate);
         },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);
@@ -474,13 +505,14 @@ function workAllList(){
 
 workAllList()
 //선택작업 조회
-function workSelectList(searchHole, searchCourseType, searchClass, searchType){
+function workSelectList(searchHole, searchCourseType, searchClass, searchType,searchDate){
 
 	var param = {
 		searchHole: searchHole,
 		searchCourseType: searchCourseType,
 		searchClass: searchClass,
-		searchType: searchType
+		searchType: searchType,
+		searchDate: searchDate
 	}
 
 	var token = $("meta[name='_csrf']").attr("content");
@@ -566,7 +598,7 @@ function workReportAllList(data){
 						<span class="float-left text-muted">\${data[i].writeAt}</span>
 					</div>
 					<div class="card-body">
-						<h6 class="card-title font-weight-bold">코스 \${data[i].workHole} \${data[i].workType} 작업</h6>
+						<h6 class="card-title font-weight-bold">코스 \${data[i].workHole} \${data[i].workCourse} \${data[i].workType} 작업</h6>
 						<div class="row">
 							<label class="col-form-label font-weight-bold col-lg-2">작업 기간</label>
 							<label class="col-form-label col-lg-10">\${dateStart} - \${dateEnd}</label>
@@ -717,8 +749,12 @@ function workReportUpdateListModal(data){
 	let classType = `\${data[0].workClass}`.split(',');
 	let type = `\${data[0].workType}`.split(',');
 	let brand = `\${data[0].workBrand}`;
-	let workTime = `\${data[0].workStart}` + ' ~ ' + `\${data[0].workEnd}`;
+	let workTime = `\${data[0].workStart.substring(0,16)}` + ' ~ ' + `\${data[0].workEnd.substring(0,16)}`;
 
+	if(data[0].workStart.substring(11,16)=="00:00" && data[0].workEnd.substring(11,16)=='00:00'){
+		$('.allDayWork').click();
+		workTime = data[0].workStart.substring(0,11) + ' ~ ' + data[0].workEnd.substring(0,11)
+	}
 	
 	$("#modal_scrollable .dateInput").each(function() {
 		$(this).val(workTime);
@@ -778,7 +814,13 @@ function deleteCheck(workNo){
         success: function(data) {
             console.log(data);
             alert("작업을 삭제하였습니다");
-            workAllList();
+        	var searchHole = $("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchCourseType = $("input[name='searchCourseTypeBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchClass = $("input[name='searchClassBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchType = $("input[name='searchTypeBt']:checked").map(function(){return $(this).val();}).get();
+        	var searchDate = $("#searchDate").val();
+        	
+        	workSelectList(searchHole, searchCourseType, searchClass, searchType,searchDate);
         },
 		beforeSend : function(xhr) {  
 			xhr.setRequestHeader(header, token);
@@ -818,9 +860,9 @@ $(document).on('click','.removeImg',function(){
 </script>
 <style>
 label input[type="checkbox"]{
-	/*display: none;*/
+	display: none;
 }
-label {
+label.badge {
 	cursor: pointer;
 	-webkit-user-select:none;
 	-moz-user-select:none;

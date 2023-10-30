@@ -150,6 +150,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="searchType!=null and !searchType.equals('')">
 			AND WR.WORK_TYPE REGEXP #{searchType}
 			</if>
+			<if test="startDate!=null and endDate!=null">
+			AND WR.WORK_START >= #{startDate} 
+			AND WR.WORK_END <![CDATA[<=]]> #{endDate} 
+			</if>
 		</where>
 		ORDER BY WR.WORK_NO DESC 
 	</select>

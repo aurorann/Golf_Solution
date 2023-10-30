@@ -232,7 +232,12 @@ body {
 .control-movi-wrap {
     /* position:absolute;
     top:25%; */
-    text-align:center;;
+    text-align:center;
+    background: #fff;
+    border-radius: 0.4rem 0.4rem 0 0;
+    float: left;
+    width: 100%;
+    padding: 10px 0 0 0;
 }
 
 .image-player-wrapper .control-movi-wrap .start-btn:hover, .image-player-wrapper .control-movi-wrap .stop-btn:hover, .control-movi-wrap .pause-btn:hover {
@@ -336,10 +341,10 @@ body {
     }
 
 }
-
+/*
 .btn-wrap {
     margin-left: 21%;
-}
+}*/
 
 .btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light {
     color: #f5f5f5;

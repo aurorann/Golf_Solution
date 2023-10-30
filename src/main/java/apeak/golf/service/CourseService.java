@@ -98,23 +98,30 @@ public class CourseService {
 
 	// 검색 선택작업 조회하기
 	public EgovMap searchWorkReportList(String searchHole, String searchCourseType, String searchClass,
-			String searchType) {
+			String searchType, String searchDate) {
 		try {
-			EgovMap paramMap = new EgovMap();
+			EgovMap param = new EgovMap();
 			if (searchHole != null) {
-				paramMap.put("searchHole", searchHole.replace(',', '|'));
+				param.put("searchHole", searchHole.replace(',', '|'));
 			}
 			if (searchCourseType != null) {
-				paramMap.put("searchCourseType", searchCourseType.replace(',', '|'));
+				param.put("searchCourseType", searchCourseType.replace(',', '|'));
 			}
 			if (searchClass != null) {
-				paramMap.put("searchClass", searchClass.replace(',', '|'));
+				param.put("searchClass", searchClass.replace(',', '|'));
 			}
 			if (searchType != null) {
-				paramMap.put("searchType", searchType.replace(',', '|'));
+				param.put("searchType", searchType.replace(',', '|'));
+			}
+			
+			String[] date = searchDate.split("~");
+
+			if(date.length==2) {
+				param.put("startDate", date[0].trim()+" 00:00:00");
+				param.put("endDate", date[1].trim()+" 23:59:59");
 			}
 
-			List<EgovMap> list = workReportDAO.searchWorkReportList(paramMap);
+			List<EgovMap> list = workReportDAO.searchWorkReportList(param);
 
 			EgovMap resultMap = new EgovMap();
 			resultMap.put("list", list);

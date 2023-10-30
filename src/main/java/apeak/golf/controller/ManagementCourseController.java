@@ -183,8 +183,9 @@ public class ManagementCourseController {
 	private EgovMap searchWorkReportList(@RequestParam(value="searchHole[]",required=false) String searchHole,
 										@RequestParam(value="searchCourseType[]",required=false) String searchCourseType,
 										@RequestParam(value="searchClass[]",required=false) String searchClass,
-										@RequestParam(value="searchType[]",required=false) String searchType) {
-		return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType);
+										@RequestParam(value="searchType[]",required=false) String searchType,
+										String searchDate) {
+		return courseService.searchWorkReportList(searchHole, searchCourseType, searchClass, searchType,searchDate);
 	}//brandAjax() end
 	
 	

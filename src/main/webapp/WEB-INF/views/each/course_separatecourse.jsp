@@ -117,7 +117,7 @@ function getAllData(category, listsort){
 			for(let i=0;i<holeCount;i++){
 				var map = new naver.maps.Map('map'+i, {
 				    center: new naver.maps.LatLng(list[i].lat, list[i].lon),
-				    zoom: 18
+				    zoom: 16
 				});
 				map.setMapTypeId('satellite'); 
 
