@@ -133,23 +133,25 @@
 						<div class="modal-body py-0 userInsert">
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-3">아이디</label> <input type="text" class="form-control col-lg-9 userId" value="" maxlength="10">
+								<label class="col-form-label col-lg-3">아이디</label> <input type="text" class="form-control col-lg-9 userId" value="" maxlength="10" minlength="5">
 								<div class="col-lg-3"></div>
 								<div class="userIdChkMsg col-lg-9"></div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-3">비밀번호</label> <input type="password" class="form-control col-lg-9 userPw" value="">
+								<label class="col-form-label col-lg-3">비밀번호</label> <input type="password" class="form-control col-lg-9 userPw" value="" minlength="5">
+								<div class="col-lg-3"></div>
+								<div class="col-lg-9 userPswMsg"></div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-3">비밀번호 확인</label> <input type="password" class="form-control col-lg-9 userPwChk" value="">
+								<label class="col-form-label col-lg-3">비밀번호 확인</label> <input type="password" class="form-control col-lg-9 userPwChk" value="" minlength="5">
 								<div class="col-lg-3"></div>
 								<div class="col-lg-9 userPswChkMsg"></div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-3">회원 이름</label> <input type="text" class="form-control col-lg-9 userName" value="">
+								<label class="col-form-label col-lg-3">회원 이름</label> <input type="text" class="form-control col-lg-9 userName" value="" minlength="2">
 							</div>
 
 							<div class="form-group row mt-3">
@@ -169,10 +171,14 @@
 
 							<div class="form-group row mt-3">
 								<label class="col-form-label col-lg-3">이메일</label> <input type="text" class="form-control col-lg-9 userEmail" value="">
+								<div class="col-lg-3"></div>
+								<div class="col-lg-9 userEmailChkMsg"></div>
 							</div>
 
 							<div class="form-group row mt-3">
-								<label class="col-form-label col-lg-3">연락처</label> <input type="text" class="form-control col-lg-9 userPhone" value="">
+								<label class="col-form-label col-lg-3">연락처</label> <input type="text" class="form-control col-lg-9 userHp" value="" maxlength="13">
+								<div class="col-lg-3"></div>
+								<div class="col-lg-9 userPhoneChkMsg"></div>
 							</div>
 
 							<div class="form-group row mt-3">
@@ -401,6 +407,7 @@ $(document).on("click",".userInsertModal", function(){
 	});
 	$(".userIdChkMsg").text('');
 	$(".userPswChkMsg").text('');
+	$(".userPhoneChkMsg").text('');
 });
 
 
@@ -418,7 +425,7 @@ $(".userId").keyup(function() {
 			userIdChk(userId);
 	    }
 	}else{
-		$(".userIdChkMsg").css("color", "black").text("아이디를 입력해주세요.");
+		$(".userIdChkMsg").css("color", "red").text("아이디를 입력해주세요.");
 	}
 });
 
@@ -452,12 +459,50 @@ function userIdChk(userId){
 $(".userPw, .userPwChk").on('keyup', function() {
     var userPw = $(".userPw").val();
     var userPwChk = $(".userPwChk").val();
-    if (userPw !== userPwChk) {
-        $(".userPswChkMsg").css("color", "red").text('비밀번호가 일치하지 않습니다');
+	if(userPw == ''){
+        $(".userPswMsg").css("color", "red").text('비밀번호을 입력해주세요');
+        $(".userPswChkMsg").text('');
+	}else if(userPw !== ''){
+		$(".userPswMsg").text('');
+	    if (userPw !== userPwChk) {
+	        $(".userPswChkMsg").css("color", "red").text('비밀번호가 일치하지 않습니다');
+	    } else {
+	        $(".userPswChkMsg").css("color", "green").text('비밀번호가 일치합니다');
+	    }//if end
+	}//if end
+});
+
+
+//이메일 확인
+$(".userEmail").on('keyup', function() {
+    var userEmail = $(".userEmail").val();
+    var regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+    console.log(userEmail)
+    if(userEmail == ''){
+        $(".userEmailChkMsg").css("color", "red").text('이메일을 입력해주세요');
+    } else if(regex.test(userEmail)) {
+        $(".userEmailChkMsg").css("color", "green").text('사용할수 있는 이메일 입니다.');
     } else {
-        $(".userPswChkMsg").css("color", "green").text('비밀번호가 일치합니다');
+        $(".userEmailChkMsg").css("color", "red").text('이메일을 확인해주세요.');
     }
 });
+
+
+//연락처 확인
+$(".userHp").on('keyup', function() {
+    var userHp = $(".userHp").val();
+    var regex = new RegExp(/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/);
+    console.log("userPhone"+userHp)
+    if(userHp == ''){
+        $(".userPhoneChkMsg").css("color", "red").text('연락처를 입력해주세요');
+    } else if(regex.test(userHp)) {
+        $(".userPhoneChkMsg").css("color", "green").text('사용할수 있는 연락처 입니다.');
+    } else {
+        $(".userPhoneChkMsg").css("color", "red").text('연락처를 확인해주세요.');
+    }
+});
+
+
 
 
 //모달 회원등록 버튼 클릭시 회원 추가
@@ -469,7 +514,7 @@ $(document).on("click",".userInsertBt", function(){
 	var userGrade = $(".userInsert .userGrade option:selected").text();
 	var userDepartment = $(".userInsert .userDepartment").val();
 	var userEmail = $(".userInsert .userEmail").val();
-	var userPhone = $(".userInsert .userPhone").val();
+	var userPhone = $(".userInsert .userHp").val();
 	
 	console.log(userId)
 	
@@ -488,11 +533,34 @@ $(document).on("click",".userInsertBt", function(){
 		formData.append('file', userImage);
 	}
     
-    console.log(formData);
     
 	
-	if(userId == '' || userPw == '' ||  userName == '' ||  userGrade == '' ||  userDepartment == '' ||  userEmail == '' ||  userPhone == ''){
-		alert("회원 정보를 확인해 주세요");
+	if(userId == '' || userId.length <5){
+		alert("아이디를 확인해 주세요");
+		return;
+	}
+	if(userPw == '' || userPw.length < 5){
+		alert("비밀번호를 확인해 주세요");
+		return;
+	}
+	if(userName == ''){
+		alert("이름을 확인해 주세요");
+		return;
+	}
+	if(userGrade == ''){
+		alert("회원등급을 확인해 주세요");
+		return;
+	}
+	if(userDepartment == ''){
+		alert("소속을 확인해 주세요");
+		return;
+	}
+	if(userEmail == ''){
+		alert("이메일을 확인해 주세요");
+		return;
+	}
+	if(userPhone == '' || userPhone.length <13){
+		alert("연락처를 확인해 주세요");
 		return;
 	}
 	
