@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class LayerDataDTO {
 	private int layerSeq;
-	private int holeNo;
+	private String holeNo;
 	private String courseType;
 	private String tm;
 	private String layerType;

@@ -42,7 +42,7 @@
 		<div class="col-lg-4">
 			<div class="card-body">
 				<div class="mb-3">
-					<h6 class="mb-0 font-weight-bold">
+					<h6 class="ml-2 mb-0 font-weight-bold">
 						검색 필터
 					</h6>
 				</div>
@@ -65,8 +65,8 @@
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
 									<li class="nav-item-header">코스 위치</li>
 									<li class="nav-item pl-3 pr-3 course-location-badge">
-										<c:forEach items="${list}" var="holename">
-										<label class="badge badge-info">${holename.holeName}<input class="searchHoleBt" type="checkbox" name="searchHoleBt" value="${holename.holeNo}"></label>
+										<c:forEach items="${list}" var="holeInfo">
+										<label class="badge badge-info">${holeInfo.holeName}<input class="searchHoleBt" type="checkbox" name="searchHoleBt" value="${holeInfo.holeNo}"></label>
 										</c:forEach>
 									</li>
 								</ul>
@@ -147,8 +147,8 @@
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">코스 위치</label>
 						<div class="col-lg-10 course-location-badge">
-							<c:forEach items="${list}" var="holename">
-							<label class="badge badge-info">${holename.holeName}<input class="holeBt" type="checkbox" name="holeBt" value="${holename.holeNo}"></label>
+							<c:forEach items="${list}" var="holeInfo">
+							<label class="badge badge-info">${holeInfo.holeName}<input class="holeBt" type="checkbox" name="holeBt" value="${holeInfo.holeNo}"></label>
 							</c:forEach>
 						</div>
 					</div>
@@ -202,7 +202,7 @@
 					<div class="form-group row mt-3">
 						<label class="col-form-label col-lg-2">작업 메모</label>
 						<div class="col-lg-10">
-							<textarea rows="1" cols="3" class="form-control comment" placeholder="작업 내용을 입력해 주세요."></textarea>
+							<textarea rows="3" cols="3" class="form-control comment" placeholder="작업 내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -548,7 +548,7 @@ function workReportAllList(data){
 	console.log("작업일정 갯수"+data.length)
    	allWorkList += `
               <div class="mb-3">
-               <h6 class="mb-0 font-weight-bold">
+               <h6 class="ml-2 mb-0 font-weight-bold">
                    전체 보기
                </h6>
            </div>
@@ -632,7 +632,7 @@ function workReportAllList(data){
 						
 						<div class="row">
 							<label class="col-form-label font-weight-bold col-lg-2">작업 메모</label>
-							<label class="col-form-label col-lg-10">\${data[i].workComment}</label>
+							<label class="col-form-label col-lg-10">\${data[i].workComment.replace(/\n/g,'<br>')}</label>
 						</div>
 		
 						<div class="form-group row mt-2">

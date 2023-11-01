@@ -413,7 +413,9 @@
 
 		    /* 정보창 */
 			var infoWindow = new naver.maps.InfoWindow({
-			    content: `<div></div>`
+			    content: `<div></div>`,
+			    disableAnchor:true,
+			    borderWidth:0
 			});
 						
 			var marker = new naver.maps.Marker({
@@ -515,6 +517,7 @@
 			            new naver.maps.LatLng(endLat[list[i][j].holeNo], endLon[list[i][j].holeNo])
 			        );
 
+
 				    var groundOverlay = new naver.maps.GroundOverlay(
 				    	list[i][j].layerPath,
 			    	    bounds,
@@ -529,7 +532,6 @@
 
 				    //groundOverlay.setMap(map)
 
-				    console.log(list[i][j].path)
 				}
 			}
 
@@ -633,15 +635,13 @@
 
 			let template = ""
 
-			console.log(data)
-
 			switch(type){
 			case "NDVI":
 				data = data.ndvi;
 				console.log(data.ndvi);
 				template = `<div class="course1 position-absolute card bg-success-100 border-success text-center" style="width:225px;">
 								<div class="text-body pb-1">
-									<div class="card-header bg-success text-white pt-1 pb-1">
+									<div class="card-header bg-success text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px;">
 										<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
 									</div>
 					
@@ -662,19 +662,19 @@
 					break;
 			case "기상정보":
 				data = data.weather;
-				template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:330px;">
+				template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:270px;">
 								<div class="text-body">
-									<div class="card-header bg-primary text-white pt-1 pb-1">
+									<div class="card-header bg-primary text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px;">
 										<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
 									</div> <!--기상정보 8종-->
 									<div class="text-center weather-wrap pl-2 pr-2 pb-2">
-										<div class="float-left weather-box mr-3">
+										<div class="float-left weather-box">
 											<h4 class="mb-0 font-weight-semibold">
 											`+data.temp+`<small class="weather-unit">ºC</small>
 											</h4>
 											<div class="font-size-sm text-muted">기온</div>
 										</div>
-										<div class="float-left weather-box mr-3">
+										<div class="float-left weather-box">
 											<h4 class="mb-0 font-weight-semibold">\${getWdText(data.wd)}</h4>
 											<div class="font-size-sm text-muted">풍향</div>
 										</div>
@@ -686,19 +686,19 @@
 										</div>
 									</div>
 									<div class="text-center weather-wrap pl-2 pr-2">
-										<div class="float-left weather-box mr-3">
+										<div class="float-left weather-box">
 											<h4 class="mb-0 font-weight-semibold">
 											\${data.humi}<small class="weather-unit">%</small>
 											</h4>
 											<div class="font-size-sm text-muted">습도</div>
 										</div>
-										<div class="float-left weather-box mr-3">
+										<div class="float-left weather-box">
 											<h4 class="mb-0 font-weight-semibold">
 											\${data.solar}<small class="weather-unit">kWh</small>
 											</h4>
 											<div class="font-size-sm text-muted">일사</div>
 										</div>
-											<div class="float-left weather-box mr-3">
+											<div class="float-left weather-box">
 											<h4 class="mb-0 font-weight-semibold">
 											\${data.rain}<small class="weather-unit">mm</small>
 											</h4>
@@ -712,7 +712,7 @@
 				data = data.soil;
 				template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
 									<div class="text-body pb-1">
-									<div class="card-header bg-warning text-white pt-1 pb-1">
+									<div class="card-header bg-warning text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px;">
 										<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
 									</div> <!--토양정보 3종-->
 									<div class="card-body pt-1 pb-2">
@@ -833,7 +833,6 @@
 			var unit = getUnit(type);
 			var chartType = getChartType(type);
 
-			console.log(chartData)
 
 			var obj = {};
 			obj.name = getDataKrName(type);
@@ -847,7 +846,6 @@
 				}
 			}
 
-			console.log(obj)
 
 			var options = {
 				chart : {

@@ -128,7 +128,7 @@ function getAllData(category, listsort){
 				  $("#img"+i).closest(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
 				  $("#img"+i).closest(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
 				  //$("#img"+i).closest(".imageZone3").hide();
-				  if(i==17){
+				  if(i==8){
 					  setTimeout(() => $(".imageZone3").hide(), 100);
 				  }
 				};
