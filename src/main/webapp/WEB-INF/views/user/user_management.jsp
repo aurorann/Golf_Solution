@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+
+
 <div class="content-wrapper">
 
 	<!-- Page header -->
@@ -36,25 +38,11 @@
 							<th>이메일</th>
 							<th>연락처</th>
 							<th>가입일자</th>
-							<th>회원등급 수정</th>
+							<th>회원정보 수정</th>
 						</tr>
 					</thead>
 					<tbody id="userList">
-						<c:forEach items="${list}" var="userList">
-							<tr>
-								<td><c:out value="${userList.userNo}"></c:out></td>
-								<td><c:out value="${userList.userId}"></c:out></td>
-								<td><c:out value="${userList.userName}"></c:out></td>
-								<td><c:out value="${userList.userGrade}"></c:out></td>
-								<td><c:out value="${userList.userDepartment}"></c:out></td>
-								<td><c:out value="${userList.email}"></c:out></td>
-								<td><c:out value="${userList.hp}"></c:out></td>
-								<td><c:out value="${userList.regiDate}"></c:out></td>
-								<td>
-									<button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="${userList.userNo}">수정</button>
-								</td>
-							</tr>
-						</c:forEach>
+
 					</tbody>
 				</table>
 
@@ -62,7 +50,7 @@
 					<div class="modal-dialog modal-dialog-scrollable">
 						<div class="modal-content">
 							<div class="modal-header pb-3">
-								<h5 class="modal-title">회원 등급 수정</h5>
+								<h5 class="modal-title">회원정보 수정</h5>
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 
@@ -82,16 +70,12 @@
 								<div class="row mt-3">
 									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <input type="text" class="col-form-label col-lg-10 userPhone"></input>
 								</div>
-
-								<div class="row mt-3">
-									<label class="col-form-label font-weight-bold col-lg-2">가입일자</label> <input type="text" class="col-form-label col-lg-10 regiDate"></input>
-								</div>
 								
 								<input type="hidden" class="userNo" value="">
 
 								<div class="row mt-3">
 									<label class="col-form-label font-weight-bold col-lg-2">회원 등급</label>
-									<div class="col-lg-10">
+									<div class="col-lg-10" style="padding: 0px">
 										<select class="custom-select">
 											<option value="opt1">관리자</option>
 											<option value="opt2">작업자</option>
@@ -191,6 +175,10 @@
 								<label class="col-form-label col-lg-3">연락처</label> <input type="text" class="form-control col-lg-9 userPhone" value="">
 							</div>
 
+							<div class="form-group row mt-3">
+								<label class="col-form-label col-lg-3">회원사진</label> <input type="file" class="form-control col-lg-9 userImage">
+							</div>
+
 						</div>
 
 						<div class="modal-footer pt-3">
@@ -254,9 +242,10 @@ function userGradeModifyListModal(data){
 	var department = `\${data[0].userDepartment}`;
 	var email = `\${data[0].email}`;
 	var phone = `\${data[0].hp}`;
-	var regiDate = `\${data[0].regiDate}`;
 	var grade = `\${data[0].userGrade}`;
 	var userNo = `\${data[0].userNo}`;
+	
+	//console.log(userNo);
 	
 	
 	$(".userModify .userName").each(function() {
@@ -273,10 +262,6 @@ function userGradeModifyListModal(data){
 	
 	$(".userModify .userPhone").each(function() {
 		$(this).val(phone)
-	})
-	
-	$(".userModify .regiDate").each(function() {
-		$(this).val(regiDate)
 	})
 	
 	$(".userModify .userNo").each(function() {
@@ -329,7 +314,7 @@ getUserList = function(curPage){
 				table+=`<td>\${nvl(item.userDepartment)}</td>`
 				table+=`<td>\${nvl(item.email)}</td>`
 				table+=`<td>\${nvl(item.hp)}</td>`
-				table+=`<td>\${nvl(item.regiDate)}</td>`
+				table+=`<td>\${nvl(item.regiDate).substring(0, 16)}</td>`
 				table+=`<td><button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="\${item.userNo}">수정</button></td>`
 				table+= `</tr>`
 			})
@@ -367,25 +352,34 @@ $(document).on("click",".userGradeModifyClose", function(){
 
 
 $(document).on("click",".userModifyBt", function(){
-	var grade = $(".userGradeModify .custom-select option:checked").text()
-	var userNo = $(".userGradeModify .userNo").val()
+	var userGrade = $(".userModify .custom-select option:checked").text()
+	var userNo = $(".userModify .userNo").val()
+	var userName = $(".userModify .userName").val()
+	var userDepartment = $(".userModify .userDepartment").val()
+	var userPhone = $(".userModify .userPhone").val()
+	var userEmail = $(".userModify .email").val()
 	//console.log(grade);
 	//console.log(userNo);
-	userGradeModify(grade, userNo);
+	userInfoModify(userGrade, userNo, userName, userDepartment, userPhone, userEmail);
 });
 
 
 //회원등급 수정
-function userGradeModify(grade, userNo){
+function userInfoModify(userGrade, userNo, userName, userDepartment, userPhone, userEmail){
 	
     $.ajax({
-        url: '/user/userGradeModify',
+        url: '/user/userInfoModify',
         method: 'GET',
-        data: { grade: grade,
-        		userNo: userNo },
+        data: { userGrade: userGrade,
+        		userNo: userNo,
+        		userName: userName, 
+        		userDepartment: userDepartment, 
+        		userPhone: userPhone, 
+        		userEmail: userEmail
+        		},
         success: function(data) {
         	console.log(data);
-        	alert("회원등급이 수정 되었습니다.");
+        	alert("회원정보가 수정 되었습니다.");
         	location.reload();
        },
 	    error: function(jqXHR, textStatus, errorThrown) {
@@ -466,8 +460,9 @@ $(".userPw, .userPwChk").on('keyup', function() {
 });
 
 
-//모달 회원등록 버튼 클릭
+//모달 회원등록 버튼 클릭시 회원 추가
 $(document).on("click",".userInsertBt", function(){
+    var formData = new FormData();
 	var userId = $(".userInsert .userId").val();
 	var userPw = $(".userInsert .userPw").val();
 	var userName = $(".userInsert .userName").val();
@@ -476,31 +471,43 @@ $(document).on("click",".userInsertBt", function(){
 	var userEmail = $(".userInsert .userEmail").val();
 	var userPhone = $(".userInsert .userPhone").val();
 	
+	console.log(userId)
+	
+    // formData에 파라미터 추가
+    formData.append("userId", userId);
+    formData.append("userPw", userPw);
+    formData.append("userName", userName);
+    formData.append("userGrade", userGrade);
+    formData.append("userDepartment", userDepartment);
+    formData.append("userEmail", userEmail);
+    formData.append("userPhone", userPhone);
+    
+	var userImage = $(".userInsert .userImage")[0].files[0];
+
+	if(userImage) {
+		formData.append('file', userImage);
+	}
+    
+    console.log(formData);
+    
+	
 	if(userId == '' || userPw == '' ||  userName == '' ||  userGrade == '' ||  userDepartment == '' ||  userEmail == '' ||  userPhone == ''){
 		alert("회원 정보를 확인해 주세요");
-	}else{
-		userInsert(userId, userPw, userName, userGrade, userDepartment, userEmail, userPhone);
+		return;
 	}
-});
-
-
-//회원등록
-function userInsert(userId, userPw, userName, userGrade, userDepartment, userEmail, userPhone){
+	
 	let token = $("input[name='_csrf']").val();
 	let header = "X-CSRF-TOKEN";
+	
 	
     $.ajax({
         url: '/user/userInsert',
         method: 'POST',
-        data: { userId: userId, 
-        		userPw: userPw, 
-        		userName: userName, 
-        		userGrade: userGrade, 
-        		userDepartment: userDepartment, 
-        		userEmail: userEmail, 
-        		userPhone: userPhone
-        },
-		beforeSend : function(xhr) {  
+        enctype: 'multipart/form-data',
+        data: formData,
+    	processData: false,
+    	contentType: false,
+        beforeSend : function(xhr) {  
 			xhr.setRequestHeader(header, token);
 		},
         success: function(data) {
@@ -515,9 +522,9 @@ function userInsert(userId, userPw, userName, userGrade, userDepartment, userEma
 	        alert(jqXHR.readyState);
 	    }
     });//ajax end
+    
 	
-}//userInsert() end
-
+});
 
 
 

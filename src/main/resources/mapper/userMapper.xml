@@ -5,14 +5,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="userMapper">
 
-	<!--  
-	<resultMap type="userInfoDTO" id="signUserMap" autoMapping="true">
+	<resultMap type="userInfoDTO" id="userInfoMap" autoMapping="true">
 		<id column="USER_ID" property="userId"/>
-		<association property="auth" javaType="authorityDTO" autoMapping="true">
+		<result property="userNo" column="USER_NO"/>
+		<result property="userPw" column="USER_PW"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="hp" column="HP"/>
+		<result property="email" column="EMAIL"/>
+		<result property="regiDate" column="REGI_DATE"/>
+		<result property="lastLogin" column="LAST_LOGIN"/>
+		<result property="userGrade" column="USER_GRADE"/>
+		<result property="userDepartment" column="USER_DEPARTMENT"/>
+		<collection property="userAuthList" column="USER_ID" ofType="userAuthDTO" javaType="List" autoMapping="true">
 			<id column="USER_ID" property="userId"/>
-		</association>
+			<result property="userId" column="USER_ID"/>
+			<result property="auth" column="AUTH"/>
+		</collection>
+		<collection property="userImage" column="USER_ID" ofType="userImageDTO" javaType="List" autoMapping="true">
+			<id column="USER_ID" property="userId"/>
+			<result property="userImgNo" column="USER_IMG_NO"/>
+			<result property="userNo" column="USER_NO"/>
+			<result property="userId" column="USER_ID"/>
+			<result property="userImgFilePath" column="USER_IMG_FILE_PATH"/>
+			<result property="userImgOriName" column="USER_IMG_ORI_NAME"/>
+			<result property="userImgSaveName" column="USER_IMG_SAVE_NAME"/>
+		</collection>
 	</resultMap>
-	-->
 	
 	
 	<resultMap type="sensorInfoDTO" id="sensorInfoMap" autoMapping="true">
@@ -35,9 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE USER_NO = #{userNo}
 	</select>
 	
-	<!-- 회원등급 수정 -->
-	<update id="userGradeModify" parameterType="userInfoDTO">
-		UPDATE USER_INFO SET USER_GRADE = #{grade}
+	<!-- 회원정보 수정 -->
+	<update id="userInfoModify" parameterType="userInfoDTO">
+		UPDATE USER_INFO SET USER_GRADE = #{userGrade}, USER_NAME = #{userName}, USER_DEPARTMENT = #{userDepartment}, EMAIL = #{userEmail}, HP = #{userPhone}
 		WHERE USER_NO = #{userNo}
 	</update>
 
@@ -77,8 +95,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 		
 	<insert id="userInsert" parameterType="map">
-		INSERT INTO USER_INFO(USER_NAME, USER_GRADE, USER_DEPARTMENT, USER_ID, USER_PW, HP, EMAIL, REGI_DATE)
-		VALUES(#{userName}, #{userGrade}, #{userDepartment}, #{userId}, #{userPw}, #{userPhone}, #{userEmail}, NOW())
+		INSERT INTO USER_INFO(USER_NAME, USER_GRADE, USER_DEPARTMENT, USER_ID, USER_PW, HP, EMAIL, REGI_DATE, USER_IMG_FILE_PATH, USER_IMG_ORI_NAME, USER_IMG_SAVE_NAME)
+		VALUES(#{userName}, #{userGrade}, #{userDepartment}, #{userId}, #{userPw}, #{userPhone}, #{userEmail}, NOW(), #{userImgFilePath}, #{userImgOriImgName}, #{userImgSaveName})
 	</insert>
 		
 	<insert id="userRoleInsert" parameterType="map">
@@ -103,6 +121,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="userIdChk" resultType="int">
 		SELECT COUNT(*) FROM USER_INFO WHERE USER_ID = #{userID}
 	</select>
+	
+	
+	<!-- 회원 이미지 추가 -->
+	<insert id="insertUserImg" parameterType="map">
+		INSERT INTO USER_IMAGE (USER_NO, USER_ID, USER_IMG_FILE_PATH, USER_IMG_ORI_NAME, USER_IMG_SAVE_NAME)
+		VALUES (
+		<if test="userNo!=null and !userNo.equals('')">
+		#{userNo},
+		</if>
+		<if test="userNo==null or userNo.equals('')">
+		(SELECT MAX(user_no) FROM USER_INFO),	
+		</if>
+		#{userId}, #{userImgFilePath}, #{userImgOriImgName}, #{userImgSaveName}
+		)
+	</insert>
 	
 	
 	

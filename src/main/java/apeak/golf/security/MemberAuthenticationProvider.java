@@ -62,10 +62,9 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		}
 		
 		// 2.인수로 받는 user정보를 가지고 디비에 존재하는지 체크(id check)
-		
 		String userId = auth.getName();
 		UserInfoDTO userInfoDTO = userInfoDAO.selectUserById(userId);
-
+		
 		if (userInfoDTO == null) {// ID가 없는경우
 			throw new UsernameNotFoundException("아이디 또는 패스워드 오류입니다.");// spring exception
 		}

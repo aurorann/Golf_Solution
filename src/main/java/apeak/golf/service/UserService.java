@@ -6,12 +6,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import apeak.golf.model.dao.UserImageDAO;
 import apeak.golf.model.dao.UserInfoDAO;
 import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.util.PagingUtil;
@@ -26,6 +28,9 @@ public class UserService {
 	@Autowired
 	private UserInfoDAO userInfoDAO;
 	
+	@Autowired
+	private UserImageDAO userImageDAO;
+	
 	//회원 조회
 	public List<EgovMap> userList() {
 		return userInfoDAO.userList();
@@ -37,8 +42,8 @@ public class UserService {
 	}//userGradeModifyList() end
 	
 	//회원등급 수정
-	public int userGradeModify(String grade, int userNo) {
-		return userInfoDAO.userGradeModify(grade, userNo);
+	public void userInfoModify(EgovMap paramMap) {
+		userInfoDAO.userInfoModify(paramMap);
 	}//userGradeModifyList() end
 	
 	public void example() {
@@ -98,10 +103,53 @@ public class UserService {
 	
 	
 	//회원추가
-	public void userInsert(EgovMap paramMap) {
-		paramMap.put("userPw", passwordEncoder.encode(paramMap.get("userPw").toString()));
-		userInfoDAO.userInsert(paramMap);
-	}//userGradeModifyList() end
+	/*
+	public void userInsert(Map<String, Object> params, List<String> userImgOriImgNameList, List<String> userImgFilePathList, List<String> userImgSaveNameList) {
+		params.put("userPw", passwordEncoder.encode(params.get("userPw").toString()));
+		userInfoDAO.userInsert(params);
+
+	    for (int i = 0; i < userImgOriImgNameList.size(); i++) {
+	        Map<String, Object> param = new HashMap<>();
+	        String userImgOriImgName = userImgOriImgNameList.get(i);
+	        String userImgFilePath = userImgFilePathList.get(i);
+	        String userImgSaveName = userImgSaveNameList.get(i);
+
+	        param.put("userId", params.get("userId"));
+	        param.put("userImgFilePath", userImgFilePath);
+	        param.put("userImgOriImgName", userImgOriImgName);
+	        param.put("userImgSaveName", userImgSaveName);
+	        userImageDAO.insertUserImage(param);
+	    }
+		
+	}//userInsert() end
+	*/
+	
+	public void userInsert(Map<String, Object> params, String userImgOriImgName, String userImgFilePath, String userImgSaveName) {
+	    params.put("userPw", passwordEncoder.encode(params.get("userPw").toString()));
+        params.put("userImgFilePath", userImgFilePath);
+        params.put("userImgOriImgName", userImgOriImgName);
+        params.put("userImgSaveName", userImgSaveName);
+
+        userInfoDAO.userInsert(params);
+	    
+        /*
+	    if(userImgOriImgName != null && userImgFilePath != null && userImgSaveName != null) {
+	    
+		    Map<String, Object> param = new HashMap<>();
+		    param.put("userId", params.get("userId"));
+	        param.put("userImgFilePath", userImgFilePath);
+	        param.put("userImgOriImgName", userImgOriImgName);
+	        param.put("userImgSaveName", userImgSaveName);
+		    
+		    userImageDAO.insertUserImage(param);
+		    
+	    }else{
+		    userInfoDAO.userInsert(params);
+	    }//if end
+	    */
+	    
+	}//userInsert() end
+
 	
 
 	

@@ -1,7 +1,16 @@
 package apeak.golf.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +24,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
@@ -98,13 +110,28 @@ public class UserController {
 		return userService.userGradeModifyList(userNo);
 	}
 	
-	//회원등급 수정
+	//회원정보 수정
 	@ResponseBody
-	@RequestMapping("/userGradeModify")
-	public int userGradeModify(@RequestParam(value="grade",required=false) String grade,
-								@RequestParam(value="userNo",required=false) int userNo) {
+	@RequestMapping("/userInfoModify")
+	public String userInfoModify(@RequestParam(value="userGrade") String userGrade,
+							@RequestParam(value="userNo") int userNo,
+							@RequestParam(value="userName") String userName,
+							@RequestParam(value="userDepartment") String userDepartment,
+							@RequestParam(value="userPhone") String userPhone,
+							@RequestParam(value="userEmail") String userEmail) {
 		
-		return userService.userGradeModify(grade, userNo);
+		
+		EgovMap paramMap = new EgovMap();
+		paramMap.put("userNo", userNo);
+		paramMap.put("userName", userName);
+		paramMap.put("userGrade", userGrade);
+		paramMap.put("userDepartment", userDepartment);
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("userPhone", userPhone);
+		
+		userService.userInfoModify(paramMap);
+		
+	    return "redirect:/";
 	}
 	
 	//회원아이디 중복 확인
@@ -115,36 +142,48 @@ public class UserController {
 		return userService.userIdChk(userId);
 	}
 	
+	
+	
+	
 	//회원추가
 	@ResponseBody
-	@RequestMapping("/userInsert")
-	public String userInsert(@RequestParam(value="userId") String userId,
-									@RequestParam(value="userPw") String userPw,
-									@RequestParam(value="userName") String userName,
-									@RequestParam(value="userGrade") String userGrade,
-									@RequestParam(value="userDepartment") String userDepartment,
-									@RequestParam(value="userEmail") String userEmail,
-									@RequestParam(value="userPhone") String userPhone) {
-		
-		
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    
-	    UserInfoDTO userInfo = (UserInfoDTO)authentication.getPrincipal();
-		
-		EgovMap paramMap = new EgovMap();
-		paramMap.put("userId", userId);
-		paramMap.put("userPw", userPw);
-		paramMap.put("userName", userName);
-		paramMap.put("userGrade", userGrade);
-		paramMap.put("userDepartment", userDepartment);
-		paramMap.put("userEmail", userEmail);
-		paramMap.put("userPhone", userPhone);
-		
-		userService.userInsert(paramMap);
-		
-	    return "redirect:/";
+	@RequestMapping(value="/userInsert", method = RequestMethod.POST)
+	public void userInsert(@RequestParam(value="file",required=false) MultipartFile file,
+							@RequestParam Map<String, Object> param) {
+	
+		UserInfoDTO userInfo = (UserInfoDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	
+		try {
+			if (file != null && !file.isEmpty()) {
+				String path = "C:\\DATA\\USER_IMAGE";
+				File fileDir = new File(path);
+				if (!fileDir.exists()) {
+				    fileDir.mkdirs();
+				}
+				
+				String oriImgName = file.getOriginalFilename();
+				String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
+				String imgName = UUID.randomUUID().toString().replace("-", "");
+				String saveName = imgName+ext;
+				
+				file.transferTo(new File(path, saveName)); 				
+				
+	            String userImgOriImgName = oriImgName;
+	            String userImgSaveName = saveName;
+	            String userImgFilePath = path + "\\" + saveName;
+				
+				userService.userInsert(param, userImgOriImgName, userImgFilePath, userImgSaveName);
+			} else {
+				userService.userInsert(param, null, null, null);
+			}
+	
+		} catch (Exception e) {
+	    	e.printStackTrace();
+		}
+	}//userInsert() end
 
-	}
+
+
 	
 	
 	

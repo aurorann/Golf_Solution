@@ -21,6 +21,10 @@ public class UserInfoDTO implements Serializable{
 	private String lastLogin;
 	private String userGrade;
 	private String userDepartment;
+	private String userImgFilePath;
+	private String userImgOriName;
+	private String userImgSaveName;
 	
 	private List<UserAuthDTO> userAuthList;
+	private List<UserImageDTO> userImage;
 }

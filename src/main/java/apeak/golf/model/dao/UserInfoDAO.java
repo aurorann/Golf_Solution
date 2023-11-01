@@ -29,11 +29,8 @@ public class UserInfoDAO {
 	}
 	
 	//회원등급 수정
-	public int userGradeModify(String grade, int userNo){
-		EgovMap paramMap = new EgovMap();
-		paramMap.put("grade", grade);
-		paramMap.put("userNo", userNo);
-		return session.update("userMapper.userGradeModify", paramMap);
+	public void userInfoModify(EgovMap paramMap){
+		session.update("userMapper.userInfoModify", paramMap);
 	}
 
 	public UserInfoDTO selectUserById(String userId) {
@@ -62,10 +59,10 @@ public class UserInfoDAO {
 	}
 		
 	//회원추가
-	public void userInsert(EgovMap paramMap){
+	public void userInsert(Map<String, Object> params){
 		//session.update("userMapper.userGradeModify", paramMap);
-		session.insert("userMapper.userInsert", paramMap);
-		session.insert("userMapper.userRoleInsert", paramMap);
+		session.insert("userMapper.userInsert", params);
+		session.insert("userMapper.userRoleInsert", params);
 		//session.selectOne("userMapper.userExist", paramMap);
 
 		
