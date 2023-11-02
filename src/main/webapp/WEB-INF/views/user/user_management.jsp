@@ -305,14 +305,29 @@ function nvl(data){
 	}
 }
 
-getUserList = function(curPage){
-	var keyword = "";
-	
+
+
+var currentSearchType = null;
+var currentSearchText = null;
+
+getUserList = function(curPage, searchType, searchText){
 	if(!curPage){curPage=1}
 	
+	var url = "${pageContext.request.contextPath}/user/getUserList";
+	var data = "curPage="+curPage;
+	
+	if(searchType && searchText){
+		url = "${pageContext.request.contextPath}/user/userSearchList";
+		data = {
+			searchType: searchType,
+			searchText: searchText,
+			curPage: curPage
+		};
+	}
+	
 	$.ajax({
-		url:"${pageContext.request.contextPath}/user/getUserList",
-		data: "curPage="+curPage,
+		url: url,
+		data: data,
 		success: function(result){
 			console.log(result);
 			
@@ -333,22 +348,23 @@ getUserList = function(curPage){
 				table+=`<td><button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="\${item.userNo}">수정</button></td>`
 				table+= `</tr>`
 			})
+			
 			$('#userList').html(table);
 			
 			var pager = result.pager;
 			
 			var pagerContent = "";
-			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.startPage-1)+")'><a href='#' class='page-link'><<a></li>"}
+			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.startPage-1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'><<a></li>"}
 			for(i=pager.startPage;i<=pager.endPage;i++){
-				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
-				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
+				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getUserList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getUserList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
 			}
-			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.endPage+1)+")'><a href='#' class='page-link'>></a></li>"}
+			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.endPage+1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>></a></li>"}
 			
 			if(table!=''){
 				$("#pager").html(pagerContent);
 			}else{
-				$('#userList').html('<tr><td colspan="8">사용자가 없습니다.</td></tr>');
+				$('#userList').html('<tr><td colspan="12">사용자가 없습니다.</td></tr>');
 				$("#pager").html('');
 			}
 		},
@@ -359,68 +375,34 @@ getUserList = function(curPage){
 	})
 }
 
-getUserList(1)
-
+$(".searchUser .searchText").on("keypress", function(event){
+    if(event.which !== 13) {
+        return;
+    }
+    
+    var searchType = $(".searchUser .searchType option:selected").val();
+    var searchText = $(".searchUser .searchText").val();
+    
+    currentSearchType = searchType;
+    currentSearchText = searchText;
+    
+    getUserList(1, searchType, searchText)
+});
 
 //회원검색 버튼 클릭
 $(document).on("click",".searchUserBt", function(){
 	var searchType = $(".searchUser .searchType option:selected").val();
 	var searchText = $(".searchUser .searchText").val();
-	var curPage = 1;
+	
+    currentSearchType = searchType;
+    currentSearchText = searchText;
 
-	$.ajax({
-		url: "${pageContext.request.contextPath}/user/userSearchList",
-		data: {
-			searchType: searchType,
-			searchText: searchText,
-			curPage: curPage
-		},
-		success: function(result){
-			console.log(result);
-						
-			var list = result.list;
-			
-			var table = ''
-			$.each(list,function(index,item){
-				
-				table+=`<tr>`
-				table+=`<td>\${nvl(item.userNo)}</td>`
-				table+=`<td>\${nvl(item.userId)}</td>`
-				table+=`<td>\${nvl(item.userName)}</td>`
-				table+=`<td>\${nvl(item.userGrade)}</td>`
-				table+=`<td>\${nvl(item.userDepartment)}</td>`
-				table+=`<td>\${nvl(item.email)}</td>`
-				table+=`<td>\${nvl(item.hp)}</td>`
-				table+=`<td>\${nvl(item.regiDate).substring(0, 16)}</td>`
-				table+=`<td><button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="\${item.userNo}">수정</button></td>`
-				table+= `</tr>`
-			})
-			$('#userList').html(table);
-			
-			var pager = result.pager;
-			
-			var pagerContent = "";
-			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.startPage-1)+")'><a href='#' class='page-link'><<a></li>"}
-			for(i=pager.startPage;i<=pager.endPage;i++){
-				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
-				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
-			}
-			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.endPage+1)+")'><a href='#' class='page-link'>></a></li>"}
-			
-			if(table!=''){
-				$("#pager").html(pagerContent);
-			}else{
-				$('#userList').html('<tr><td colspan="8">사용자가 없습니다.</td></tr>');
-				$("#pager").html('');
-			}
-			
-		},
-		error:function(request,status,error){
-		   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-		}
-			
-	})
+    getUserList(1, searchType, searchText)
 });
+
+getUserList(1)
+
+
 
 
 
