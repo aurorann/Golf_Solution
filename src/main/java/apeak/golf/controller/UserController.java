@@ -183,7 +183,22 @@ public class UserController {
 	}//userInsert() end
 
 
-
+	
+	//회원검색
+	@ResponseBody
+	@RequestMapping("/userSearchList")
+	public Map<String,Object> userSearch(@RequestParam Map<String, Object> pMap) {
+		
+		//EgovMap paramMap = new EgovMap();
+		//paramMap.put("searchType", searchType);
+		//paramMap.put("searchText", searchText);
+		//paramMap.put("curPage", curPage);
+		
+		return userService.userSearchList(pMap);
+	}
+	
+	
+	
 	
 	
 	

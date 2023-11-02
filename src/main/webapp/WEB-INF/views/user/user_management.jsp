@@ -21,6 +21,15 @@
 	<!-- Content area -->
 	<div class="content">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		<div class="row searchUser" style="margin-left: 0; margin-right: 0; margin-bottom: 20px">
+			<select class="custom-select col-lg-1 mr-2 searchType">
+				<option value="userId">아이디</option>
+				<option value="userName">회원 이름</option>
+				<option value="userDpt">소속</option>
+			</select>
+			<input type="text" class="col-lg-2 mr-2 searchText">
+			<button type="button" class="ml-2 btn btn-primary searchUserBt">검색</button>
+		</div>
 		<!-- Basic card -->
 		<div class="card">
 			<div class="card-header">
@@ -56,19 +65,19 @@
 
 							<div class="modal-body py-0">
 								<div class="row">
-									<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <input type="text" class="col-form-label col-lg-10 userName"></input>
+									<label class="col-form-label font-weight-bold col-lg-2">회원명</label> <input type="text" class="form-control col-form-label col-lg-10 userName"></input>
 								</div>
 
 								<div class="row mt-3">
-									<label class="col-form-label font-weight-bold col-lg-2">소속</label> <input type="text" class="col-form-label col-lg-10 userDepartment"></input>
+									<label class="col-form-label font-weight-bold col-lg-2">소속</label> <input type="text" class="form-control col-form-label col-lg-10 userDepartment"></input>
 								</div>
 
 								<div class="row mt-3">
-									<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <input type="text" class="col-form-label col-lg-10 email"></input>
+									<label class="col-form-label font-weight-bold col-lg-2">이메일</label> <input type="text" class="form-control col-form-label col-lg-10 email"></input>
 								</div>
 
 								<div class="row mt-3">
-									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <input type="text" class="col-form-label col-lg-10 userPhone"></input>
+									<label class="col-form-label font-weight-bold col-lg-2">연락처</label> <input type="text" class="form-control col-form-label col-lg-10 userPhone"></input>
 								</div>
 								
 								<input type="hidden" class="userNo" value="">
@@ -352,9 +361,67 @@ getUserList = function(curPage){
 
 getUserList(1)
 
-$(document).on("click",".userGradeModifyClose", function(){
 
+//회원검색 버튼 클릭
+$(document).on("click",".searchUserBt", function(){
+	var searchType = $(".searchUser .searchType option:selected").val();
+	var searchText = $(".searchUser .searchText").val();
+	var curPage = 1;
+
+	$.ajax({
+		url: "${pageContext.request.contextPath}/user/userSearchList",
+		data: {
+			searchType: searchType,
+			searchText: searchText,
+			curPage: curPage
+		},
+		success: function(result){
+			console.log(result);
+						
+			var list = result.list;
+			
+			var table = ''
+			$.each(list,function(index,item){
+				
+				table+=`<tr>`
+				table+=`<td>\${nvl(item.userNo)}</td>`
+				table+=`<td>\${nvl(item.userId)}</td>`
+				table+=`<td>\${nvl(item.userName)}</td>`
+				table+=`<td>\${nvl(item.userGrade)}</td>`
+				table+=`<td>\${nvl(item.userDepartment)}</td>`
+				table+=`<td>\${nvl(item.email)}</td>`
+				table+=`<td>\${nvl(item.hp)}</td>`
+				table+=`<td>\${nvl(item.regiDate).substring(0, 16)}</td>`
+				table+=`<td><button class="btn btn-info listUserModify" type="button" data-toggle="modal" data-target="#modal_user" value="\${item.userNo}">수정</button></td>`
+				table+= `</tr>`
+			})
+			$('#userList').html(table);
+			
+			var pager = result.pager;
+			
+			var pagerContent = "";
+			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.startPage-1)+")'><a href='#' class='page-link'><<a></li>"}
+			for(i=pager.startPage;i<=pager.endPage;i++){
+				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
+				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getUserList("+i+")'><a href='#' class='page-link'>"+i+"</a></li>"}
+			}
+			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.endPage+1)+")'><a href='#' class='page-link'>></a></li>"}
+			
+			if(table!=''){
+				$("#pager").html(pagerContent);
+			}else{
+				$('#userList').html('<tr><td colspan="8">사용자가 없습니다.</td></tr>');
+				$("#pager").html('');
+			}
+			
+		},
+		error:function(request,status,error){
+		   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		}
+			
+	})
 });
+
 
 
 $(document).on("click",".userModifyBt", function(){
@@ -593,6 +660,11 @@ $(document).on("click",".userInsertBt", function(){
     
 	
 });
+
+
+
+
+
 
 
 

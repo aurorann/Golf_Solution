@@ -80,6 +80,11 @@
 											<label class="col-form-label col-lg-10">${userInfo.regiDate}</label>
 										</div>
 
+										<div class="row mt-2">
+											<label class="col-form-label font-weight-bold col-lg-2">회원사진</label> 
+											<input type="file" class="form-control col-lg-4 userImage">
+										</div>
+
 										<div class="text-center mt-2">
 											<button type="button" id="changeUserBtn" class="btn btn-lg btn-primary">정보 수정</button>
 										</div>

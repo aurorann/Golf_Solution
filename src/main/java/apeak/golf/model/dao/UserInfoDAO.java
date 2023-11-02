@@ -64,8 +64,15 @@ public class UserInfoDAO {
 		session.insert("userMapper.userInsert", params);
 		session.insert("userMapper.userRoleInsert", params);
 		//session.selectOne("userMapper.userExist", paramMap);
+	}
+	
 
-		
+	public int userSearchListCnt(Map<String, Object> paramMap) {
+		return session.selectOne("userMapper.userSearchListCnt",paramMap);
+	}
+
+	public List<UserInfoDTO> userSearchList(Map<String, Object> paramMap) {
+		return session.selectList("userMapper.userSearchList",paramMap);
 	}
 
 	

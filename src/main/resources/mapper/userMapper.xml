@@ -136,6 +136,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{userId}, #{userImgFilePath}, #{userImgOriImgName}, #{userImgSaveName}
 		)
 	</insert>
+		
+	
+	<select id="userSearchListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM USER_INFO WHERE 
+		<if test="searchType == 'userId'">
+			USER_ID LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'userName'">
+			USER_NAME LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'userDpt'">
+			USER_DEPARTMENT LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+	</select>
+
+	
+	<select id="userSearchList" parameterType="map" resultType="userInfoDTO">
+		SELECT * FROM USER_INFO WHERE
+		<if test="searchType == 'userId'">
+			USER_ID LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'userName'">
+			USER_NAME LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'userDpt'">
+			USER_DEPARTMENT LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		LIMIT ${startIndex},${pageSize}
+	</select>
+	
 	
 	
 	

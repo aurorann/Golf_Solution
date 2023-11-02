@@ -72,6 +72,30 @@ public class UserService {
 		
 		return resultMap;
 	}
+	
+	
+
+	public Map<String, Object> userSearchList(Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int curPage = Integer.parseInt((String) paramMap.get("curPage"));
+		
+		int listCnt = userInfoDAO.userSearchListCnt(paramMap);
+		
+		PagingUtil pager = new PagingUtil(listCnt, curPage);
+		pager.setPageSize(10);
+		paramMap.put("startIndex", pager.getStartIndex());
+		paramMap.put("pageSize", pager.getPageSize());
+		
+		List<UserInfoDTO> list = userInfoDAO.userSearchList(paramMap);
+
+		resultMap.put("listCnt", listCnt);
+		resultMap.put("list", list);
+		resultMap.put("pager", pager);
+		
+		return resultMap;
+	}
+	
 
 	public boolean userCheckPw(String password) {
 		UserInfoDTO userInfo = (UserInfoDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -149,10 +173,9 @@ public class UserService {
 	    */
 	    
 	}//userInsert() end
-
+	
 	
 
-	
 	
 	
 	
