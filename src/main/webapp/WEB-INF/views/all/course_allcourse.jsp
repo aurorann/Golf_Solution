@@ -494,8 +494,8 @@ $(function(){
 		    position: position,
 		    icon: {
 		        //content: contentString,
-		        url: "/resources/assets/img/pin.png",
-		        size: new naver.maps.Size(30, 44),
+		        url: "/resources/assets/img/marker.png",
+		        size: new naver.maps.Size(45, 46),
 		        origin: new naver.maps.Point(0, 0),
 		        anchor: new naver.maps.Point(25, 26)
 		    }
