@@ -48,6 +48,37 @@ body {
     left: 65%;
 }
 
+.course-sm .card-title {
+    font-size:11px;
+}
+
+.course-sm .badge {
+    font-size:10px;
+    padding: 3px;
+}
+
+.course-sm .weather-wrap {
+    height: auto;
+}
+
+.course-sm .weather-box {
+    width:auto;
+    padding: 0 10px;
+}
+
+.course-sm .card-body {
+    padding:0 4px;
+}
+
+.course-sm h2, .course-sm h4 {
+    font-size:13px;
+}
+
+.course-sm .font-size-sm {
+    font-size:11px;
+}
+
+
 .course-tab {
     right: 16px;
     top: 10px;
@@ -226,22 +257,75 @@ body {
 
 .control-movi-wrap {
     background:#fff;
-    border-radius:0.4rem 0.4rem 0 0;
-}
-
-.control-movi-wrap {
-    /* position:absolute;
-    top:25%; */
-    text-align:center;
-    background: #fff;
-    border-radius: 0.4rem 0.4rem 0 0;
+    border-radius:0.4rem;
     float: left;
     width: 100%;
     padding: 10px 0 0 0;
+    text-align:center;
 }
 
-.image-player-wrapper .control-movi-wrap .start-btn:hover, .image-player-wrapper .control-movi-wrap .stop-btn:hover, .control-movi-wrap .pause-btn:hover {
+.btn-wrap {
+    /* margin-left: 21%; */
+}
+
+/* .now-date {
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+} */
+
+.image-player-wrapper {
+    position: absolute;
+    bottom: 10px;
+    width: 99%;
+    left: 50%;
+    margin-left: -49%;
+    padding: 11px 10px 0 0;
+    border-radius: 11px;
+}
+
+.image-player-btn {
+    position:absolute;
+    bottom:85px;
+    right:20px;
+    z-index:1;
+    background:#ececec;
+    border-radius: 20px;
+    padding: 2px 3px 2px 10px;
+}
+
+.image-player-btn button {
+    width:30px;
+    height:30px;
+    border: 2px solid #ddd;
+    background:#fff;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    border-radius: 50px;
+    transition: color 0.15s ease-in-out 0s, background-color 0.15s ease-in-out 0s, border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+.player-open {
+    bottom:20px;
+}
+
+.image-player-btn span {
+    color:#999;
+    cursor: pointer;
+}
+
+.image-player-btn button i {
+    color:#ddd;
+}
+
+.image-player-btn:hover button {
+    border:2px solid #2cbacc;
+    
+}
+
+.image-player-wrapper .control-movi-wrap .start-btn:hover, .image-player-wrapper .control-movi-wrap .stop-btn:hover, .control-movi-wrap .pause-btn:hover, .image-player-btn:hover i, .image-player-btn:hover span {
     color:#2cbacc;
+    -webkit-font-smoothing: antialiased;
 }
 
 .image-player-wrapper .control-movi-lap {
@@ -250,10 +334,9 @@ body {
     left: 65px;
     margin-top: -6px;
     width: calc(100% - 85px); */
-    padding:8px 16px; 
+    padding:8px 10px; 
     width:100%;
     float:left;
-    background:#fff;
 }
 
 
@@ -326,12 +409,26 @@ body {
     background:url('../img/background1.png')no-repeat 100% 100%;
     background-size:cover;
 }
+@media (max-width: 992px) {
+    .btn-wrap {
+        margin-left: 0;
+    }
+    
+}
 
 @media (max-width: 670px) {
     .image-player-wrapper .control-movi-wrap .movi-line {
         flex-direction: column;
     }
 
+    .movi-line {
+        display: none!important;
+    }
+
+    .btn-wrap {
+        margin-left: 0;
+    }
+    
     .image-player-wrapper .control-movi-lap .movi-line {
         height:150px;
     }
@@ -340,11 +437,23 @@ body {
         margin-top:10px;
     }
 
+    .image-player-btn {
+        bottom: 212px;
+    }
+
+    .player-open {
+        bottom:10px;
+    }    
+
+    .control-movi-wrap .btn-wrap button {
+        padding: 5px 0 0 0;
+    }
+
+    .control-movi-wrap .btn-wrap button i {
+        margin: 0;
+    }
+
 }
-/*
-.btn-wrap {
-    margin-left: 21%;
-}*/
 
 .btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light {
     color: #f5f5f5;

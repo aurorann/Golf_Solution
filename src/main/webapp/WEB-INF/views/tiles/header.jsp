@@ -23,10 +23,10 @@
 		</button>
 	</div>
 
-	<div class="navbar-brand text-center text-lg-left">
-		<a href="#" class="d-inline-block"> <img src="/resources/assets/img/golf_logo.png"
-			class="d-none d-sm-block" alt="Logo"> <img src="/resources/assets/img/golf_logo.png" class="d-sm-none"
-			alt="Logo">
+	<div class="navbar-brand text-center text-lg-left" style="padding: 10px;">
+		<a href="/all/course_allcourse" class="d-inline-block"> 
+			<img src="/resources/assets/img/golf_logo2.png"	class="d-none d-sm-block" alt="Logo" style="height: 30px"> 
+			<img src="/resources/assets/img/golf_logo2.png" class="d-sm-none" alt="Logo">
 		</a>
 	</div>
 

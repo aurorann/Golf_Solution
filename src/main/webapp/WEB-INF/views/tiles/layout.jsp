@@ -18,6 +18,7 @@
 	<link href="/resources/assets/css/fontawsome/styles.min.css" rel="stylesheet" type="text/css">
 	<link href="/resources/assets/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="/resources/assets/css/add.css" rel="stylesheet" type="text/css">
+	<link href="/resources/assets/css/kdh.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
 
 	<!-- Core JS files -->

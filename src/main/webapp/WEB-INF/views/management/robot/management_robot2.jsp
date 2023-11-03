@@ -56,56 +56,56 @@
                           </thead>
                           <tbody>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>샌싱 캐디(토양 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>샌싱 센싱(토양 측정)</td>
                                   <td>37.211,128.412 데이터 측정중에 있습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 2</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 2</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>37.211,128.412 데이터 측정중에 있습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
                               <tr>
-                                  <td>캐디 1</td>
-                                  <td>캐디(NDVI 측정)</td>
+                                  <td>센싱 1</td>
+                                  <td>센싱(NDVI 측정)</td>
                                   <td>활성화 되었습니다.</td>
                                   <td>2023-08-14 16:54</td>
                               </tr>
@@ -173,52 +173,52 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>

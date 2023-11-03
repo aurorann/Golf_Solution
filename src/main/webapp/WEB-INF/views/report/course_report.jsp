@@ -11,7 +11,7 @@
 		<div class="page-header-content d-sm-flex">
 			<div class="page-title" style="width: 100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
-				<div class="btn-group mr-2">
+				<div class="btn-group mr-2" id="holeList">
 					<button type="button" class="holebt btn btn-light active" value="01" data-lat="" data-lon="" data-holename="Hole 1">H1</button>
 					<button type="button" class="holebt btn btn-light" value="02" data-lat="" data-lon="" data-holename="Hole 2">H2</button>
 					<button type="button" class="holebt btn btn-light" value="03" data-lat="" data-lon="" data-holename="Hole 3">H3</button>
@@ -863,7 +863,7 @@
 
 				map = new naver.maps.Map('map', {
 				    center: new naver.maps.LatLng(37.0455041, 127.3907905),
-				    zoom: 15
+				    zoom: 18
 				});
 
 				map.setMapTypeId('satellite'); 
@@ -877,10 +877,19 @@
 							<div class="card-header">
 								<h5 class="card-title holename">
 									\${data.list4[0].holeName}
-									<div class="btn-group ml-3" data-toggle="buttons" id="layerType">
-										<button type="button" class="btn btn-light" data-layertype="NDVI">생육</button>
-										<button type="button" class="btn btn-light" data-layertype="TEMP">열</button>
-										<button type="button" class="btn btn-light" data-layertype="HUMI">습도</button>
+									<div class="btn-group btn-group-toggle ml-3" data-toggle="buttons" id="layerType">
+										<label class="btn btn-light active" data-layertype="NDVI">
+											<input type="radio" name="layerType${i}" autocomplete="off" >
+											생육
+										</label>
+										<label class="btn btn-light" data-layertype="TEMP">
+											<input type="radio" name="layerType${i}" autocomplete="off" >
+											열
+										</label>
+										<label class="btn btn-light" data-layertype="HUMI">
+											<input type="radio" name="layerType${i}" autocomplete="off" >
+											습도
+										</label>
 									</div>
 									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
 								</h5>
@@ -1299,9 +1308,11 @@
 				dataElement.innerHTML = content;
 
 				map = new naver.maps.Map('map', {
-				    center: new naver.maps.LatLng(35.591352, 127.902073),
-				    zoom: 17
+				    center: new naver.maps.LatLng(data.list4[0].lat, data.list4[0].lon),
+				    zoom: 18
 				});
+
+				console.log(data.list4[0].lat)
 
 				map.setMapTypeId('satellite'); 
 				
@@ -1787,7 +1798,7 @@
     
     
 	//달력 오늘날짜 설정
-    document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
+    document.getElementById('currentDate').value = '2023-09-26'//new Date().toISOString().substring(0, 10);
     
 	//현재 날짜 yyyy-mm-dd hh:mm으로 표출
     function formatDate(date) {

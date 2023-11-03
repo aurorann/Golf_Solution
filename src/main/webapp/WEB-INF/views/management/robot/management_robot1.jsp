@@ -48,7 +48,7 @@
 							<a href="#">
 								<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
 								</span>
-								<span class="ml-1 font-weight-bold text-dark">캐디 로봇 1</span>
+								<span class="ml-1 font-weight-bold text-dark">센싱 로봇 1</span>
 							</a>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 							<a href="#">
 								<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
 								</span>
-								<span class="ml-1 font-weight-bold text-dark">캐디 로봇 2</span>
+								<span class="ml-1 font-weight-bold text-dark">센싱 로봇 2</span>
 							</a>
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 						<h6 class="card-title">
 							<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart" aria-expanded="false">
 								<span class="badge badge-danger badge-pill mr-1">충전 필요</span>
-								<span>캐디 로봇 2</span>
+								<span>센싱 로봇 2</span>
 								<span>
 									배터리가 부족합니다
 								</span>
@@ -175,7 +175,7 @@
 							<h6 class="card-title">
 								<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart2" aria-expanded="false">
 									<span class="badge badge-success badge-pill mr-1">활동중</span>
-									<span>캐디 로봇 1</span>
+									<span>센싱 로봇 1</span>
 									<span>
 										활동 중입니다.
 									</span>
@@ -321,52 +321,52 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
 						<tr>
-							<td class="pl-1 pr-1">캐디1</td>
+							<td class="pl-1 pr-1">센싱1</td>
 							<td class="pl-1 pr-1">작동중</td>
 							<td class="pl-1 pr-1">2023-10-23 14:11</td>
 						</tr>
@@ -390,7 +390,7 @@
 <script type="text/javascript">
 $(function(){
 	var map = new naver.maps.Map('map', {
-	    center: new naver.maps.LatLng(35.591352, 127.902073),
+	    center: new naver.maps.LatLng(37.0455041, 127.3907905),
 	    zoom: 18
 	});
 

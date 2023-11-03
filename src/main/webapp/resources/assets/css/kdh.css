@@ -1,0 +1,13 @@
+@media ( max-width : 450px) {
+	#holeList .btn {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	#map{
+		height: 350px;
+	}
+}
+#map{
+	height: 750px;
+	width: 100%;
+}

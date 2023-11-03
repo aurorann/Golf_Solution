@@ -30,7 +30,7 @@
 
 
 	<!-- Content area -->
-	<div class="content">
+	<div class="content" style="visibility: hidden;">
 		<!-- Basic card -->
 		<div class="row data">
 
@@ -45,6 +45,8 @@
 
 
 let holeCount = 0;
+let mapList = {};
+let overlayList = {};
 
 $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
@@ -63,6 +65,7 @@ $(".categorybt").click(function() {
 	$(this).addClass("active");
 	var listsort = $(".listsort.active").val();
 	getAllData(category, listsort);
+	getChartData()
 });
 
 $(".listsort").click(function() {
@@ -74,10 +77,14 @@ $(".listsort").click(function() {
 	var category = $(".categorybt.active").val();
 	getAllData(category, listsort);
     console.log(category, listsort);
+    getChartData()
 });
 
 
 function getAllData(category, listsort){
+
+	$('.content').css('visibility','hidden')
+	
 	$.ajax({
 		url: '/each/course_separatecourse_ajax',
 		type:'GET',
@@ -120,6 +127,7 @@ function getAllData(category, listsort){
 				    zoom: 16
 				});
 				map.setMapTypeId('satellite'); 
+				mapList[list[i].holeNo] = map;
 
 				const imgNode = document.getElementById("img"+i);
 
@@ -130,6 +138,9 @@ function getAllData(category, listsort){
 				  //$("#img"+i).closest(".imageZone3").hide();
 				  if(i==8){
 					  setTimeout(() => $(".imageZone3").hide(), 100);
+					  setTimeout(() =>$('.content').css('visibility','visible'),200);
+					  setTimeout(() => $('.layerType>label:nth-child(1)').click(),150);
+					  setTimeout(() => window.scrollTo(0,0),200);
 				  }
 				};
 			}
@@ -171,16 +182,16 @@ function updatedata(data){
 							</div>
 						</div>
 						<!--이미지 end-->
-						<div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
-							<label class="btn btn-light active grow" onclick="change(event)">
+						<div class="btn-group btn-group-toggle mr-2 layerType" data-toggle="buttons">
+							<label class="btn btn-light active grow" onclick="change(event)" data-layertype="NDVI"  data-holeno="\${data.list2[i].holeNo}">
 								<input type="radio" name="layerType\${i}" id="option1" autocomplete="off" checked>
 								생육
 							</label>
-							<label class="btn btn-light temp" onclick="change(event)">
+							<label class="btn btn-light temp" onclick="change(event)" data-layertype="TEMP"  data-holeno="\${data.list2[i].holeNo}">
 								<input type="radio" name="layerType\${i}" autocomplete="off">
 								열
 							</label>
-							<label class="btn btn-light moisture" onclick="change(event)">
+							<label class="btn btn-light moisture" onclick="change(event)" data-layertype="HUMI"  data-holeno="\${data.list2[i].holeNo}">
 								<input type="radio" name="layerType\${i}" autocomplete="off" >
 								습도
 							</label>
@@ -334,6 +345,9 @@ function drawChart(type,target,chartData){
 			type : 'datetime',
 	        dateTimeLabelFormats: {
 	            day: '%y-%m-%d<br>%H:%M'
+	        },
+	        labels: {
+	            format: '{value:%y-%m-%d<br>%H:%M}'
 	        }
 		},
 		labels : {
@@ -535,6 +549,74 @@ function formatDate(date) {
 document.getElementById("currentDate").innerHTML = formatDate(new Date());
 
 
+function getLayerData(hole, category,nowLayerType){
+	let retData = null;
+
+	let param = {
+		holeNo : hole,
+		courseType : category,
+		layerType : nowLayerType,
+		startDate : "2023-10-31",
+		endDate : "2023-11-02"
+	}
+	
+	$.ajax({
+		url : "/all/getLayerData",
+		data : param,
+		async : false,
+		success : function(result){
+			retData = result;
+		}
+	})
+
+	return retData;
+}
+
+
+function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx,targetMap,holeNo){
+    var bounds = new naver.maps.LatLngBounds(
+        new naver.maps.LatLng(startLat, startLon),
+        new naver.maps.LatLng(endLat, endLon)
+    );
+
+    var groundOverlay = new naver.maps.GroundOverlay(
+    	path,
+	    bounds,
+	    {
+	        opacity: 0.5,
+	        clickable: false
+	    }
+	);
+
+	if(overlayList[holeNo]){
+		overlayList[holeNo].setMap(null)
+	}
+
+    overlayList[holeNo] = groundOverlay
+	groundOverlay.setMap(targetMap);
+
+	console.log(holeNo)
+	console.log(targetMap)
+	//console.log()
+}
+
+var nowLayerType = "ndvi";
+
+$(document).on('click','.layerType label',function(){
+	console.log('asdf')
+	var layerType = $(this).data('layertype');
+	var holeNo = $(this).data('holeno');
+	
+	nowLayerType = layerType;
+
+	var result = getLayerData(holeNo,$(".categorybt.active").val(),layerType)
+	
+	$.each(result,function(index,item){
+		if(index==result.length-1){
+			createGroundOverlay(item.startLat,item.startLon,item.endLat,item.endLon,item.layerPath,item.tm,index,mapList[holeNo],holeNo)
+		}
+	})
+})
 
 </script>
 <style>
