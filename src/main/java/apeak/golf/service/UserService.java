@@ -148,10 +148,10 @@ public class UserService {
 	}//userInsert() end
 	*/
 	
-	public void userInsert(Map<String, Object> params, String userImgOriImgName, String userImgFilePath, String userImgSaveName) {
+	public void userInsert(Map<String, Object> params, String userImgOriName, String userImgFilePath, String userImgSaveName) {
 	    params.put("userPw", passwordEncoder.encode(params.get("userPw").toString()));
         params.put("userImgFilePath", userImgFilePath);
-        params.put("userImgOriImgName", userImgOriImgName);
+        params.put("userImgOriName", userImgOriName);
         params.put("userImgSaveName", userImgSaveName);
 
         userInfoDAO.userInsert(params);

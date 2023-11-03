@@ -82,7 +82,7 @@
 
 										<div class="row mt-2">
 											<label class="col-form-label font-weight-bold col-lg-2">회원사진</label> 
-											<input type="file" class="form-control col-lg-4 userImage">
+											<input type="file" name="userImgOriName" class="form-control col-lg-4" value="${userInfo.userImgOriName}">
 										</div>
 
 										<div class="text-center mt-2">

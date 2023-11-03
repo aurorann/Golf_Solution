@@ -74,13 +74,47 @@ public class UserController {
 	    return "redirect:/";
 	}
 	
-	@RequestMapping("/updateUserInfo")
-	public String updateUserInfo(UserInfoDTO userInfo) {
-		
-		userService.updateUserInfo(userInfo);
-		
-		return "redirect:/user/user_info";
+	@RequestMapping(value="/updateUserInfo", method = RequestMethod.POST)
+	public String updateUserInfo(UserInfoDTO userInfo, @RequestParam(value="file",required=false) MultipartFile file) {
+	    
+	    try {
+	        if (file != null && !file.isEmpty()) {
+	            String path = "C:\\DATA\\USER_IMAGE";
+	            File fileDir = new File(path);
+	            if (!fileDir.exists()) {
+	                fileDir.mkdirs();
+	            }
+	            
+	            String oriImgName = file.getOriginalFilename();
+	            String ext = oriImgName.substring(oriImgName.lastIndexOf("."));
+	            String imgName = UUID.randomUUID().toString().replace("-", "");
+	            String saveName = imgName+ext;
+	            
+	            file.transferTo(new File(path, saveName)); 
+	            
+	            String userImgOriName = oriImgName;
+	            String userImgSaveName = saveName;
+	            String userImgFilePath = path + "\\" + saveName;
+	            
+	            System.out.println(userImgOriName);
+	            System.out.println(userImgSaveName);
+	            System.out.println(userImgFilePath);
+	            
+	            
+	            userInfo.setUserImgOriName(userImgOriName);
+	            userInfo.setUserImgSaveName(userImgSaveName);
+	            userInfo.setUserImgFilePath(userImgFilePath);
+	        }
+	        
+	        userService.updateUserInfo(userInfo);
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return "redirect:/user/user_info";
 	}
+
 	
 	@RequestMapping("/user_info")
 	public String userInfo() {
@@ -142,9 +176,6 @@ public class UserController {
 		return userService.userIdChk(userId);
 	}
 	
-	
-	
-	
 	//회원추가
 	@ResponseBody
 	@RequestMapping(value="/userInsert", method = RequestMethod.POST)
@@ -168,11 +199,11 @@ public class UserController {
 				
 				file.transferTo(new File(path, saveName)); 				
 				
-	            String userImgOriImgName = oriImgName;
+	            String userImgOriName = oriImgName;
 	            String userImgSaveName = saveName;
 	            String userImgFilePath = path + "\\" + saveName;
 				
-				userService.userInsert(param, userImgOriImgName, userImgFilePath, userImgSaveName);
+				userService.userInsert(param, userImgOriName, userImgFilePath, userImgSaveName);
 			} else {
 				userService.userInsert(param, null, null, null);
 			}
