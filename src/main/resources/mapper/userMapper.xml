@@ -90,9 +90,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<update id="updateUserInfo" parameterType="userInfoDTO">
-		UPDATE USER_INFO SET EMAIL=#{email} , HP=#{hp}, USER_IMG_FILE_PATH=#{userImgFilePath}, USER_IMG_ORI_NAME=#{userImgOriName}, USER_IMG_SAVE_NAME=#{userImgSaveName}
+		UPDATE USER_INFO SET EMAIL=#{email}, HP=#{hp}
+			<if test="userImgOriName != null">
+				 ,USER_IMG_FILE_PATH=#{userImgFilePath}, 
+				USER_IMG_ORI_NAME=#{userImgOriName}, 
+				USER_IMG_SAVE_NAME=#{userImgSaveName}
+			</if>
 		WHERE USER_ID=#{userId}
 	</update>
+
 		
 	<insert id="userInsert" parameterType="map">
 		INSERT INTO USER_INFO(USER_NAME, USER_GRADE, USER_DEPARTMENT, USER_ID, USER_PW, HP, EMAIL, REGI_DATE, USER_IMG_FILE_PATH, USER_IMG_ORI_NAME, USER_IMG_SAVE_NAME)

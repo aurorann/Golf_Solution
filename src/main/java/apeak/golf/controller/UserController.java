@@ -78,9 +78,8 @@ public class UserController {
 	}
 	
 	@RequestMapping("/updateUserInfo")
-	public String updateUserInfo(@RequestParam(value="userImgOriName",required=false) MultipartFile file,@RequestParam Map<String, Object> param//UserInfoDTO userInfo
-		) {
-
+	public String updateUserInfo(@RequestParam(value="userImgOriName",required=false) MultipartFile file,
+								@RequestParam Map<String, Object> param/*UserInfoDTO userInfo*/) {
 		
 	    try {
 	        if (file != null && !file.isEmpty()) {
@@ -101,16 +100,27 @@ public class UserController {
 	            String userImgSaveName = saveName;
 	            String userImgFilePath = path + "\\" + saveName;
 	            
-	            System.out.println(userImgOriName);
-	            System.out.println(userImgSaveName);
-	            System.out.println(userImgFilePath);
+	            param.put("userImgOriName", userImgOriName);
+	            param.put("userImgSaveName", userImgSaveName);
+	            param.put("userImgFilePath", userImgFilePath);
+	            
+	            userService.updateUserInfo(param);
+	            
             	
 	            /*userInfo.setUserImgOriName(userImgOriName);
 	            userInfo.setUserImgSaveName(userImgSaveName);
 	            userInfo.setUserImgFilePath(userImgFilePath);*/
+	        }else{
+	            String userImgOriName = null;
+	            String userImgSaveName = null;
+	            String userImgFilePath = null;
+	            
+	            param.put("userImgOriName", userImgOriName);
+	            param.put("userImgSaveName", userImgSaveName);
+	            param.put("userImgFilePath", userImgFilePath);
+	            
+	            userService.updateUserInfo(param);
 	        }
-	        
-	        //userService.updateUserInfo(userInfo);
 	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -179,6 +189,7 @@ public class UserController {
 		
 		return userService.userIdChk(userId);
 	}
+	
 	
 	//회원추가
 	@ResponseBody

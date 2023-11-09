@@ -35,7 +35,6 @@
 							<div class="card more-round">
 								<div class="card-body">
 									<form id="updateForm" action="/user/updateUserInfo?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="modal-body py-0">
 										<div class="row">
 											<label class="col-form-label font-weight-bold col-lg-2">회원명</label> 
@@ -45,6 +44,7 @@
 										<div class="row mt-2">
 											<label class="col-form-label font-weight-bold col-lg-2">아이디</label> 
 											<label class="col-form-label col-lg-10">${userInfo.userId}</label>
+											<input type="hidden" name="userId" value="${userInfo.userId}">
 										</div>
 
 										

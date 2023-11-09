@@ -110,14 +110,27 @@ public class UserService {
 		userInfoDAO.updateUserPw(paramMap);
 	}
 
-	public void updateUserInfo(UserInfoDTO userInfo) {
+	public void updateUserInfo(Map<String, Object> params) {
 		UserInfoDTO info = (UserInfoDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		userInfo.setUserId(info.getUserId());
-		userInfoDAO.updateUserInfo(userInfo);
+		//userInfo.setUserId(info.getUserId());
+		userInfoDAO.updateUserInfo(params);
 		
-		info.setEmail(userInfo.getEmail());
-		info.setHp(userInfo.getHp());
-	}
+		/*
+		info.setEmail(params.getEmail());
+		info.setHp(params.getHp());
+		*/
+		
+		info.setEmail((String) params.get("email"));
+		info.setHp((String) params.get("hp"));		
+		
+		
+		if(params.get("userImgOriName") != null) {
+			info.setUserImgFilePath((String) params.get("userImgFilePath"));
+			info.setUserImgOriName((String) params.get("userImgOriName"));
+			info.setUserImgSaveName((String) params.get("userImgSaveName"));
+		}
+		
+	}//updateUserInfo end
 	
 	
 	//회원 아이디 중복 확인

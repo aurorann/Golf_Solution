@@ -49,8 +49,9 @@ public class UserInfoDAO {
 		session.update("userMapper.updateUserPw",paramMap);
 	}
 
-	public void updateUserInfo(UserInfoDTO userInfo) {
-		session.update("userMapper.updateUserInfo",userInfo);
+	public void updateUserInfo(Map<String, Object> params){
+		//session.update("userMapper.userGradeModify) {
+		session.update("userMapper.updateUserInfo",params);
 	}
 	
 	//회원아이디 중복 확인
