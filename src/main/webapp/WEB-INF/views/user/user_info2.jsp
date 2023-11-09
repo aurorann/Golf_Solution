@@ -34,8 +34,7 @@
 						<div class="col-lg-12">
 							<div class="card more-round">
 								<div class="card-body">
-									<form id="updateForm" action="/user/updateUserInfo" method="post" enctype="multipart/form-data">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<form id="updateForm" action="/user/updateUserInfo" method="post">
 									<div class="modal-body py-0">
 										<div class="row">
 											<label class="col-form-label font-weight-bold col-lg-2">회원명</label> 
@@ -50,6 +49,7 @@
 										
 										<div class="row mt-2">
 											<label class="col-form-label font-weight-bold col-lg-2">비밀번호</label> 
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											<input type="password" name="password" class="form-control h-auto col-lg-3" placeholder="기존 비밀번호를 입력해 주세요.">
 											<button id="changePwBtn" type="button" class="btn btn-info ml-2">비밀번호 변경</button>
 										</div>
@@ -82,7 +82,8 @@
 
 										<div class="row mt-2">
 											<label class="col-form-label font-weight-bold col-lg-2">회원사진</label> 
-											<input type="file" name="userImgOriName" class="form-control col-lg-4">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+											<input type="file" name="userImgOriName" class="form-control col-lg-4" value="${userInfo.userImgOriName}">
 										</div>
 
 										<div class="text-center mt-2">

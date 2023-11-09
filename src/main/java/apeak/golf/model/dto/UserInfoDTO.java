@@ -26,5 +26,4 @@ public class UserInfoDTO implements Serializable{
 	private String userImgSaveName;
 	
 	private List<UserAuthDTO> userAuthList;
-	private List<UserImageDTO> userImage;
 }

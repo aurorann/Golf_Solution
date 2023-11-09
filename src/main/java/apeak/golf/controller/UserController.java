@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,9 +75,10 @@ public class UserController {
 	    return "redirect:/";
 	}
 	
-	@RequestMapping(value="/updateUserInfo", method = RequestMethod.POST)
-	public String updateUserInfo(UserInfoDTO userInfo, @RequestParam(value="file",required=false) MultipartFile file) {
-	    
+	@RequestMapping("/updateUserInfo")
+	public String updateUserInfo(UserInfoDTO userInfo, 
+			@RequestPart(value="userImgOriName",required=false) MultipartFile file) {
+		
 	    try {
 	        if (file != null && !file.isEmpty()) {
 	            String path = "C:\\DATA\\USER_IMAGE";
@@ -99,8 +101,7 @@ public class UserController {
 	            System.out.println(userImgOriName);
 	            System.out.println(userImgSaveName);
 	            System.out.println(userImgFilePath);
-	            
-	            
+            	
 	            userInfo.setUserImgOriName(userImgOriName);
 	            userInfo.setUserImgSaveName(userImgSaveName);
 	            userInfo.setUserImgFilePath(userImgFilePath);
