@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.service.UserService;
@@ -76,8 +78,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("/updateUserInfo")
-	public String updateUserInfo(UserInfoDTO userInfo, 
-			@RequestPart(value="userImgOriName",required=false) MultipartFile file) {
+	public String updateUserInfo(@RequestParam(value="userImgOriName",required=false) MultipartFile file,@RequestParam Map<String, Object> param//UserInfoDTO userInfo
+		) {
+
 		
 	    try {
 	        if (file != null && !file.isEmpty()) {
@@ -102,12 +105,12 @@ public class UserController {
 	            System.out.println(userImgSaveName);
 	            System.out.println(userImgFilePath);
             	
-	            userInfo.setUserImgOriName(userImgOriName);
+	            /*userInfo.setUserImgOriName(userImgOriName);
 	            userInfo.setUserImgSaveName(userImgSaveName);
-	            userInfo.setUserImgFilePath(userImgFilePath);
+	            userInfo.setUserImgFilePath(userImgFilePath);*/
 	        }
 	        
-	        userService.updateUserInfo(userInfo);
+	        //userService.updateUserInfo(userInfo);
 	        
 	    } catch (Exception e) {
 	        e.printStackTrace();

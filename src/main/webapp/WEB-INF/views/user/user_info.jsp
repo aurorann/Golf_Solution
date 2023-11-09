@@ -34,7 +34,7 @@
 						<div class="col-lg-12">
 							<div class="card more-round">
 								<div class="card-body">
-									<form id="updateForm" action="/user/updateUserInfo" method="post" enctype="multipart/form-data">
+									<form id="updateForm" action="/user/updateUserInfo?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<div class="modal-body py-0">
 										<div class="row">
@@ -86,7 +86,7 @@
 										</div>
 
 										<div class="text-center mt-2">
-											<button type="button" id="changeUserBtn" class="btn btn-lg btn-primary">정보 수정</button>
+											<button type="submit" id="changeUserBtn" class="btn btn-lg btn-primary">정보 수정</button>
 										</div>
 									</div>
 									</form>
@@ -123,7 +123,7 @@ $(document).on('click','#changeUserBtn',function(){
 		return;
 	}
 	
-	$('#updateForm').attr('action','/user/updateUserInfo');
+	$('#updateForm').attr('action','/user/updateUserInfo?${_csrf.parameterName}=${_csrf.token}');
 	$('#updateForm').submit();
 })
 </script>
