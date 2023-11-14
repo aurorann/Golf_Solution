@@ -306,8 +306,9 @@ function drawChart(type,target,chartData){
 	var unit = getUnit(type);
 	var chartType = getChartType(type);
 
-	console.log(chartData)
-
+	if(type=='solar'){
+		console.log(chartData)
+	}
 	var obj = {};
 	obj.name = getDataKrName(type);
 	obj.data = [];
@@ -320,7 +321,9 @@ function drawChart(type,target,chartData){
 		}
 	}
 
-	console.log(obj)
+	if(type=='solar'){
+		console.log(obj)
+	}
 
 	var options = {
 		chart : {

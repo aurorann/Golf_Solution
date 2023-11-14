@@ -90,7 +90,7 @@
 						</div>
 					</div>
 	
-					<div id="layer-card-chart" class="collapse" style="">
+					<div id="layer-card-chart" class="collapse" >
 						<div class="card-body chart-card scrolled pl-1 pr-1">
 							<div class="table-responsive">
 								<table class="table text-center">
@@ -189,7 +189,7 @@
 							</div>
 						</div>
 	
-						<div id="layer-card-chart2" class="collapse" style="">
+						<div id="layer-card-chart2" class="collapse" >
 							<div class="card-body chart-card scrolled pl-1 pr-1">
 								<div class="table-responsive">
 									<table class="table text-center">

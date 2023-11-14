@@ -409,6 +409,9 @@
 	}
 
 	$(document).on('click','#prevChart',function(){
+		if(currentPair==0){
+			return;
+		}
         $(pairs[currentPair].join(', ')).toggle();
         currentPair = (currentPair - 1) % pairs.length;
         $(pairs[currentPair].join(', ')).toggle();
@@ -1543,6 +1546,64 @@
 		return unit;
 	}
 
+	//데이터 종류에 따른 차트 범위 최고값을 구한다.
+	function getChartMax(type){
+
+		var max = "";
+		
+		if(type=='ndvi'){
+			max = 1
+		}else if(type=='stp' || type=='temp'){
+			max = 40
+		}else if(type=='sec'){
+			max = 1
+		}else if(type=='pm25' || type=='pm10'){
+			max = 200
+		}else if(type=='humi'){
+			max = 100
+		}else if(type=="rain"){
+			max = 20
+		}else if(type=="co2"){
+			max = 1000
+		}else{
+			max = null
+		}
+
+		return max;
+	}
+
+	//데이터 종류에 따른 차트 선 색상을 구한다.
+	function getChartColor(type){
+
+		var color = "";
+		
+		if(type=='ndvi'){
+			color = "#40A940"
+		}else if(type=='stp' || type=='temp'){
+			color = "#FF0000"
+		}else if(type=='sec'){
+			color = '#DB631F'
+		}else if(type=='pm25' || type=='pm10'){
+			color = '#f8f9fa'
+		}else if(type=='humi'){
+			color = '#00BFFF	'
+		}else if(type=="rain"){
+			color = '#228be6'
+		}else if(type=="co2"){
+			color = '#212529'
+		}else if(type=='smo'){
+			color = "#1E90FF"
+		}else if(type=="ws"){
+			color = "#20B2AA"
+		}else if(type=="solar"){
+			color = "#FF8200"
+		}else{
+			color = "green"
+		}
+
+		return color;
+	}
+
 	function drawChart(type,chartData){
 		
 		var unit = getUnit(type);
@@ -1553,7 +1614,7 @@
 		var obj = {};
 		obj.name = getDataKrName(type);
 		obj.data = [];
-		
+		obj.color = getChartColor(type)
 				
 		for(var i=0;i<chartData.length;i++){
 			obj.data.push([chartData[i].tm*1,chartData[i][type]*1])
@@ -1598,6 +1659,7 @@
 			},
 			yAxis : {
 				min: 0,
+				max:getChartMax(type),
 				labels : {
 					format : '{value}'+unit,
 					style : {
