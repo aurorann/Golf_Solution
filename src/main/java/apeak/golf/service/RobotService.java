@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import apeak.golf.model.dao.RobotInfoDAO;
 import apeak.golf.model.dao.RobotLogDAO;
+import apeak.golf.model.dto.RobotInfoDTO;
 import apeak.golf.model.dto.RobotLogDTO;
 import apeak.golf.util.PagingUtil;
 
@@ -41,7 +42,7 @@ public class RobotService {
 		paramMap.put("startIndex", pager.getStartIndex());
 		paramMap.put("pageSize", pager.getPageSize());
 		
-		List<RobotLogDTO> list = robotLogDAO.getLogList(paramMap);
+		List<RobotInfoDTO> list = robotLogDAO.getLogList(paramMap);
 
 		resultMap.put("listCnt", listCnt);
 		resultMap.put("list", list);
@@ -56,7 +57,7 @@ public class RobotService {
 		
 		int curPage = Integer.parseInt((String) paramMap.get("curPage"));
 		
-		int listCnt = robotLogDAO.getLogListCnt(paramMap);
+		int listCnt = robotLogDAO.logSearchListCnt(paramMap);
 		
 		PagingUtil pager = new PagingUtil(listCnt, curPage);
 		pager.setPageSize(10);

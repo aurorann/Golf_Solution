@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import apeak.golf.model.dto.RobotInfoDTO;
 import apeak.golf.model.dto.RobotLogDTO;
 
 @Repository
@@ -20,7 +21,11 @@ public class RobotLogDAO {
 		return session.selectOne("robotMapper.getLogListCnt",paramMap);
 	}
 	
-	public List<RobotLogDTO> getLogList(Map<String, Object> paramMap) {
+	public int logSearchListCnt(Map<String, Object> paramMap) {
+		return session.selectOne("robotMapper.logSearchListCnt",paramMap);
+	}
+	
+	public List<RobotInfoDTO> getLogList(Map<String, Object> paramMap) {
 		return session.selectList("robotMapper.getLogList",paramMap);
 	}
 	

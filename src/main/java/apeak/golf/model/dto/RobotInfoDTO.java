@@ -23,4 +23,7 @@ public class RobotInfoDTO implements Serializable{
 	
 	private List<SoilDataDTO> soilDataList;
 	private List<RobotLogDTO> robotLogList;
+	
+	private RobotLogDTO robotLog;
+
 }

@@ -15,13 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="lat" column="LAT"/>
 		<result property="lon" column="LON"/>
 		<result property="lastUpdated" column="LAST_UPDATED"/>
-		<collection property="robotLogList" column="ROBOT_NO" ofType="robotLogDTO" javaType="List" autoMapping="true">
-			<id column="ROBOT_NO" property="robotNo"/>
+		<association property="robotLog" column="ROBOT_NO" javaType="robotLogDTO" autoMapping="true">
+			<id column="LOG_NO" property="logNo"/>
 			<result property="tm" column="TM"/>
-			<result property="logNo" column="LOG_NO"/>
+			<result property="robotNo" column="ROBOT_NO"/>
 			<result property="eventType" column="EVENT_TYPE"/>
 			<result property="eventComment" column="EVENT_COMMENT"/>
-		</collection>
+		</association>
 	</resultMap>
 	
 	<select id="getRobotInfo" resultType="egovMap">
@@ -32,7 +32,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM ROBOT_LOG
 	</select>
 	
-	<select id="getLogList" parameterType="map" resultType="map">
+	<select id="logSearchListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM ROBOT_LOG
+		INNER JOIN ROBOT_INFO
+		ON ROBOT_LOG.ROBOT_NO = ROBOT_INFO.ROBOT_NO
+		WHERE
+		<if test="searchType == 'robotName'">
+			ROBOT_INFO.ROBOT_NAME LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'logType'">
+			ROBOT_LOG.EVENT_TYPE LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'logEvent'">
+			ROBOT_LOG.EVENT_COMMENT LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+	</select>
+	
+	<select id="getLogList" parameterType="map" resultMap="robotInfoMap">
 		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME
 		FROM ROBOT_LOG
 		INNER JOIN ROBOT_INFO
@@ -40,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT ${startIndex},${pageSize};
 	</select>
 			
-	<select id="logSearchList" parameterType="map" resultType="map">
+	<select id="logSearchList" parameterType="map" resultMap="robotInfoMap">
 		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME
 		FROM ROBOT_LOG
 		INNER JOIN ROBOT_INFO

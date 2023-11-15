@@ -229,10 +229,10 @@ getLogList = function(curPage, searchType, searchText){
 			$.each(list,function(index,item){
 				
 				table+=`<tr>`
-				table+=`<td>\${nvl(item.ROBOT_NAME)}</td>`
-				table+=`<td>\${nvl(item.EVENT_TYPE)}</td>`
-				table+=`<td>\${nvl(item.EVENT_COMMENT)}</td>`
-				table+=`<td>\${nvl(item.TM)}</td>`
+				table+=`<td>\${nvl(item.robotName)}</td>`
+				table+=`<td>\${nvl(item.robotLog.eventType)}</td>`
+				table+=`<td>\${nvl(item.robotLog.eventComment)}</td>`
+				table+=`<td>\${nvl(item.robotLog.tm)}</td>`
 				table+= `</tr>`
 			})
 			
