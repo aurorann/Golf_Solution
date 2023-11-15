@@ -107,7 +107,12 @@ function logout(){
 $(document).ready(function() {
 	
     var path = window.location.pathname; // 현재 페이지의 경로
-    
+
+
+    console.log(path)
+    if(path == '/management/robot2'){
+    	path = '/management/robot1'
+    }
     //nav 메뉴에 active 추가
     $('.nav-item a').each(function() {
         var href = $(this).attr('href');
@@ -116,7 +121,7 @@ $(document).ready(function() {
             $(this).addClass('active');
             
             // 경로에 따라 active 클래스 추가
-            if (path === '/management/course1' || path === '/management/course2' || path === '/management/robot1') {
+            if (path === '/management/course1' || path === '/management/course2' || path === '/management/robot1' || path == '/management/robot2') {
                 $('.management').addClass('active'); // 'MANAGEMENT' 메뉴 아이템에 'active' 클래스 추가
             }else if (path === '/each/course_separatecourse' || path === '/report/course_report' || path === '/all/course_allcourse') {
                 $('.course').addClass('active');

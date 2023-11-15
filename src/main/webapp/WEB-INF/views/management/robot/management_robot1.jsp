@@ -22,11 +22,22 @@
 						<i class="fas fa-align-justify"></i>
 					</button>
 				</div>
-	
-				<div class="btn-group mr-2 float-left">
-					<button type="button" class="btn btn-light active">전체</button>
-					<button type="button" class="btn btn-light">동작중</button>
-					<button type="button" class="btn btn-light">대기중</button>
+				
+				<div class="btn-group mr-2 float-left btn-group-toggle col-lg-12" data-toggle="buttons" style="width: 211px;">
+					<label class="btn btn-light active">
+						<input type="radio" name="options" id="option1" autocomplete="off" value="전체" checked="checked">
+						전체
+					</label>
+
+					<label class="btn btn-light">
+						<input type="radio" name="options" id="option2" autocomplete="off" value="동작중">
+						동작중
+					</label>
+					
+					<label class="btn btn-light">
+						<input type="radio" name="options" id="option2" autocomplete="off" value="대기중">
+						대기중
+					</label>
 				</div>
 				<h6 class="ml-3 mr-2 mt-1 font-weight-bold float-left">로봇</h6>	
 	
@@ -40,34 +51,6 @@
 	<div class="content">
 		<!-- Basic card -->
 		<div class="content-wrap position-relative">
-	
-			<div class="robot1 position-absolute card border-pink bg-white text-center p-2">
-				<a href="#" class="text-body">
-					<div class="media m-0">
-						<div class="mr-3">
-							<a href="#">
-								<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
-								</span>
-								<span class="ml-1 font-weight-bold text-dark">센싱 로봇 1</span>
-							</a>
-						</div>
-					</div>
-				</a>
-			</div>
-	
-			<div class="robot2 robot-active position-absolute card border-pink bg-white text-center p-2">
-				<a href="#" class="text-body">
-					<div class="media m-0">
-						<div class="mr-3">
-							<a href="#">
-								<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
-								</span>
-								<span class="ml-1 font-weight-bold text-dark">센싱 로봇 2</span>
-							</a>
-						</div>
-					</div>
-				</a>
-			</div>
 	
 			<div class="collapsible-sortable position-absolute" style="left:10px; top:10px;">
 	
@@ -389,11 +372,116 @@
 	
 <script type="text/javascript">
 $(function(){
-	var map = new naver.maps.Map('map', {
+
+	let robotMap = {};
+	
+	let map = new naver.maps.Map('map', {
 	    center: new naver.maps.LatLng(37.0455041, 127.3907905),
 	    zoom: 18
 	});
 
 	map.setMapTypeId('satellite'); 
+
+    naver.maps.Event.addListener(map, 'click', function(e) {
+    	let coord = e.coord;
+    	let lat = coord.lat();
+    	let lng = coord.lng();
+
+        console.log('클릭한 위치의 좌표는 ' + lat + ', ' + lng + ' 입니다.');
+    });
+
+    let CustomOverlay = function(options) {
+        this._element = $(options.content);
+
+        this.setPosition(options.position);
+        this.setMap(options.map || null);
+    };
+
+    CustomOverlay.prototype = new naver.maps.OverlayView();
+    CustomOverlay.prototype.constructor = CustomOverlay;
+
+    CustomOverlay.prototype.setPosition = function(position) {
+        this._position = position;
+        this.draw();
+    };
+
+    CustomOverlay.prototype.getPosition = function() {
+        return this._position;
+    };
+
+    CustomOverlay.prototype.onAdd = function() {
+    	let overlayLayer = this.getPanes().overlayLayer;
+
+        this._element.appendTo(overlayLayer);
+    };
+
+    CustomOverlay.prototype.draw = function() {
+        if (!this.getMap()) {
+            return;
+        }
+
+        let projection = this.getProjection(),
+            position = this.getPosition(),
+            pixelPosition = projection.fromCoordToOffset(position);
+
+        this._element.css('left', pixelPosition.x);
+        this._element.css('top', pixelPosition.y);
+    };
+
+    CustomOverlay.prototype.onRemove = function() {
+    	let overlayLayer = this.getPanes().overlayLayer;
+
+        this._element.remove();
+        this._element.off();
+    };
+
+	function drawInfoWindow(robotName,state){
+
+		let active = "";
+		
+		if(state=="동작중"){
+			active = "robot-active"
+		}
+		
+		let template = 
+			`<div class="card border-pink bg-white text-center p-2 \${active}" style="width:156px;">
+					<a href="#" class="text-body">
+					</a><div class="media m-0"><a href="#" class="text-body">
+						</a><div class="mr-3"><a href="#" class="text-body">
+							</a><a href="#">
+								<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
+								</span>
+								<span class="ml-1 font-weight-bold text-dark">\${robotName}</span>
+							</a>
+						</div>
+					</div>
+			</div>`
+
+		return template;
+	}
+
+	let contentString = [
+		drawInfoWindow("센싱 로봇1","")
+    ].join('');
+
+	let position = new naver.maps.LatLng(37.046257, 127.390777);
+
+	let customOverlay = new CustomOverlay({
+        content: contentString,
+        position: position,
+        map: map
+    });
+
+	let contentString2 = [
+		drawInfoWindow("센싱 로봇2","동작중")
+    ].join('');
+
+	let position2 = new naver.maps.LatLng(37.045675, 127.391759);
+
+	let customOverlay2 = new CustomOverlay({
+        content: contentString2,
+        position: position2,
+        map: map
+    });
 })
 </script>

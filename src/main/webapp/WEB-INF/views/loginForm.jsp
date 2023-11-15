@@ -75,7 +75,7 @@
 						<div class="card mb-0">
 							<div class="card-body">
                                 <div class="position-relative text-center">
-                                    <img src="/resources/assets/img/golf_logo.png" width="200" class="" alt="Logo">
+                                    <img src="/resources/assets/img/golf_logo2.png" width="200" class="" alt="Logo">
                                 </div>
 								<div class="text-center mb-3">
 									<h5 class="mt-2 mb-2">골프 코스관리 솔루션</h5>

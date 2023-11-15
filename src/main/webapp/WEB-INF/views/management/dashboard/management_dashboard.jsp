@@ -12,10 +12,14 @@
 		<div class="page-header-content d-sm-flex">
 	
 			<div class="page-title">
-				<ul class="nav nav-tabs nav-tabs-solid border-0 m-0 ml-2">
+				<!--<ul class="nav nav-tabs nav-tabs-solid border-0 m-0 ml-2">
 					<li class="nav-item"><a href="#solid-tab1" class="nav-link active" data-toggle="tab">통합 대시보드</a></li>
 					<li class="nav-item"><a href="#solid-tab2" class="nav-link" data-toggle="tab">작업 알람 리스트</a></li>
-				</ul>
+				</ul>-->
+				<div class="btn-group mr-2 float-left col-lg-12" data-toggle="buttons" id="tabs">
+					<a href="#solid-tab1" class="nav-link btn btn-light active" data-toggle="tab">통합 대시보드</a>
+					<a href="#solid-tab2" class="nav-link btn btn-light" data-toggle="tab">작업 알람 리스트</a>
+				</div>
 			</div>
 	
 		</div>
@@ -219,7 +223,7 @@ function updatedata(data){
 						<div class="col-lg-3">
 							<div class="card">
 								<div class="card-header mb-2">
-									<h6 class="card-title font-weight-bold"><a class="detailreport" value="\${data.list1[i].hole_No}">\${data.list1[i].holeName}</a>
+									<h6 class="card-title font-weight-bold"><a class="detailReport" value="\${data.list1[i].holeNo}">\${data.list1[i].holeName}</a>
 									<span class="float-right badge badge-success badge-pill">양호</span>
 									</h6>
 								</div>
@@ -312,7 +316,7 @@ function updatedata(data){
 }//updatedata() end
 
 //상세정보 버튼 클릭 이벤트 핸들러
-$('body').on('click', '.detailreport', function() {
+$('body').on('click', '.detailReport', function() {
     // 버튼의 value 값
     var value = $(this).attr('value');
     console.log(value);
@@ -320,6 +324,21 @@ $('body').on('click', '.detailreport', function() {
 	location.href = '/report/course_report?value=' + encodeURIComponent(value);
 });
 
-
-
+$('#tabs a').click(function(e){
+	console.log('aa')
+	e.stopPropagation()
+	$('#tabs a').removeClass('active')
+	$(this).addClass('active')
+	console.log($(this).attr('href'))
+	$('.tab-pane').removeClass('show')
+	$('.tab-pane').removeClass('active')
+	$($(this).attr('href')).addClass('show')
+	$($(this).attr('href')).addClass('active')
+})
 </script>
+
+<style>
+.detailReport{
+	cursor: pointer;
+}
+</style>

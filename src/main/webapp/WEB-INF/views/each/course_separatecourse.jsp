@@ -30,10 +30,102 @@
 
 
 	<!-- Content area -->
-	<div class="content" style="visibility: hidden;">
+	<div class="content" style="visibility: visible;">
 		<!-- Basic card -->
 		<div class="row data">
-
+			<!-- 
+			list1 : ndvi
+			list2 : hole
+			list3 : soil
+			 -->
+			<c:forEach items="${mainData.list1}" var="hole" varStatus="status">
+			
+			
+			<div class="col-lg-3">
+				<div class="card imageZone">
+					<div class="card-header bg-white text-dark header-elements-inline">
+						<h6 class="card-title font-weight-semibold">${mainData.list2[status.index].holeName}</h6>
+						<div>
+							<i class="fas fa-seedling mr-2"></i> 
+							<span class="badge badge-success badge-pill ndviData"><i class="fas fa-camera mr-2"></i>${mainData.list1[status.index].sensorInfoList[0].ndviDataList[0].ndvi}</span>
+							<span class="badge badge-success badge-pill smoData"><i class="fas fa-tint mr-2"></i>${mainData.list3[status.index].robotInfoList[0].soilDataList[0].smo}<small class="weather-unit">%</small></span>
+							<span class="badge badge-success badge-pill stpData"><i class="fas fa-thermometer-half mr-2"></i>${mainData.list3[status.index].robotInfoList[0].soilDataList[0].stp}<small class="weather-unit">ºC</small></span>
+						</div>
+					</div>
+	
+					<div class="card-body pb-0">
+						<!--이미지-->
+						<div class="col-xl-12 col-md-12 col-sm-12 p-0 mb-3 imageZone2">
+							<div id="map${status.index}" style="height:236px"></div>
+						</div>
+						<div class="col-xl-12 col-md-12 col-sm-12 p-0 mb-3 imageZone3">
+							<div class="twentytwenty-wrapper twentytwenty-horizontal">
+								<div class="twentytwenty-container">
+									<img src="/resources/assets/img/ndvi-1.png" class="ndvi-img twentytwenty-before">
+									<img src="/resources/assets/img/ndvi-1.png" class="ndvi-img twentytwenty-after" id="img${status.index}">
+								</div>
+							</div>
+						</div>
+						<!--이미지 end-->
+						<div class="btn-group btn-group-toggle mr-2 layerType" data-toggle="buttons">
+							<label class="btn btn-light active grow" onclick="change(event)" data-layertype="NDVI"  data-holeno="${mainData.list2[status.index].holeNo}">
+								<input type="radio" name="layerType${status.index}" id="option1" autocomplete="off" checked>
+								생육
+							</label>
+							<label class="btn btn-light temp" onclick="change(event)" data-layertype="TEMP"  data-holeno="${mainData.list2[status.index].holeNo}">
+								<input type="radio" name="layerType${status.index}" autocomplete="off">
+								열
+							</label>
+							<label class="btn btn-light moisture" onclick="change(event)" data-layertype="HUMI"  data-holeno="${mainData.list2[status.index].holeNo}">
+								<input type="radio" name="layerType${status.index}" autocomplete="off" >
+								습도
+							</label>
+						</div>
+	
+						<span class="btn-group mr-2" data-toggle="buttons">
+							<button type="button" class="btn btn-light ndvi" onclick="change(event)">NDVI 비교</button>
+						</span>
+	
+						<span class="float-right">
+							<button type="button" class="btn btn-primary-100 border-primary text-primary detailReport" value="${mainData.list1[status.index].holeNo}">상세정보</button>
+						</span>
+	
+						<!--Chart card-->
+						<div class="card mt-2 mb-0 card-collapsed" style="border:0; box-shadow:none;">	
+							<div class="collapse">
+								<div class="card-chart">
+									<div id="layer-card-chart" class="collapse show" style="">
+										<div class="card-body chart-card scrolled">
+											<div class="chart-container">
+												<div class="ndviChart"></div>
+												<div class="tempChart"></div>
+												<div class="humiChart"></div>
+												<div class="wsChart"></div>
+												<div class="lightChart"></div>
+												<div class="rainChart"></div>
+												<div class="solarChart"></div>
+												<div class="smoChart"></div>
+												<div class="secChart"></div>
+												<div class="stpChart"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="list-icons">
+								<a class="list-icons-item chart-close" data-action="collapse" onclick="spread(event)"></a>
+							</div>
+	
+						
+						</div>
+						<!--Chart card end-->
+	
+					
+					</div>
+				</div>
+			</div>
+			
+			</c:forEach>
 		</div>
 		<!-- /basic card -->
 	</div>
@@ -59,7 +151,7 @@ $(document).ready(function() {
 
 $(".categorybt").click(function() {
 	datatemplate = "";
-	$('.row.data').empty();
+	//$('.row.data').empty();
 	var category = $(this).val();
 	$(".categorybt").removeClass("active");
 	$(this).addClass("active");
@@ -70,7 +162,7 @@ $(".categorybt").click(function() {
 
 $(".listsort").click(function() {
 	datatemplate = "";
-	$('.row.data').empty();
+	//$('.row.data').empty();
 	var listsort = $(this).val();
 	$(".listsort").removeClass("active");
 	$(this).addClass("active");
@@ -82,8 +174,8 @@ $(".listsort").click(function() {
 
 
 function getAllData(category, listsort){
-
-	$('.content').css('visibility','hidden')
+	
+	//$('.content').css('visibility','hidden')
 	
 	$.ajax({
 		url: '/each/course_separatecourse_ajax',
@@ -94,7 +186,8 @@ function getAllData(category, listsort){
 		success: function(data, textStatus, jqXHR){
             console.log(data);
             console.log(data.list1.length);
-            updatedata(data);
+            //updateData(data);
+            updateDataV2(data)
             holeCount = data.list1.length
 		},
 	    error: function(jqXHR, textStatus, errorThrown) {
@@ -145,7 +238,9 @@ function getAllData(category, listsort){
 				};
 			}
 
-
+			//$(".imageZone3").hide()
+			$('.content').css('visibility','visible')
+			$('.layerType>label:nth-child(1)').click()
 	    }
 		
 	})//ajax end
@@ -153,7 +248,7 @@ function getAllData(category, listsort){
 
 let datatemplate = "";
 
-function updatedata(data){
+function updateData(data){
 	for(var i=0; i<data.list1.length; i++){
 		datatemplate += `
 			<div class="col-lg-3">
@@ -202,7 +297,7 @@ function updatedata(data){
 						</span>
 	
 						<span class="float-right">
-							<button type="button" class="btn btn-primary-100 border-primary text-primary detailreport" value="\${data.list1[i].holeNo}">상세정보</button>
+							<button type="button" class="btn btn-primary-100 border-primary text-primary detailReport" value="\${data.list1[i].holeNo}">상세정보</button>
 						</span>
 	
 						<!--Chart card-->
@@ -245,13 +340,30 @@ function updatedata(data){
 	dataElement.innerHTML = datatemplate;
 	
 	
-}//updatedata() end
+}//updateData() end
+
+function updateDataV2(data){
+	for(var i=0; i<data.list1.length; i++){
+		$('.imageZone:eq('+i+') .card-title').html(data.list2[i].holeName)
+		$('.imageZone:eq('+i+') .ndviData').html(`<i class="fas fa-camera mr-2"></i>`+parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2))
+		$('.imageZone:eq('+i+') .smoData').html(`<i class="fas fa-tint mr-2"></i>`+parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2))
+		$('.imageZone:eq('+i+') .stpData').html(`<i class="fas fa-thermometer-half mr-2"></i>`+parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2))
+		$('.imageZone:eq('+i+') label').data('holeno',data.list1[i].holeNo);
+	}
+}
 
 function getChartData(){
+
+	for(let i=0;i<chartList.length;i++){
+		chartList[i].destroy()
+	}
+
+	chartList = [];
+
 	$.ajax({
 		url : "/each/getChartDataList",
 		success : function(result){
-			console.log(result)
+			//console.log(result)
 			let ndviDataList = result.ndviDataList;
 			let soilDataList = result.soilDataList;
 			let weatherDataList = result.weatherDataList;
@@ -474,7 +586,7 @@ function getDataKrName(type){
 
 
 // 상세정보 버튼 클릭 이벤트 핸들러
-$('body').on('click', '.detailreport', function() {
+$('body').on('click', '.detailReport', function() {
 	// 버튼의 value 값
 	var value = $(this).val();
 
@@ -491,6 +603,8 @@ function change(event){
     if($(targets).hasClass('ndvi')){
     	$(targets).closest('.imageZone').find('.imageZone2').hide();
     	$(targets).closest('.imageZone').find('.imageZone3').show();
+    	$(targets).closest('.imageZone').find(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
+    	$(targets).closest('.imageZone').find(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
     }else if($(targets).hasClass('grow') || $(targets).hasClass('temp') || $(targets).hasClass('moisture')){
     	$(targets).closest('.imageZone').find('.imageZone2').show();
     	$(targets).closest('.imageZone').find('.imageZone3').hide();
@@ -502,20 +616,22 @@ function change(event){
 
 
 function spread(event){
+
+	event.stopPagination();
 	
 	let id = "";
-	let targets = event.target;
-	console.log($(targets).closest('.card').attr('id'))
-	
+	let targets = event.target;	
     var card = $(targets).closest('.card');
     if (card.hasClass('card-collapsed')) {
         // 카드가 축소된 경우, 클래스 제거 후 내용 표시 
         card.removeClass('card-collapsed');
         card.find('.collapse').collapse('show');
+        console.log('show')
     } else {
         // 그렇지 않은 경우, 클래스를 추가하고 내용을 숨깁니다.
         card.addClass('card-collapsed');
         card.find('.collapse').collapse('hide');
+        console.log('hide')
     }
 	
 }//spread end

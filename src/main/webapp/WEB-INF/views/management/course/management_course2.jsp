@@ -690,6 +690,19 @@ function workReportAllList(data){
 			</div>
            `;
 	}//for end
+
+	if(data.length==0){
+		allWorkList += `<div class="col-lg-12 row">
+	        <div class="col-lg-12">
+	            <div class="card more-round">
+	                <div class="card-body">
+	                    <h6 class="card-title font-weight-bold mb-0">작업 일정이 없습니다.</h6>
+	                </div>
+	            </div>
+	        </div>
+	    </div>`
+	}
+	
 	let dataElement = document.querySelector('.workListContent');
 	dataElement.innerHTML = allWorkList;
 	

@@ -3,6 +3,7 @@ package apeak.golf.controller;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,8 @@ public class EachCourseController {
 	private EachCourseService eachCourseService;
 	
 	@RequestMapping("/course_separatecourse")
-	private String eachCourse() {
+	private String eachCourse(Model model) {
+		model.addAttribute("mainData", eachCourseService.courseSeparatecourseAjax("FAIRWAY", "ASC"));
 		return "/each/course_separatecourse";
 	}//eachCourse end
 	
