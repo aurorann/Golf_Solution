@@ -11,5 +11,6 @@ public class RobotLogDTO {
 	private int logNo;
 	private String tm;
 	private int robotNo;
+	private String eventType;
 	private String eventComment;
 }

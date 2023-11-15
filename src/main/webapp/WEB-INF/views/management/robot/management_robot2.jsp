@@ -38,99 +38,50 @@
 
 	<!-- Content area -->
 	<div class="content">
+		<div class="row searchLog" style="margin-left: 0; margin-right: 0; margin-bottom: 20px">
+			<select class="custom-select col-lg-1 mr-2 searchType">
+				<option value="robotName">로봇명</option>
+				<option value="logType">구분</option>
+				<option value="logEvent">이벤트</option>
+			</select>
+			<input type="text" class="col-lg-2 mr-2 searchText">
+			<button type="button" class="ml-2 btn btn-primary searchLogBt">검색</button>
+		</div>
 		<!-- Basic card -->
 		<div class="card">
-                  <div class="card-header">
-                      <h5 class="card-title">로봇 관리 리스트</h5>
-                  </div>
+			<div class="card-header">
+			    <h5 class="card-title">로봇 관리 리스트</h5>
+			</div>
+			
+			<div class="table-responsive">
+			    <table class="table">
+			        <thead>
+			            <tr>
+			                <th>로봇명</th>
+			                <th>구분</th>
+			                <th>이벤트</th>
+			                <th>최근 동작 시간</th>
+			            </tr>
+			        </thead>
+			        <tbody id="logList">
+			            
+			        </tbody>
+			    </table>
+			</div>
+			
+			<div class="mt-3 mb-3 text-center">
+			    <ul class="pagination pagination-flat align-self-center" id="pager">
+			        <li class="page-item"><a href="#" class="page-link">← &nbsp; Prev</a></li>
+			        <li class="page-item active"><a href="#" class="page-link">1</a></li>
+			        <li class="page-item"><a href="#" class="page-link">2</a></li>
+			        <li class="page-item disabled"><a href="#" class="page-link">3</a></li>
+			        <li class="page-item"><a href="#" class="page-link">4</a></li>
+			        <li class="page-item"><a href="#" class="page-link">Next &nbsp; →</a></li>
+			    </ul>
+			</div>
 
-                  <div class="table-responsive table-scrollable">
-                      <table class="table">
-                          <thead>
-                              <tr>
-                                  <th>로봇명</th>
-                                  <th>구분</th>
-                                  <th>이벤트</th>
-                                  <th>최근 동작 시간</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>샌싱 센싱(토양 측정)</td>
-                                  <td>37.211,128.412 데이터 측정중에 있습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 2</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>37.211,128.412 데이터 측정중에 있습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              <tr>
-                                  <td>센싱 1</td>
-                                  <td>센싱(NDVI 측정)</td>
-                                  <td>활성화 되었습니다.</td>
-                                  <td>2023-08-14 16:54</td>
-                              </tr>
-                              
-                              
-                              
-                          </tbody>
-                      </table>
-                  </div>
-
-                  <div class="mt-3 mb-3 text-center">
-                      <ul class="pagination pagination-flat align-self-center">
-                          <li class="page-item"><a href="#" class="page-link">← &nbsp; Prev</a></li>
-                          <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                          <li class="page-item"><a href="#" class="page-link">2</a></li>
-                          <li class="page-item disabled"><a href="#" class="page-link">3</a></li>
-                          <li class="page-item"><a href="#" class="page-link">4</a></li>
-                          <li class="page-item"><a href="#" class="page-link">Next &nbsp; →</a></li>
-                      </ul>
-                  </div>
-                  
-
-              </div>
+		</div>
 		<!-- /basic card -->
-
 
 	</div>
 	<!-- /content area -->
@@ -157,8 +108,7 @@
 				</button>
 			</div>
 		</div>
-		<!-- /header -->
-
+		<!-- Header -->
 
 		<!-- Sidebar search -->
 		<div class="sidebar-section ">
@@ -233,3 +183,123 @@
 	<!-- /sidebar content -->
 
 </div>
+
+<script>
+
+
+
+function nvl(data){
+	if(!data || data=='null'){
+		return "";
+	}else{
+		return data;
+	}
+}
+
+
+
+var currentSearchType = null;
+var currentSearchText = null;
+
+getLogList = function(curPage, searchType, searchText){
+	if(!curPage){curPage=1}
+	
+	var url = "${pageContext.request.contextPath}/management/getLogList";
+	var data = "curPage="+curPage;
+	
+	
+	if(searchType && searchText){
+		url = "${pageContext.request.contextPath}/management/logSearchList";
+		data = {
+			searchType: searchType,
+			searchText: searchText,
+			curPage: curPage
+		};
+	}
+	
+	$.ajax({
+		url: url,
+		data: data,
+		success: function(result){
+			console.log(result);
+			
+			var list = result.list;
+			
+			var table = ''
+			$.each(list,function(index,item){
+				
+				table+=`<tr>`
+				table+=`<td>\${nvl(item.ROBOT_NAME)}</td>`
+				table+=`<td>\${nvl(item.EVENT_TYPE)}</td>`
+				table+=`<td>\${nvl(item.EVENT_COMMENT)}</td>`
+				table+=`<td>\${nvl(item.TM)}</td>`
+				table+= `</tr>`
+			})
+			
+			$('#logList').html(table);
+			
+			var pager = result.pager;
+			
+			var pagerContent = "";
+			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.startPage-1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'><<a></li>"}
+			
+			for(i=pager.startPage;i<=pager.endPage;i++){
+				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+			}
+			
+			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.endPage+1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>></a></li>"}
+			
+			if(table!=''){
+				$("#pager").html(pagerContent);
+			}else{
+				$('#logList').html('<tr><td colspan="12">데이터가 없습니다.</td></tr>');
+				$("#pager").html('');
+			}
+		},
+		error:function(request,status,error){
+		   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		}
+			
+	})
+}
+
+$(".searchLog .searchText").on("keypress", function(event){
+    if(event.which !== 13) {
+        return;
+    }
+    
+    var searchType = $(".searchLog .searchType option:selected").val();
+    var searchText = $(".searchLog .searchText").val();
+    
+    currentSearchType = searchType;
+    currentSearchText = searchText;
+    
+    getLogList(1, searchType, searchText)
+});
+
+//회원검색 버튼 클릭
+$(document).on("click",".searchLogBt", function(){
+	var searchType = $(".searchLog .searchType option:selected").val();
+	var searchText = $(".searchLog .searchText").val();
+	
+    currentSearchType = searchType;
+    currentSearchText = searchText;
+
+    getLogList(1, searchType, searchText)
+});
+
+getLogList(1)
+
+
+</script>
+
+<style>
+<!--
+#pager{
+	justify-content: center;
+	border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+-->
+</style>

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import apeak.golf.model.dto.UserInfoDTO;
 
 @Repository
-public class RoBotInfoDAO {
+public class RobotInfoDAO {
 
 	@Autowired
 	private SqlSession session;

@@ -4,9 +4,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="robotMapper">
+
+	<resultMap type="robotInfoDTO" id="robotInfoMap" autoMapping="true">
+		<id column="ROBOT_NO" property="robotNo"/>
+		<result property="holeNoNow" column="HOLE_NO_NOW"/>
+		<result property="courseTypeNow" column="COURSE_TYPE_NOW"/>
+		<result property="robotName" column="ROBOT_NAME"/>
+		<result property="robotType" column="ROBOT_TYPE"/>
+		<result property="robotState" column="ROBOT_STATE"/>
+		<result property="lat" column="LAT"/>
+		<result property="lon" column="LON"/>
+		<result property="lastUpdated" column="LAST_UPDATED"/>
+		<collection property="robotLogList" column="ROBOT_NO" ofType="robotLogDTO" javaType="List" autoMapping="true">
+			<id column="ROBOT_NO" property="robotNo"/>
+			<result property="tm" column="TM"/>
+			<result property="logNo" column="LOG_NO"/>
+			<result property="eventType" column="EVENT_TYPE"/>
+			<result property="eventComment" column="EVENT_COMMENT"/>
+		</collection>
+	</resultMap>
 	
 	<select id="getRobotInfo" resultType="egovMap">
 		SELECT * FROM ROBOT_INFO
 	</select>
+	
+	<select id="getLogListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM ROBOT_LOG
+	</select>
+	
+	<select id="getLogList" parameterType="map" resultType="map">
+		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME
+		FROM ROBOT_LOG
+		INNER JOIN ROBOT_INFO
+		ON ROBOT_LOG.ROBOT_NO = ROBOT_INFO.ROBOT_NO
+		LIMIT ${startIndex},${pageSize};
+	</select>
+			
+	<select id="logSearchList" parameterType="map" resultType="map">
+		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME
+		FROM ROBOT_LOG
+		INNER JOIN ROBOT_INFO
+		ON ROBOT_LOG.ROBOT_NO = ROBOT_INFO.ROBOT_NO
+		WHERE
+		<if test="searchType == 'robotName'">
+			ROBOT_INFO.ROBOT_NAME LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'logType'">
+			ROBOT_LOG.EVENT_TYPE LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		<if test="searchType == 'logEvent'">
+			ROBOT_LOG.EVENT_COMMENT LIKE CONCAT('%', #{searchText}, '%')
+		</if>
+		LIMIT ${startIndex},${pageSize}
+	</select>
+
+
+
+
 
 </mapper>
