@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="robotMapper">
 
 	<resultMap type="robotInfoDTO" id="robotInfoMap" autoMapping="true">
+	<!-- 
 		<id column="ROBOT_NO" property="robotNo"/>
 		<result property="holeNoNow" column="HOLE_NO_NOW"/>
 		<result property="courseTypeNow" column="COURSE_TYPE_NOW"/>
@@ -15,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="lat" column="LAT"/>
 		<result property="lon" column="LON"/>
 		<result property="lastUpdated" column="LAST_UPDATED"/>
+		 -->
 		<association property="robotLog" column="ROBOT_NO" javaType="robotLogDTO" autoMapping="true">
 			<id column="LOG_NO" property="logNo"/>
 			<result property="tm" column="TM"/>
@@ -50,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getLogList" parameterType="map" resultMap="robotInfoMap">
-		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME
+		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME AS robotName
 		FROM ROBOT_LOG
 		INNER JOIN ROBOT_INFO
 		ON ROBOT_LOG.ROBOT_NO = ROBOT_INFO.ROBOT_NO
