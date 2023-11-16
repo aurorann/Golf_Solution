@@ -25,6 +25,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result property="eventComment" column="EVENT_COMMENT"/>
 		</association>
 	</resultMap>
+
+	<resultMap type="robotLogDTO" id="robotLogDTO" autoMapping="true">
+		<result property="logNo" column="LOG_NO"/>
+		<result property="tm" column="TM"/>
+		<result property="robotNo" column="ROBOT_NO"/>
+		<result property="eventType" column="EVENT_TYPE"/>
+		<result property="eventComment" column="EVENT_COMMENT"/>
+	</resultMap>
+
+	<resultMap type="robotInfoDTO" id="robotInfoMap2" autoMapping="true">
+		<id column="ROBOT_NO" property="robotNo"/>
+		<result property="robotNo" column="ROBOT_NO"/>
+		<result property="holeNoNow" column="HOLE_NO_NOW"/>
+		<result property="courseTypeNow" column="COURSE_TYPE_NOW"/>
+		<result property="robotName" column="ROBOT_NAME"/>
+		<result property="robotType" column="ROBOT_TYPE"/>
+		<result property="robotState" column="ROBOT_STATE"/>
+		<result property="lat" column="LAT"/>
+		<result property="lon" column="LON"/>
+		<result property="lastUpdated" column="LAST_UPDATED"/>
+		<collection property="robotLog" resultMap="robotLogDTO"/>
+	</resultMap>
 	
 	<select id="getRobotInfo" resultType="egovMap">
 		SELECT * FROM ROBOT_INFO
@@ -52,11 +74,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getLogList" parameterType="map" resultMap="robotInfoMap">
-		SELECT ROBOT_LOG.*, ROBOT_INFO.ROBOT_NAME AS robotName
+		SELECT ROBOT_LOG.*, ROBOT_INFO.*
 		FROM ROBOT_LOG
 		INNER JOIN ROBOT_INFO
 		ON ROBOT_LOG.ROBOT_NO = ROBOT_INFO.ROBOT_NO
 		LIMIT ${startIndex},${pageSize};
+	</select>
+	
+	<select id="getLogList2" resultMap="robotInfoMap">
+		SELECT ROBOT_INFO.*, ROBOT_LOG.*
+		FROM ROBOT_LOG
+		INNER JOIN ROBOT_INFO
+		ON ROBOT_LOG.ROBOT_NO = ROBOT_INFO.ROBOT_NO
+		ORDER BY ROBOT_LOG.TM DESC;
 	</select>
 			
 	<select id="logSearchList" parameterType="map" resultMap="robotInfoMap">

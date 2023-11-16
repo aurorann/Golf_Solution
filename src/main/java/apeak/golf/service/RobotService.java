@@ -29,6 +29,10 @@ public class RobotService {
 		return robotInfoDAO.getRobotInfo();
 	}
 	
+	public List<EgovMap> getLogList() {
+		return robotLogDAO.getLogList();
+	}
+	
 	//robot log 목록 가져오기
 	public Map<String, Object> getLogList(Map<String, Object> paramMap) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();

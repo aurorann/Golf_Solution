@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,10 @@ public class RobotLogDAO {
 	
 	public List<RobotLogDTO> logSearchList(Map<String, Object> paramMap) {
 		return session.selectList("robotMapper.logSearchList",paramMap);
+	}
+	
+	public List<EgovMap> getLogList() {
+		return session.selectList("robotMapper.getLogList2");
 	}
 	
 }

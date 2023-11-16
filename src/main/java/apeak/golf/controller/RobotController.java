@@ -6,6 +6,7 @@ import java.util.Map;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +21,13 @@ public class RobotController {
 	private RobotService robotService;
 
 	@RequestMapping("/robot1")
-	private String robot1() {
+	private String robot1(Model model) {
+		List<EgovMap> list = robotService.getRobotInfo();
+		model.addAttribute("list", list);
+
+		List<EgovMap> log = robotService.getLogList();
+		model.addAttribute("log", log);
+		
 		return "/management/robot/management_robot1";
 	}
 	

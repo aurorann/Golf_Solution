@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class RobotInfoDTO implements Serializable{
+public class RobotInfoDTO{
 	private int robotNo;
 	private int holeNoNow;
 	private String courseTypeNow;

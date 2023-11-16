@@ -232,7 +232,7 @@ getLogList = function(curPage, searchType, searchText){
 				table+=`<td>\${nvl(item.robotName)}</td>`
 				table+=`<td>\${nvl(item.robotLog.eventType)}</td>`
 				table+=`<td>\${nvl(item.robotLog.eventComment)}</td>`
-				table+=`<td>\${nvl(item.robotLog.tm)}</td>`
+				table+=`<td>\${nvl(item.robotLog.tm).substring(0, 16)}</td>`
 				table+= `</tr>`
 			})
 			

@@ -53,7 +53,7 @@
 		<div class="content-wrap position-relative">
 	
 			<div class="collapsible-sortable position-absolute" style="left:10px; top:10px;">
-	
+				<!-- 
 				<div class="card layer-card">
 					<div class="card-header card-header-round header-elements-inline">
 						<h6 class="card-title">
@@ -88,169 +88,128 @@
 											<td class="p-0">2023-06-26 18:02:18</td>
 											<td class="p-0">배터리가 부족합니다.</td>
 										</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
+										<tr>
+											<td class="p-0">2023-06-26 18:02:18</td>
+											<td class="p-0">이동중 입니다.</td>
+										</tr>
+										<tr>
+											<td class="p-0">2023-06-26 18:02:18</td>
+											<td class="p-0">이동중 입니다.</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
 	
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">이동중 입니다.</td>
-											</tr>
-	
+				<div class="card layer-card">
+					<div class="card-header card-header-round header-elements-inline">
+						<h6 class="card-title">
+							<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart2" aria-expanded="false">
+								<span class="badge badge-success badge-pill mr-1">활동중</span>
+								<span>센싱 로봇 1</span>
+								<span>
+									활동 중입니다.
+								</span>
+							</a>
+						</h6>
+
+						<div class="header-elements">
+							<div class="list-icons">
+								<a class="list-icons-item" data-action="remove"></a>
+							</div>
+						</div>
+					</div>
+
+					<div id="layer-card-chart2" class="collapse" >
+						<div class="card-body chart-card scrolled pl-1 pr-1">
+							<div class="table-responsive">
+								<table class="table text-center">
+									<thead>
+										<tr>
+											<th class="table-info pt-1 pb-1">날짜</th>
+											<th class="table-info pt-1 pb-1">활동</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="p-0">2023-06-26 18:02:18</td>
+											<td class="p-0">배터리가 부족합니다.</td>
+										</tr>
+										<tr>
+											<td class="p-0">2023-06-26 18:02:18</td>
+											<td class="p-0">이동중 입니다.</td>
+										</tr>
+										<tr>
+											<td class="p-0">2023-06-26 18:02:18</td>
+											<td class="p-0">이동중 입니다.</td>
+										</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
 					</div>
-	
-					<div class="card layer-card">
-						<div class="card-header card-header-round header-elements-inline">
-							<h6 class="card-title">
-								<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart2" aria-expanded="false">
-									<span class="badge badge-success badge-pill mr-1">활동중</span>
-									<span>센싱 로봇 1</span>
-									<span>
-										활동 중입니다.
-									</span>
-								</a>
-							</h6>
-	
-							<div class="header-elements">
-								<div class="list-icons">
-									<a class="list-icons-item" data-action="remove"></a>
+					 -->
+					
+					<c:forEach items="${list}" var="robotInfo" varStatus="status">
+						<fmt:formatDate value="${robotLogList.lastUpdated}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate"/>
+							<div class="card layer-card">
+								<div class="card-header card-header-round header-elements-inline">
+									<h6 class="card-title">
+										<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart${status.index + 1}" aria-expanded="false">
+											<c:choose>
+												<c:when test="${robotInfo.robotState == '충전 필요'}">
+													<span class="badge badge-danger badge-pill mr-1">충전 필요</span>
+												</c:when>
+												<c:when test="${robotInfo.robotState == '대기중'}">
+													<span class="badge badge-warning badge-pill mr-1">대기중</span>
+												</c:when>
+												<c:otherwise>
+													<span class="badge badge-success badge-pill mr-1">활동중</span>
+												</c:otherwise>
+											</c:choose>
+											<span><c:out value="${robotInfo.robotName}"></c:out></span>
+											<span><c:out value="${robotInfo.robotState}"></c:out></span>
+										</a>
+									</h6>
+			
+									<div class="header-elements">
+										<div class="list-icons">
+											<a class="list-icons-item" data-action="remove"></a>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
-	
-						<div id="layer-card-chart2" class="collapse" >
-							<div class="card-body chart-card scrolled pl-1 pr-1">
-								<div class="table-responsive">
-									<table class="table text-center">
-										<thead>
-											<tr>
-												<th class="table-info pt-1 pb-1">날짜</th>
-												<th class="table-info pt-1 pb-1">활동</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="p-0">2023-06-26 18:02:18</td>
-												<td class="p-0">배터리가 부족합니다.</td>
-											</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-	
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-												<tr>
-													<td class="p-0">2023-06-26 18:02:18</td>
-													<td class="p-0">이동중 입니다.</td>
-												</tr>
-	
-											</tbody>
-										</table>
+			
+								<div id="layer-card-chart${status.index + 1}" class="collapse" >
+									<div class="card-body chart-card scrolled pl-1 pr-1">
+										<div class="table-responsive">
+											<table class="table text-center">
+												<thead>
+													<tr>
+														<th class="table-info pt-1 pb-1">날짜</th>
+														<th class="table-info pt-1 pb-1">활동</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:set var="count" value="0"/>
+														<c:forEach items="${log}" var="logList" varStatus="status">
+															 <c:if test="${robotInfo.robotName == logList.robotName and count lt 10}">
+																<tr>
+																	<td class="p-0">${logList.robotLog.tm}</td>
+																	<td class="p-0">${logList.robotLog.eventComment}</td>
+																</tr>
+															<c:set var="count" value="${count + 1}"/>
+														</c:if>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+					</c:forEach>
 	
 					
 	
@@ -302,58 +261,15 @@
 							<th class="table-info pl-1 pr-1 pt-1 pb-1">동작시간</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-						<tr>
-							<td class="pl-1 pr-1">센싱1</td>
-							<td class="pl-1 pr-1">작동중</td>
-							<td class="pl-1 pr-1">2023-10-23 14:11</td>
-						</tr>
-					
+					<tbody class="sideRobotList">
+						<c:forEach items="${list}" var="robotInfo">
+							<fmt:formatDate value="${robotInfo.lastUpdated}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate"/>
+								<tr>
+									<td class="pl-1 pr-1"><c:out value="${robotInfo.robotName}"></c:out></td>
+									<td class="pl-1 pr-1"><c:out value="${robotInfo.robotState}"></c:out></td>
+									<td class="pl-1 pr-1"><c:out value="${formattedDate}"></c:out></td>
+								</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -484,4 +400,11 @@ $(function(){
         map: map
     });
 })
+
+
+
+
+
+
+
 </script>
