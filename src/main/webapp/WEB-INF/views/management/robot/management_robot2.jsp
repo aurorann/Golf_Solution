@@ -253,7 +253,7 @@ getLogList = function(curPage, searchType, searchText){
 			if(table!=''){
 				$("#pager").html(pagerContent);
 			}else{
-				$('#logList').html('<tr><td colspan="12">데이터가 없습니다.</td></tr>');
+				$('#logList').html('<tr><td colspan="12" style="text-align: center;">데이터가 없습니다.</td></tr>');
 				$("#pager").html('');
 			}
 		},
