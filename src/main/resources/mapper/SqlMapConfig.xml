@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/> <!-- name값과 value값은 둘 다 예약어이다. null 소문자로 안 됨 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="defaultFetchSize" value="1000"/>
 	</settings>
 	
 	<typeAliases>

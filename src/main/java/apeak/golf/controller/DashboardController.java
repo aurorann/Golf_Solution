@@ -1,5 +1,7 @@
 package apeak.golf.controller;
 
+import java.util.Map;
+
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,12 @@ public class DashboardController {
 		//System.out.println("오류지점 찾기");
 		
 	    return dashboardService.data(category, listsort);
+	}
+	
+	@RequestMapping("/getNotiList")
+	@ResponseBody
+	public Map<String,Object> getNotiList(@RequestParam Map<String, Object> pMap){
+		return dashboardService.getNotiList(pMap);
 	}
 
 }

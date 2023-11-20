@@ -67,83 +67,31 @@
 									<th>권장 작업</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="logList">
 								<tr>
 									<td>2023-08-14</td>
 									<td>Hole3</td>
 									<td>Green</td>
 									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								<tr>
-									<td>2023-08-14</td>
-									<td>Hole3</td>
-									<td>Green</td>
-									<td>시비 / 잔디깎기 / 관수</td>
-								</tr>
-								
+								</tr>		
 							</tbody>
 						</table>
 					</div>
 
 					<div class="mt-3 mb-3 text-center">
-						<ul class="pagination pagination-flat align-self-center">
-							<li class="page-item"><a href="#" class="page-link">← &nbsp; Prev</a></li>
-							<li class="page-item active"><a href="#" class="page-link">1</a></li>
-							<li class="page-item"><a href="#" class="page-link">2</a></li>
-							<li class="page-item disabled"><a href="#" class="page-link">3</a></li>
-							<li class="page-item"><a href="#" class="page-link">4</a></li>
-							<li class="page-item"><a href="#" class="page-link">Next &nbsp; →</a></li>
+						<ul class="pagination pagination-flat align-self-center" id="pager">
+							<li class="page-item active" onclick="getLogList(1, currentSearchType, currentSearchText)"><a href="#"
+								class="page-link">1</a></li>
+							<li class="page-item" onclick="getLogList(2, currentSearchType, currentSearchText)"><a href="#"
+								class="page-link">2</a></li>
+							<li class="page-item" onclick="getLogList(3, currentSearchType, currentSearchText)"><a href="#"
+								class="page-link">3</a></li>
+							<li class="page-item" onclick="getLogList(4, currentSearchType, currentSearchText)"><a href="#"
+								class="page-link">4</a></li>
+							<li class="page-item" onclick="getLogList(5, currentSearchType, currentSearchText)"><a href="#"
+								class="page-link">5</a></li>
 						</ul>
 					</div>
-					
 
 				</div>
 			</div>
@@ -160,12 +108,145 @@
 
 <script>
 
+function nvl(data){
+	if(!data || data=='null'){
+		return "";
+	}else{
+		return data;
+	}
+}
+
+function postToPage(data) {
+    // form 요소 생성
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "/management/course1");
+
+    // 데이터를 form의 input 요소로 변환
+    for (var key in data) {
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", key);
+        hiddenField.setAttribute("value", data[key]);
+        form.appendChild(hiddenField);
+    }
+
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "${_csrf.parameterName}");
+    hiddenField.setAttribute("value", "${_csrf.token}");
+    form.appendChild(hiddenField);
+
+    // form을 body에 추가
+    document.body.appendChild(form);
+
+    // form 제출
+    form.submit();
+}
+
 $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
 	var category = $(".categorybt.active").val();
 	var listsort = $(".listsort.active").val();
 	getAllData(category, listsort);
-    
+
+
+	var currentSearchType = null;
+	var currentSearchText = null;
+
+	getLogList = function(curPage, searchType, searchText){
+		if(!curPage){curPage=1}
+		
+		var url = "${pageContext.request.contextPath}/management/getNotiList";
+		var data = "curPage="+curPage;
+		
+		$.ajax({
+			url: url,
+			data: data,
+			success: function(result){
+				console.log(result);
+				
+				var list = result.list;
+				
+				var table = ''
+				$.each(list,function(index,item){
+					
+					table+=`<tr class="writeWork" data-holeno="\${item.holeNo}" data-coursetype="\${item.courseType}" data-worktype="\${item.recommendWork}">`
+					table+=`<td>\${nvl(item.tm)}</td>`
+					table+=`<td>Hole \${nvl(item.holeNo)}</td>`
+					table+=`<td>\${nvl(item.courseType)}</td>`
+					table+=`<td>\${nvl(item.recommendWork)}</td>`
+					table+= `</tr>`
+				})
+				
+				$('#logList').html(table);
+				
+				var pager = result.pager;
+				
+				var pagerContent = "";
+				if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.startPage-1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'><<a></li>"}
+				
+				for(i=pager.startPage;i<=pager.endPage;i++){
+					if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+					if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+				}
+				
+				if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.endPage+1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>></a></li>"}
+				
+				if(table!=''){
+					$("#pager").html(pagerContent);
+				}else{
+					$('#logList').html('<tr><td colspan="12">데이터가 없습니다.</td></tr>');
+					$("#pager").html('');
+				}
+			},
+			error:function(request,status,error){
+			   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			}
+				
+		})
+	}
+
+	$(".searchLog .searchText").on("keypress", function(event){
+	    if(event.which !== 13) {
+	        return;
+	    }
+	    
+	    var searchType = $(".searchLog .searchType option:selected").val();
+	    var searchText = $(".searchLog .searchText").val();
+	    
+	    currentSearchType = searchType;
+	    currentSearchText = searchText;
+	    
+	    getLogList(1, searchType, searchText)
+	});
+
+	//회원검색 버튼 클릭
+	$(document).on("click",".searchLogBt", function(){
+		var searchType = $(".searchLog .searchType option:selected").val();
+		var searchText = $(".searchLog .searchText").val();
+		
+	    currentSearchType = searchType;
+	    currentSearchText = searchText;
+
+	    getLogList(1, searchType, searchText)
+	});
+
+	$(document).on('click','.writeWork',function(){
+		var workType = $(this).data('worktype')
+		var holeNo = $(this).data('holeno')
+		var courseType = $(this).data('coursetype')
+
+		var param = {
+			workType : workType,
+			holeNo : holeNo,
+			courseType : courseType
+		}
+		
+		postToPage(param)
+	})
+
+	getLogList(1)
 });
 
 //카테고리 버튼 클릭시 데이터 갱신
@@ -338,7 +419,15 @@ $('#tabs a').click(function(e){
 </script>
 
 <style>
-.detailReport{
+.detailReport,.writeWork{
 	cursor: pointer;
 }
+
+<!--
+#pager{
+	justify-content: center;
+	border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+-->
 </style>

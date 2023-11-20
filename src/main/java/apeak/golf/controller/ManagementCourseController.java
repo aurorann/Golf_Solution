@@ -38,12 +38,13 @@ public class ManagementCourseController {
 
 	//hole 이름 가져오기
 	@RequestMapping("/course1")
-	private String courseManagement(Model model) {
+	private String courseManagement(Model model,@RequestParam Map<String, Object> param) {
 		
 		List<EgovMap> list = courseService.holedata();
 		
 		//System.out.println(list);
 		model.addAttribute("list", list);
+		model.addAttribute("param",param);
 		
 		return "/management/course/management_course1";
 	}

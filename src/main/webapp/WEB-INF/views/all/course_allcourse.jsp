@@ -14,7 +14,7 @@
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2" data-toggle="buttons" id="holeList">
 					<button type="button" class="btn btn-light active">전체</button>
-					<button type="button" class="btn btn-light active">H1</button>
+					<button type="button" class="btn btn-light">H1</button>
 					<button type="button" class="btn btn-light">H2</button>
 					<button type="button" class="btn btn-light">H3</button>
 					<button type="button" class="btn btn-light">H4</button>
@@ -83,12 +83,13 @@
 				<div class="card layer-card border-info">
 					<div class="card-header bg-info text-white">
 						<h6 class="card-title">
-							<span class="text-white collapsed">Update : 2023.08.16 11:12 </span>
+							<span class="text-white collapsed" id="updateTime">Update : 2023.08.16 11:12 </span>
 						</h6>
 					</div>
 
 				</div>
-
+				
+				<!--
 				<div class="card layer-card">
 					<div class="card-header header-elements-inline">
 						<h6 class="card-title">
@@ -121,8 +122,9 @@
 						</div>
 					</div>
 				</div>
+				-->
 
-				<div class="card layer-card">
+				<div class="card layer-card" id="chartCard">
 					<div class="card-header header-elements-inline">
 						<h6 class="card-title">
 							<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart" aria-expanded="false"> <span>차트정보
@@ -239,7 +241,7 @@
 				<li class="nav-item text-center pl-2 pr-2">
 					<div class="btn-group btn-group-toggle col-lg-12" data-toggle="buttons">
 						<label class="btn btn-light active">
-							<input type="radio" name="options" id="option1" autocomplete="off" value="all">
+							<input type="radio" name="options" id="option1" autocomplete="off" value="all" checked="checked">
 							전체
 						</label>
 
@@ -519,6 +521,8 @@ $(function(){
 		naver.maps.Event.trigger(marker,"click")
 		//marker.click();
 
+		//console.log(data.weather.tm)
+		$('#updateTime').text('Update : '+data.weather.tm.substring(0,16))
 	}
 
 	function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx,mode,moviWidth){
@@ -803,6 +807,8 @@ $(function(){
 							</div>
 						</div>`
 				break;
+		default:
+			template = `<div style="display:none;"></div>`;
 		}
 
 		return template;
@@ -1327,6 +1333,8 @@ $(function(){
 			async : false,
 			success : function(result){
 				retData = result;
+				//console.log(retData.weatherDataList[0].sensorInfoList[0].weatherDataList[0].tm.substring(0,16))
+				$('#updateTime').text('Update : '+retData.weatherDataList[0].sensorInfoList[0].weatherDataList[0].tm.substring(0,16))
 			}
 		})
 
@@ -1379,6 +1387,7 @@ $(function(){
 		playIdx = 0;
 
 		if(hole!="0"){
+			$('#chartCard').show()
 			map.setZoom(19)
 			//개별검색			
 			var holeInfo = getHoleInfo(hole,course)
@@ -1448,8 +1457,10 @@ $(function(){
 			
 
 			hideGroundOverlay()
-			showGroundOverlay(result.length-1)
+			//showGroundOverlay(result.length-1)
+			$('#overlayList .overlayBtn:eq(0)').click();
 		}else{
+			$('#chartCard').hide()
 			map.setZoom(17)
 			//전체검색
 			var result = getAllData(nowCourse);
@@ -1613,7 +1624,8 @@ $(function(){
 			
 
 			hideGroundOverlay()
-			showGroundOverlay(result.length-1)
+			//showGroundOverlay(result.length-1)
+			$('#overlayList .overlayBtn:eq(0)').click();
 		}else{
 			
 			//전체검색
@@ -1653,13 +1665,13 @@ $(function(){
 	})
 	
 	$('#searchBtn').on('click',function(){
-
-		$('#holeList button.active').click();
+		if($('[name="options"]:checked').val()=='all'){
+			$('#holeList button:eq(0)').click();
+		}else{
+			$('#holeList button.active').click();
+		}
 	})
-	
-	$('#holeList button:eq(1)').click();
-	//$('#layerType button:eq(0)').click();
-	
+		
 	$(document).on('click','#overlayPlay',function(){
 		console.log("재생")
 		playOverlay();
@@ -1753,10 +1765,8 @@ $(function(){
     	$('.player-close').show();
     	$(this).hide();
 	})
-    
-	createMarker(35.5913518, 127.9020725);
-	
-
+    	
+	$('#holeList button:eq(0)').click();
 })
 </script>
 <style>
@@ -1789,5 +1799,10 @@ $(function(){
 	}
 	.player-open{
 		display: none;
+	}
+	
+	.course-sm .weather-box {
+	    width: 33.3%;
+	    padding: 0 5px;
 	}
 </style>

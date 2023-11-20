@@ -96,20 +96,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getNdviDataAllList" parameterType="map" resultMap="holeInfoMap">
 		SELECT * FROM HOLE_INFO H JOIN SENSOR_INFO S
 		ON H.HOLE_NO=S.HOLE_NO AND H.COURSE_TYPE=S.COURSE_TYPE
-		AND S.SENSOR_TYPE='NDVI' AND H.COURSE_TYPE='GREEN'
+		AND S.SENSOR_TYPE='NDVI' AND H.COURSE_TYPE=#{category}
 		JOIN NDVI_DATA N
 		ON S.SENSOR_NO=N.SENSOR_NO
-		WHERE TM BETWEEN '2023-09-05 00:00:00' AND '2023-09-27 23:59:59'
+		WHERE N.TM BETWEEN DATE_ADD(NOW(),INTERVAL -1 DAY) AND NOW()
+		ORDER BY 
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            H.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            H.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
+		,TM
 	</select>
 
 	<select id="getWeatherDataAllList" parameterType="map" resultMap="holeInfoMap">
 		SELECT * FROM HOLE_INFO H JOIN SENSOR_INFO S
 		ON H.HOLE_NO=S.HOLE_NO AND H.COURSE_TYPE=S.COURSE_TYPE
-		AND S.SENSOR_TYPE='WEATHER' AND H.COURSE_TYPE='GREEN'
+		AND S.SENSOR_TYPE='WEATHER' AND H.COURSE_TYPE=#{category}
 		JOIN WEATHER_DATA W
 		ON S.SENSOR_NO=W.SENSOR_NO
-		WHERE TM BETWEEN '2023-09-05 00:00:00' AND '2023-09-27 23:59:59'
-		ORDER BY H.HOLE_NO
+		WHERE W.TM BETWEEN DATE_ADD(NOW(),INTERVAL -1 DAY) AND NOW() 
+		ORDER BY 
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            H.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            H.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
+		,TM
 	</select>
 	
 	<select id="getSoilDataAllList" parameterType="map" resultMap="holeSoilLayerMap">
@@ -117,9 +136,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN SOIL_DATA S 
 		ON H.HOLE_NO = S.HOLE_NO
 		AND H.COURSE_TYPE = S.COURSE_TYPE 
-		AND H.COURSE_TYPE='GREEN'
-		WHERE TM BETWEEN '2023-09-05 00:00:00' AND '2023-09-27 23:59:59'
-		ORDER BY H.HOLE_NO
+		AND H.COURSE_TYPE = #{category}
+		WHERE S.TM BETWEEN DATE_ADD(NOW(),INTERVAL -1 DAY) AND NOW()
+		ORDER BY 
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            H.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            H.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
+		,TM
 	</select>
 	
 	<select id="getAllLastLayout" parameterType="map" resultMap="holeSoilLayerMap">

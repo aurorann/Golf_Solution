@@ -74,12 +74,15 @@ public class AllCourseService {
 	}
 
 	public List<EgovMap> getLayerData(Map<String, Object> param) {
+		param.put("endDate", param.get("endDate")+" 23:59:59");
 		return layerDataDAO.getLayerData(param);
 	}
 
 	public EgovMap getAllData(Map<String, Object> param) {
 		
 		EgovMap resultMap = new EgovMap();
+		
+		param.put("category", param.get("courseType"));
 		
 		List<HoleInfoDTO> layerDataList = layerDataDAO.getLayerDataAllList(param);
 		List<HoleInfoDTO> soilDataList = soilDataDAO.getSoilDataAllList(param);

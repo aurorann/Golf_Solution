@@ -1,6 +1,8 @@
 package apeak.golf.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,13 @@ import apeak.golf.model.dao.HoleInfoDAO;
 import apeak.golf.model.dao.NdviDataDAO;
 import apeak.golf.model.dao.SoilDataDAO;
 import apeak.golf.model.dao.WeatherDataDAO;
+import apeak.golf.model.dao.WorkNotificationDAO;
 import apeak.golf.model.dto.HoleInfoDTO;
 import apeak.golf.model.dto.SensorInfoDTO;
+import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.model.dto.WeatherDataDTO;
+import apeak.golf.model.dto.WorkNotificationDTO;
+import apeak.golf.util.PagingUtil;
 
 @Service
 @Transactional
@@ -30,6 +36,9 @@ public class DashboardService {
 	
 	@Autowired
 	private NdviDataDAO ndviDataDAO;
+	
+	@Autowired
+	private WorkNotificationDAO workNotificationDAO;
 	
 	
 	public void holeinfo() {
@@ -58,5 +67,28 @@ public class DashboardService {
 		
 		return resultMap;
 	}//data() end
+
+
+	public Map<String, Object> getNotiList(Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+
+		int curPage = Integer.parseInt((String) paramMap.get("curPage"));
+
+		int listCnt = workNotificationDAO.getNotiListCnt(paramMap);
+
+		PagingUtil pager = new PagingUtil(listCnt, curPage);
+		pager.setPageSize(10);
+		paramMap.put("startIndex", pager.getStartIndex());
+		paramMap.put("pageSize", pager.getPageSize());
+		
+		List<WorkNotificationDTO> list = workNotificationDAO.getNotiList(paramMap);
+
+		resultMap.put("listCnt", listCnt);
+		resultMap.put("list", list);
+		resultMap.put("pager", pager);
+		
+		return resultMap;
+	}
 	
+
 }

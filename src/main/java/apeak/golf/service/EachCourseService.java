@@ -50,6 +50,8 @@ public class EachCourseService {
 	
 	public EgovMap getChartDataList(String category, String listsort) {
 		Map<String,Object> param = new HashMap<>();
+		param.put("category", category);
+		param.put("listsort", listsort);
 		EgovMap resultMap = new EgovMap();
 		List<HoleInfoDTO> ndviDataList = ndviDataDAO.getNdviDataAllList(param);
 		List<HoleInfoDTO> soilDataList =soilDataDAO.getSoilDataAllList(param);

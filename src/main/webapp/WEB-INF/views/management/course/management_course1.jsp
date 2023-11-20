@@ -504,6 +504,13 @@ const FullCalendarStyling = function() {
 $(document).ready(function() {
     // 페이지가 로드될 때 workAllList 함수 호출
 	workAllList();
+
+	if('${param.workType}'!='' && '${param.holeNo}'!='' && '${param.courseType}' !=''){
+		$('#modal_scrollable').modal('show');
+		$('#modal_scrollable .holeBt[value="${param.holeNo}"]').click()
+		$('#modal_scrollable .courseTypeBt[value="${param.courseType}"]').click()
+		$('#modal_scrollable .typeBt[value="${param.workType}"]').click()
+	}
 });
 
 </script>

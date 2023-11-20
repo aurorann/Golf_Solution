@@ -130,6 +130,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    </choose>
 	</select>
 
+	<select id="getNotiListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM work_notification
+	</select>
 
+	<select id="getNotiList" parameterType="map" resultType="workNotificationDTO">
+		SELECT * FROM work_notification 
+		LIMIT ${startIndex},${pageSize}
+	</select>
 
 </mapper>

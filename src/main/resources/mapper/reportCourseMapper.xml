@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE HOLE_NO = #{holeNo} and TM BETWEEN #{workStart} AND #{workEnd}
 	</select>
 	
-	<select id="searchAllWeather" parameterType="map" resultMap="holeInfoMap2">
+	<select id="searchAllWeather" parameterType="map" resultMap="holeInfoMap2" fetchSize="1000">
 		SELECT * FROM SENSOR_INFO SI 
 		JOIN WEATHER_DATA WD ON SI.SENSOR_NO = WD.SENSOR_NO 
 		WHERE TM BETWEEN #{workStart} AND #{workEnd}
@@ -129,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE HOLE_NO = #{holeNo} and TM BETWEEN #{workStart} AND #{workEnd}
 	</select>
 	 
-	<select id="searchAllSoilData" parameterType="map" resultMap="holeInfoMap4">
+	<select id="searchAllSoilData" parameterType="map" resultMap="holeInfoMap4" fetchSize="1000">
 		SELECT * FROM ROBOT_INFO RI
 		JOIN SOIL_DATA SD ON RI.ROBOT_NO = SD.ROBOT_NO 
 		WHERE TM BETWEEN #{workStart} AND #{workEnd}

@@ -10,7 +10,7 @@ import lombok.ToString;
 public class WorkNotificationDTO {
 	private int notiNo;
 	private String tm;
-	private int holeNo;
+	private String holeNo;
 	private String courseType;
 	private String notiTitle;
 	private String recommendWork;

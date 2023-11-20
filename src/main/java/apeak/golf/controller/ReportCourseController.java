@@ -83,7 +83,7 @@ public class ReportCourseController {
 									@RequestParam(value="category",required=false) String category, 
 									@RequestParam(value="selectDate",required=false) String selectDate, 
 									@RequestParam(value="beforeDate",required=false) String beforeDate) {
-		return reportCourseService.getdata(hole, category, selectDate, beforeDate);
+		return reportCourseService.getData(hole, category, selectDate, beforeDate);
 	}
 	
 	
@@ -102,7 +102,7 @@ public class ReportCourseController {
 										@RequestParam(value="workStart",required=false) String workStart,
 										@RequestParam(value="workEnd",required=false) String workEnd) {
 		System.out.println(holeNo);
-	return reportCourseService.getsearchdata(holeNo, workStart, workEnd);
+	return reportCourseService.getSearchData(holeNo, workStart, workEnd);
 	}
 	
 	//모든 홀 데이터 검색
@@ -110,7 +110,7 @@ public class ReportCourseController {
 	@RequestMapping(value = "/course_report_allsearch_ajax", method = RequestMethod.GET)
 	public EgovMap courseReportAllSearchAjax(@RequestParam(value="workStart",required=false) String workStart,
 											@RequestParam(value="workEnd",required=false) String workEnd) {
-		return reportCourseService.getsearchalldata(workStart, workEnd);
+		return reportCourseService.getSearchAllData(workStart, workEnd);
 	}
 	
 	

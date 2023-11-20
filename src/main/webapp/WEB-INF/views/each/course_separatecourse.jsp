@@ -13,13 +13,13 @@
 			<div class="page-title" style="width:100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">정렬</h6>
 				<div class="btn-group mr-2">
-					<button type="button" class="btn btn-light listsort" value="">관리순위</button>
-					<button type="button" class="btn btn-light listsort active" value="ASC">오름차순</button>
-					<button type="button" class="btn btn-light listsort" value="DESC">내림차순</button>
+					<button type="button" class="btn btn-light listSort" value="">관리순위</button>
+					<button type="button" class="btn btn-light listSort active" value="ASC">오름차순</button>
+					<button type="button" class="btn btn-light listSort" value="DESC">내림차순</button>
 				</div>
 				<div class="btn-group mr-2">
-					<button type="button" class="categorybt btn btn-light active" value="FAIRWAY">Fairway</button>
-					<button type="button" class="categorybt btn btn-light" value="GREEN">Green</button>
+					<button type="button" class="categoryBt btn btn-light active" value="FAIRWAY">Fairway</button>
+					<button type="button" class="categoryBt btn btn-light" value="GREEN">Green</button>
 				</div>
 				<h6 class="mr-2 mt-1 font-weight-bold float-right" id="currentDate"></h6>
 				
@@ -142,45 +142,57 @@ let overlayList = {};
 
 $(document).ready(function() {
     // 페이지가 로드될 때 getAllData 함수 호출
-	var category = $(".categorybt.active").val();
-	var listsort = $(".listsort.active").val();
-	getAllData(category, listsort);
-	getChartData()
+	var category = $(".categoryBt.active").val();
+	var listSort = $(".listSort.active").val();
+	var body = $('.page-content');
+	body.css('overflow', 'hidden');
+	getAllData(category, listSort);
+	getChartData(category, listSort)
+	body.css('overflow', '');
 });
 
 
-$(".categorybt").click(function() {
+$(".categoryBt").click(function() {
 	datatemplate = "";
 	//$('.row.data').empty();
 	var category = $(this).val();
-	$(".categorybt").removeClass("active");
+	$(".categoryBt").removeClass("active");
 	$(this).addClass("active");
-	var listsort = $(".listsort.active").val();
-	getAllData(category, listsort);
-	getChartData()
+	var listSort = $(".listSort.active").val();
+	var body = $('.page-content');
+	body.css('overflow', 'hidden');
+
+	getAllData(category, listSort);
+	getChartData(category, listSort)
+
+	// 변경 작업 수행
+	body.css('overflow', '');
 });
 
-$(".listsort").click(function() {
+$(".listSort").click(function() {
 	datatemplate = "";
 	//$('.row.data').empty();
-	var listsort = $(this).val();
-	$(".listsort").removeClass("active");
+	var listSort = $(this).val();
+	$(".listSort").removeClass("active");
 	$(this).addClass("active");
-	var category = $(".categorybt.active").val();
-	getAllData(category, listsort);
-    console.log(category, listsort);
-    getChartData()
+	var category = $(".categoryBt.active").val();
+	var body = $('.page-content');
+	body.css('overflow', 'hidden');
+	getAllData(category, listSort);
+    console.log(category, listSort);
+    getChartData(category, listSort)
+    body.css('overflow', '');
 });
 
 
-function getAllData(category, listsort){
+function getAllData(category, listSort){
 	
 	//$('.content').css('visibility','hidden')
 	
 	$.ajax({
 		url: '/each/course_separatecourse_ajax',
 		type:'GET',
-        data: {category: category, listsort: listsort},
+        data: {category: category, listsort: listSort},
 		dataType: "json",
 		async: false,
 		success: function(data, textStatus, jqXHR){
@@ -233,7 +245,7 @@ function getAllData(category, listsort){
 					  setTimeout(() => $(".imageZone3").hide(), 100);
 					  setTimeout(() =>$('.content').css('visibility','visible'),200);
 					  setTimeout(() => $('.layerType>label:nth-child(1)').click(),150);
-					  setTimeout(() => window.scrollTo(0,0),200);
+					  //setTimeout(() => window.scrollTo(0,0),200);
 				  }
 				};
 			}
@@ -350,24 +362,27 @@ function updateDataV2(data){
 		$('.imageZone:eq('+i+') .stpData').html(`<i class="fas fa-thermometer-half mr-2"></i>`+parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2))
 		$('.imageZone:eq('+i+') label').data('holeno',data.list1[i].holeNo);
 	}
+
+	//window.scrollTo({left:0, top:0})
 }
 
-function getChartData(){
+function getChartData(category,listSort){
 
 	for(let i=0;i<chartList.length;i++){
-		chartList[i].destroy()
+		$(chartList[i][0]).empty()
 	}
 
 	chartList = [];
 
 	$.ajax({
 		url : "/each/getChartDataList",
+		data : {category:category, listsort:listSort},
 		success : function(result){
 			//console.log(result)
 			let ndviDataList = result.ndviDataList;
 			let soilDataList = result.soilDataList;
 			let weatherDataList = result.weatherDataList;
-
+			
 			for(var i=0;i<ndviDataList.length;i++){
 
 				var dataList = ndviDataList[i].sensorInfoList[0].ndviDataList;
@@ -424,6 +439,7 @@ function drawChart(type,target,chartData){
 	var obj = {};
 	obj.name = getDataKrName(type);
 	obj.data = [];
+	obj.color = getChartColor(type)
 	
 			
 	for(var i=0;i<chartData.length;i++){
@@ -474,6 +490,7 @@ function drawChart(type,target,chartData){
 		},
 		yAxis : {
 			min: 0,
+			max : getChartMax(type),
 			labels : {
 				format : '{value}'+unit,
 				style : {
@@ -549,6 +566,64 @@ function getUnit(type){
 	return unit;
 }
 
+//데이터 종류에 따른 차트 범위 최고값을 구한다.
+function getChartMax(type){
+
+	var max = "";
+	
+	if(type=='ndvi'){
+		max = 1
+	}else if(type=='stp' || type=='temp'){
+		max = 40
+	}else if(type=='sec'){
+		max = 1
+	}else if(type=='pm25' || type=='pm10'){
+		max = 200
+	}else if(type=='humi'){
+		max = 100
+	}else if(type=="rain"){
+		max = 20
+	}else if(type=="co2"){
+		max = 1000
+	}else{
+		max = null
+	}
+
+	return max;
+}
+
+//데이터 종류에 따른 차트 선 색상을 구한다.
+function getChartColor(type){
+
+	var color = "";
+	
+	if(type=='ndvi'){
+		color = "#40A940"
+	}else if(type=='stp' || type=='temp'){
+		color = "#FF0000"
+	}else if(type=='sec'){
+		color = '#DB631F'
+	}else if(type=='pm25' || type=='pm10'){
+		color = '#f8f9fa'
+	}else if(type=='humi'){
+		color = '#00BFFF	'
+	}else if(type=="rain"){
+		color = '#228be6'
+	}else if(type=="co2"){
+		color = '#212529'
+	}else if(type=='smo'){
+		color = "#1E90FF"
+	}else if(type=="ws"){
+		color = "#20B2AA"
+	}else if(type=="solar"){
+		color = "#FF8200"
+	}else{
+		color = "green"
+	}
+
+	return color;
+}
+
 function getDataKrName(type){
 	if(type=="ndvi"){
 		return "NDVI"
@@ -601,11 +676,13 @@ function change(event){
 	var targets = event.target;
 	
     if($(targets).hasClass('ndvi')){
+    	$(targets).closest('.imageZone').find('.layerType label').removeClass('active')
     	$(targets).closest('.imageZone').find('.imageZone2').hide();
     	$(targets).closest('.imageZone').find('.imageZone3').show();
     	$(targets).closest('.imageZone').find(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({default_offset_pct: 0.5});
     	$(targets).closest('.imageZone').find(".twentytwenty-container[data-orientation='vertical']").twentytwenty({default_offset_pct: 0.5, orientation: 'vertical'});
     }else if($(targets).hasClass('grow') || $(targets).hasClass('temp') || $(targets).hasClass('moisture')){
+    	$(targets).closest('.imageZone').find('.ndvi').removeClass('active')
     	$(targets).closest('.imageZone').find('.imageZone2').show();
     	$(targets).closest('.imageZone').find('.imageZone3').hide();
     }
@@ -617,7 +694,9 @@ function change(event){
 
 function spread(event){
 
-	event.stopPagination();
+	//event.stopPagination();
+	
+	return;
 	
 	let id = "";
 	let targets = event.target;	
@@ -669,14 +748,22 @@ document.getElementById("currentDate").innerHTML = formatDate(new Date());
 
 
 function getLayerData(hole, category,nowLayerType){
+
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+
+	var dateString = year + '-' + month  + '-' + day;
+	
 	let retData = null;
 
 	let param = {
 		holeNo : hole,
 		courseType : category,
 		layerType : nowLayerType,
-		startDate : "2023-10-31",
-		endDate : "2023-11-02"
+		startDate : dateString,
+		endDate : dateString
 	}
 	
 	$.ajax({
@@ -728,7 +815,7 @@ $(document).on('click','.layerType label',function(){
 	
 	nowLayerType = layerType;
 
-	var result = getLayerData(holeNo,$(".categorybt.active").val(),layerType)
+	var result = getLayerData(holeNo,$(".categoryBt.active").val(),layerType)
 	
 	$.each(result,function(index,item){
 		if(index==result.length-1){

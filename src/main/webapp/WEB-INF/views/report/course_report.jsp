@@ -29,8 +29,10 @@
 				</div>
 
 				<div class="float-right">
-					<button type="button" class="btn sidebar-control sidebar-right-toggle">
-						<i class="fas fa-align-justify"></i>
+					<!-- sidebar-control sidebar-right-toggle -->
+					<button type="button" class="btn" data-toggle="modal" data-target="#modal_scrollable">
+						<!--<i class="fas fa-align-justify"></i>-->
+						<i class="icon-search4 ml-2"></i>
 					</button>
 				</div>
 
@@ -55,10 +57,74 @@
 	<!-- /page header -->
 
 	<!-- Content area -->
-	<div class="content contentdata">
+	<div class="content contentData">
 
 	</div>
 	
+	<div id="modal_scrollable" class="modal fade" tabindex="-1">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header pb-3">
+					<h5 class="modal-title" id="modalTitle">수집 자료 보기</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body py-0">
+					<div class="row mb-2">
+						<div class="col-4">
+							<select class="custom-select">
+					            <option value="0">전체코스</option>
+								<c:forEach items="${list}" var="holename">
+					            	<option value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></option>
+					            </c:forEach>
+					        </select>
+						</div>
+						<div class="col-6">
+							<div class="input-group">
+								<span class="input-group-prepend">
+									<span class="input-group-text"><i class="icon-calendar22"></i></span>
+								</span>
+								<input type="text" class="form-control daterange-basic search-daterange" value=""> 
+							</div>
+						</div>
+						<div class="col-2">
+							<button type="button" class="btn btn-primary btn-block search pb-2 pt-2">검색하기<i class="icon-search4 ml-2"></i></button>
+						</div>
+					</div>
+					<div class="table-responsive table-scrollable">
+					    <table class="table searchResult" id="searchResult">
+					        <thead>
+					            <tr>
+					                <th class="table-info">날짜</th>
+					                <th class="table-info">센서명</th>
+					                <th class="table-info">코스</th>
+					                <th class="table-info">온도</th>
+					                <th class="table-info">습도</th>
+					                <th class="table-info">풍향</th>
+					                <th class="table-info">풍속</th>
+					                <th class="table-info">일사</th>
+					                <th class="table-info">강수량</th>
+					                <th class="table-info">토양온도</th>
+					                <th class="table-info">토양수분</th>
+					                <th class="table-info">토양양분</th>
+					            </tr>
+					        </thead>
+					        <tbody>
+								<tr>
+									<td colspan="13" align="center">조건을 입력 후 검색해 주세요.</td>
+								</tr>
+					        </tbody>
+					    </table>
+					</div>
+				</div>
+
+				<div class="modal-footer pt-3">
+					<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
+					<button type="button" class="mt-2 ml-2 btn btn-secondary csvdownload">파일 저장</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- /main content -->
 
@@ -78,63 +144,7 @@
 
 		<!-- Sidebar search -->
 		<div class="sidebar-section">
-			<ul class="nav nav-sidebar" data-nav-type="accordion">
-				<li class="nav-item-header">코스</li>
-				<li class="nav-item text-center pl-2 pr-2">
-					<div class="form-group row">
-					    <div class="col-lg-12">
-					        <select class="custom-select">
-					            <option value="0">전체코스</option>
-								<c:forEach items="${list}" var="holename">
-					            	<option value="${holename.holeNo}"><c:out value="${holename.holeName}"></c:out></option>
-					            </c:forEach>
-					        </select>
-					    </div>
-					</div>
-				</li>
-			</ul>
-
-
-			<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
-				<li class="nav-item-header">기간</li>
-				<li class="nav-item pl-3 pr-3">
-					<!--달력 플러그인-->
-					<div class="input-group">
-						<span class="input-group-prepend">
-							<span class="input-group-text"><i class="icon-calendar22"></i></span>
-						</span>
-						<input type="text" class="form-control daterange-basic search-daterange" value=""> 
-					</div>
-				</li>
-			</ul>
-
-			<ul class="nav nav-sidebar my-2" >
-				<li class="nav-item pl-3 pr-3">
-					<button type="button" class="btn btn-primary btn-block search">검색하기<i class="icon-search4 ml-2"></i></button>
-				</li>
-			</ul>
-
-			<div class="table-responsive table-scrollable pl-2 pr-2">
-			    <table class="table searchresult" id="searchresult">
-			        <thead>
-			            <tr>
-			                <th class="table-info">날짜</th>
-			                <th class="table-info">센서명</th>
-			                <th class="table-info">코스</th>
-			                <th class="table-info">온도</th>
-			                <th class="table-info">습도</th>
-			                <th class="table-info">토양온도</th>
-			                <th class="table-info">토양수분</th>
-			            </tr>
-			        </thead>
-			        <tbody>
-			
-			        </tbody>
-			    </table>
-			</div>
-				
-			<button type="button" class="mt-2 ml-2 btn btn-secondary csvdownload">파일 저장</button>
-			
+			<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_scrollable">자료조회<i class="icon-search4 ml-2"></i></button>
 		</div>
 		<!-- /sidebar search -->
 
@@ -861,7 +871,7 @@
 						</div>
 						`
 
-				let dataElement = document.querySelector('.contentdata');
+				let dataElement = document.querySelector('.contentData');
 				dataElement.innerHTML = content;
 
 				map = new naver.maps.Map('map', {
@@ -1307,7 +1317,7 @@
 						</div>
 						`
 
-				let dataElement = document.querySelector('.contentdata');
+				let dataElement = document.querySelector('.contentData');
 				dataElement.innerHTML = content;
 
 				map = new naver.maps.Map('map', {
@@ -1784,13 +1794,18 @@
 		                <td>\${data.list1[i].sensorInfo.courseType}</td>
 		                <td>\${data.list1[i].weatherData.temp}</td>
 		                <td>\${data.list1[i].weatherData.humi}</td>
+		                <td>\${data.list1[i].weatherData.wd}</td>
+		                <td>\${data.list1[i].weatherData.ws}</td>
+		                <td>\${data.list1[i].weatherData.solar}</td>
+		                <td>\${data.list1[i].weatherData.rain}</td>
 		                <td>\${data.list2[i].soilData.stp}</td>
 		                <td>\${data.list2[i].soilData.smo}</td>
+		                <td>\${data.list2[i].soilData.sec}</td>
 		            </tr>
 		        `
 		    }//for() end
 		}//if() end
-		let dataElement = document.querySelector('.searchresult tbody');
+		let dataElement = document.querySelector('.searchResult tbody');
 		dataElement.innerHTML = result;
 	}
     
@@ -1826,7 +1841,7 @@
 	}
 
 	function saveCSV2() {
-	    let table = document.getElementById('searchresult');
+	    let table = document.getElementById('searchResult');
 	    let csv = [];
 	    
 	    for(let row of table.rows) {
@@ -1860,7 +1875,7 @@
     
     
 	//달력 오늘날짜 설정
-    document.getElementById('currentDate').value = '2023-09-26'//new Date().toISOString().substring(0, 10);
+    document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
     
 	//현재 날짜 yyyy-mm-dd hh:mm으로 표출
     function formatDate(date) {
@@ -1883,4 +1898,12 @@
 	height: 330px;
 }
 -->
+
+@media (min-width: 576px){
+	.modal-dialog {
+	    max-width: 1250px;
+	    margin: 1.75rem auto;
+	}
+}
+
 </style>

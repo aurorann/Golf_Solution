@@ -40,7 +40,7 @@ public class ReportCourseService {
 //		return sensorinfodao.test();
 //	}
 	
-	public EgovMap getdata(String hole, String category, String selectDate, String beforeDate) {
+	public EgovMap getData(String hole, String category, String selectDate, String beforeDate) {
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("hole", hole);
 		paramMap.put("category", category);
@@ -63,7 +63,7 @@ public class ReportCourseService {
 	}
 	
 	//데이터 검색
-	public EgovMap getsearchdata(String holeNo, String workStart, String workEnd) {
+	public EgovMap getSearchData(String holeNo, String workStart, String workEnd) {
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("holeNo", holeNo);
 		paramMap.put("workStart", workStart);
@@ -80,7 +80,7 @@ public class ReportCourseService {
 	}
 	
 	//모든 홀 데이터 날짜로 검색
-	public EgovMap getsearchalldata(String workStart, String workEnd) {
+	public EgovMap getSearchAllData(String workStart, String workEnd) {
 		EgovMap paramMap = new EgovMap();
 		paramMap.put("workStart", workStart);
 		paramMap.put("workEnd", workEnd);
