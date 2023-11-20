@@ -36,6 +36,7 @@ public class RobotController {
 		return "/management/robot/management_robot2";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/getRobotInfo")
 	private List<EgovMap> getRobotInfo(){
 		return robotService.getRobotInfo();

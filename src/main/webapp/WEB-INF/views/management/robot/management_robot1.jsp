@@ -25,17 +25,20 @@
 				
 				<div class="btn-group mr-2 float-left btn-group-toggle col-lg-12" data-toggle="buttons" style="width: 211px;">
 					<label class="btn btn-light active">
+						<input type="radio" name="options" id="allRobot" autocomplete="off" value="전체" checked="checked">
+						<!--
 						<input type="radio" name="options" id="option1" autocomplete="off" value="전체" checked="checked">
+						-->
 						전체
 					</label>
 
 					<label class="btn btn-light">
-						<input type="radio" name="options" id="option2" autocomplete="off" value="동작중">
+						<input type="radio" name="options" id="workRobot" autocomplete="off" value="동작중">
 						동작중
 					</label>
 					
 					<label class="btn btn-light">
-						<input type="radio" name="options" id="option2" autocomplete="off" value="대기중">
+						<input type="radio" name="options" id="waitRobot" autocomplete="off" value="대기중">
 						대기중
 					</label>
 				</div>
@@ -53,185 +56,76 @@
 		<div class="content-wrap position-relative">
 	
 			<div class="collapsible-sortable position-absolute" style="left:10px; top:10px;">
-				<!-- 
-				<div class="card layer-card">
-					<div class="card-header card-header-round header-elements-inline">
-						<h6 class="card-title">
-							<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart" aria-expanded="false">
-								<span class="badge badge-danger badge-pill mr-1">충전 필요</span>
-								<span>센싱 로봇 2</span>
-								<span>
-									배터리가 부족합니다
-								</span>
-							</a>
-						</h6>
-	
-						<div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="remove"></a>
-							</div>
-						</div>
-					</div>
-	
-					<div id="layer-card-chart" class="collapse" >
-						<div class="card-body chart-card scrolled pl-1 pr-1">
-							<div class="table-responsive">
-								<table class="table text-center">
-									<thead>
-										<tr>
-											<th class="table-info pt-1 pb-1">날짜</th>
-											<th class="table-info pt-1 pb-1">활동</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td class="p-0">2023-06-26 18:02:18</td>
-											<td class="p-0">배터리가 부족합니다.</td>
-										</tr>
-										<tr>
-											<td class="p-0">2023-06-26 18:02:18</td>
-											<td class="p-0">이동중 입니다.</td>
-										</tr>
-										<tr>
-											<td class="p-0">2023-06-26 18:02:18</td>
-											<td class="p-0">이동중 입니다.</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-	
-				<div class="card layer-card">
-					<div class="card-header card-header-round header-elements-inline">
-						<h6 class="card-title">
-							<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart2" aria-expanded="false">
-								<span class="badge badge-success badge-pill mr-1">활동중</span>
-								<span>센싱 로봇 1</span>
-								<span>
-									활동 중입니다.
-								</span>
-							</a>
-						</h6>
-
-						<div class="header-elements">
-							<div class="list-icons">
-								<a class="list-icons-item" data-action="remove"></a>
-							</div>
-						</div>
-					</div>
-
-					<div id="layer-card-chart2" class="collapse" >
-						<div class="card-body chart-card scrolled pl-1 pr-1">
-							<div class="table-responsive">
-								<table class="table text-center">
-									<thead>
-										<tr>
-											<th class="table-info pt-1 pb-1">날짜</th>
-											<th class="table-info pt-1 pb-1">활동</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td class="p-0">2023-06-26 18:02:18</td>
-											<td class="p-0">배터리가 부족합니다.</td>
-										</tr>
-										<tr>
-											<td class="p-0">2023-06-26 18:02:18</td>
-											<td class="p-0">이동중 입니다.</td>
-										</tr>
-										<tr>
-											<td class="p-0">2023-06-26 18:02:18</td>
-											<td class="p-0">이동중 입니다.</td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-					 -->
-					
-					<c:forEach items="${list}" var="robotInfo" varStatus="status">
-						<fmt:formatDate value="${robotLogList.lastUpdated}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate"/>
-							<div class="card layer-card">
-								<div class="card-header card-header-round header-elements-inline">
-									<h6 class="card-title">
-										<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart${status.index + 1}" aria-expanded="false">
-											<c:choose>
-												<c:when test="${robotInfo.robotState == '충전 필요'}">
-													<span class="badge badge-danger badge-pill mr-1">충전 필요</span>
-												</c:when>
-												<c:when test="${robotInfo.robotState == '대기중'}">
-													<span class="badge badge-warning badge-pill mr-1">대기중</span>
-												</c:when>
-												<c:otherwise>
-													<span class="badge badge-success badge-pill mr-1">활동중</span>
-												</c:otherwise>
-											</c:choose>
-											<span><c:out value="${robotInfo.robotName}"></c:out></span>
-											<span><c:out value="${robotInfo.robotState}"></c:out></span>
-										</a>
-									</h6>
-			
-									<div class="header-elements">
-										<div class="list-icons">
-											<a class="list-icons-item" data-action="remove"></a>
-										</div>
-									</div>
-								</div>
-			
-								<div id="layer-card-chart${status.index + 1}" class="collapse" >
-									<div class="card-body chart-card scrolled pl-1 pr-1">
-										<div class="table-responsive">
-											<table class="table text-center">
-												<thead>
-													<tr>
-														<th class="table-info pt-1 pb-1">날짜</th>
-														<th class="table-info pt-1 pb-1">활동</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:set var="count" value="0"/>
-														<c:forEach items="${log}" var="logList" varStatus="status">
-															 <c:if test="${robotInfo.robotName == logList.robotName and count lt 10}">
-																<tr>
-																	<td class="p-0">${logList.robotLog.tm}</td>
-																	<td class="p-0">${logList.robotLog.eventComment}</td>
-																</tr>
-															<c:set var="count" value="${count + 1}"/>
-														</c:if>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-					</c:forEach>
-	
-					
-	
-				</div>
-	
 				
-	
-				<div id="map" style="width: 100%;height: 750px;"></div>
+				<c:forEach items="${list}" var="robotInfo" varStatus="status">
+					<fmt:formatDate value="${robotLogList.lastUpdated}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate"/>
+						<div class="card layer-card">
+						<input type="hidden" class="listRobotName" value="${robotInfo.robotName}">
+							<div class="card-header card-header-round header-elements-inline">
+								<h6 class="card-title">
+									<a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart${status.index + 1}" aria-expanded="false">
+										<c:choose>
+											<c:when test="${robotInfo.robotState == '충전 필요'}">
+												<span class="badge badge-danger badge-pill mr-1">충전 필요</span>
+											</c:when>
+											<c:when test="${robotInfo.robotState == '대기중'}">
+												<span class="badge badge-warning badge-pill mr-1">대기중</span>
+											</c:when>
+											<c:otherwise>
+												<span class="badge badge-success badge-pill mr-1">활동중</span>
+											</c:otherwise>
+										</c:choose>
+										<span><c:out value="${robotInfo.robotName}"></c:out></span>
+										<span><c:out value="${robotInfo.robotState}"></c:out></span>
+									</a>
+								</h6>
+		
+								<div class="header-elements">
+									<div class="list-icons">
+										<a class="list-icons-item" data-action="remove"></a>
+									</div>
+								</div>
+							</div>
+		
+							<div id="layer-card-chart${status.index + 1}" class="collapse" >
+								<div class="card-body chart-card scrolled pl-1 pr-1">
+									<div class="table-responsive">
+										<table class="table text-center">
+											<thead>
+												<tr>
+													<th class="table-info pt-1 pb-1">날짜</th>
+													<th class="table-info pt-1 pb-1">활동</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:set var="count" value="0"/>
+													<c:forEach items="${log}" var="logList" varStatus="status">
+														 <c:if test="${robotInfo.robotName == logList.robotName and count lt 10}">
+															<tr>
+																<td class="p-0">${logList.robotLog.tm}</td>
+																<td class="p-0">${logList.robotLog.eventComment}</td>
+															</tr>
+														<c:set var="count" value="${count + 1}"/>
+													</c:if>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+				</c:forEach>
+			</div>
+			<div id="map" style="width: 100%;height: 750px;"></div>
 		</div>
 		<!-- /basic card -->
-	
-	
 	</div>
 	<!-- /content area -->
-	
-	
-	
 </div>
 <!-- /main content -->
 
 <div class="sidebar sidebar-light sidebar-right sidebar-expand-lg sidebar-collapsed">
-		<!-- Sidebar content -->
+	<!-- Sidebar content -->
 	<div class="sidebar-content">
 	
 		<!-- Header -->
@@ -287,6 +181,17 @@
 </style>
 	
 <script type="text/javascript">
+
+$(document).ready(function() {
+    $(".btn-group-toggle .btn").click(function() {
+        // 모든 label에서 'active' 클래스 제거
+        $(".btn-group-toggle .btn").removeClass("active");
+        // 클릭한 label에 'active' 클래스 추가
+        $(this).addClass("active");
+    });
+
+});
+
 $(function(){
 
 	let robotMap = {};
@@ -356,51 +261,147 @@ $(function(){
 		let active = "";
 		
 		if(state=="동작중"){
-			active = "robot-active"
+			active = "robot-active",
+			state = "work-robot"
+		}else{
+			state = "wait-robot"
 		}
 		
 		let template = 
-			`<div class="card border-pink bg-white text-center p-2 \${active}" style="width:156px;">
-					<a href="#" class="text-body">
-					</a><div class="media m-0"><a href="#" class="text-body">
-						</a><div class="mr-3"><a href="#" class="text-body">
-							</a><a href="#">
-								<span href="#" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i>
-								</span>
-								<span class="ml-1 font-weight-bold text-dark">\${robotName}</span>
-							</a>
-						</div>
+			`<div class="card border-pink bg-white text-center p-2 \${active} \${state}" style="width:156px; cursor:pointer;">
+				<input class="robotName" type="hidden" value="\${robotName}">
+				<div class="media m-0">
+					<div class="mr-3">
+						<a href="#">
+							<span href="" class="btn bg-transparent border-pink text-pink rounded-pill border-2 btn-icon"><i class="fas fa-robot"></i></span>
+							<span class="ml-1 font-weight-bold text-dark">\${robotName}</span>
+						</a>
 					</div>
+				</div>
 			</div>`
-
+		
 		return template;
 	}
+	
+	let robotList = [];
+	let overlays = [];
+	
+    $.ajax({
+        url: '/management/getRobotInfo',
+        method: 'GET',
+        success: function(data) {
+        	console.log(data);
+        	console.log(data[0].robotName);
+			$.each(data, function(index, robotInfo) {
+				robotList.push({
+					robotName: robotInfo.robotName,
+					robotState: robotInfo.robotState,
+					lat: robotInfo.lat,
+					lon: robotInfo.lon
+				});
+			});
+			console.log(robotList);
+			
+			robotList.forEach(function(robotInfo) {
+			    let contentString = [
+			        drawInfoWindow(robotInfo.robotName, robotInfo.robotState)
+			    ].join('');
 
-	let contentString = [
-		drawInfoWindow("센싱 로봇1","")
-    ].join('');
+			    let position = new naver.maps.LatLng(robotInfo.lat, robotInfo.lon);
 
-	let position = new naver.maps.LatLng(37.046257, 127.390777);
-
-	let customOverlay = new CustomOverlay({
-        content: contentString,
-        position: position,
-        map: map
+			    let customOverlay = new CustomOverlay({
+			        content: contentString,
+			        position: position,
+			        map: map
+			    });
+			    overlays.push(customOverlay);
+			});
+			
+       },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+    });//ajax end
+    
+    
+    
+    $(document).on("click","#allRobot", function(){
+    	$('.wait-robot').show();
+    	$('.work-robot').show();
     });
 
-	let contentString2 = [
-		drawInfoWindow("센싱 로봇2","동작중")
-    ].join('');
-
-	let position2 = new naver.maps.LatLng(37.045675, 127.391759);
-
-	let customOverlay2 = new CustomOverlay({
-        content: contentString2,
-        position: position2,
-        map: map
+    $(document).on("click","#workRobot", function(){
+    	$('.wait-robot').hide();
+    	$('.work-robot').show();
     });
+
+    $(document).on("click","#waitRobot", function(){
+    	$('.wait-robot').show();
+    	$('.work-robot').hide();
+    });
+
+    $(document).on("click",".border-pink", function(){
+        var robotName = $(this).find('.robotName').val();
+        console.log("로봇이름"+robotName)
+        $('.listRobotName[value="' + robotName + '"]').closest('.card').find('a.text-body').click();
+    });
+	    
+    
 })
 
+
+/*
+let contentString = [
+	drawInfoWindow("로봇1","동작중")
+].join('');
+
+let position = new naver.maps.LatLng(37.046257, 127.390777);
+
+let customOverlay = new CustomOverlay({
+    content: contentString,
+    position: position,
+    map: map
+});
+
+let contentString2 = [
+	drawInfoWindow("로봇2","대기중")
+].join('');
+
+let position2 = new naver.maps.LatLng(37.045675, 127.391759);
+
+let customOverlay2 = new CustomOverlay({
+    content: contentString2,
+    position: position2,
+    map: map
+});
+
+let contentString3 = [
+	drawInfoWindow("캐디로봇1","충전 필요")
+].join('');
+
+let position3 = new naver.maps.LatLng(37.044585, 127.385645);
+
+let customOverlay3 = new CustomOverlay({
+    content: contentString3,
+    position: position3,
+    map: map
+});
+
+let contentString4 = [
+	drawInfoWindow("캐디로봇2","동작중")
+].join('');
+
+let position4 = new naver.maps.LatLng(37.046366, 127.387826);
+
+let customOverlay4 = new CustomOverlay({
+    content: contentString4,
+    position: position4,
+    map: map
+});
+*/
 
 
 
