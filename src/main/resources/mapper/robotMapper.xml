@@ -52,6 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM ROBOT_INFO
 	</select>
 	
+	<select id="getRobotInfoSelect" resultType="egovMap">
+		SELECT * FROM ROBOT_INFO WHERE ROBOT_NAME = #{robotName}
+	</select>
+	
 	<select id="getLogListCnt" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM ROBOT_LOG
 	</select>

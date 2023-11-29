@@ -44,8 +44,8 @@
 			</li>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<li class="nav-item">
-				<a href="/user/user_management" class="navbar-nav-link">
-					회원관리
+				<a href="/user/user_management" class="navbar-nav-link user">
+					MEMBER
 				</a>
 			</li>
 			</sec:authorize>
@@ -110,28 +110,28 @@ $(document).ready(function() {
 
 
     console.log(path)
+    <!--
     if(path == '/management/robot2'){
     	path = '/management/robot1'
     }
+    -->
     //nav 메뉴에 active 추가
     $('.nav-item a').each(function() {
         var href = $(this).attr('href');
         if (path === href) {
-        	
             $(this).addClass('active');
-            
             // 경로에 따라 active 클래스 추가
             if (path === '/management/course1' || path === '/management/course2' || path === '/management/robot1' || path == '/management/robot2') {
-                $('.management').addClass('active'); // 'MANAGEMENT' 메뉴 아이템에 'active' 클래스 추가
+                $('.management').addClass('active');
             }else if (path === '/each/course_separatecourse' || path === '/report/course_report' || path === '/all/course_allcourse') {
                 $('.course').addClass('active');
+            }else if (path === '/user/user_info') {
+            	$('.user').addClass('active');
             }
         }
     });
     
-
-    
-});
+});//ready end
 </script>
 
 
