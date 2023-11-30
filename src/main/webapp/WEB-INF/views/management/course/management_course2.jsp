@@ -48,7 +48,7 @@
 				</div>
 				<div class="col-lg-12 row">
 					<div class="col-lg-12">
-						<div class="card more-round">
+						<div class="card more-round" style="background-color: transparent;">
 							<!-- Sidebar search -->
 							<div class="sidebar-section ">
 								<ul class="nav nav-sidebar my-2" data-nav-type="accordion">
