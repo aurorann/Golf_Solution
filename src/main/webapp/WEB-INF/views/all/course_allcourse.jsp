@@ -14,15 +14,15 @@
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">Course</h6>
 				<div class="btn-group mr-2" data-toggle="buttons" id="holeList">
 					<button type="button" class="btn btn-light active">전체</button>
-					<button type="button" class="btn btn-light">H1</button>
-					<button type="button" class="btn btn-light">H2</button>
-					<button type="button" class="btn btn-light">H3</button>
-					<button type="button" class="btn btn-light">H4</button>
-					<button type="button" class="btn btn-light">H5</button>
-					<button type="button" class="btn btn-light">H6</button>
-					<button type="button" class="btn btn-light">H7</button>
-					<button type="button" class="btn btn-light">H8</button>
-					<button type="button" class="btn btn-light">H9</button>
+					<button type="button" class="btn btn-light" value="01">H1</button>
+					<button type="button" class="btn btn-light" value="02">H2</button>
+					<button type="button" class="btn btn-light" value="03">H3</button>
+					<button type="button" class="btn btn-light" value="04">H4</button>
+					<button type="button" class="btn btn-light" value="05">H5</button>
+					<button type="button" class="btn btn-light" value="06">H6</button>
+					<button type="button" class="btn btn-light" value="07">H7</button>
+					<button type="button" class="btn btn-light" value="08">H8</button>
+					<button type="button" class="btn btn-light" value="09">H9</button>
 				</div>
 
 				<div class="btn-group mr-2" data-toggle="buttons" id="courseType">
@@ -251,6 +251,25 @@
 						</label>
 					</div>
 				</li>
+			</ul>
+			
+			<ul class="nav nav-sidebar my-2" data-nav-type="accordion" style="display: none;">
+				<li class="nav-item-header">설정</li>
+				<li class="nav-item text-center pl-2 pr-2">
+					<div class="btn-group btn-group-toggle col-lg-12">
+						<select class="custom-select" id="searchHole">				
+			            	<option value="01">Hole 1</option>
+			            	<option value="02">Hole 2</option>
+			            	<option value="03">Hole 3</option>
+			            	<option value="04">Hole 4</option>
+			            	<option value="05">Hole 5</option>
+			            	<option value="06">Hole 6</option>
+			            	<option value="07">Hole 7</option>
+			            	<option value="08">Hole 8</option>
+			            	<option value="09">Hole 9</option>
+				        </select>
+			        </div>
+			     </li>
 			</ul>
 
 
@@ -535,7 +554,7 @@ $(function(){
 	    	path,
     	    bounds,
     	    {
-    	        opacity: 0.5,
+    	        opacity: 1,
     	        clickable: false
     	    }
     	);
@@ -597,7 +616,7 @@ $(function(){
 			    	list[i][j].layerPath,
 		    	    bounds,
 		    	    {
-		    	        opacity: 0.5,
+		    	        opacity: 1,
 		    	        clickable: false
 		    	    }
 		    	);
@@ -1334,7 +1353,7 @@ $(function(){
 			success : function(result){
 				retData = result;
 				//console.log(retData.weatherDataList[0].sensorInfoList[0].weatherDataList[0].tm.substring(0,16))
-				$('#updateTime').text('Update : '+retData.weatherDataList[0].sensorInfoList[0].weatherDataList[0].tm.substring(0,16))
+				$('#updateTime').text('Update : '+retData.weatherDataList[0].sensorInfoList[0].weatherDataList[retData.weatherDataList[0].sensorInfoList[0].weatherDataList.length-1].tm.substring(0,16))
 			}
 		})
 
@@ -1668,7 +1687,17 @@ $(function(){
 		if($('[name="options"]:checked').val()=='all'){
 			$('#holeList button:eq(0)').click();
 		}else{
-			$('#holeList button.active').click();
+			var hole = $('#searchHole').val();
+
+			$('#holeList button[value="'+hole+'"]').click();
+		}
+	})
+	
+	$('[name="options"]').on('change',function(){
+		if($(this).val()=='all'){
+			$('#searchHole').closest('ul').hide()
+		}else{
+			$('#searchHole').closest('ul').show()
 		}
 	})
 		

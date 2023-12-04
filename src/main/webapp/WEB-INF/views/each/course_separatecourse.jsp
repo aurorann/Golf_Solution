@@ -229,7 +229,7 @@ function getAllData(category, listSort){
 			for(let i=0;i<holeCount;i++){
 				var map = new naver.maps.Map('map'+i, {
 				    center: new naver.maps.LatLng(list[i].lat, list[i].lon),
-				    zoom: 16
+				    zoom: 17
 				});
 				map.setMapTypeId('satellite'); 
 				mapList[list[i].holeNo] = map;
@@ -789,7 +789,7 @@ function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx,targetM
     	path,
 	    bounds,
 	    {
-	        opacity: 0.5,
+	        opacity: 1,
 	        clickable: false
 	    }
 	);

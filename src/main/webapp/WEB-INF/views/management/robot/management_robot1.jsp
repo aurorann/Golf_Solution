@@ -268,7 +268,7 @@ $(function(){
 		}
 		
 		let template = 
-			`<div class="card border-pink bg-white text-center p-2 \${active} \${state}" style="width:156px; cursor:pointer;">
+			`<div class="card border-pink bg-white text-center p-2 \${active} \${state}" style="width:156px; cursor:pointer;position:absolute;">
 				<input class="robotName" type="hidden" value="\${robotName}">
 				<div class="media m-0">
 					<div class="mr-3">

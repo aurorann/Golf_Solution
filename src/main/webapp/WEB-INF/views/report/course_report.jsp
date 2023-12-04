@@ -1456,7 +1456,7 @@
 	    	path,
     	    bounds,
     	    {
-    	        opacity: 0.5,
+    	        opacity: 1,
     	        clickable: false
     	    }
     	);
