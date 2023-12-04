@@ -80,8 +80,8 @@
 
 
 			<div class="collapsible-sortable position-absolute" style="left: 10px; top: 10px;">
-				<div class="card layer-card border-info">
-					<div class="card-header bg-info text-white">
+				<div class="card layer-card border-info bg-info">
+					<div class="card-header text-white">
 						<h6 class="card-title">
 							<span class="text-white collapsed" id="updateTime">Update : 2023.08.16 11:12 </span>
 						</h6>
@@ -140,7 +140,7 @@
 					</div>
 
 					<div id="layer-card-chart" class="collapse show" style="">
-						<div class="card-body chart-card scrolled">
+						<div class="card-body scrolled">
 							<div class="chart-container" id="chartZone">
 								<div class="chart has-fixed-height" id="line_multiple" style="height: 440px;"></div>
 							</div>
@@ -156,7 +156,7 @@
 			
 			</div>
 			
-			<div class="image-player-wrapper mt-2">
+			<div class="image-player-wrapper mt-2" style="display: none;">
 				<div class="col-lg-12 mb-2">
 					<div class="row">
 						<div class="col-lg-9 col-sm-12 mt-2">
@@ -223,7 +223,7 @@
 </div>
 <!-- /main content -->
 
-<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg">
+<div class="sidebar sidebar-light sidebar-right sidebar-expand-lg sidebar-collapsed">
 	<!-- Sidebar content -->
 	<div class="sidebar-content">
 
@@ -303,6 +303,15 @@
 
 </div>
 <script>
+
+$(document).ready(function(){
+	$('.player-close').hide()
+	$('.player-open').show();
+	//$('.image-player-wrapper').hide()
+})
+
+
+
 function findMiddleValue(array) {
     const result = []; // 결과를 저장할 배열
     
@@ -419,7 +428,20 @@ function getWdText(wdir){
 
 }
 
-$(function(){
+
+var marker, infoWindow;
+
+function handleClick() {
+	
+	console.log("remove");
+	
+	if(infoWindow.getMap()){
+		infoWindow.close();
+		marker.setMap(map); 
+	}
+}
+
+
 
 	let chartList = [];
 	let markerList = new Array(); // 마커 정보를 담는 배열
@@ -500,17 +522,17 @@ $(function(){
 	function createMarker(lat,lon){
 		
 		var position = new naver.maps.LatLng(lat, lon);
-		var data = getCurrentData(nowHole,nowCourse)
+		var data = getCurrentData(nowHole, nowCourse);
 		let hole = nowHole;
 
 	    /* 정보창 */
-		var infoWindow = new naver.maps.InfoWindow({
+		infoWindow = new naver.maps.InfoWindow({
 		    content: `<div></div>`,
 		    disableAnchor:true,
 		    borderWidth:0
 		});
 					
-		var marker = new naver.maps.Marker({
+		marker = new naver.maps.Marker({
 		    map: map,
 		    position: position,
 		    icon: {
@@ -530,10 +552,12 @@ $(function(){
 		naver.maps.Event.addListener(marker, "click", function(e) {
 			if(infoWindow.getMap()){
 				infoWindow.close();
+				//marker.setMap(map); 
 			}else{
 				let infoHtml = drawInfoWindow(nowDataType,hole,data);
 				infoWindow.setContent(infoHtml)
 				infoWindow.open(map, marker);
+				marker.setMap(null); 
 			}
 		});
 
@@ -732,11 +756,12 @@ $(function(){
 		switch(type){
 		case "NDVI":
 			data = data.ndvi;
-			console.log(data.ndvi);
+			console.log(data);
 			template = `<div class="course1 position-absolute card bg-success-100 border-success text-center" style="width:225px;">
 							<div class="text-body pb-1">
-								<div class="card-header bg-success text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px;">
-									<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+								<div class="card-header bg-success text-white pt-1 pb-1" style="border-top-left-radius: 17px; border-top-right-radius: 17px; position: relative;">
+						    		<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
+						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div>
 				
 								<div class="card-body pt-2 pb-2">
@@ -758,8 +783,9 @@ $(function(){
 			data = data.weather;
 			template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:270px;">
 							<div class="text-body">
-								<div class="card-header bg-primary text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px;">
-									<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+								<div class="card-header bg-primary text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px; position: relative;">
+									<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
+						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div> <!--기상정보 8종-->
 								<div class="text-center weather-wrap pl-2 pr-2 pb-2">
 									<div class="float-left weather-box">
@@ -806,8 +832,9 @@ $(function(){
 			data = data.soil;
 			template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
 								<div class="text-body pb-1">
-								<div class="card-header bg-warning text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px;">
-									<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+								<div class="card-header bg-warning text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px; position: relative;">
+									<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
+						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div> <!--토양정보 3종-->
 								<div class="card-body pt-1 pb-2">
 									<div class="float-left mr-3">
@@ -829,9 +856,16 @@ $(function(){
 		default:
 			template = `<div style="display:none;"></div>`;
 		}
-
 		return template;
 	}
+	
+	
+	$(document).on('click','.remove2',function(){
+    	console.log("remove");
+	})
+	
+
+
 
 	function drawInfoWindowMini(type,holeNo,data){
 
@@ -1132,7 +1166,8 @@ $(function(){
 		        },
 		        labels: {
 		            format: '{value:%y-%m-%d<br>%H:%M}'
-		        }
+		        },
+		        visible: false
 			},
 			labels : {
 				autoRotation: false,
@@ -1148,14 +1183,17 @@ $(function(){
 					format : '{value}'+unit,
 					style : {
 						color : Highcharts.getOptions().colors[3]
+						//color : 'transparent'
 					}
 				},
 				title : {
 					text : false,
 					style : {
 						color : Highcharts.getOptions().colors[3]
+						//color : 'transparent'
 					}
-				}
+				},
+				visible: false
 			},
 			tooltip : {
 				shared : true,
@@ -1441,10 +1479,14 @@ $(function(){
 			var result = getLayerData(nowHole,nowCourse)
 			var layerCnt = result.length;
 
+// 			if(layerCnt==0){
+// 				$('.image-player-wrapper').hide()
+// 			}else{
+// 				$('.image-player-wrapper').show()
+// 			}
+
 			if(layerCnt==0){
 				$('.image-player-wrapper').hide()
-			}else{
-				$('.image-player-wrapper').show()
 			}
 			
 			var layerList = [0];
@@ -1503,10 +1545,14 @@ $(function(){
 			
 			var res = unifyArrayLengthWithTime(layerParam);
 
+// 			if(res.times.length==0){
+// 				$('.image-player-wrapper').hide()
+// 			}else{
+// 				$('.image-player-wrapper').show()
+// 			}
+
 			if(res.times.length==0){
 				$('.image-player-wrapper').hide()
-			}else{
-				$('.image-player-wrapper').show()
 			}
 
 			clearGroundOverlay();
@@ -1611,10 +1657,14 @@ $(function(){
 			var result = getLayerData(nowHole,nowCourse)
 			var layerCnt = result.length;
 
+// 			if(layerCnt==0){
+// 				$('.image-player-wrapper').hide()
+// 			}else{
+// 				$('.image-player-wrapper').show()
+// 			}
+
 			if(layerCnt==0){
 				$('.image-player-wrapper').hide()
-			}else{
-				$('.image-player-wrapper').show()
 			}
 			
 			var layerList = [0];
@@ -1669,10 +1719,14 @@ $(function(){
 			
 			var res = unifyArrayLengthWithTime(layerParam);
 
+// 			if(res.times.length==0){
+// 				$('.image-player-wrapper').hide()
+// 			}else{
+// 				$('.image-player-wrapper').show()
+// 			}
+
 			if(res.times.length==0){
 				$('.image-player-wrapper').hide()
-			}else{
-				$('.image-player-wrapper').show()
 			}
 
 			clearGroundOverlay();
@@ -1796,7 +1850,8 @@ $(function(){
 	})
     	
 	$('#holeList button:eq(0)').click();
-})
+	
+
 </script>
 <style>
 	.position-absolute{
@@ -1813,7 +1868,7 @@ $(function(){
 		height: 175px;
 	}
 	#chartZone > #ndviChart{
-		height: 300px;
+		height: 150px;
 	}
 	
 	.movi-bar{

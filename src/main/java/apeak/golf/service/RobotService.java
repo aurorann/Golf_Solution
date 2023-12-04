@@ -29,6 +29,10 @@ public class RobotService {
 		return robotInfoDAO.getRobotInfo();
 	}
 	
+	public List<EgovMap> getRobotInfo(String robotName) {
+		return robotInfoDAO.getRobotInfo(robotName);
+	}
+	
 	public List<EgovMap> getLogList() {
 		return robotLogDAO.getLogList();
 	}

@@ -55,8 +55,8 @@
 		<!-- Basic card -->
 		<div class="content-wrap position-relative">
 	
-			<div class="collapsible-sortable position-absolute" style="left:10px; top:10px;">
-				
+			<div class="collapsible-sortable position-absolute badgeList" style="left:10px; top:10px;">
+				<!-- 
 				<c:forEach items="${list}" var="robotInfo" varStatus="status">
 					<fmt:formatDate value="${robotLogList.lastUpdated}" pattern="yyyy-MM-dd HH:mm:ss" var="formattedDate"/>
 						<div class="card layer-card">
@@ -105,9 +105,9 @@
 																<td class="p-0">${logList.robotLog.tm}</td>
 																<td class="p-0">${logList.robotLog.eventComment}</td>
 															</tr>
-														<c:set var="count" value="${count + 1}"/>
-													</c:if>
-												</c:forEach>
+															<c:set var="count" value="${count + 1}"/>
+														</c:if>
+													</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -115,6 +115,7 @@
 							</div>
 						</div>
 				</c:forEach>
+				 -->
 			</div>
 			<div id="map" style="width: 100%;height: 750px;"></div>
 		</div>
@@ -189,8 +190,157 @@ $(document).ready(function() {
         // 클릭한 label에 'active' 클래스 추가
         $(this).addClass("active");
     });
+    
+    robotInfo();
 
+});//ready end
+
+
+function robotInfo(){
+    var badge = '';
+	$.ajax({
+	    url: '/management/getRobotInfo',
+	    method: 'GET',
+	    success: function(data) {
+	        console.log(data);
+	        
+            $.each(data,function(index,item){
+                badge += badgeList(item);	            
+            })//for each end
+
+            $('.badgeList').html(badge);
+            logList();
+	   },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+	});//ajax end
+}//robotInfo() end
+
+function selectRobotInfo(robotName){
+	console.log("selectRobotInfo"+robotName);
+    var badge = '';
+	$.ajax({
+	    url: '/management/getRobotInfoSelect',
+	    data: { 'robotName': robotName },
+	    method: 'GET',
+	    success: function(data) {
+	        console.log(data);
+	        
+	        var item = data;
+	        
+            $.each(data,function(index,item){
+                badge += badgeList(item);	            
+            })//for each end           
+
+            $('.badgeList').append(badge);
+            logList();
+	   },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+	});//ajax end
+}//robotInfo() end
+
+
+function badgeList(item){
+	console.log(item)
+	var badge = '';
+	var stateClass = '';
+	var stateText = '';
+	if (item.robotState == '충전 필요') {
+		stateClass = 'badge-danger';
+		stateText = '충전 필요';
+	} else if (item.robotState == '대기중') {
+		stateClass = 'badge-warning';
+		stateText = '대기중';
+	} else {
+		stateClass = 'badge-success';
+		stateText = '활동중';
+	}
+	console.log(item.robotName);
+	badge+=`
+            <div class="card layer-card" value="\${item.robotName}">
+            <input type="hidden" class="listRobotName" value="\${item.robotName}">
+                <div class="card-header card-header-round header-elements-inline">
+                    <h6 class="card-title">
+                        <a class="text-body collapsed" data-toggle="collapse" href="#layer-card-chart\${item.robotNo}" aria-expanded="false">
+                            <span class="badge \${stateClass} badge-pill mr-1">\${stateText}</span>
+                            <span>\${item.robotName}</span>
+                            <span>\${item.robotState}</span>
+                        </a>
+                    </h6>
+
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="remove"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="layer-card-chart\${item.robotNo}" class="collapse" >
+                    <div class="card-body chart-card scrolled pl-1 pr-1">
+                        <div class="table-responsive">
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="table-info pt-1 pb-1">날짜</th>
+                                        <th class="table-info pt-1 pb-1">활동</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="logList" value="\${item.robotName}">
+                                    <!-- 로그 정보를 표시하는 코드를 여기에 추가합니다. -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+            `
+		return badge;
+}//badgeList() end
+
+$(document).on('click', '.list-icons-item[data-action="remove"]', function() {
+	$(this).closest('.card.layer-card').remove();
 });
+
+function logList(){
+	$.ajax({
+	    url: '/management/getLogList2',
+	    method: 'GET',
+	    success: function(data) {
+	        console.log(data);
+	        
+            $.each(data, function(index, logItem) {
+                // 로그 아이템의 로봇 이름과 일치하는 카드를 찾습니다.
+                var card = $('.listRobotName[value="' + logItem.robotName + '"]').closest('.card.layer-card');
+                if (card.length > 0) {
+                    // 카드가 존재하면 로그 리스트에 로그 아이템을 추가합니다.
+                    var logList = card.find('.logList');
+                    if (logList.children().length < 10) {
+                        var logEntry = '<tr><td class="p-0">' + logItem.robotLog.tm + '</td><td class="p-0">' + logItem.robotLog.eventComment + '</td></tr>';
+                        logList.append(logEntry);
+                    }
+                }
+            });
+	        
+	   },
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	    }
+	});//ajax end
+}//rogList() end
+
+
 
 $(function(){
 
@@ -291,7 +441,7 @@ $(function(){
         method: 'GET',
         success: function(data) {
         	console.log(data);
-        	console.log(data[0].robotName);
+        	console.log("로봇이름"+data[0].robotName);
 			$.each(data, function(index, robotInfo) {
 				robotList.push({
 					robotName: robotInfo.robotName,
@@ -345,12 +495,23 @@ $(function(){
 
     $(document).on("click",".border-pink", function(){
         var robotName = $(this).find('.robotName').val();
+        var card = $('.listRobotName[value="' + robotName + '"]').closest('.card.layer-card');
         console.log("로봇이름"+robotName)
-        $('.listRobotName[value="' + robotName + '"]').closest('.card').find('a.text-body').click();
+        
+        if(card.length == 0){
+        	selectRobotInfo(robotName);
+        }else{
+        	card.find('a.text-body').click();
+        }
+
     });
 	    
     
-})
+    
+})//function end
+
+
+
 
 
 /*

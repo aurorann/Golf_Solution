@@ -19,4 +19,8 @@ public class RobotInfoDAO {
 		return session.selectList("robotMapper.getRobotInfo");
 	}
 	
+	public List<EgovMap> getRobotInfo(String robotName) {
+		return session.selectList("robotMapper.getRobotInfoSelect", robotName);
+	}
+	
 }

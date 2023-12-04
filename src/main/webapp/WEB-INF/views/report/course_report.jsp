@@ -926,7 +926,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list2[1].ndviData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list2[1].ndviData.ndvi.toFixed(3))}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -964,7 +964,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.smo.toFixed(3))}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1002,7 +1002,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.stp.toFixed(3))}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1040,7 +1040,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list3[1].soilData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${Number(data.list3[1].soilData.sec.toFixed(3))}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1078,7 +1078,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.temp}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1116,7 +1116,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.rain}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1154,7 +1154,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.wd}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1188,7 +1188,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.ws}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1226,7 +1226,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.humi}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>
@@ -1264,7 +1264,7 @@
 				                                            <div class="col-lg-6">
 				                                                <div class="row">
 				                                                    <div class="col-lg-12 text-center p-0">
-				                                                        <span class="text-secondary">\${data.list1[1].weatherData.tm.substring(0, 10)}</span>
+				                                                        <span class="text-secondary">` + beforeDateStr + `</span>
 				                                                        <h2 class="mb-0 font-weight-semibold">\${data.list1[1].weatherData.solar}</h2>
 				                                                        <div class="font-size-sm text-muted">전날</div>
 				                                                    </div>

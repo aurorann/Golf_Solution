@@ -42,11 +42,23 @@ public class RobotController {
 		return robotService.getRobotInfo();
 	}
 	
+	@ResponseBody
+	@RequestMapping("/getRobotInfoSelect")
+	private List<EgovMap> getRobotInfo(@RequestParam(value="robotName", required=false)  String robotName){
+		return robotService.getRobotInfo(robotName);
+	}
+	
 	//로봇 로그 리스트
 	@RequestMapping("/getLogList")
 	@ResponseBody
 	public Map<String,Object> getLogList(@RequestParam Map<String, Object> pMap){
 		return robotService.getLogList(pMap);
+	}
+	
+	@RequestMapping("/getLogList2")
+	@ResponseBody
+	public List<EgovMap> getLogList(){
+		return robotService.getLogList();
 	}
 	
 	//로봇 로그 검색 리스트
