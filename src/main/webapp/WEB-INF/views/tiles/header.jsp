@@ -108,13 +108,13 @@ $(document).ready(function() {
 	
     var path = window.location.pathname; // 현재 페이지의 경로
 
+    if(path=='/management/course2'){
+    	path = '/management/course1'
+    }
 
-    console.log(path)
-    <!--
     if(path == '/management/robot2'){
     	path = '/management/robot1'
     }
-    -->
     //nav 메뉴에 active 추가
     $('.nav-item a').each(function() {
         var href = $(this).attr('href');

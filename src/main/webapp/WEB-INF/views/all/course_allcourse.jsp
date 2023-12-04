@@ -281,7 +281,7 @@
 						<span class="input-group-prepend">
 							<span class="input-group-text"><i class="icon-calendar22"></i></span>
 						</span>
-						<input type="text" class="form-control daterange-basic" value="01/01/2015 - 01/31/2015" id="searchDate"> 
+						<input type="text" class="form-control daterange-basic" value="2023-12-02 ~ 2023-12-05" id="searchDate"> 
 						
 					</div>
 				</li>
@@ -863,9 +863,6 @@ function handleClick() {
 	$(document).on('click','.remove2',function(){
     	console.log("remove");
 	})
-	
-
-
 
 	function drawInfoWindowMini(type,holeNo,data){
 
@@ -1376,6 +1373,7 @@ function handleClick() {
 		let retData = null;
 
 		let searchDate = $('#searchDate').val();
+		console.log(searchDate)
 
 		let param = {
 			courseType : courseType.toUpperCase(),
