@@ -304,149 +304,126 @@
 </div>
 <script>
 
-$(document).ready(function(){
-	$('.player-close').hide()
-	$('.player-open').show();
-	//$('.image-player-wrapper').hide()
-})
-
-
-
-function findMiddleValue(array) {
-    const result = []; // 결과를 저장할 배열
-    
-    // 배열의 길이가 3 이하인 경우, 모든 값을 결과로 반환
-    if (array.length <= 3) {
-        return array;
-    }
-    
-    const step = Math.floor(array.length / 3); // 간격 계산
-    
-    // 첫 번째 중간값
-    result.push(array[step]);
-    
-    // 두 번째 중간값 (배열의 길이가 충분할 때만)
-    if (array.length > step * 2) {
-        result.push(array[step * 2]);
-    }
-    
-    // 세 번째 중간값 (배열의 길이가 충분할 때만)
-    if (array.length > step * 3) {
-        result.push(array[step * 3]);
-    }
-
-    return result;
-}
-
-
-function unifyArrayLengthWithTime(arrays) {
-    let times = [];
-    let resultMap = {};
-    
-    // 모든 시간 값을 가져와서 하나의 배열로 만들기
-    arrays.forEach(array => {
-        array.forEach(item => {
-            times.push(item.tm);
-        });
-    });
-
-    // 중복 제거 및 시간순으로 정렬
-    times = Array.from(new Set(times)).sort();
-
-    // 시간대에 따라 적절한 위치에 null 삽입
-    const list = arrays.map(array => {
-        let newArray = [];
-        times.forEach(time => {
-            const found = array.find(item => item.tm === time);
-            newArray.push(found || null);
-        });
-        //resultMap["times"] = times;
-        //resultMap["list"] = newArray;
-        return newArray;
-    });
-
-    return {
-        times,
-        list
-    };
-}
-
-// 예시 데이터
-const arrays = [
-    [{tm:'2023-10-04 10:00:00'},{tm:'2023-10-04 11:00:00'},{tm:'2023-10-04 12:00:00'}],
-    [{tm:'2023-10-04 10:00:00'},{tm:'2023-10-04 13:00:00'},{tm:'2023-10-04 14:00:00'}],
-    [{tm:'2023-10-04 13:00:00'},{tm:'2023-10-04 14:00:00'}]
-];
-
-console.log(unifyArrayLengthWithTime(arrays));
-
-function getWdText(wdir){
-	//16방
-	wdirk = "";
+	$(document).ready(function(){
+		$('.player-close').hide()
+		$('.player-open').show();
+		//$('.image-player-wrapper').hide()
+	})
 	
-	wdir = wdir*1;
 	
-	if (0 <= wdir && wdir <= 11.25){
-		wdirk = "북";
-	}else if (11.25 < wdir && wdir <= 33.75){
-		wdirk = "북북동";
-	}else if (33.75 < wdir && wdir <= 56.25){ 
-		wdirk = "북동";
-	}else if (56.25 < wdir && wdir <= 78.75){ 
-		wdirk = "동북동";
-	}else if (78.75 < wdir && wdir <= 101.25){ 
-		wdirk = "동";
-	}else if (101.25 < wdir && wdir <= 123.75){ 
-		wdirk = "동남동";
-	}else if (123.75 < wdir && wdir <= 146.25){ 
-		wdirk = "남동";
-	}else if (146.25 < wdir && wdir <= 168.75){ 
-		wdirk = "남남동";
-	}else if (168.75 < wdir && wdir <= 191.25){ 
-		wdirk = "남";
-	}else if (191.25 < wdir && wdir <= 213.75){ 
-		wdirk = "남남서";
-	}else if (213.75 < wdir && wdir <= 236.25){ 
-		wdirk = "남서";
-	}else if (236.25 < wdir && wdir <= 258.75){ 
-		wdirk = "서남서";
-	}else if (258.75 < wdir && wdir <= 281.25){ 
-		wdirk = "서";
-	}else if (281.25 < wdir && wdir <= 303.75){ 
-		wdirk = "서북서";
-	}else if (303.75 < wdir && wdir <= 326.25){ 
-		wdirk = "북서";
-	}else if (326.25 < wdir && wdir <= 348.75){ 
-		wdirk = "북북서";
-	}else if (348.75 < wdir){ 
-		wdirk = "북";
-	}else{
-		wdirk = '-';
+	
+	function findMiddleValue(array) {
+	    const result = []; // 결과를 저장할 배열
+	    
+	    // 배열의 길이가 3 이하인 경우, 모든 값을 결과로 반환
+	    if (array.length <= 3) {
+	        return array;
+	    }
+	    
+	    const step = Math.floor(array.length / 3); // 간격 계산
+	    
+	    // 첫 번째 중간값
+	    result.push(array[step]);
+	    
+	    // 두 번째 중간값 (배열의 길이가 충분할 때만)
+	    if (array.length > step * 2) {
+	        result.push(array[step * 2]);
+	    }
+	    
+	    // 세 번째 중간값 (배열의 길이가 충분할 때만)
+	    if (array.length > step * 3) {
+	        result.push(array[step * 3]);
+	    }
+	
+	    return result;
+	}
+	
+	
+	function unifyArrayLengthWithTime(arrays) {
+	    let times = [];
+	    let resultMap = {};
+	    
+	    // 모든 시간 값을 가져와서 하나의 배열로 만들기
+	    arrays.forEach(array => {
+	        array.forEach(item => {
+	            times.push(item.tm);
+	        });
+	    });
+	
+	    // 중복 제거 및 시간순으로 정렬
+	    times = Array.from(new Set(times)).sort();
+	
+	    // 시간대에 따라 적절한 위치에 null 삽입
+	    const list = arrays.map(array => {
+	        let newArray = [];
+	        times.forEach(time => {
+	            const found = array.find(item => item.tm === time);
+	            newArray.push(found || null);
+	        });
+	        //resultMap["times"] = times;
+	        //resultMap["list"] = newArray;
+	        return newArray;
+	    });
+	
+	    return {
+	        times,
+	        list
+	    };
+	}
+	
+	
+	function getWdText(wdir){
+		//16방
+		wdirk = "";
+		
+		wdir = wdir*1;
+		
+		if (0 <= wdir && wdir <= 11.25){
+			wdirk = "북";
+		}else if (11.25 < wdir && wdir <= 33.75){
+			wdirk = "북북동";
+		}else if (33.75 < wdir && wdir <= 56.25){ 
+			wdirk = "북동";
+		}else if (56.25 < wdir && wdir <= 78.75){ 
+			wdirk = "동북동";
+		}else if (78.75 < wdir && wdir <= 101.25){ 
+			wdirk = "동";
+		}else if (101.25 < wdir && wdir <= 123.75){ 
+			wdirk = "동남동";
+		}else if (123.75 < wdir && wdir <= 146.25){ 
+			wdirk = "남동";
+		}else if (146.25 < wdir && wdir <= 168.75){ 
+			wdirk = "남남동";
+		}else if (168.75 < wdir && wdir <= 191.25){ 
+			wdirk = "남";
+		}else if (191.25 < wdir && wdir <= 213.75){ 
+			wdirk = "남남서";
+		}else if (213.75 < wdir && wdir <= 236.25){ 
+			wdirk = "남서";
+		}else if (236.25 < wdir && wdir <= 258.75){ 
+			wdirk = "서남서";
+		}else if (258.75 < wdir && wdir <= 281.25){ 
+			wdirk = "서";
+		}else if (281.25 < wdir && wdir <= 303.75){ 
+			wdirk = "서북서";
+		}else if (303.75 < wdir && wdir <= 326.25){ 
+			wdirk = "북서";
+		}else if (326.25 < wdir && wdir <= 348.75){ 
+			wdirk = "북북서";
+		}else if (348.75 < wdir){ 
+			wdirk = "북";
+		}else{
+			wdirk = '-';
+		}
+	
+		return wdirk;
+	
 	}
 
-	return wdirk;
-
-}
-
-
-var marker, infoWindow;
-
-function handleClick() {
-	
-	console.log("remove");
-	
-	if(infoWindow.getMap()){
-		infoWindow.close();
-		marker.setMap(map); 
-	}
-}
-
-
-
+	var marker, infoWindow;
 	let chartList = [];
 	let markerList = new Array(); // 마커 정보를 담는 배열
-	let infoWindowMap = {}; // 정보창을 담아두는 맵
-	let infoDataMap = {}; // 데이터를 담아두는 맵
+
 	let overLayList = new Array(); // 그라운드 오버레이 배열
 	let overLayAllList = {};//그라운드 오버레이 전체 저장용 맵
 	let customOverlayList = [];//전체용 커스텀 오버레이 배열
@@ -458,6 +435,19 @@ function handleClick() {
 	let playTimer;
 	let playIdx = 0;
 	let playSpeed = 1000;
+	
+		
+	function handleClick() {		
+		if(infoWindow.getMap()){
+			infoWindow.close();
+			marker.setMap(map); 
+		}
+	}
+
+	function handleClick2(index){
+		customOverlayList[index].setMap(null)
+		markerList[index].setMap(map)
+	}
 
 	var map = new naver.maps.Map('map', {
 	    center: new naver.maps.LatLng(37.0455041, 127.3907905),
@@ -536,7 +526,6 @@ function handleClick() {
 		    map: map,
 		    position: position,
 		    icon: {
-		        //content: contentString,
 		        url: "/resources/assets/img/marker.png",
 		        size: new naver.maps.Size(45, 46),
 		        origin: new naver.maps.Point(0, 0),
@@ -544,15 +533,12 @@ function handleClick() {
 		    }
 		});
 
-		infoWindowMap[`${nowHole}\${nowCourse}`] = infoWindow
-		infoDataMap[`${nowHole}\${nowCourse}`] = data;
 		
 		markerList.push(marker)
 		
 		naver.maps.Event.addListener(marker, "click", function(e) {
 			if(infoWindow.getMap()){
 				infoWindow.close();
-				//marker.setMap(map); 
 			}else{
 				let infoHtml = drawInfoWindow(nowDataType,hole,data);
 				infoWindow.setContent(infoHtml)
@@ -562,10 +548,30 @@ function handleClick() {
 		});
 
 		naver.maps.Event.trigger(marker,"click")
-		//marker.click();
 
-		//console.log(data.weather.tm)
 		$('#updateTime').text('Update : '+data.weather.tm.substring(0,16))
+	}
+
+	function createMarker2(position,index){
+		let marker = new naver.maps.Marker({
+		    //map: map,
+		    position: position,
+		    icon: {
+		        //content: contentString,
+		        url: "/resources/assets/img/marker.png",
+		        size: new naver.maps.Size(45, 46),
+		        origin: new naver.maps.Point(0, 0),
+		        anchor: new naver.maps.Point(25, 26)
+		    }
+		});
+
+		naver.maps.Event.addListener(marker, "click", function(e) {
+			console.log(index)
+			customOverlayList[index].setMap(map);
+			markerList[index].setMap(null)
+		})		
+		
+		markerList.push(marker)
 	}
 
 	function createGroundOverlay(startLat,startLon,endLat,endLon,path,tm,idx,mode,moviWidth){
@@ -593,7 +599,6 @@ function handleClick() {
 	    }else{
 	    	$('#overlayList').append(`<button class="slider-handle ui-state-default overlayBtn" data-idx="\${idx}">\${tm}</button>`)
 	    }
-    	//$('#overlayList').append(`<button class="overlayBtn" data-idx="\${idx}">\${tm}</button>`)
 	}
 
 	function createGroundTimeAll(times){
@@ -614,8 +619,6 @@ function handleClick() {
 			}
 			
 			$('#moviBarZone').append(`<div class="movi-bar" style="width:\${movieWidth}%" data-tm="\${tm}" title="\${tm}"></div>`)
-			
-			//$('#overlayList').append(`<button class="overlayBtn" data-tm="\${tm}">\${tm}</button>`)
 		}
 	}
 
@@ -627,8 +630,6 @@ function handleClick() {
 				if(list[i][j]==null){
 					continue;
 				}
-
-				//startLat,startLon,endLat,endLon
 				
 			    var bounds = new naver.maps.LatLngBounds(
 		            new naver.maps.LatLng(startLat[list[i][j].holeNo], startLon[list[i][j].holeNo]),
@@ -647,15 +648,16 @@ function handleClick() {
 
 			    overLayAllList[list[i][j].tm].push(groundOverlay)
 			    overLayList.push(groundOverlay)
-
-			    //groundOverlay.setMap(map)
-
 			}
 		}
 
-		//alert(overLayList.length)
+	}
 
-    	//groundOverlay.setMap(map);
+	function clearInfoWindow(){
+		if(infoWindow){
+			infoWindow.close();
+		}
+		infoWindow = null;
 	}
 
 	function clearMarker(){
@@ -665,15 +667,6 @@ function handleClick() {
 		}
 
 		markerList = []
-	}
-
-	function clearInfoWindow(){
-
-		Object.values(infoWindowMap).forEach(value => {
-		   value.close();
-		});
-
-		infoWindowMap = {};
 	}
 
 	function clearCustomOverlay(){
@@ -858,13 +851,8 @@ function handleClick() {
 		}
 		return template;
 	}
-	
-	
-	$(document).on('click','.remove2',function(){
-    	console.log("remove");
-	})
 
-	function drawInfoWindowMini(type,holeNo,data){
+	function drawInfoWindowMini(type,holeNo,data,index){
 
 		let template = ""
 
@@ -874,9 +862,11 @@ function handleClick() {
 			console.log(data.ndvi);
 			template = `
 						<div class="course1 course-sm position-absolute card bg-success-100 border-success text-center" style="width:86px;">
-							<a href="#" class="text-body pb-1">
+							<!--<a href="#" class="text-body pb-1">-->
 								<div class="card-header card-header-round bg-success text-white p-0">
-									<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+									<h6 class="card-title font-weight-semibold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
+									<span style="float:right;margin-right:10px" onclick="handleClick2(\${index});">X</span>
+									</h6>
 								</div>
 	
 								<div class="card-body">
@@ -891,7 +881,7 @@ function handleClick() {
 										<div class="font-size-sm text-muted">예측</div>
 									</div>
 								</div>
-							</a>
+							<!--</a>-->
 						</div>
 						`
 				break;
@@ -900,7 +890,9 @@ function handleClick() {
 			template = 	`<div class="course3 course-sm position-absolute card border-primary text-center pb-1" style="width:175px;">
 							<a href="#" class="text-body">
 								<div class="card-header card-header-round bg-primary text-white p-0">
-									<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+									<h6 class="card-title font-weight-semibold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
+									<span style="float:right;margin-right:10px" onclick="handleClick2(\${index});">X</span>
+									</h6>
 								</div>
 								<!--기상정보 8종-->
 								<div class="text-center weather-wrap">
@@ -939,7 +931,9 @@ function handleClick() {
 						<div class="course4 course-sm position-absolute card border-warning text-center" style="width:152px">
 							<a href="#" class="text-body pb-1">
 								<div class="card-header card-header-round bg-warning text-white p-0">
-									<h6 class="card-title font-weight-semibold">Hole \${holeNo}</h6>
+									<h6 class="card-title font-weight-semibold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
+									<span style="float:right;margin-right:10px" onclick="handleClick2(\${index});">X</span>
+									</h6>
 								</div>
 								<!--토양정보 3종-->
 								<div class="card-body">
@@ -1214,50 +1208,7 @@ function handleClick() {
 			},
 			series : [obj]
 		};
-		
-		/*
-		if(type=='smo'){
-			
-			warnSMO = 10;
-			
-			if(dataList[0].sensorNo=='0001' || dataList[0].sensorNo=='0002'){
-				warnSMO = 12;
-			}else if(dataList[0].sensorNo=='0011' || dataList[0].sensorNo=='0012' || dataList[0].sensorNo=='0013'){
-				warnSMO = 20;
-			}else{
-				warnSMO = 10;
-			}
-			
-			options.yAxis.plotLines = [{ // mark the weekend
-	            color: 'red',
-	            width: 3,
-	            value: warnSMO,
-	            dashStyle: 'dot',
-	            label: {
-	            	text : '<span style="color:red;padding-bottom:2px;">경보기준치('+warnSMO+'%)</span>'
-	            }
-	        }]
-		}else if(type=='sec'){
-			options.yAxis.plotLines = [{ // mark the weekend
-	            color: 'red',
-	            width: 3,
-	            value: 0.4,
-	            dashStyle: 'dot',
-	            label: {
-	            	text : '<span style="color:red;padding-bottom:2px;">경보기준치</span>'
-	            }
-	        },{ // mark the weekend
-	            color: 'red',
-	            width: 3,
-	            value: 5,
-	            dashStyle: 'dot',
-	            label: {
-	            	text : '<span style="color:red;padding-bottom:2px;">경보기준치</span>'
-	            }
-	        }]
-			options.yAxis.max = 2;
-		}
-		*/
+
 		chart = new Highcharts.Chart(options);
 
 		chartList.push(chart)
@@ -1388,7 +1339,6 @@ function handleClick() {
 			async : false,
 			success : function(result){
 				retData = result;
-				//console.log(retData.weatherDataList[0].sensorInfoList[0].weatherDataList[0].tm.substring(0,16))
 				$('#updateTime').text('Update : '+retData.weatherDataList[0].sensorInfoList[0].weatherDataList[retData.weatherDataList[0].sensorInfoList[0].weatherDataList.length-1].tm.substring(0,16))
 			}
 		})
@@ -1397,16 +1347,14 @@ function handleClick() {
 	}
 
 	$('#holeList button,#courseType button,#dataType button').on('click',function(){
-		//alert($(this).text());
 		$(this).parent().find('button').removeClass('active')
-		//$(this).addClass('active')
 		
 		let now = $(this).text();
 		
 		let hole = $('#holeList button.active').text();
 		let course = $('#courseType button.active').text();
 		let dataType = $('#dataType button.active').text();
-		//var layer = $('#layerType button.active').text();
+		
 		if(hole==""){
 			hole = now
 		}
@@ -1468,7 +1416,7 @@ function handleClick() {
 			}
 
 			clearGroundOverlay();
-			//alert(layerType)
+			
 			if(nowLayerType=="NULL"){
 				console.log("중단")
 				return;
@@ -1476,12 +1424,6 @@ function handleClick() {
 
 			var result = getLayerData(nowHole,nowCourse)
 			var layerCnt = result.length;
-
-// 			if(layerCnt==0){
-// 				$('.image-player-wrapper').hide()
-// 			}else{
-// 				$('.image-player-wrapper').show()
-// 			}
 
 			if(layerCnt==0){
 				$('.image-player-wrapper').hide()
@@ -1504,9 +1446,7 @@ function handleClick() {
 
 			$.each(result,function(index,item){
 				let mode = 'show';
-				/*if(index%showRepeat==0){
-					mode = 'hide'
-				}*/
+
 				if(layerList.indexOf(index)==-1){
 					mode = 'hide'
 				}
@@ -1516,7 +1456,7 @@ function handleClick() {
 			
 
 			hideGroundOverlay()
-			//showGroundOverlay(result.length-1)
+			
 			$('#overlayList .overlayBtn:eq(0)').click();
 		}else{
 			$('#chartCard').hide()
@@ -1543,12 +1483,6 @@ function handleClick() {
 			
 			var res = unifyArrayLengthWithTime(layerParam);
 
-// 			if(res.times.length==0){
-// 				$('.image-player-wrapper').hide()
-// 			}else{
-// 				$('.image-player-wrapper').show()
-// 			}
-
 			if(res.times.length==0){
 				$('.image-player-wrapper').hide()
 			}
@@ -1562,9 +1496,8 @@ function handleClick() {
 				for(var i=0;i<soilDataList.length;i++){
 					var data = soilDataList[i].soilDataList[soilDataList[i].soilDataList.length-1]
 					data.soil = data;
-					//console.log(data)
 					var contentString = [
-						drawInfoWindowMini("토양정보",data.holeNo,data)
+						drawInfoWindowMini("토양정보",data.holeNo,data,i)
 				    ].join('');
 		
 				    var position = new naver.maps.LatLng(data.lat, data.lon);
@@ -1576,6 +1509,8 @@ function handleClick() {
 				    });
 
 				    customOverlayList.push(customOverlay)
+
+				    createMarker2(position,i)
 				}
 			}
 
@@ -1584,13 +1519,11 @@ function handleClick() {
 					var data = {};
 					var data2 = ndviDataList[i].sensorInfoList[0].ndviDataList[ndviDataList[i].sensorInfoList[0].ndviDataList.length-1]
 					data.ndvi = data2;
-					//console.log(data)
+					
 					var contentString = [
-						drawInfoWindowMini("NDVI",ndviDataList[i].sensorInfoList[0].holeNo,data)
+						drawInfoWindowMini("NDVI",ndviDataList[i].sensorInfoList[0].holeNo,data,i)
 				    ].join('');
-	
-				    //console.log(drawInfoWindow("기상정보",data2.holeNo,data))
-		
+			
 				    var position = new naver.maps.LatLng(ndviDataList[i].sensorInfoList[0].lat, ndviDataList[i].sensorInfoList[0].lon);
 		
 				    var customOverlay = new CustomOverlay({
@@ -1600,6 +1533,8 @@ function handleClick() {
 				    });
 
 				    customOverlayList.push(customOverlay)
+
+				    createMarker2(position,i)
 				}
 			}
 			if(nowDataType=="기상정보"){
@@ -1607,12 +1542,10 @@ function handleClick() {
 					var data = {};
 					var data2 = weatherDataList[i].sensorInfoList[0].weatherDataList[weatherDataList[i].sensorInfoList[0].weatherDataList.length-1]
 					data.weather = data2;
-					//console.log(data)
+					
 					var contentString = [
-						drawInfoWindowMini("기상정보",weatherDataList[i].sensorInfoList[0].holeNo,data)
+						drawInfoWindowMini("기상정보",weatherDataList[i].sensorInfoList[0].holeNo,data,i)
 				    ].join('');
-
-				    //console.log(drawInfoWindow("기상정보",data2.holeNo,data))
 		
 				    var position = new naver.maps.LatLng(weatherDataList[i].sensorInfoList[0].lat, weatherDataList[i].sensorInfoList[0].lon);
 		
@@ -1623,6 +1556,8 @@ function handleClick() {
 				    });
 
 				    customOverlayList.push(customOverlay)
+
+				    createMarker2(position,i)
 				}
 			}
 		}
@@ -1648,18 +1583,12 @@ function handleClick() {
 
 			clearGroundOverlay();
 			if(nowLayerType=="NULL"){
-				//clearInfoWindow()
 				return;
 			}
 
 			var result = getLayerData(nowHole,nowCourse)
 			var layerCnt = result.length;
 
-// 			if(layerCnt==0){
-// 				$('.image-player-wrapper').hide()
-// 			}else{
-// 				$('.image-player-wrapper').show()
-// 			}
 
 			if(layerCnt==0){
 				$('.image-player-wrapper').hide()
@@ -1691,7 +1620,7 @@ function handleClick() {
 			
 
 			hideGroundOverlay()
-			//showGroundOverlay(result.length-1)
+			
 			$('#overlayList .overlayBtn:eq(0)').click();
 		}else{
 			
@@ -1716,12 +1645,6 @@ function handleClick() {
 			}
 			
 			var res = unifyArrayLengthWithTime(layerParam);
-
-// 			if(res.times.length==0){
-// 				$('.image-player-wrapper').hide()
-// 			}else{
-// 				$('.image-player-wrapper').show()
-// 			}
 
 			if(res.times.length==0){
 				$('.image-player-wrapper').hide()
@@ -1754,7 +1677,6 @@ function handleClick() {
 	})
 		
 	$(document).on('click','#overlayPlay',function(){
-		console.log("재생")
 		playOverlay();
 	})
 	
