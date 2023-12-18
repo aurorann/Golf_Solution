@@ -54,11 +54,18 @@
 	</div>
 
 	<ul class="navbar-nav flex-row order-1 order-lg-2 flex-1 flex-lg-0 justify-content-end align-items-center">
-		<li class="nav-item">
-			<a href="#" class="navbar-nav-link navbar-nav-link-toggler">
+		<li class="nav-item nav-item-dropdown-lg dropdown h-100">
+			<a href="#" class="navbar-nav-link navbar-nav-link-toggler d-inline-flex align-items-center h-100" data-toggle="dropdown">
 				<i class="fas fa-bell"></i>
 				<span class="badge badge-warning badge-pill ml-auto ml-lg-0">2</span>
-			</a>				
+			</a>	
+			
+			<div class="dropdown-menu dropdown-menu-right" style="width: 300px">
+				<h6 class="font-weight-semibold" style="padding:.5rem 1rem">알림</h6>
+				<div class="dropdown-divider"></div>
+				<div class="alertMsg" style="padding:.5rem 1rem; padding-bottom: 2rem;">코스 01,02,09 Green 시비,시약 작업</div>
+				<div class="alertMsg" style="padding:.5rem 1rem; padding-bottom: 2rem;">코스 09 Green 시비 작업</div>
+			</div>		
 		</li>
 
 		<li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
