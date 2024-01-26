@@ -58,7 +58,7 @@
 											<span class="input-group-prepend">
 												<span class="input-group-text"><i class="icon-calendar22"></i></span>
 											</span>
-											<input type="text" class="form-control daterange-basic" value="" id="searchDate">
+											<input type="text" class="form-control daterange-basic" value="2023-10-01 ~ 2023-10-30" id="searchDate">
 										</div>
 									</li>
 								</ul>
@@ -499,6 +499,7 @@ function workAllList(){
 	    },
 	    complete: function(){
 	    	Gallery.init();
+	    	$('[name="searchHoleBt"]:eq(0)').click();
 		}
     });//ajax end
 }//workAllList() end

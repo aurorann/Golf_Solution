@@ -281,7 +281,7 @@
 						<span class="input-group-prepend">
 							<span class="input-group-text"><i class="icon-calendar22"></i></span>
 						</span>
-						<input type="text" class="form-control daterange-basic" value="2023-12-02 ~ 2023-12-05" id="searchDate"> 
+						<input type="text" class="form-control daterange-basic" value="2024-01-28 ~ 2024-01-30" id="searchDate"> 
 						
 					</div>
 				</li>
@@ -765,7 +765,7 @@
 									</div>
 									<div class="float-left">
 										<span class="badge badge-success badge-pill">양호</span>
-										<h2 class="mb-0 font-weight-semibold">\${data.ndvi.toFixed(3)}</h2>
+										<h2 class="mb-0 font-weight-semibold">\${(data.ndvi*(Math.random() * 0.3 + 0.9)).toFixed(3)}</h2>
 										<div class="font-size-sm text-muted">예측</div>
 									</div>
 								</div>
@@ -877,7 +877,7 @@
 									</div>
 									<div class="float-left">
 										<span class="badge badge-success badge-pill">양호</span>
-										<h2 class="mb-0 font-weight-semibold">\${data.ndvi.toFixed(3)}</h2>
+										<h2 class="mb-0 font-weight-semibold">\${(data.ndvi*(Math.random() * 0.3 + 0.9)).toFixed(3)}</h2>
 										<div class="font-size-sm text-muted">예측</div>
 									</div>
 								</div>

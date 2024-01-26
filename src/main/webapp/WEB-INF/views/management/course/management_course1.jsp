@@ -475,6 +475,7 @@ const FullCalendarStyling = function() {
                 direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
                 events: eventColors,
                 height: 850,
+                defaultDate: '2023-10-01',
                 displayEventTime : true,
 	       	    eventClick: function(info) {
 	       	      let workNo = info.event._def.extendedProps.workNo
@@ -487,7 +488,7 @@ const FullCalendarStyling = function() {
 
             // Init
             calendarEventColorsInit.render();
-
+			calendarEventColorsInit.gotoDate('2023-10-01');
         }
 
     };
