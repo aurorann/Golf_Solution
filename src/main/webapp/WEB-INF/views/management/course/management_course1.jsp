@@ -265,6 +265,7 @@ $(document).on('click','.workInsert,.workUpdate',function() {
     formData.append("workType", workType);
     formData.append("workBrand", workBrand);
     formData.append("comment", comment);
+    
 
     // 파일 추가
     var files = $('.img')[0].files;
@@ -273,6 +274,7 @@ $(document).on('click','.workInsert,.workUpdate',function() {
         formData.append('files[]', file);
     });
 
+    console.log(formData);
 
 	let token = $("input[name='_csrf']").val();
 	let header = "X-CSRF-TOKEN";
@@ -366,7 +368,7 @@ function workAllList(){
   });
 }
 
-//수정작업 조회
+//선택 및 수정작업 조회
 function workReportUpdateList(workNo){
 
 	var token = $("meta[name='_csrf']").attr("content");
@@ -395,10 +397,13 @@ function workReportUpdateList(workNo){
 }//workAllList() end
 
 
-//수정 할 작업 보여주기
+//선택 및 수정 할 작업 모달 보여주기
 function workReportUpdateListModal(data){
 
 	resetModal();
+	
+	//$("#modalTitle").text('작업일정 수정')
+	//$("#insertUpdateBtn").text("작업 수정")
 	
 	let hole = `\${data[0].workHole}`.split(',');
 	let course = `\${data[0].workCourse}`.split(',');

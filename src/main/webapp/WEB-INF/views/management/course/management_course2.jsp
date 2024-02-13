@@ -515,6 +515,9 @@ function workSelectList(searchHole, searchCourseType, searchClass, searchType,se
 		searchType: searchType,
 		searchDate: searchDate
 	}
+	
+	console.log("검색날짜");
+	console.log(searchDate);
 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -528,7 +531,9 @@ function workSelectList(searchHole, searchCourseType, searchClass, searchType,se
         },
         success: function(data) {
         	console.log(data);
-        	workReportAllList(data.list);
+        	console.log("data 길이");
+        	console.log(data.length);
+        	workReportAllList(data);
         },
 	    error: function(jqXHR, textStatus, errorThrown) {
 	        alert(jqXHR.status);

@@ -13,6 +13,7 @@ import apeak.golf.model.dao.HoleInfoDAO;
 import apeak.golf.model.dao.WorkReportBrandDefDAO;
 import apeak.golf.model.dao.WorkReportDAO;
 import apeak.golf.model.dao.WorkReportImageDAO;
+import apeak.golf.model.dto.WorkReportDTO;
 
 @Service
 @Transactional
@@ -97,7 +98,7 @@ public class CourseService {
 	}// insertWork() end
 
 	// 검색 선택작업 조회하기
-	public EgovMap searchWorkReportList(String searchHole, String searchCourseType, String searchClass,
+	public List<WorkReportDTO> searchWorkReportList(String searchHole, String searchCourseType, String searchClass,
 			String searchType, String searchDate) {
 		try {
 			EgovMap param = new EgovMap();
@@ -121,12 +122,9 @@ public class CourseService {
 				param.put("endDate", date[1].trim()+" 23:59:59");
 			}
 
-			List<EgovMap> list = workReportDAO.searchWorkReportList(param);
+			List<WorkReportDTO> list = workReportDAO.searchWorkReportList(param);
 
-			EgovMap resultMap = new EgovMap();
-			resultMap.put("list", list);
-
-			return resultMap;
+			return list;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +133,7 @@ public class CourseService {
 	}
 
 	// 수정 할 작업 조회
-	public List<EgovMap> workReportUpdateList(String workNo) {
+	public List<WorkReportDTO> workReportUpdateList(String workNo) {
 
 		return workReportDAO.workReportUpdateList(workNo);
 	}

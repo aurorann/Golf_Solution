@@ -10,6 +10,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import apeak.golf.model.dto.WorkReportDTO;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -33,11 +35,11 @@ public class WorkReportDAO {
 	}//workReportAllList() end
 	
 	
-	public List<EgovMap> searchWorkReportList(EgovMap paramMap){
+	public List<WorkReportDTO> searchWorkReportList(EgovMap paramMap){
 		return session.selectList("managementCourseMapper.workReportAllList", paramMap);
 	}//workReportAllList() end
 	
-	public List<EgovMap> workReportUpdateList(String workNo){
+	public List<WorkReportDTO> workReportUpdateList(String workNo){
 		return session.selectList("managementCourseMapper.workReportUpdateList", workNo);
 	}
 	

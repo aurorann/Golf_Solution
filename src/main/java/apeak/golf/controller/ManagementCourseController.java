@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import apeak.golf.model.dto.UserInfoDTO;
+import apeak.golf.model.dto.WorkReportDTO;
 import apeak.golf.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -181,7 +182,7 @@ public class ManagementCourseController {
 	//검색 선택작업 조회하기
 	@ResponseBody
 	@RequestMapping(value="/searchWorkReportListAjax", method = RequestMethod.POST)
-	private EgovMap searchWorkReportList(@RequestParam(value="searchHole[]",required=false) String searchHole,
+	private List<WorkReportDTO> searchWorkReportList(@RequestParam(value="searchHole[]",required=false) String searchHole,
 										@RequestParam(value="searchCourseType[]",required=false) String searchCourseType,
 										@RequestParam(value="searchClass[]",required=false) String searchClass,
 										@RequestParam(value="searchType[]",required=false) String searchType,
@@ -193,7 +194,7 @@ public class ManagementCourseController {
 	//수정할 작업 조회하기
 	@ResponseBody
 	@RequestMapping(value="/workReportUpdateList", method = RequestMethod.GET)
-	private List<EgovMap> workReportUpdateList(@RequestParam(value="workNo",required=false) String workNo) {
+	private List<WorkReportDTO> workReportUpdateList(@RequestParam(value="workNo",required=false) String workNo) {
 		
 		return courseService.workReportUpdateList(workNo);
 	}//brandAjax() end

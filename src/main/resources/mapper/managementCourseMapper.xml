@@ -133,7 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
-	<select id="workReportAllList" parameterType="egovMap" resultMap="workReportInfo">
+	<select id="workReportAllList" parameterType="map" resultMap="workReportInfo">
 		SELECT WR.*, WRI.FILE_PATH , WRI.ORI_NAME 
 		FROM WORK_REPORT WR
 		LEFT JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
