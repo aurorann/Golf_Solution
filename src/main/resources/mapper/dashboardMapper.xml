@@ -88,7 +88,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    JOIN WEATHER_DATA ON SENSOR_INFO.SENSOR_NO = WEATHER_DATA.SENSOR_NO AND SENSOR_INFO.COURSE_TYPE = #{category}
 		    GROUP BY HOLE_NO
 		)
-		ORDER BY S.HOLE_NO;
+		<choose>
+	        <when test="listsort == 'ASC'">
+	            ORDER BY S.HOLE_NO ASC
+	        </when>
+	        <otherwise>
+	            ORDER BY S.HOLE_NO DESC
+	        </otherwise>
+	    </choose>
 	</select>
 	
 	<select id="ndviData" parameterType="egovMap" resultMap="holeInfoMap">

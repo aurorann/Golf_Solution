@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.protobuf.Empty;
+
 import apeak.golf.model.dao.UserImageDAO;
 import apeak.golf.model.dao.UserInfoDAO;
 import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.model.dto.WorkReportDTO;
 import apeak.golf.service.CourseService;
 import apeak.golf.service.UserService;
+import apeak.golf.service.DashboardService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -45,6 +48,9 @@ public class MobileController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private DashboardService dashboardService;
 	
 	@RequestMapping("/sample")
 	@ResponseBody
@@ -295,7 +301,7 @@ public class MobileController {
 		
 		return mv;
 				
-	}//brandAjax() end
+	}//searchWorkReportList() end
 	
 	
 	//달력에서 단일 작업일정 조회하기
@@ -382,6 +388,7 @@ public class MobileController {
 		
 		return mv;
 	}//brandAjax() end
+	
 
 	/*2.사용자 관리*/
 	//로그인(MemberAuthenticationProvider 참고해서 개발 진행)
@@ -441,6 +448,50 @@ public class MobileController {
 		mv.put("results", resultMap);
 		
 		return mv;
+	}
+	
+	/*3.홀 정보조회*/
+	@RequestMapping(value = "/dashBoard", method = RequestMethod.GET)
+	@ResponseBody
+	private Map<String, Object> dashBoard(String category, @RequestParam(value="listsort",required=false)  String listsort) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> status = new HashMap<String, Object>();
+		List<Map<String, Object>> items = new ArrayList<Map<String, Object>>();
+		Map<String, Object> mv = new HashMap<String, Object>();
+
+		try {
+			items = dashboardService.mobileData(category, listsort);
+			
+			if(items != null && items.size() != 0) {
+				//System.out.println("items");
+				//System.out.println(items);
+				
+				status.put("msg", "OK");
+				status.put("code", "200");
+			}else {
+				status.put("msg", "LOGIC_ERROR");
+				status.put("code", "1002");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (devMode) {
+				status.put("LOGIC_ERROR", e);
+			} else {
+				status.put("msg", "LOGIC_ERROR");
+			}
+			status.put("code", "1002");
+		}
+
+		resultMap.put("status", status);
+		resultMap.put("items", items);
+
+		mv.put("results", resultMap);
+		
+		System.out.println(mv);
+		
+		return mv;
+		
 	}
 	
 	
