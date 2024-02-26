@@ -633,7 +633,7 @@ function getDataKrName(type){
 		return "토양습도";
 	}
 	if(type=="sec"){
-		return "토양양분";
+		return "EC";
 	}
 	if(type=="stp"){
 		return "토양온도";

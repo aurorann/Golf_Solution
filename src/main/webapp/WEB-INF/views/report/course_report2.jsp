@@ -197,7 +197,7 @@
                             <div class="col-lg-2">
                                 <div class="card border-top-success rounded-top-0">
                                     <div class="card-header">
-                                        <h6 class="card-title font-weight-bold">토양양분</h6>
+                                        <h6 class="card-title font-weight-bold">EC</h6>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">

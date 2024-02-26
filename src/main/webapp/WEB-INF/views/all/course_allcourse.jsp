@@ -823,24 +823,24 @@
 				break;
 		case '토양정보' : 
 			data = data.soil;
-			template = `<div class="course4 position-absolute card border-warning text-center" style="width:260px;">
+			template = `<div class="course4 position-absolute card border-warning text-center" style="width:290px;">
 								<div class="text-body pb-1">
 								<div class="card-header bg-warning text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px; position: relative;">
 									<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
 						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div> <!--토양정보 3종-->
 								<div class="card-body pt-1 pb-2">
-									<div class="float-left mr-3">
+									<div class="float-left" style="width:33%">
 										<h2 class="mb-0 font-weight-semibold">\${data.smo}<small class="weather-unit">%</small></h2>
 										<div class="font-size-sm text-muted">토양 수분</div>
 									</div>
-									<div class="float-left mr-3">
+									<div class="float-left" style="width:33%">
 										<h2 class="mb-0 font-weight-semibold">\${data.stp}<small class="weather-unit">ºC</small></h2>
 										<div class="font-size-sm text-muted">토양 온도</div>
 									</div>
-									<div class="float-left">
-										<h2 class="mb-0 font-weight-semibold">\${data.sec}</h2>
-										<div class="font-size-sm text-muted">토양 양분</div>
+									<div class="float-left" style="width:33%">
+										<h2 class="mb-0 font-weight-semibold">\${data.sec}<small class="weather-unit">dS/m</small></h2>
+										<div class="font-size-sm text-muted">EC</div>
 									</div>
 								</div>
 							</div>
@@ -947,7 +947,7 @@
 									</div>
 									<div class="float-left">
 										<h2 class="mb-0 font-weight-semibold">\${data.sec}</h2>
-										<div class="font-size-sm text-muted">토양양분</div>
+										<div class="font-size-sm text-muted">EC</div>
 									</div>
 								</div>
 							</a>
@@ -969,7 +969,7 @@
 			return "토양습도";
 		}
 		if(type=="sec"){
-			return "토양양분";
+			return "EC";
 		}
 		if(type=="stp"){
 			return "토양온도";
@@ -1768,6 +1768,28 @@
     	$('.player-close').show();
     	$(this).hide();
 	})
+	
+	function formatDate(date) {
+	  // 날짜를 YYYY-MM-DD 형식의 문자열로 변환
+	  return date.toISOString().slice(0, 10);
+	}
+	
+	function getCurrentAndNextDate() {
+	  // 현재 날짜 객체
+	  const today = new Date();
+	  // 다음 날짜 객체 (현재 날짜에 1일 추가)
+	  const tomorrow = new Date(today);
+	  tomorrow.setDate(tomorrow.getDate() + 1);
+	
+	  // 날짜를 YYYY-MM-DD 형식으로 포매팅
+	  const todayStr = formatDate(today);
+	  const tomorrowStr = formatDate(tomorrow);
+	
+	  // 현재 날짜와 다음 날짜 문자열 반환
+	  return todayStr + " ~ " + tomorrowStr;
+	}
+		
+	$('#searchDate').val(getCurrentAndNextDate());
     	
 	$('#holeList button:eq(0)').click();
 	

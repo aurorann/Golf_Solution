@@ -106,7 +106,7 @@
 					                <th class="table-info">강수량</th>
 					                <th class="table-info">토양온도</th>
 					                <th class="table-info">토양수분</th>
-					                <th class="table-info">토양양분</th>
+					                <th class="table-info">EC</th>
 					            </tr>
 					        </thead>
 					        <tbody>
@@ -587,7 +587,7 @@
 				                            <div class="col-lg-2">
 				                                <div class="card border-top-success rounded-top-0">
 				                                    <div class="card-header">
-				                                        <h6 class="card-title font-weight-bold">토양양분</h6>
+				                                        <h6 class="card-title font-weight-bold">EC</h6>
 				                                    </div>
 				                                    <div class="card-body">
 				                                        <div class="row">
@@ -1033,7 +1033,7 @@
 				                            <div class="col-lg-2">
 				                                <div class="card border-top-success rounded-top-0">
 				                                    <div class="card-header">
-				                                        <h6 class="card-title font-weight-bold">토양양분</h6>
+				                                        <h6 class="card-title font-weight-bold">EC</h6>
 				                                    </div>
 				                                    <div class="card-body">
 				                                        <div class="row">
@@ -1487,7 +1487,7 @@
 			return "토양습도";
 		}
 		if(type=="sec"){
-			return "토양양분";
+			return "EC";
 		}
 		if(type=="stp"){
 			return "토양온도";
