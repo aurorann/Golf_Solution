@@ -157,6 +157,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 		ORDER BY WR.WORK_NO DESC 
 	</select>
+	
+	<select id="myWorkReportList" parameterType="map" resultMap="workReportInfo">
+		SELECT WR.*, WRI.FILE_PATH , WRI.ORI_NAME 
+		FROM WORK_REPORT WR
+		LEFT JOIN WORK_REPORT_IMAGE WRI ON WR.WORK_NO = WRI.WORK_NO
+		WHERE WR.USER_ID = #{userId} ORDER BY WR.WORK_NO DESC 
+	</select>
 
 	<select id="workReportUpdateList" parameterType="map" resultMap="workReportInfo">
 		SELECT WR.*, WRI.IMG_NO,WRI.FILE_PATH , WRI.ORI_NAME

@@ -61,6 +61,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</collection>
 		</collection>
 	</resultMap>
+	
+	<resultMap type="WorkNotificationDTO" id="workNotiList" autoMapping="true">
+		<id property="notiNo" column="NOTI_NO"/>
+		<result property="manageUserNo" column="MANAGE_USER_NO"/>
+		<result property="workerUserNo" column="WORKER_USER_NO"/>
+		<result property="tm" column="tm"/>
+		<result property="deadlineStart" column="DEADLINE_START"/>
+		<result property="deadlineEnd" column="DEADLINE_END"/>
+		<result property="notiTitle" column="NOTI_TITLE"/>
+		<result property="notiHole" column="NOTI_HOLE"/>
+		<result property="notiCourse" column="NOTI_COURSE"/>
+		<result property="notiClass" column="NOTI_CLASS"/>
+		<result property="notiType" column="NOTI_TYPE"/>
+		<result property="notiState" column="NOTI_STATE"/>
+		<result property="workerName" column="workerName"/>
+		<result property="managerName" column="managerName"/>
+		<collection property="userList" ofType="userInfoDTO" javaType="List" autoMapping="true">
+			<id property="userNo" column="USER_NO"/>
+			<result property="userPw" column="USER_PW"/>
+			<result property="userName" column="USER_NAME"/>
+			<result property="hp" column="HP"/>
+			<result property="email" column="EMAIL"/>
+			<result property="regiDate" column="REGI_DATE"/>
+			<result property="lastLogin" column="LAST_LOGIN"/>
+			<result property="userGrade" column="USER_GRADE"/>
+			<result property="userDepartment" column="USER_DEPARTMENT"/>
+		</collection>
+	</resultMap>
 
 	<select id="test" resultType="egovMap">
 		SELECT * FROM HOLE_INFO 				
@@ -138,12 +166,143 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getNotiListCnt" parameterType="map" resultType="int">
-		SELECT COUNT(*) FROM work_notification
+		SELECT COUNT(*) 
+		FROM work_notification wn
+		<if test="userRole == '관리자'">
+		JOIN user_info AS ui1 ON wn.WORKER_USER_NO = ui1.USER_NO
+		WHERE MANAGE_USER_NO = ${userNo}
+		</if>
+		<if test="userRole == '작업자'">
+		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
+		WHERE WORKER_USER_NO = ${userNo}
+		</if>
 	</select>
 
-	<select id="getNotiList" parameterType="map" resultType="workNotificationDTO">
-		SELECT * FROM work_notification 
+	<select id="getSearchNotiListCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM work_notification
+	    <if test="searchType == 'date'">
+	        WHERE DEADLINE_START >= #{deadlineStart} AND DEADLINE_END  &lt;= #{deadlineEnd}
+	    </if>
+	    <if test="searchType == 'course'">
+	        WHERE NOTI_COURSE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'holeNo'">
+	        WHERE NOTI_HOLE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'class'">
+	        WHERE NOTI_CLASS LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'type'">
+	        WHERE NOTI_TYPE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	</select>
+	
+	<select id="getSearchNotiList" parameterType="map" resultMap="workNotiList">
+		SELECT wn.*, 
+		<if test="userRole == '관리자'">
+		ui1.USER_NAME
+		</if>
+		<if test="userRole == '작업자'">
+		ui2.USER_NAME
+		</if>
+		FROM work_notification AS wn
+		<if test="userRole == '관리자'">
+		JOIN user_info AS ui1 ON wn.WORKER_USER_NO = ui1.USER_NO
+		WHERE MANAGE_USER_NO = ${userNo}
+		</if>
+		<if test="userRole == '작업자'">
+		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
+		WHERE WORKER_USER_NO = ${userNo}
+		</if>
+	    <if test="searchType == 'date'">
+	        AND DEADLINE_START >= #{deadlineStart} AND DEADLINE_END  &lt;= #{deadlineEnd}
+	    </if>
+	    <if test="searchType == 'course'">
+	        AND NOTI_COURSE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'holeNo'">
+	        AND NOTI_HOLE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'class'">
+	        AND NOTI_CLASS LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'type'">
+	        AND NOTI_TYPE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
 		LIMIT ${startIndex},${pageSize}
 	</select>
+
+		
+	<select id="getNotiList" parameterType="map" resultMap="workNotiList">
+		SELECT wn.*, 
+		<if test="userRole == '관리자'">
+		ui1.USER_NAME
+		</if>
+		<if test="userRole == '작업자'">
+		ui2.USER_NAME
+		</if>
+		FROM work_notification AS wn
+		<if test="userRole == '관리자'">
+		JOIN user_info AS ui1 ON wn.WORKER_USER_NO = ui1.USER_NO
+		WHERE MANAGE_USER_NO = ${userNo}
+		</if>
+		<if test="userRole == '작업자'">
+		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
+		WHERE WORKER_USER_NO = ${userNo}
+		</if>
+		LIMIT ${startIndex},${pageSize}
+	</select>
+
+	<select id="getHeaderNoti" parameterType="map" resultMap="workNotiList">
+		SELECT wn.*, 
+		<if test="userRole == '관리자'">
+		ui1.USER_NAME
+		</if>
+		<if test="userRole == '작업자'">
+		ui2.USER_NAME
+		</if>
+		FROM work_notification AS wn
+		<if test="userRole == '관리자'">
+		JOIN user_info AS ui1 ON wn.WORKER_USER_NO = ui1.USER_NO
+		WHERE MANAGE_USER_NO = ${userNo}
+		</if>
+		<if test="userRole == '작업자'">
+		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
+		WHERE WORKER_USER_NO = ${userNo}
+		</if>
+	</select>
+	
+	<insert id="insertNotiWork" parameterType="map">
+		INSERT INTO WORK_NOTIFICATION(TM, DEADLINE_START, DEADLINE_END, NOTI_TITLE, NOTI_HOLE, NOTI_COURSE, NOTI_CLASS, NOTI_TYPE, MANAGE_USER_NO, WORKER_USER_NO)
+		VALUES(now(), #{workStart},#{workEnd},#{notiTitle},#{hole},#{course},#{workClass},#{workType},#{userNo},#{workerNo})
+	</insert>
+	
+	<select id="selectNotiWorkData" parameterType="map" resultType="workNotificationDTO">
+		SELECT * FROM work_notification WHERE NOTI_NO = #{notiNo}
+	</select>
+		
+	<update id="updateNotiWork" parameterType="map">
+		UPDATE work_notification 
+		SET
+			DEADLINE_START = #{workStart},
+			DEADLINE_END =	 #{workEnd},
+			NOTI_TITLE = #{notiTitle},
+			NOTI_HOLE =  #{hole},
+			NOTI_COURSE = #{course},
+			NOTI_CLASS=#{workClass},
+			NOTI_TYPE =  #{workType},
+			MANAGE_USER_NO =#{userNo},
+			WORKER_USER_NO =#{workerNo} 
+		WHERE NOTI_NO=#{notiNo}
+	</update>
+		
+	<update id="updateNotiState" parameterType="map">
+		UPDATE work_notification 
+		SET	NOTI_STATE = #{notiState} WHERE NOTI_NO=#{notiNo}
+	</update>
+		
+	<delete id="deleteNoti" parameterType="map">
+		DELETE FROM work_notification WHERE NOTI_NO=#{notiNo}
+	</delete>
 
 </mapper>

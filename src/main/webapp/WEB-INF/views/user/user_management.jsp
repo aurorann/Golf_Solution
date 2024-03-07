@@ -329,8 +329,10 @@ getUserList = function(curPage, searchType, searchText){
 		url: url,
 		data: data,
 		success: function(result){
+			console.log("result 불러오기");
 			console.log(result);
-			
+			console.log("result 불러오기 끝");
+		
 			var list = result.list;
 			
 			var table = ''

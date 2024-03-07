@@ -10,12 +10,15 @@ import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import apeak.golf.model.dao.HoleInfoDAO;
 import apeak.golf.model.dao.NdviDataDAO;
 import apeak.golf.model.dao.SoilDataDAO;
+import apeak.golf.model.dao.UserInfoDAO;
 import apeak.golf.model.dao.WeatherDataDAO;
 import apeak.golf.model.dao.WorkNotificationDAO;
+import apeak.golf.model.dao.WorkReportDAO;
 import apeak.golf.model.dto.HoleInfoDTO;
 import apeak.golf.model.dto.NdviDataDTO;
 import apeak.golf.model.dto.RobotInfoDTO;
@@ -24,6 +27,7 @@ import apeak.golf.model.dto.SoilDataDTO;
 import apeak.golf.model.dto.UserInfoDTO;
 import apeak.golf.model.dto.WeatherDataDTO;
 import apeak.golf.model.dto.WorkNotificationDTO;
+import apeak.golf.model.dto.WorkReportDTO;
 import apeak.golf.util.PagingUtil;
 
 @Service
@@ -44,6 +48,12 @@ public class DashboardService {
 	
 	@Autowired
 	private WorkNotificationDAO workNotificationDAO;
+	
+	@Autowired
+	private WorkReportDAO workReportDAO;
+	
+	@Autowired
+	private UserInfoDAO userInfoDAO;
 	
 	
 	public void holeinfo() {
@@ -175,6 +185,66 @@ public class DashboardService {
 		
 		return resultMap;
 	}
+	
+	//알림 검색
+	public Map<String, Object> getSearchNotiList(Map<String, Object> paramMap) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		int curPage = Integer.parseInt((String) paramMap.get("curPage"));
+		
+		String searchType = (String) paramMap.get("searchType");
+
+		if(searchType.equals("date")) {
+			String[] dates = ((String) paramMap.get("searchText")).split(" ~ ");
+			paramMap.put("deadlineStart", dates[0]);
+			paramMap.put("deadlineEnd", dates[1] + " 23:59:59");
+		}
+		
+		int listCnt = workNotificationDAO.getSearchNotiListCnt(paramMap);
+		
+		PagingUtil pager = new PagingUtil(listCnt, curPage);
+		pager.setPageSize(10);
+		paramMap.put("startIndex", pager.getStartIndex());
+		paramMap.put("pageSize", pager.getPageSize());
+		
+		List<WorkNotificationDTO> list = workNotificationDAO.getSearchNotiList(paramMap);
+		
+		resultMap.put("listCnt", listCnt);
+		resultMap.put("list", list);
+		resultMap.put("pager", pager);
+		
+		return resultMap;
+	}
+	
+	public void insertNotiWork(Map<String, Object> params) {
+		workNotificationDAO.insertNotiWork(params);
+	}// insertWork() end
+	
+	public List<EgovMap> getWorkerList() {
+		return userInfoDAO.getWorkerList();
+	}//getWorkerList()
+	
+	public List<WorkNotificationDTO> selectNotiWorkData(int notiNo) {
+		return workNotificationDAO.selectNotiWorkData(notiNo);
+	}
+	
+	public List<WorkNotificationDTO> getHeaderNoti(Map<String, Object> params) {
+		return workNotificationDAO.getHeaderNoti(params);
+	}
+	
+	public void updateNotiWork(Map<String, Object> params) {
+		workNotificationDAO.updateNotiWork(params);
+	}// insertWork() end
+	
+	
+	public void updateNotiState(Map<String, Object> params) {
+		workNotificationDAO.updateNotiState(params);
+	}//data() end
+	
+	public void deleteNoti(int notiNo) {
+		workNotificationDAO.deleteNoti(notiNo);
+	}//data() end
+	
 	
 
 }

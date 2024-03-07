@@ -77,6 +77,11 @@ public class UserInfoDAO {
 	}
 
 	
+	//작업자 정보 조회
+	public List<EgovMap> getWorkerList(){
+		return session.selectList("userMapper.workerList");
+	}
+	
 	
 	
 }

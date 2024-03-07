@@ -116,8 +116,8 @@ public class ManagementCourseController {
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	    }
-	}
+	    }//try end
+	}//insertWorkAjax end
 	
 	//작업수정 하기
 	/**
@@ -170,13 +170,23 @@ public class ManagementCourseController {
 		
         courseService.updateWorkReport(param,oriImgNameList, filePathList, saveNameList);
 
-	}
+	}//updateWork end
+
 	//전체 작업 리포트 가져오기
 	@ResponseBody
 	@RequestMapping(value="/workReportAllList", method = RequestMethod.GET)
 	private List<EgovMap> workReportAllList() {
 		return courseService.workReportAllList();
-	}//brandAjax() end
+	}//workReportAllList() end
+	
+	//나의 작업 리포트 가져오기
+	@ResponseBody
+	@RequestMapping(value="/myWorkReportList", method = RequestMethod.GET)
+	private List<EgovMap> myWorkReportList() {
+		UserInfoDTO userInfo = (UserInfoDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = userInfo.getUserId();
+		return courseService.myWorkReportList(userId);
+	}//workReportAllList() end
 	
 	
 	//검색 선택작업 조회하기

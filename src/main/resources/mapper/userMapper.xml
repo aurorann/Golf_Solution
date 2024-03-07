@@ -172,7 +172,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT ${startIndex},${pageSize}
 	</select>
 	
-	
+	<!-- user 내에서 작업자 등급 조회 -->
+	<select id="workerList" resultType="egovMap">
+		SELECT USER_NO, USER_NAME, USER_GRADE FROM USER_INFO WHERE USER_GRADE = '작업자';
+	</select>
 	
 	
 	

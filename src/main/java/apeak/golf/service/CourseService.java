@@ -45,6 +45,11 @@ public class CourseService {
 
 		return workReportDAO.workReportAllList();
 	}
+	
+	public List<EgovMap> myWorkReportList(String userId) {
+		
+		return workReportDAO.myWorkReportList(userId);
+	}
 
 	public List<EgovMap> getBrandData(String worktype) {
 

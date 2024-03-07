@@ -13,12 +13,12 @@
 
 			<div class="page-title" style="width:100%;">
 				<h6 class="mr-2 mt-1 font-weight-semibold float-left ml-2">코스관리 작업 일정표 - 달력</h6>
+				<div class="ml-2 mt-1 font-weight-bold float-left">나의 작업</div>
+				<input type="checkbox" class="ml-2 mt-2 float-left myWorkList">
 				<div class="btn-group float-right mr-2">
 					<button type="button" class="btn btn-light active" onclick="location.href='/management/course1'">달력</button>
 					<button type="button" class="btn btn-light" onclick="location.href='/management/course2'">리스트</button>
 				</div>
-
-				
 			</div>
 
 		</div>
@@ -274,8 +274,6 @@ $(document).on('click','.workInsert,.workUpdate',function() {
         formData.append('files[]', file);
     });
 
-    console.log(formData);
-
 	let token = $("input[name='_csrf']").val();
 	let header = "X-CSRF-TOKEN";
 	
@@ -337,7 +335,7 @@ $(document).on('click','.workInsert,.workUpdate',function() {
 var colors = ['#d662a2', '#2cbacc', '#257e4a', '#ff9f89'];
 
 //전역 변수로 선언
-var eventColors = [];
+let eventColors = [];
 
 function workAllList(){
   $.ajax({
@@ -345,9 +343,41 @@ function workAllList(){
       method: 'GET',
       success: function(data) {
         console.log(data);
+        eventColors = [];
         // data를 반복하여 eventColors 배열에 추가합니다.
         for(let i = 0; i < data.length; i++) {
-            console.log(data[i])
+            //console.log(data[i])
+	        eventColors.push({
+	           title: 'Hole ' + data[i].workHole + '  ' + data[i].workCourse + '  ' + data[i].workClass + '  ' + data[i].workType,
+	           start: data[i].workStart,//.replace(" ","T"),
+	           end: data[i].workEnd,//.replace(" ","T"),
+	           color: colors[i % colors.length],
+	           workNo : data[i].workNo,
+	        });
+        }
+        // AJAX 호출이 성공하면 FullCalendar를 초기화합니다.
+        FullCalendarStyling.init();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert(jqXHR.status);
+        alert(jqXHR.statusText);
+        alert(jqXHR.responseText);
+        alert(jqXHR.readyState);
+      }
+  });
+}
+
+//나의 작업 리스트
+function myWorkReportList(){
+  $.ajax({
+      url: '/management/myWorkReportList',
+      method: 'GET',
+      success: function(data) {
+        console.log(data);
+        eventColors = [];
+        // data를 반복하여 eventColors 배열에 추가합니다.
+        for(let i = 0; i < data.length; i++) {
+            //console.log(data[i])
 	        eventColors.push({
 	           title: 'Hole ' + data[i].workHole + '  ' + data[i].workCourse + '  ' + data[i].workClass + '  ' + data[i].workType,
 	           start: data[i].workStart,//.replace(" ","T"),
@@ -466,6 +496,14 @@ const FullCalendarStyling = function() {
         if(calendarEventColorsElement) {
             const calendarEventColorsInit = new FullCalendar.Calendar(calendarEventColorsElement, {
             	locale: 'ko',
+                customButtons: {
+                    myCustomButton: {
+                        text: 'custom!',
+                        click: function() {
+                            alert('clicked the custom button!');
+                        }
+                    }
+                },
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -506,6 +544,16 @@ const FullCalendarStyling = function() {
         }
     }
 }();
+
+$(document).on('change','.myWorkList',function() {
+	if($(this).is(':checked')) {
+		console.log("check 완료");
+		myWorkReportList();
+	} else {
+		workAllList();
+	}
+})
+
 
 $(document).ready(function() {
     // 페이지가 로드될 때 workAllList 함수 호출
