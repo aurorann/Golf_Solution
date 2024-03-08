@@ -45,7 +45,7 @@
 			
 			<div class="tab-pane fade" id="solid-tab2">
 				<div class="row mb-2">
-					<div class="col-2">
+					<div class="col-1">
 						<select class="custom-select searchType">
 							<option value="date">날짜</option>
 							<option value="holeNo">코스명</option>
@@ -54,7 +54,7 @@
 							<option value="class">작업명</option>
 				        </select>
 					</div>
-					<div class="col-3 searchInput searchDate">
+					<div class="col-2 searchInput searchDate">
 						<div class="input-group">
 							<span class="input-group-prepend">
 								<span class="input-group-text"><i class="icon-calendar22"></i></span>
@@ -62,12 +62,12 @@
 							<input type="text" class="form-control daterange-basic search-daterange" value=""> 
 						</div>
 					</div>
-					<div class="col-3 searchInput searchText" hidden>
+					<div class="col-2 searchInput searchText" hidden>
 						<div class="input-group">
 							<input type="text" class="form-control search-text" value=""> 
 						</div>
 					</div>
-					<div class="col-3 searchInput searchCourse" hidden>
+					<div class="col-1 searchInput searchCourse" hidden>
 						<div class="input-group">
 							<select class="custom-select selectCourse">
 								<option value="green">Green</option>
@@ -75,7 +75,7 @@
 					        </select>
 						</div>
 					</div>
-					<div class="col-3 searchInput searchHole" hidden>
+					<div class="col-1 searchInput searchHole" hidden>
 						<div class="input-group">
 							<select class="custom-select selectHole">
 					            <option value="0">전체코스</option>
@@ -86,7 +86,7 @@
 						</div>
 					</div>
 					<div class="col-1">
-						<button type="button" class="btn btn-primary btn-block searchBt pb-2 pt-2">검색</button>
+						<button type="button" class="btn btn-primary searchBt pb-2 pt-2">검색</button>
 					</div>
 				</div>
 				
@@ -153,7 +153,7 @@
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<div class="" style="position:fixed; bottom:30px; right:30px; z-index:1;">
-					<button type="button" class="btn btn-round work" data-toggle="modal" data-target="#modal_scrollable">작업예약<br>등록<br><i class="fas fa-plus mt-2"></i></button>
+					<button type="button" class="btn btn-round work" data-toggle="modal" data-target="#modal_scrollable">알람 등록<i class="fas fa-plus mt-2"></i></button>
 				</div>
 				</sec:authorize>
 				
@@ -266,6 +266,23 @@
 <!-- /main content -->
 
 <script>
+
+$(document).ready(function() {
+	var url = window.location.href;
+	var tabId = url.substring(url.indexOf("solid-tab=") + 10);
+
+	if (tabId === '1') {
+		$('.tabBt').removeClass('active');
+		$('.tab-pane').removeClass('show active');
+		$('#solid-tab1').addClass('active show');
+		$('.tabBt[data-id="solid-tab1"]').addClass('active');
+	} else if (tabId === '2') {
+		$('.tabBt').removeClass('active');
+		$('.tab-pane').removeClass('show active');
+		$('#solid-tab2').addClass('active show');
+		$('.tabBt[data-id="solid-tab2"]').addClass('active');
+	}
+});
 
 
 
@@ -381,7 +398,7 @@ $(".work").click(function() {
 					if(role == '관리자'){
 						table+=`<tr class="notiList notiData" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
 					}else{
-						table+=`<tr class="notiList writeWork" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
+						table+=`<tr class="notiList writeWork" data-date="\${item.deadlineStart}" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
 					}
 					table+=`<td>\${nvl(item.notiNo)}</td>`
 					table+=`<td>\${nvl(item.tm)}</td>`
@@ -393,7 +410,11 @@ $(".work").click(function() {
 					table+=`<td>\${nvl(item.notiClass)}</td>`
 					table+=`<td>\${nvl(item.userList[0].userName)}</td>`
 					if(role == '관리자'){
-						table+=`<td>\${nvl(item.notiState)}</td>`
+						if(item.notiState == '완료'){
+							table+=`<td style="color: #0D8AEE; font-weight: bold;">\${nvl(item.notiState)}</td>`
+						}else{
+							table+=`<td>\${nvl(item.notiState)}</td>`
+						}
 						table+=`<td><button type="button" class="btn btn-danger notiDel">삭제</button></td>`
 					}else{
 						if(item.notiState == '대기'){
@@ -477,11 +498,13 @@ $(".work").click(function() {
 		var workType = $(this).data('worktype')
 		var holeNo = $(this).data('holeno')
 		var courseType = $(this).data('coursetype')
+		var dateStart = $(this).data('date')
 
 		var param = {
 			workType : workType,
 			holeNo : holeNo,
-			courseType : courseType
+			courseType : courseType,
+			dateStart : dateStart
 		}
 		
 		postToPage(param)
@@ -832,7 +855,11 @@ $(document).on('click','.workInsert,.workUpdate',function() {
 			xhr.setRequestHeader(header, token);
 		},
         success: function(result) {
-            alert("등록되었습니다")
+        	if($(this).hasClass('workUpdate')){
+        		alert("등록되었습니다")
+        	}else{
+                alert("수정되었습니다")
+        	}
             $('#modal_scrollable').modal('hide');  // 모달 창 닫기
         	var searchHole = $("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();
         	var searchCourseType = $("input[name='searchCourseTypeBt']:checked").map(function(){return $(this).val();}).get();

@@ -179,7 +179,7 @@ $(document).on('click','.notiRow',function(){
 	var notiNo = $(this).data('notino')
 	
 	//console.log(notiNo);
-	//window.location.href = "/management/dashboard";
+	window.location.href = "/management/dashboard?solid-tab=2";
 	
 	var workType = $(this).data('worktype')
 	var holeNo = $(this).data('holeno')
@@ -191,7 +191,7 @@ $(document).on('click','.notiRow',function(){
 		courseType : courseType
 	}
 	
-	postToPage(param)
+	//postToPage(param)
 })
 
 function postToPage(data) {

@@ -337,7 +337,8 @@ var colors = ['#d662a2', '#2cbacc', '#257e4a', '#ff9f89'];
 //전역 변수로 선언
 let eventColors = [];
 
-function workAllList(){
+function workAllList(dateStart){
+	dateStart = dateStart || '2023-10-01';
   $.ajax({
       url: '/management/workReportAllList',
       method: 'GET',
@@ -356,7 +357,7 @@ function workAllList(){
 	        });
         }
         // AJAX 호출이 성공하면 FullCalendar를 초기화합니다.
-        FullCalendarStyling.init();
+        FullCalendarStyling.init(dateStart);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(jqXHR.status);
@@ -483,7 +484,7 @@ const FullCalendarStyling = function() {
     // Setup module components
 
     // External events
-    const _componentFullCalendarStyling = function() {
+    const _componentFullCalendarStyling = function(dateStart) {
         if (typeof FullCalendar == 'undefined') {
             console.warn('Warning - Fullcalendar files are not loaded.');
             return;
@@ -518,7 +519,7 @@ const FullCalendarStyling = function() {
                 direction: document.dir == 'rtl' ? 'rtl' : 'ltr',
                 events: eventColors,
                 height: 850,
-                defaultDate: '2023-10-01',
+                defaultDate: 'dateStart',
                 displayEventTime : true,
 	       	    eventClick: function(info) {
 	       	      let workNo = info.event._def.extendedProps.workNo
@@ -531,7 +532,7 @@ const FullCalendarStyling = function() {
 
             // Init
             calendarEventColorsInit.render();
-			calendarEventColorsInit.gotoDate('2023-10-01');
+			calendarEventColorsInit.gotoDate(dateStart);
         }
 
     };
@@ -539,8 +540,8 @@ const FullCalendarStyling = function() {
     // Return objects assigned to module
 
     return {
-        init: function() {
-            _componentFullCalendarStyling();
+        init: function(dateStart) {
+            _componentFullCalendarStyling(dateStart);
         }
     }
 }();
@@ -557,14 +558,17 @@ $(document).on('change','.myWorkList',function() {
 
 $(document).ready(function() {
     // 페이지가 로드될 때 workAllList 함수 호출
-	workAllList();
-
 	if('${param.workType}'!='' && '${param.holeNo}'!='' && '${param.courseType}' !=''){
+		var dateStart = `${param.dateStart}`.substring(0, 10);
 		$('#modal_scrollable').modal('show');
 		$('#modal_scrollable .holeBt[value="${param.holeNo}"]').click()
 		$('#modal_scrollable .courseTypeBt[value="${param.courseType}"]').click()
 		$('#modal_scrollable .typeBt[value="${param.workType}"]').click()
+		workAllList(dateStart);
+	}else{
+		workAllList();
 	}
+	
 });
 
 </script>
