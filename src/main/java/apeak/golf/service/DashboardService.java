@@ -172,6 +172,8 @@ public class DashboardService {
 
 		int listCnt = workNotificationDAO.getNotiListCnt(paramMap);
 
+		int completelistCnt = workNotificationDAO.completelistCnt(paramMap);
+
 		PagingUtil pager = new PagingUtil(listCnt, curPage);
 		pager.setPageSize(10);
 		paramMap.put("startIndex", pager.getStartIndex());
@@ -182,6 +184,7 @@ public class DashboardService {
 		resultMap.put("listCnt", listCnt);
 		resultMap.put("list", list);
 		resultMap.put("pager", pager);
+		resultMap.put("completelistCnt", completelistCnt);
 		
 		return resultMap;
 	}
@@ -201,6 +204,8 @@ public class DashboardService {
 		}
 		
 		int listCnt = workNotificationDAO.getSearchNotiListCnt(paramMap);
+		int searchcompletelistCnt = workNotificationDAO.searchcompletelistCnt(paramMap);
+
 		
 		PagingUtil pager = new PagingUtil(listCnt, curPage);
 		pager.setPageSize(10);
@@ -212,6 +217,7 @@ public class DashboardService {
 		resultMap.put("listCnt", listCnt);
 		resultMap.put("list", list);
 		resultMap.put("pager", pager);
+		resultMap.put("completelistCnt", searchcompletelistCnt);
 		
 		return resultMap;
 	}

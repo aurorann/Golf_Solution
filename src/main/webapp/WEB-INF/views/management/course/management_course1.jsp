@@ -338,7 +338,7 @@ var colors = ['#d662a2', '#2cbacc', '#257e4a', '#ff9f89'];
 let eventColors = [];
 
 function workAllList(dateStart){
-	dateStart = dateStart || '2023-10-01';
+	//dateStart = dateStart || '2023-10-01';
   $.ajax({
       url: '/management/workReportAllList',
       method: 'GET',
@@ -357,7 +357,7 @@ function workAllList(dateStart){
 	        });
         }
         // AJAX 호출이 성공하면 FullCalendar를 초기화합니다.
-        FullCalendarStyling.init(dateStart);
+        FullCalendarStyling.init();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(jqXHR.status);
@@ -369,7 +369,8 @@ function workAllList(dateStart){
 }
 
 //나의 작업 리스트
-function myWorkReportList(){
+function myWorkReportList(dateStart){
+	//dateStart = dateStart || '2023-10-01';
   $.ajax({
       url: '/management/myWorkReportList',
       method: 'GET',
@@ -485,6 +486,11 @@ const FullCalendarStyling = function() {
 
     // External events
     const _componentFullCalendarStyling = function(dateStart) {
+    	
+    	dateStart = dateStart || new Date().toISOString().split('T')[0];
+    	console.log("오늘날짜");
+    	console.log(dateStart);
+    	
         if (typeof FullCalendar == 'undefined') {
             console.warn('Warning - Fullcalendar files are not loaded.');
             return;
@@ -527,11 +533,20 @@ const FullCalendarStyling = function() {
 	       	   	  $('#modal_scrollable').modal('show');
 		       	  //console.log('이벤트클릭')
 	       	      return false;
+	       	  	},
+	       	  	datesSet: function(dateInfo) {
+					var date = dateInfo.start;
+					window.currentMonth = date.toISOString().split('T')[0].slice(0, 7);
+					var dateObject = new Date(window.currentMonth);
+					dateObject.setMonth(dateObject.getMonth() + 1);
+					window.currentMonth = dateObject.toISOString().split('T')[0].slice(0, 7);
+					console.log("내부");
+					console.log(window.currentMonth);  // 현재 보고 있는 달 콘솔 출력
 	       	  	}
             });
 
             // Init
-            calendarEventColorsInit.render();
+			calendarEventColorsInit.render();
 			calendarEventColorsInit.gotoDate(dateStart);
         }
 
@@ -541,7 +556,13 @@ const FullCalendarStyling = function() {
 
     return {
         init: function(dateStart) {
-            _componentFullCalendarStyling(dateStart);
+        	console.log("init 들어옴");
+        	if(window.currentMonth === undefined){
+        		window.currentMonth = new Date().toISOString().split('T')[0];
+        	}
+        	console.log(window.currentMonth);
+
+            _componentFullCalendarStyling(window.currentMonth);
         }
     }
 }();
@@ -549,6 +570,8 @@ const FullCalendarStyling = function() {
 $(document).on('change','.myWorkList',function() {
 	if($(this).is(':checked')) {
 		console.log("check 완료");
+		var month = window.currentMonth || new Date().toISOString().split('T')[0].slice(0, 7);
+		console.log(month);
 		myWorkReportList();
 	} else {
 		workAllList();

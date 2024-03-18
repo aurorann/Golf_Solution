@@ -178,6 +178,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 
+	<select id="completelistCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) 
+		FROM work_notification wn
+		<if test="userRole == '관리자'">
+		JOIN user_info AS ui1 ON wn.WORKER_USER_NO = ui1.USER_NO
+		WHERE MANAGE_USER_NO = ${userNo}
+		</if>
+		<if test="userRole == '작업자'">
+		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
+		WHERE WORKER_USER_NO = ${userNo}
+		</if>
+		AND NOTI_STATE = '완료';
+	</select>
+
 	<select id="getSearchNotiListCnt" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM work_notification
 	    <if test="searchType == 'date'">
@@ -195,6 +209,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <if test="searchType == 'type'">
 	        WHERE NOTI_TYPE LIKE CONCAT('%', #{searchText}, '%')
 	    </if>
+	</select>
+
+	<select id="searchcompletelistCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM work_notification
+	    <if test="searchType == 'date'">
+	        WHERE DEADLINE_START >= #{deadlineStart} AND DEADLINE_END  &lt;= #{deadlineEnd}
+	    </if>
+	    <if test="searchType == 'course'">
+	        WHERE NOTI_COURSE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'holeNo'">
+	        WHERE NOTI_HOLE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'class'">
+	        WHERE NOTI_CLASS LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    <if test="searchType == 'type'">
+	        WHERE NOTI_TYPE LIKE CONCAT('%', #{searchText}, '%')
+	    </if>
+	    AND NOTI_STATE = '완료';
 	</select>
 	
 	<select id="getSearchNotiList" parameterType="map" resultMap="workNotiList">
@@ -229,7 +263,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    <if test="searchType == 'type'">
 	        AND NOTI_TYPE LIKE CONCAT('%', #{searchText}, '%')
 	    </if>
-		LIMIT ${startIndex},${pageSize}
+		ORDER BY wn.TM desc LIMIT ${startIndex},${pageSize}
 	</select>
 
 		
@@ -250,7 +284,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
 		WHERE WORKER_USER_NO = ${userNo}
 		</if>
-		LIMIT ${startIndex},${pageSize}
+		ORDER BY wn.TM desc LIMIT ${startIndex},${pageSize}
 	</select>
 
 	<select id="getHeaderNoti" parameterType="map" resultMap="workNotiList">
@@ -270,6 +304,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		JOIN user_info AS ui2 ON wn.MANAGE_USER_NO = ui2.USER_NO
 		WHERE WORKER_USER_NO = ${userNo}
 		</if>
+		ORDER BY wn.TM desc 
 	</select>
 	
 	<insert id="insertNotiWork" parameterType="map">

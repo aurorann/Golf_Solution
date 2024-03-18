@@ -356,6 +356,8 @@ getUserList = function(curPage, searchType, searchText){
 			var pager = result.pager;
 			
 			var pagerContent = "";
+			console.log("currentSearchType");
+			console.log(currentSearchType);
 			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getUserList("+(pager.startPage-1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'><<a></li>"}
 			for(i=pager.startPage;i<=pager.endPage;i++){
 				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getUserList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}

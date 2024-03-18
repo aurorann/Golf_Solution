@@ -16,7 +16,7 @@
 			<div class="page-title">
 				<div class="btn-group mr-2 float-left col-lg-12" data-toggle="buttons" id="tabs">
 					<a class="nav-link btn btn-light tabBt active" data-id="solid-tab1" >통합 대시보드</a>
-					<a class="nav-link btn btn-light tabBt" data-id="solid-tab2" >작업 알람 리스트</a>
+					<a class="nav-link btn btn-light tabBt" data-id="solid-tab2" >통합 작업관리</a>
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 							<option value="class">작업명</option>
 				        </select>
 					</div>
-					<div class="col-2 searchInput searchDate">
+					<div class="col-3 searchInput searchDate">
 						<div class="input-group">
 							<span class="input-group-prepend">
 								<span class="input-group-text"><i class="icon-calendar22"></i></span>
@@ -139,120 +139,119 @@
 
 					<div class="mt-3 mb-3 text-center">
 						<ul class="pagination pagination-flat align-self-center" id="pager">
-							<li class="page-item active" onclick="getLogList(1, currentSearchType, currentSearchText)"><a href="#" class="page-link">1</a></li>
-							<li class="page-item" onclick="getLogList(2, currentSearchType, currentSearchText)"><a href="#" class="page-link">2</a></li>
-							<li class="page-item" onclick="getLogList(3, currentSearchType, currentSearchText)"><a href="#" class="page-link">3</a></li>
-							<li class="page-item" onclick="getLogList(4, currentSearchType, currentSearchText)"><a href="#" class="page-link">4</a></li>
-							<li class="page-item" onclick="getLogList(5, currentSearchType, currentSearchText)"><a href="#" class="page-link">5</a></li>
+							<li class="page-item"><a href="#" class="page-link">← &nbsp; Prev</a></li>
+							<li class="page-item active"><a href="#" class="page-link">1</a></li>
+							<li class="page-item"><a href="#" class="page-link">2</a></li>
+							<li class="page-item disabled"><a href="#" class="page-link">3</a></li>
+							<li class="page-item"><a href="#" class="page-link">4</a></li>
+							<li class="page-item"><a href="#" class="page-link">Next &nbsp; →</a></li>
 						</ul>
 					</div>
-
+					
 				</div>
-				
-				<!-- Scrollable modal -->
-				
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<div class="" style="position:fixed; bottom:30px; right:30px; z-index:1;">
-					<button type="button" class="btn btn-round work" data-toggle="modal" data-target="#modal_scrollable">알람 등록<i class="fas fa-plus mt-2"></i></button>
-				</div>
-				</sec:authorize>
-				
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<div id="modal_scrollable" class="modal fade" tabindex="-1">
-					<div class="modal-dialog modal-dialog-scrollable">
-						<div class="modal-content">
-							<div class="modal-header pb-3">
-								<h5 class="modal-title" id="modalTitle">작업일정 추가</h5>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-			
-							<div class="modal-body py-0">
-								<input type="hidden" name="notiNo" id="notiNo" value="">
-								
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 제목</label>
-									<div class="col-lg-10">
-										<div class="input-group">
-											<input type="textbox" class="form-control notiTitle" value="" style="display:show">
-										</div>
-									</div>
-								</div>
-								
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 날짜</label>
-									<div class="col-lg-10">
-										<div class="input-group">
-											<span class="input-group-prepend">
-												<span class="input-group-text"><i class="icon-calendar22"></i></span>
-											</span>
-											<input type="text" class="form-control daterange-time dateInputTime dateInput" value="" style="display:show">
-											<input type="text" class="form-control daterange-basic dateInputBasic dateInput"  value="" style="display:none">
-											<input type="checkbox" class="allDayWork" name="allDay" style="margin-left: 1rem!important; margin-right: .2rem!important;"/>
-										    <label for="allDay" style="margin: auto;">하루종일</label>
-										</div>
-									</div>
-								</div>
-			
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">코스 위치</label>
-									<div class="col-lg-10 course-location-badge">
-										<c:forEach items="${list}" var="holeInfo">
-										<label class="badge badge-info">${holeInfo.holeName}<input class="holeBt" type="checkbox" name="holeBt" value="${holeInfo.holeNo}"></label>
-										</c:forEach>
-									</div>
-								</div>
-			
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">코스 종류</label>
-									<div class="col-lg-10 course-category-badge">
-										<label class="badge badge-success">Green<input class="courseTypeBt" type="checkbox" name="courseTypeBt" value="Green"></label>
-										<label class="badge badge-success">Fairway<input class="courseTypeBt" type="checkbox" name="courseTypeBt" value="Fairway"></label>					
-									</div>
-								</div>
-			
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 분류</label>
-									<div class="col-lg-10 work-class-badge">
-										<label class="badge badge-warning">갱신<input class="classBt" type="checkbox" name="classBt" value="갱신"></label>
-										<label class="badge badge-warning">예고<input class="classBt" type="checkbox" name="classBt" value="예고"></label>
-										<label class="badge badge-warning">기타<input class="classBt" type="checkbox" name="classBt" value="기타"></label>				
-									</div>
-								</div>
-			
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업 종류</label>
-									<div class="col-lg-10 work-category-badge">
-										<label class="badge badge-secondary">시비<input class="typeBt" type="checkbox" name="typeBt" value="시비"></label>
-										<label class="badge badge-secondary">시약<input class="typeBt" type="checkbox" name="typeBt" value="시약"></label>				 											
-									</div>
-								</div>
-			
-								<div class="form-group row mt-3">
-									<label class="col-form-label col-lg-2">작업자</label>
-									<div class="col-lg-10">
-										<select class="custom-select workerName">
-											<!-- 작업자 선택 -->
-											<option value='' selected>작업자 선택</option>
-											<c:forEach items="${getWorkerList}" var="worker">
-											<option value='${worker.userNo}' selected>${worker.userName}</option>
-											</c:forEach>
-										</select>
-									</div>
+			</div>
+		</div>
+		
+		<!-- Scrollable modal -->
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		<div id="modal_scrollable" class="modal fade" tabindex="-1">
+			<div class="modal-dialog modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header pb-3">
+						<h5 class="modal-title" id="modalTitle">작업일정 추가</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+	
+					<div class="modal-body py-0">
+						<input type="hidden" name="notiNo" id="notiNo" value="">
+						
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">작업 제목</label>
+							<div class="col-lg-10">
+								<div class="input-group">
+									<input type="textbox" class="form-control notiTitle" value="" style="display:show">
 								</div>
 							</div>
-			
-							<div class="modal-footer pt-3">
-								<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
-								<button type="button" id="insertUpdateBtn" class="btn btn-primary">작업 등록</button>
+						</div>
+						
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">작업 날짜</label>
+							<div class="col-lg-10">
+								<div class="input-group">
+									<span class="input-group-prepend">
+										<span class="input-group-text"><i class="icon-calendar22"></i></span>
+									</span>
+									<input type="text" class="form-control daterange-time dateInputTime dateInput" value="" style="display:show">
+									<input type="text" class="form-control daterange-basic dateInputBasic dateInput"  value="" style="display:none">
+									<input type="checkbox" class="allDayWork" name="allDay" style="margin-left: 1rem!important; margin-right: .2rem!important;"/>
+								    <label for="allDay" style="margin: auto;">하루종일</label>
+								</div>
+							</div>
+						</div>
+	
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">코스 위치</label>
+							<div class="col-lg-10 course-location-badge">
+								<c:forEach items="${list}" var="holeInfo">
+								<label class="badge badge-info">${holeInfo.holeName}<input class="holeBt" type="checkbox" name="holeBt" value="${holeInfo.holeNo}"></label>
+								</c:forEach>
+							</div>
+						</div>
+	
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">코스 종류</label>
+							<div class="col-lg-10 course-category-badge">
+								<label class="badge badge-success">Green<input class="courseTypeBt" type="checkbox" name="courseTypeBt" value="Green"></label>
+								<label class="badge badge-success">Fairway<input class="courseTypeBt" type="checkbox" name="courseTypeBt" value="Fairway"></label>					
+							</div>
+						</div>
+	
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">작업 분류</label>
+							<div class="col-lg-10 work-class-badge">
+								<label class="badge badge-warning">갱신<input class="classBt" type="checkbox" name="classBt" value="갱신"></label>
+								<label class="badge badge-warning">예고<input class="classBt" type="checkbox" name="classBt" value="예고"></label>
+								<label class="badge badge-warning">기타<input class="classBt" type="checkbox" name="classBt" value="기타"></label>				
+							</div>
+						</div>
+	
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">작업 종류</label>
+							<div class="col-lg-10 work-category-badge">
+								<label class="badge badge-secondary">시비<input class="typeBt" type="checkbox" name="typeBt" value="시비"></label>
+								<label class="badge badge-secondary">시약<input class="typeBt" type="checkbox" name="typeBt" value="시약"></label>				 											
+							</div>
+						</div>
+	
+						<div class="form-group row mt-3">
+							<label class="col-form-label col-lg-2">작업자</label>
+							<div class="col-lg-10">
+								<select class="custom-select workerName">
+									<!-- 작업자 선택 -->
+									<option value='' selected>작업자 선택</option>
+									<c:forEach items="${getWorkerList}" var="worker">
+									<option value='${worker.userNo}' selected>${worker.userName}</option>
+									</c:forEach>
+								</select>
 							</div>
 						</div>
 					</div>
+	
+					<div class="modal-footer pt-3">
+						<button type="button" class="btn btn-link insertClose" data-dismiss="modal">닫기</button>
+						<button type="button" id="insertUpdateBtn" class="btn btn-primary">작업 등록</button>
+					</div>
 				</div>
-				<!-- /scrollable modal -->
-				
-				
 			</div>
 		</div>
+		<!-- /scrollable modal -->
+		
+						
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<div class="" style="position:fixed; bottom:30px; right:30px; z-index:1;">
+			<button type="button" class="btn btn-round work" data-toggle="modal" data-target="#modal_scrollable">작업지시<br>등록<br><i class="fas fa-plus mt-2"></i></button>
+		</div>
+		</sec:authorize>
 
 		<!-- /basic card -->
 
@@ -266,7 +265,6 @@
 <!-- /main content -->
 
 <script>
-
 $(document).ready(function() {
 	var url = window.location.href;
 	var tabId = url.substring(url.indexOf("solid-tab=") + 10);
@@ -339,6 +337,8 @@ function resetModal(){
 	$('.courseTypeBtSelect').empty();
 	$('.classBtSelect').empty();
 	$('.typeBtSelect').empty();
+	
+	$('.dateInput').val('');
 }
 
 //작업등록 버튼 클릭시 modal 리셋
@@ -347,210 +347,214 @@ $(".work").click(function() {
 	$("#insertUpdateBtn").text("작업일정 등록")
 	$("#insertUpdateBtn").removeClass("workUpdate")
 	$("#insertUpdateBtn").addClass("workInsert")
+	//$('.dateInput').val('');
+
 	resetModal();
 });
 
 	  
-    // 페이지가 로드될 때 getAllData 함수 호출
-	var category = $(".categorybt.active").val();
-	var listsort = $(".listsort.active").val();
-	getAllData(category, listsort);
+// 페이지가 로드될 때 getAllData 함수 호출
+var category = $(".categorybt.active").val();
+var listsort = $(".listsort.active").val();
+getAllData(category, listsort);
 
-	var currentSearchType = null;
-	var currentSearchText = null;
+var currentSearchType = null;
+var currentSearchText = null;
+
+var role = "${userInfo.userGrade}";
+
+getLogList = function(curPage, searchType, searchText){
+	if(!curPage){curPage=1}
+
+	var url = "${pageContext.request.contextPath}/management/getNotiList";
+	var data = "curPage="+curPage;
 	
-	var role = "${userInfo.userGrade}";
-
-	getLogList = function(curPage, searchType, searchText){
-		if(!curPage){curPage=1}
-
-		var url = "${pageContext.request.contextPath}/management/getNotiList";
-		var data = "curPage="+curPage;
-		
-		if(searchType && searchText){
-			url = "${pageContext.request.contextPath}/management/getSearchNotiList";
-			data = {
-				searchType: searchType,
-				searchText: searchText,
-				curPage: curPage
-			};
-		}
-		
-		$.ajax({
-			url: url,
-			data: data,
-			success: function(result){
-				console.log("dashboard result 불러오기");
-				console.log(result);
-				console.log("result 불러오기 끝");
-				var list = result.list;
-				
-				var listTotalCnt = list.length;
-				var listCompleteCnt = 0;
-				
-				var table = ''
-				$.each(list,function(index,item){
-					if(item.notiState == '완료'){
-						listCompleteCnt++;
-					}
-					
-					
-					if(role == '관리자'){
-						table+=`<tr class="notiList notiData" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
-					}else{
-						table+=`<tr class="notiList writeWork" data-date="\${item.deadlineStart}" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
-					}
-					table+=`<td>\${nvl(item.notiNo)}</td>`
-					table+=`<td>\${nvl(item.tm)}</td>`
-					table+=`<td>\${nvl(item.deadlineStart)}</td>`
-					table+=`<td>\${nvl(item.notiTitle)}</td>`
-					table+=`<td>Hole \${nvl(item.notiHole)}</td>`
-					table+=`<td>\${nvl(item.notiCourse)}</td>`
-					table+=`<td>\${nvl(item.notiType)}</td>`
-					table+=`<td>\${nvl(item.notiClass)}</td>`
-					table+=`<td>\${nvl(item.userList[0].userName)}</td>`
-					if(role == '관리자'){
-						if(item.notiState == '완료'){
-							table+=`<td style="color: #0D8AEE; font-weight: bold;">\${nvl(item.notiState)}</td>`
-						}else{
-							table+=`<td>\${nvl(item.notiState)}</td>`
-						}
-						table+=`<td><button type="button" class="btn btn-danger notiDel">삭제</button></td>`
-					}else{
-						if(item.notiState == '대기'){
-							table+=`<td><select class="custom-select cursorNone" onclick=event.stopPropagation()>`
-							table+=`<option selected>\${nvl(item.notiState)}</option>`
-							table+=`<option>완료</option>`
-						}else{
-							table+=`<td><select class="custom-select cursorNone" style="background:#E9F5FE;" onclick=event.stopPropagation()>`
-							table+=`<option>대기</option>`
-							table+=`<option selected>\${nvl(item.notiState)}</option>`
-						}
-
-						table+=`</td>`	
-					}
-					table+= `</tr>`
-				})
-				
-				$(".completeCnt").text("완료 갯수 "+listCompleteCnt+" / "+"전체 갯수 "+listTotalCnt);
-				
-				$('#logList').html(table);
-				
-				var pager = result.pager;
-				
-				var pagerContent = "";
-				if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.startPage-1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'><<a></li>"}
-				
-				for(i=pager.startPage;i<=pager.endPage;i++){
-					if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
-					if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
-				}
-				
-				if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.endPage+1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>></a></li>"}
-				
-				if(table!=''){
-					$("#pager").html(pagerContent);
-				}else{
-					$('#logList').html('<tr><td colspan="12">데이터가 없습니다.</td></tr>');
-					$("#pager").html('');
-				}
-			},
-			error:function(request,status,error){
-			   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-			}
-				
-		})
+	if(searchType && searchText){
+		url = "${pageContext.request.contextPath}/management/getSearchNotiList";
+		data = {
+			searchType: searchType,
+			searchText: searchText,
+			curPage: curPage
+		};
 	}
+			
+	$.ajax({
+		url: url,
+		data: data,
+		success: function(result){
+			console.log("dashboard result 불러오기");
+			console.log(result);
+			console.log("result 불러오기 끝");
+			var list = result.list;
+			var listCnt = result.listCnt;
+			
+			var listTotalCnt = list.length;
+			var listCompleteCnt = result.completelistCnt;
+			
+			var table = ''
+			$.each(list,function(index,item){
+				if(role == '관리자'){
+					table+=`<tr class="notiList notiData" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
+				}else{
+					table+=`<tr class="notiList writeWork" data-date="\${item.deadlineStart}" data-notino="\${item.notiNo}" data-holeno="\${item.notiHole}" data-coursetype="\${item.notiCourse}" data-worktype="\${item.notiType}">`
+				}
+				table+=`<td>\${nvl(item.notiNo)}</td>`
+				table+=`<td>\${nvl(item.tm).substring(0,10)}</td>`
+				table+=`<td>\${nvl(item.deadlineStart).substring(0,16)} - \${nvl(item.deadlineEnd).substring(0,16)}</td>`
+				table+=`<td>\${nvl(item.notiTitle)}</td>`
+				table+=`<td>Hole \${nvl(item.notiHole)}</td>`
+				table+=`<td>\${nvl(item.notiCourse)}</td>`
+				table+=`<td>\${nvl(item.notiType)}</td>`
+				table+=`<td>\${nvl(item.notiClass)}</td>`
+				table+=`<td>\${nvl(item.userList[0].userName)}</td>`
+				if(role == '관리자'){
+					if(item.notiState == '완료'){
+						table+=`<td style="color: #0D8AEE; font-weight: bold;">\${nvl(item.notiState)}</td>`
+					}else{
+						table+=`<td>\${nvl(item.notiState)}</td>`
+					}
+					table+=`<td><button type="button" class="btn btn-danger notiDel">삭제</button></td>`
+				}else{
+					if(item.notiState == '대기'){
+						table+=`<td><select class="custom-select cursorNone" onclick=event.stopPropagation()>`
+						table+=`<option selected>\${nvl(item.notiState)}</option>`
+						table+=`<option>완료</option>`
+					}else{
+						table+=`<td><select class="custom-select cursorNone" style="background:#E9F5FE;" onclick=event.stopPropagation()>`
+						table+=`<option>대기</option>`
+						table+=`<option selected>\${nvl(item.notiState)}</option>`
+					}
 
-	$(".searchLog .searchText").on("keypress", function(event){
-	    if(event.which !== 13) {
-	        return;
-	    }
-	    
-	    var searchType = $(".searchLog .searchType option:selected").val();
-	    var searchText = $(".searchLog .searchText").val();
-	    
-	    currentSearchType = searchType;
-	    currentSearchText = searchText;
-	    
-	    getLogList(1, searchType, searchText)
-	});
-
-	//noti검색 버튼 클릭
-	$(document).on("click keypress", ".searchBt", function() {
-		if(event.type === 'keypress' && event.which !== 13) {
-	        return;
-	    }
-	    
-		var searchType = $('.searchType option:selected').val();
-		var searchText = $('.searchInput:not([hidden]) input').val() || $('.searchInput:not([hidden]) select').val();
-
-		console.log(searchType);
-		console.log(searchText);
-		
-		getLogList(1, searchType, searchText)
-	})
-	
-	getLogList(1)
-
-	
-	$(document).on('click','.writeWork',function(){
-		var workType = $(this).data('worktype')
-		var holeNo = $(this).data('holeno')
-		var courseType = $(this).data('coursetype')
-		var dateStart = $(this).data('date')
-
-		var param = {
-			workType : workType,
-			holeNo : holeNo,
-			courseType : courseType,
-			dateStart : dateStart
+					table+=`</td>`	
+				}
+				table+= `</tr>`
+			})
+			
+			$(".completeCnt").text("완료 갯수 "+listCompleteCnt+" / "+"전체 갯수 "+listCnt);
+			
+			$('#logList').html(table);
+			
+			var pager = result.pager;
+			console.log("currentSearchType");
+			console.log(currentSearchType);
+			
+			var pagerContent = "";
+			if(pager.curRange!=1){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.startPage-1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'><<a></li>"}
+			
+			for(i=pager.startPage;i<=pager.endPage;i++){
+				if(i!=pager.curPage){pagerContent+="<li class='page-item' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+				if(i==pager.curPage){pagerContent+="<li class='page-item active' onclick='getLogList("+i+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>"+i+"</a></li>"}
+			}
+			
+			if(pager.curRange!=pager.rangeCnt){pagerContent+="<li class='page-item' onclick='getLogList("+(pager.endPage+1)+", currentSearchType, currentSearchText)'><a href='#' class='page-link'>></a></li>"}
+			
+			if(table!=''){
+				$("#pager").html(pagerContent);
+			}else{
+				$('#logList').html('<tr><td colspan="12" style="text-align: center;">데이터가 없습니다.</td></tr>');
+				$("#pager").html('');
+			}
+		},
+		error:function(request,status,error){
+		   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 		}
-		
-		postToPage(param)
+			
 	})
-	
-	
-	$(document).on('click','.notiData',function(){
-		var notiNo = $(this).data('notino')
-		
-		selectNotiWorkData(notiNo);
-	})
-	
-	 var previousValue;//선택값 저장변수
-	$(document).on('change', '.cursorNone',function() {
-		previousValue = this.value;
-        var confirmMessage = confirm("변경하시겠습니까?");
-        if (confirmMessage) {
-        	var formData = new FormData();
-            var notiNo = $(this).closest('tr').data('notino');
-            var notiState = $(this).val();
-            console.log("notiNo는 "+notiNo);
-            console.log("notiState는 "+notiState);
-        	formData.append("notiNo", notiNo);
-        	formData.append("notiState", notiState);
-        	updateNotiState(notiNo, notiState);
-        	updateNotiState(formData);
-        } else {
-        	$(this).val(previousValue);
-        }
-    });
-	 
-	//noti 삭제
-    $(document).on('click','.notiDel',function(event){
-        event.stopPropagation();
-        var confirmMessage = confirm("삭제하시겠습니까?");
-        if (confirmMessage) {
-            var notiNo = $(this).closest('tr').data('notino');
-            console.log("noti삭제"+notiNo);
-            deleteNoti(notiNo)
-            getLogList()
-        }
-    });
-	 
-	 
+}
 
-	getLogList(1)
+$(".searchLog .searchText").on("keypress", function(event){
+    if(event.which !== 13) {
+        return;
+    }
+    
+    var searchType = $(".searchLog .searchType option:selected").val();
+    var searchText = $(".searchLog .searchText").val();
+    
+    currentSearchType = searchType;
+    currentSearchText = searchText;
+    
+    getLogList(1, searchType, searchText)
+});
+
+//noti검색 버튼 클릭
+$(document).on("click keypress", ".searchBt", function() {
+	if(event.type === 'keypress' && event.which !== 13) {
+        return;
+    }
+    
+	var searchType = $('.searchType option:selected').val();
+	var searchText = $('.searchInput:not([hidden]) input').val() || $('.searchInput:not([hidden]) select').val();
+
+	console.log("검색버튼 클릭");
+	
+    currentSearchType = searchType;
+    currentSearchText = searchText;
+
+	console.log(searchType);
+	console.log(searchText);
+	
+	getLogList(1, searchType, searchText)
+})
+
+getLogList(1)
+
+
+$(document).on('click','.writeWork',function(){
+	var workType = $(this).data('worktype')
+	var holeNo = $(this).data('holeno')
+	var courseType = $(this).data('coursetype')
+	var dateStart = $(this).data('date')
+
+	var param = {
+		workType : workType,
+		holeNo : holeNo,
+		courseType : courseType,
+		dateStart : dateStart
+	}
+	
+	postToPage(param)
+})
+
+
+$(document).on('click','.notiData',function(){
+	var notiNo = $(this).data('notino')
+	
+	selectNotiWorkData(notiNo);
+})
+
+ var previousValue;//선택값 저장변수
+$(document).on('change', '.cursorNone',function() {
+	previousValue = this.value;
+       var confirmMessage = confirm("변경하시겠습니까?");
+       if (confirmMessage) {
+       	var formData = new FormData();
+           var notiNo = $(this).closest('tr').data('notino');
+           var notiState = $(this).val();
+           console.log("notiNo는 "+notiNo);
+           console.log("notiState는 "+notiState);
+       	formData.append("notiNo", notiNo);
+       	formData.append("notiState", notiState);
+       	updateNotiState(notiNo, notiState);
+       	updateNotiState(formData);
+       } else {
+       	$(this).val(previousValue);
+       }
+   });
+ 
+//noti 삭제
+ $(document).on('click','.notiDel',function(event){
+     event.stopPropagation();
+     var confirmMessage = confirm("삭제하시겠습니까?");
+     if (confirmMessage) {
+         var notiNo = $(this).closest('tr').data('notino');
+         console.log("noti삭제"+notiNo);
+         deleteNoti(notiNo)
+         getLogList()
+     }
+ });
+ 
+ 
+
 
 
 $(document).on('click', ".tabBt", function() {
@@ -813,6 +817,8 @@ $(document).on('click',".holeBtSelect label,.courseTypeBtSelect label,.classBtSe
 
 
 $(document).on('click','.workInsert,.workUpdate',function() {
+	var clickedElement = $(this);	
+	
     var formData = new FormData();
     var notiNo = $('#notiNo').val(); //알림 번호
     var notiTitle = $('.notiTitle').val(); //알림 제목
@@ -836,6 +842,37 @@ $(document).on('click','.workInsert,.workUpdate',function() {
     formData.append("workType", workType);
     formData.append("workerNo", workerNo);
     formData.append("notiNo", notiNo);
+    
+    //값 들어와있는지 검증
+	var keys = ["notiTitle", "workStart", "workEnd", "hole", "course", "workClass", "workType", "workerNo"];
+	for (var i = 0; i < keys.length; i++) {
+		var value = formData.get(keys[i]);
+		if (!value) {
+			alert("내용을 입력해주세요");
+			//alert("error: " + keys[i] + " is missing");
+			return;
+		}//if end
+	}//for end
+	
+	//현재 날짜 저장 
+	var currentDate = new Date();
+	var day = String(currentDate.getDate()).padStart(2, '0');
+	var month = String(currentDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var year = currentDate.getFullYear();
+
+	currentDate = year + '-' + month + '-' + day;
+    
+	// Date 객체로 변환
+	var currentDateTime = new Date(currentDate);
+	var workEndDateTime = new Date(workEnd.substring(0, 10));
+
+	//작업 종료 날짜가 현재날짜보다 전일 경우 에러
+	if(currentDateTime > workEndDateTime){
+		alert("작업 종료날짜를 확인해주세요");
+		return;
+	}
+    
+
 
 	let token = $("input[name='_csrf']").val();
 	let header = "X-CSRF-TOKEN";
@@ -855,10 +892,12 @@ $(document).on('click','.workInsert,.workUpdate',function() {
 			xhr.setRequestHeader(header, token);
 		},
         success: function(result) {
-        	if($(this).hasClass('workUpdate')){
-        		alert("등록되었습니다")
+        	var classes = clickedElement.attr('class');
+        	
+        	if(clickedElement.hasClass('workUpdate')){
+        		alert("수정되었습니다")
         	}else{
-                alert("수정되었습니다")
+                alert("등록되었습니다")
         	}
             $('#modal_scrollable').modal('hide');  // 모달 창 닫기
         	var searchHole = $("input[name='searchHoleBt']:checked").map(function(){return $(this).val();}).get();

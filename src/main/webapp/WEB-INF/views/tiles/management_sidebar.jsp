@@ -18,7 +18,7 @@
 				<!-- Main -->
 				<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
 				<li class="nav-item p-0">
-					<a href="/management/dashboard" class="nav-link"><i class="far fa-clone"></i><span>대시보드</span></a>
+					<a href="/management/dashboard" class="nav-link"><i class="far fa-clone"></i><span>작업관리</span></a>
 					<a href="/management/course1" class="nav-link"><i class="far fa-calendar-alt"></i><span>코스관리</span></a>
 					<a href="/management/robot1" class="nav-link"><i class="fas fa-robot"></i><span>로봇관리</span></a>
 				</li>

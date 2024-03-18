@@ -20,6 +20,14 @@ public class WorkNotificationDAO {
 		return session.selectOne("dashboardMapper.getNotiListCnt",paramMap);
 	}
 	
+	public int completelistCnt(Map<String, Object> paramMap) {
+		return session.selectOne("dashboardMapper.completelistCnt",paramMap);
+	}
+	
+	public int searchcompletelistCnt(Map<String, Object> paramMap) {
+		return session.selectOne("dashboardMapper.searchcompletelistCnt",paramMap);
+	}
+	
 	public int getSearchNotiListCnt(Map<String, Object> paramMap) {
 		return session.selectOne("dashboardMapper.getSearchNotiListCnt",paramMap);
 	}
