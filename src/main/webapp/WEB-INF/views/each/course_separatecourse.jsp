@@ -46,10 +46,9 @@
 					<div class="card-header bg-white text-dark header-elements-inline">
 						<h6 class="card-title font-weight-semibold">${mainData.list2[status.index].holeName}</h6>
 						<div>
-							<i class="fas fa-seedling mr-2"></i> 
-							<span class="badge badge-success badge-pill ndviData"><i class="fas fa-camera mr-2"></i>${mainData.list1[status.index].sensorInfoList[0].ndviDataList[0].ndvi}</span>
-							<span class="badge badge-success badge-pill smoData"><i class="fas fa-tint mr-2"></i>${mainData.list3[status.index].robotInfoList[0].soilDataList[0].smo}<small class="weather-unit">%</small></span>
-							<span class="badge badge-success badge-pill stpData"><i class="fas fa-thermometer-half mr-2"></i>${mainData.list3[status.index].robotInfoList[0].soilDataList[0].stp}<small class="weather-unit">ºC</small></span>
+							<span class="badge badge-success badge-pill ndviData" tooltip="NDVI"><i class="fas fa-seedling mr-2"></i>${mainData.list1[status.index].sensorInfoList[0].ndviDataList[0].ndvi}</span>
+							<span class="badge badge-success badge-pill smoData" tooltip="토양수분"><i class="fas fa-tint mr-2"></i>${mainData.list3[status.index].robotInfoList[0].soilDataList[0].smo}<small class="weather-unit">%</small></span>
+							<span class="badge badge-success badge-pill stpData" tooltip="토양온도"><i class="fas fa-thermometer-half mr-2"></i>${mainData.list3[status.index].robotInfoList[0].soilDataList[0].stp}<small class="weather-unit">ºC</small></span>
 						</div>
 					</div>
 	
@@ -68,26 +67,26 @@
 						</div>
 						<!--이미지 end-->
 						<div class="btn-group btn-group-toggle mr-2 layerType" data-toggle="buttons">
-							<label class="btn btn-light active grow" onclick="change(event)" data-layertype="NDVI"  data-holeno="${mainData.list2[status.index].holeNo}">
+							<label class="btn btn-light active grow" onclick="change(event)" data-layertype="NDVI"  data-holeno="${mainData.list2[status.index].holeNo}" style="padding:.3rem .5rem">
 								<input type="radio" name="layerType${status.index}" id="option1" autocomplete="off" checked>
-								생육
+								NDVI
 							</label>
-							<label class="btn btn-light temp" onclick="change(event)" data-layertype="TEMP"  data-holeno="${mainData.list2[status.index].holeNo}">
+							<label class="btn btn-light temp" onclick="change(event)" data-layertype="TEMP"  data-holeno="${mainData.list2[status.index].holeNo}" style="padding:.3rem .5rem">
 								<input type="radio" name="layerType${status.index}" autocomplete="off">
-								열
+								토양온도
 							</label>
-							<label class="btn btn-light moisture" onclick="change(event)" data-layertype="HUMI"  data-holeno="${mainData.list2[status.index].holeNo}">
+							<label class="btn btn-light moisture" onclick="change(event)" data-layertype="HUMI"  data-holeno="${mainData.list2[status.index].holeNo}" style="padding:.3rem .5rem">
 								<input type="radio" name="layerType${status.index}" autocomplete="off" >
-								습도
+								토양수분
 							</label>
 						</div>
 	
 						<span class="btn-group mr-2" data-toggle="buttons">
-							<button type="button" class="btn btn-light ndvi" onclick="change(event)">NDVI 비교</button>
+							<button type="button" class="btn btn-light ndvi" onclick="change(event)" style="padding:.3rem .5rem">NDVI 비교</button>
 						</span>
 	
 						<span class="float-right">
-							<button type="button" class="btn btn-primary-100 border-primary text-primary detailReport" value="${mainData.list1[status.index].holeNo}">상세정보</button>
+							<button type="button" class="btn btn-primary-100 border-primary text-primary detailReport" value="${mainData.list1[status.index].holeNo}" style="padding:.3rem .5rem">상세정보</button>
 						</span>
 	
 						<!--Chart card-->
@@ -269,9 +268,9 @@ function updateData(data){
 						<h6 class="card-title font-weight-semibold">\${data.list2[i].holeName}</h6>
 						<div>
 							<i class="fas fa-seedling mr-2"></i> 
-							<span class="badge badge-success badge-pill"><i class="fas fa-camera mr-2"></i>\${parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2)}</span>
-							<span class="badge badge-success badge-pill"><i class="fas fa-tint mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2)}<small class="weather-unit">%</small></span>
-							<span class="badge badge-success badge-pill"><i class="fas fa-thermometer-half mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2)}<small class="weather-unit">ºC</small></span>
+							<span class="badge badge-success badge-pill" tooltip="NDVI"><i class="fas fa-seedling mr-2"></i>\${parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2)}</span>
+							<span class="badge badge-success badge-pill" tooltip="토양온도"><i class="fas fa-tint mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2)}<small class="weather-unit">%</small></span>
+							<span class="badge badge-success badge-pill" tooltip="토양수분"><i class="fas fa-thermometer-half mr-2"></i>\${parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2)}<small class="weather-unit">ºC</small></span>
 						</div>
 					</div>
 	
@@ -292,15 +291,15 @@ function updateData(data){
 						<div class="btn-group btn-group-toggle mr-2 layerType" data-toggle="buttons">
 							<label class="btn btn-light active grow" onclick="change(event)" data-layertype="NDVI"  data-holeno="\${data.list2[i].holeNo}">
 								<input type="radio" name="layerType\${i}" id="option1" autocomplete="off" checked>
-								생육
+								NDVI
 							</label>
 							<label class="btn btn-light temp" onclick="change(event)" data-layertype="TEMP"  data-holeno="\${data.list2[i].holeNo}">
 								<input type="radio" name="layerType\${i}" autocomplete="off">
-								열
+								토양온도
 							</label>
 							<label class="btn btn-light moisture" onclick="change(event)" data-layertype="HUMI"  data-holeno="\${data.list2[i].holeNo}">
 								<input type="radio" name="layerType\${i}" autocomplete="off" >
-								습도
+								토양수분
 							</label>
 						</div>
 	
@@ -357,7 +356,7 @@ function updateData(data){
 function updateDataV2(data){
 	for(var i=0; i<data.list1.length; i++){
 		$('.imageZone:eq('+i+') .card-title').html(data.list2[i].holeName)
-		$('.imageZone:eq('+i+') .ndviData').html(`<i class="fas fa-camera mr-2"></i>`+parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2))
+		$('.imageZone:eq('+i+') .ndviData').html(`<i class="fas fa-seedling mr-2"></i>`+parseFloat(data.list1[i].sensorInfoList[0].ndviDataList[0].ndvi).toFixed(2))
 		$('.imageZone:eq('+i+') .smoData').html(`<i class="fas fa-tint mr-2"></i>`+parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].smo).toFixed(2))
 		$('.imageZone:eq('+i+') .stpData').html(`<i class="fas fa-thermometer-half mr-2"></i>`+parseFloat(data.list3[i].robotInfoList[0].soilDataList[0].stp).toFixed(2))
 		$('.imageZone:eq('+i+') label').data('holeno',data.list1[i].holeNo);

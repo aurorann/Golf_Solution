@@ -447,15 +447,15 @@
 									<div class="btn-group btn-group-toggle ml-3" data-toggle="buttons" id="layerType">
 										<label class="btn btn-light active" data-layertype="NDVI">
 											<input type="radio" name="layerType${i}" autocomplete="off" >
-											생육
+											NDVI
 										</label>
 										<label class="btn btn-light" data-layertype="TEMP">
 											<input type="radio" name="layerType${i}" autocomplete="off" >
-											열
+											토양온도
 										</label>
 										<label class="btn btn-light" data-layertype="HUMI">
 											<input type="radio" name="layerType${i}" autocomplete="off" >
-											습도
+											토양수분
 										</label>
 									</div>
 									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>
@@ -893,15 +893,15 @@
 									<div class="btn-group btn-group-toggle ml-3" data-toggle="buttons" id="layerType">
 										<label class="btn btn-light active" data-layertype="NDVI">
 											<input type="radio" name="layerType${i}" autocomplete="off" >
-											생육
+											NDVI
 										</label>
 										<label class="btn btn-light" data-layertype="TEMP">
 											<input type="radio" name="layerType${i}" autocomplete="off" >
-											열
+											토양온도
 										</label>
 										<label class="btn btn-light" data-layertype="HUMI">
 											<input type="radio" name="layerType${i}" autocomplete="off" >
-											습도
+											토양수분
 										</label>
 									</div>
 									<small class="mr-2 mt-1 font-weight-bold float-right">Update : ` + formatDate(new Date()) + `</small>

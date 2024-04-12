@@ -37,15 +37,15 @@
 				</div>
 
 				<div class="btn-group mr-2 float-right" data-toggle="buttons" id="layerType">
-					<button type="button" class="btn btn-light active" data-layertype="NDVI">
+					<button type="button" class="btn btn-light active" data-layertype="NDVI" tooltip="NDVI">
 						<i class="fas fa-seedling"></i>
 						<!--생육-->
 					</button>
-					<button type="button" class="btn btn-light" data-layertype="TEMP">
-						<i class="fab fa-hotjar"></i>
+					<button type="button" class="btn btn-light" data-layertype="TEMP" tooltip="토양온도">
+						<i class="fas fa-thermometer-half"></i>
 						<!--열-->
 					</button>
-					<button type="button" class="btn btn-light" data-layertype="HUMI">
+					<button type="button" class="btn btn-light" data-layertype="HUMI" tooltip="토양수분">
 						<i class="fas fa-tint"></i>
 						<!--습도-->
 					</button>
@@ -247,7 +247,7 @@
 
 						<label class="btn btn-light">
 							<input type="radio" name="options" id="option2" autocomplete="off" value="each">
-							개별
+							코스별
 						</label>
 					</div>
 				</li>
@@ -281,11 +281,10 @@
 						<span class="input-group-prepend">
 							<span class="input-group-text"><i class="icon-calendar22"></i></span>
 						</span>
-						<input type="text" class="form-control daterange-basic" value="2024-01-28 ~ 2024-01-30" id="searchDate"> 
+						<input type="text" class="form-control daterange-basic" id="searchDate"> 
 						
 					</div>
 				</li>
-				
 			</ul>
 
 			<ul class="nav nav-sidebar my-2">
@@ -1266,8 +1265,8 @@
 			holeNo : "0"+holeNo.substring(1,holeNo.length),
 			courseType : courseType.toUpperCase(),
 			layerType : nowLayerType,
-			startDate : searchDate.split('~')[0].trim(),
-			endDate : searchDate.split('~')[1].trim()
+			startDate : searchDate.split('~')[0].trim() + " 00:00",
+			endDate : searchDate.split('~')[1].trim() + " 23:59"
 		}
 		
 		$.ajax({
@@ -1304,8 +1303,8 @@
 			holeNo : "0"+holeNo.substring(1,holeNo.length),
 			courseType : courseType.toUpperCase(),
 			type : type,
-			startDate : searchDate.split('~')[0].trim(),
-			endDate : searchDate.split('~')[1].trim()
+			startDate : searchDate.split('~')[0].trim() + " 00:00",
+			endDate : searchDate.split('~')[1].trim() + " 23:59"
 		}
 		
 		$.ajax({
@@ -1328,8 +1327,8 @@
 
 		let param = {
 			courseType : courseType.toUpperCase(),
-			startDate : searchDate.split('~')[0].trim(),
-			endDate : searchDate.split('~')[1].trim(),
+			startDate : searchDate.split('~')[0].trim() + " 00:00",
+			endDate : searchDate.split('~')[1].trim() + " 23:59",
 			layerType : nowLayerType
 		}
 

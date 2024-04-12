@@ -517,6 +517,12 @@ const FullCalendarStyling = function() {
                     //right: 'dayGridMonth,dayGridWeek,dayGridDay',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
+                buttonText: {
+                	today: '오늘',
+                	month: '월',
+                	week: '주',
+                	day: '일'
+                },
                 navLinks: true, // can click day/week names to navigate views
                 businessHours: true, // display business hours
                 editable: false,
