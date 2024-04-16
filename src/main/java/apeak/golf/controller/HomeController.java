@@ -12,7 +12,7 @@ import apeak.golf.service.HomeService;
 
 @Controller
 @RequestMapping("/")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class HomeController {
 	static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	

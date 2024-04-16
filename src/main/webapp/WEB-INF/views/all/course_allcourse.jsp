@@ -442,6 +442,13 @@
 			marker.setMap(map); 
 		}
 	}
+	
+	function detailReport(val){
+	    //var value = $(this).data('value');
+   		//alert(val);
+
+		location.href = '/report/course_report?value=' + encodeURIComponent(val);
+	}
 
 	function handleClick2(index){
 		customOverlayList[index].setMap(null)
@@ -539,7 +546,7 @@
 			if(infoWindow.getMap()){
 				infoWindow.close();
 			}else{
-				let infoHtml = drawInfoWindow(nowDataType,hole,data);
+				let infoHtml = drawInfoWindow(nowDataType,hole.replace('H',''),data);
 				infoWindow.setContent(infoHtml)
 				infoWindow.open(map, marker);
 				marker.setMap(null); 
@@ -752,7 +759,7 @@
 			template = `<div class="course1 position-absolute card bg-success-100 border-success text-center" style="width:225px;">
 							<div class="text-body pb-1">
 								<div class="card-header bg-success text-white pt-1 pb-1" style="border-top-left-radius: 17px; border-top-right-radius: 17px; position: relative;">
-						    		<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
+						    		<h6 class="card-title font-weight-semibold detailReport" onclick="detailReport('0\${holeNo}')" style="display: inline-block;">Hole \${holeNo}</h6>
 						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div>
 				
@@ -776,7 +783,7 @@
 			template = `<div class="course3 position-absolute card border-primary text-center pb-1" style="width:270px;">
 							<div class="text-body">
 								<div class="card-header bg-primary text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px; position: relative;">
-									<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
+									<h6 class="card-title font-weight-semibold detailReport" onclick="detailReport('0\${holeNo}')" style="display: inline-block;">Hole \${holeNo}</h6>
 						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div> <!--기상정보 8종-->
 								<div class="text-center weather-wrap pl-2 pr-2 pb-2">
@@ -825,7 +832,7 @@
 			template = `<div class="course4 position-absolute card border-warning text-center" style="width:290px;">
 								<div class="text-body pb-1">
 								<div class="card-header bg-warning text-white pt-1 pb-1" style="border-top-left-radius: 17px;border-top-right-radius: 17px; position: relative;">
-									<h6 class="card-title font-weight-semibold" style="display: inline-block;">Hole \${holeNo}</h6>
+									<h6 class="card-title font-weight-semibold detailReport" onclick="detailReport('0\${holeNo}')" style="display: inline-block;">Hole \${holeNo}</h6>
 						    		<a class="list-icons-item removeBt" data-action="remove" style="position: absolute; right: 10px;" onclick="handleClick();"></a>
 								</div> <!--토양정보 3종-->
 								<div class="card-body pt-1 pb-2">
@@ -863,7 +870,7 @@
 						<div class="course1 course-sm position-absolute card bg-success-100 border-success text-center" style="width:86px;">
 							<!--<a href="#" class="text-body pb-1">-->
 								<div class="card-header card-header-round bg-success text-white p-0">
-									<h6 class="card-title font-weight-semibold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
+									<h6 class="card-title font-weight-semibold detailReport" onclick="detailReport('0\${holeNo}')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
 									<span style="float:right;margin-right:10px" onclick="handleClick2(\${index});">X</span>
 									</h6>
 								</div>
@@ -889,7 +896,7 @@
 			template = 	`<div class="course3 course-sm position-absolute card border-primary text-center pb-1" style="width:175px;">
 							<a href="#" class="text-body">
 								<div class="card-header card-header-round bg-primary text-white p-0">
-									<h6 class="card-title font-weight-semibold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
+									<h6 class="card-title font-weight-semibold detailReport" onclick="detailReport('0\${holeNo}')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
 									<span style="float:right;margin-right:10px" onclick="handleClick2(\${index});">X</span>
 									</h6>
 								</div>
@@ -930,7 +937,7 @@
 						<div class="course4 course-sm position-absolute card border-warning text-center" style="width:152px">
 							<a href="#" class="text-body pb-1">
 								<div class="card-header card-header-round bg-warning text-white p-0">
-									<h6 class="card-title font-weight-semibold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
+									<h6 class="card-title font-weight-semibold detailReport" onclick="detailReport('0\${holeNo}')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hole \${holeNo}
 									<span style="float:right;margin-right:10px" onclick="handleClick2(\${index});">X</span>
 									</h6>
 								</div>
@@ -1791,6 +1798,7 @@
 	$('#searchDate').val(getCurrentAndNextDate());
     	
 	$('#holeList button:eq(0)').click();
+
 	
 
 </script>
@@ -1829,5 +1837,9 @@
 	.course-sm .weather-box {
 	    width: 33.3%;
 	    padding: 0 5px;
+	}
+	
+	.detailReport{
+		cursor: pointer;
 	}
 </style>

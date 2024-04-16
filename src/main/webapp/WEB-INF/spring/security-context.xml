@@ -8,7 +8,7 @@
 
    <!-- Spring Security 인증처리로직를 정의한 클래스 -->
    <sec:http use-expressions="true" auto-config="true" >
-      <sec:intercept-url pattern="/*/*"  access="isAuthenticated()" />
+<!--       <sec:intercept-url pattern="/*/*"  access="isAuthenticated()" /> -->
       <sec:intercept-url pattern="/user/user_management"  access="hasRole('ROLE_ADMIN')" />
       <!--<sec:intercept-url pattern="/management/dashboard"  access="hasRole('ROLE_ADMIN')"/>-->
       <!--<sec:intercept-url pattern="/user/**"  access="isAuthenticated()" />

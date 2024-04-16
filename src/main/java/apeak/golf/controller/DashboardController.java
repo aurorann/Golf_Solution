@@ -27,8 +27,8 @@ import apeak.golf.service.CourseService;
 import apeak.golf.service.DashboardService;
 
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping("/management")
-@CrossOrigin
 public class DashboardController {
 
 	@Autowired

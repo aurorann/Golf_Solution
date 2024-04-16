@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/user")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class UserController {
 	
 	@Autowired

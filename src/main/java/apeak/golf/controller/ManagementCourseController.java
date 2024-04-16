@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller	
 @RequestMapping("/management")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class ManagementCourseController {
 
 	@Autowired

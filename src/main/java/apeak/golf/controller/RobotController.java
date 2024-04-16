@@ -16,7 +16,7 @@ import apeak.golf.service.RobotService;
 
 @Controller
 @RequestMapping("/management")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class RobotController {
 	
 	@Autowired

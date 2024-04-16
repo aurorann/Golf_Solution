@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/mobile")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class MobileController {
 	
 	private static boolean devMode = false;

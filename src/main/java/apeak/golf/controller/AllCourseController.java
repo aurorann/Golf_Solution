@@ -18,8 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@CrossOrigin(origins = "*")
 @RequestMapping("/all")
-@CrossOrigin
 public class AllCourseController {
 
 	@Autowired
@@ -61,6 +61,7 @@ public class AllCourseController {
 	 * 전체검색
 	 * @return
 	 */
+	@CrossOrigin(origins = "*")
 	@GetMapping("/getAllData")
 	@ResponseBody
 	public EgovMap getAllData(@RequestParam Map<String, Object> param){

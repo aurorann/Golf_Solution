@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/report")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class ReportCourseController {
 
 	@Autowired

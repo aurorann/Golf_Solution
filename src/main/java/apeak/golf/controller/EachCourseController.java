@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/each")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class EachCourseController {
 
 	@Autowired

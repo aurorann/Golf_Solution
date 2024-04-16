@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/sign")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class SignController {
 	
 	@RequestMapping("/loginForm")
